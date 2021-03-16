@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,11 +28,22 @@ public class Main extends Application {
         menuBar.setStyle("-fx-background-color: grey");
 
         Menu file = new Menu("File");
+        MenuItem menuItem1 = new MenuItem("Save XML");
+        MenuItem menuItem2 = new MenuItem("Save HTMl");
+        MenuItem menuItem3 = new MenuItem("Load XML");
+        MenuItem menuItem4 = new MenuItem("Load HTML");
+        file.getItems().add(menuItem1);
+        file.getItems().add(menuItem2);
+        file.getItems().add(menuItem3);
+        file.getItems().add(menuItem4);
+
         menuBar.getMenus().add(file);
+
         Menu edit = new Menu("Edit");
         menuBar.getMenus().add(edit);
         Menu view = new Menu("View");
         menuBar.getMenus().add(view);
+
 
         HBox menuBox = new HBox(menuBar);
         menuBox.setMinWidth(960);
