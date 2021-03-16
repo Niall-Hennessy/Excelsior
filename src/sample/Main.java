@@ -18,6 +18,8 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 
+import java.io.FileInputStream;
+
 public class Main extends Application {
 
     @Override
@@ -50,30 +52,20 @@ public class Main extends Application {
         menuBar.getMenus().add(view);
 
 
+        Image image = new Image(new FileInputStream("src/images/confused.png"));
+
         HBox menuBox = new HBox(menuBar);
         menuBox.setMinWidth(960);
         menuBox.setStyle("-fx-background-color: gray");
 
 
         ComicPanel comicPanel = new ComicPanel();
-        comicPanel.setCharacter1("accusing");
-        ImageView character1View = new ImageView(comicPanel.getCharacter1());
-        character1View.setFitHeight(100);
-        character1View.setFitWidth(100);
-        character1View.setX(430);
-        character1View.setY(200);
-        comicPanel.setCharacter2("attacking");
-        ImageView character2View = new ImageView(comicPanel.getCharacter2());
-        character2View.setFitHeight(100);
-        character2View.setFitWidth(100);
-        character2View.setX(530);
-        character2View.setY(200);
-        comicPanel.getChildren().add(character2View);
-        comicPanel.getChildren().add(character1View);
-        comicPanel.setStyle("-fx-border-color: black");
+        comicPanel.setLeftCharacter("accusing");
+        comicPanel.setRightCharacter("biting");
 
         HBox comicStrip = new HBox();
         comicStrip.getChildren().add(comicPanel);
+        comicStrip.setStyle("-fx-border-color: hotpink; -fx-border-width: 10px");
 
 
         gridPane.addRow(0, menuBox);

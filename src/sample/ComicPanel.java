@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import javax.swing.plaf.PanelUI;
@@ -9,31 +10,38 @@ import java.io.FileNotFoundException;
 
 public class ComicPanel extends Pane {
 
-
-    Image character1 = null;
-
-    Image character2 = null;
+    ImageView leftCharacterView;
+    ImageView rightCharacterView;
 
     public ComicPanel(){
-
-        this.setStyle("-fx-border-color: black");
+        this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
     }
 
-    public Image getCharacter1() {
-        return character1;
+    public ImageView getLeftCharacterView() {
+        return leftCharacterView;
     }
 
-    public void setCharacter1(String character1) throws FileNotFoundException {
-        character1 = "src/images/"+character1+".png";
-        this.character1 = new Image(new FileInputStream(character1));
+    public void setLeftCharacter(String imagePath) throws FileNotFoundException {
+        imagePath = "src/images/" + imagePath + ".png";
+        Image image = new Image(new FileInputStream(imagePath));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
+        this.getChildren().add(imageView);
+        this.leftCharacterView = imageView;
     }
 
-    public Image getCharacter2() {
-        return character2;
+    public ImageView getRightCharacter() {
+        return rightCharacterView;
     }
 
-    public void setCharacter2(String character2) throws FileNotFoundException {
-        character2 = "src/images/"+character2+".png";
-        this.character2 = new Image(new FileInputStream(character2));
+    public void setRightCharacter(String imagePath) throws FileNotFoundException {
+        imagePath = "src/images/" + imagePath + ".png";
+        Image image = new Image(new FileInputStream(imagePath));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
+        this.getChildren().add(imageView);
+        this.rightCharacterView = imageView;
     }
 }
