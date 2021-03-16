@@ -8,10 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import java.io.FileInputStream;
 
 public class Main extends Application {
 
@@ -50,7 +55,29 @@ public class Main extends Application {
         menuBox.setStyle("-fx-background-color: gray");
 
 
+        ComicPanel comicPanel = new ComicPanel();
+        comicPanel.setCharacter1("accusing");
+        ImageView character1View = new ImageView(comicPanel.getCharacter1());
+        character1View.setFitHeight(100);
+        character1View.setFitWidth(100);
+        character1View.setX(430);
+        character1View.setY(200);
+        comicPanel.setCharacter2("attacking");
+        ImageView character2View = new ImageView(comicPanel.getCharacter2());
+        character2View.setFitHeight(100);
+        character2View.setFitWidth(100);
+        character2View.setX(530);
+        character2View.setY(200);
+        comicPanel.getChildren().add(character2View);
+        comicPanel.getChildren().add(character1View);
+        comicPanel.setStyle("-fx-border-color: black");
+
+        HBox comicStrip = new HBox();
+        comicStrip.getChildren().add(comicPanel);
+
+
         gridPane.addRow(0, menuBox);
+        gridPane.addRow(1, comicStrip);
         Scene scene = new Scene(gridPane, 960, 600);
 
         primaryStage.setScene(scene);
