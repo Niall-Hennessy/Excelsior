@@ -15,6 +15,8 @@ public class ComicPanel extends Pane {
 
     public ComicPanel(){
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
+        this.setPrefHeight(200);
+        this.setPrefWidth(200);
     }
 
     public ImageView getLeftCharacterView() {
@@ -25,8 +27,8 @@ public class ComicPanel extends Pane {
         imagePath = "src/images/" + imagePath + ".png";
         Image image = new Image(new FileInputStream(imagePath));
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(100);
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
         this.getChildren().add(imageView);
         this.leftCharacterView = imageView;
     }
@@ -39,8 +41,8 @@ public class ComicPanel extends Pane {
         imagePath = "src/images/" + imagePath + ".png";
         Image image = new Image(new FileInputStream(imagePath));
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(100);
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
         this.getChildren().add(imageView);
         this.rightCharacterView = imageView;
     }
