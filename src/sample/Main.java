@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.webkit.graphics.ScrollBarTheme;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -9,17 +10,23 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 
+import java.awt.*;
 import java.io.FileInputStream;
 
 import java.io.FileInputStream;
@@ -34,11 +41,12 @@ public class Main extends Application {
         int width = (int) Screen.getPrimary().getBounds().getWidth();
         int height = (int) Screen.getPrimary().getBounds().getHeight();
 
+
         GridPane gridPane = new GridPane();
 
 
         MenuBar menuBar = new MenuBar();
-        menuBar.setStyle("-fx-background-color: grey");
+        menuBar.setStyle("-fx-background-color: #F7705D");
 
         Menu file = new Menu("File");
         MenuItem menuItem1 = new MenuItem("Save XML");
@@ -60,10 +68,10 @@ public class Main extends Application {
 
         HBox menuBox = new HBox(menuBar);
 //        menuBox.setMinWidth(960);
-        menuBox.setStyle("-fx-background-color: gray");
+        menuBox.setStyle("-fx-background-color: #F7705D");
 
         GridPane bottomPane = new GridPane();
-        bottomPane.setStyle("-fx-border-color: black; -fx-border-width: 2px");
+        bottomPane.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF; -fx-border-width: 2px");
         bottomPane.setPrefHeight(300);
         bottomPane.setPrefWidth(width);
 
@@ -71,6 +79,7 @@ public class Main extends Application {
         HBox optionBox = new HBox(bottomPane);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
         optionBox.setMargin(bottomPane, new Insets(10, 10, 10, 10));
+        optionBox.setStyle("-fx-background-color: #FFFFFF");
 
         ComicPanel comicPanel1 = new ComicPanel();
         ComicPanel comicPanel2 = new ComicPanel();
@@ -91,21 +100,27 @@ public class Main extends Application {
         comicStrip.setMargin(comicPanel3, new Insets(10,10,10,10));
         comicStrip.setMargin(comicPanel4, new Insets(10,10,10,10));
         comicStrip.setMargin(comicPanel5, new Insets(10,10,10,10));
+        comicStrip.setStyle("-fx-background-color: #FFFFFF");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setPrefHeight(320);
+       // scrollPane.setStyle("-fx-background-color: blue")
+       // ScrollBarTheme.setThickness(3);
 
         gridPane.addRow(0, menuBox);
         gridPane.addRow(1, scrollPane);
         gridPane.addRow(2, optionBox);
+        gridPane.setStyle("-fx-background-color: #FFFFFF");
+        gridPane.setMargin(scrollPane, new Insets(0,0,0,5));
 
         Scene scene = new Scene(gridPane, width, height);
 
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.show();
+
 
     }
 
