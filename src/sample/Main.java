@@ -44,22 +44,25 @@ public class Main extends Application {
         menuBox.setMinWidth(960);
         menuBox.setStyle("-fx-background-color: gray");
 
-        Pane bottomPane = new Pane();
-        bottomPane.getChildren().add(new Label("Test"));
-        bottomPane.setStyle("-fx-background-color: green");
-        bottomPane.setMinSize(500, 100);
-
         Button colourHair = new Button("Colour Hair");
         Button colourBody = new Button("Colour Body");
         //HBox hbox = new HBox(20, colourBody, colourHair);
         //hbox.setSpacing(50);
 
-        HBox bottomBox = new HBox(bottomPane, colourHair, colourBody);
+        GridPane bottomPane = new GridPane();
+        //bottomPane.getChildren().add(new Label("Test"));
+        //bottomPane.add(colourHair, 1,1,1,1); for later
+        //bottomPane.add(colourBody, 2, 1, 1, 1); for later
+        bottomPane.setStyle("-fx-border-color: blue");
+        bottomPane.setMinSize(800, 100);
+
+
+        HBox bottomBox = new HBox(bottomPane);
         bottomBox.setAlignment(Pos.BOTTOM_LEFT);
-        bottomBox.setStyle("-fx-background-color: red");
+        bottomBox.setStyle("-fx-border-color: red");
         bottomBox.setMargin(bottomPane, new Insets(10, 10, 10, 10));
-        bottomBox.setMargin(colourBody, new Insets(10, 10, 10, 10));
-        bottomBox.setMargin(colourHair, new Insets(10, 10, 10, 10));
+        //bottomBox.setMargin(colourBody, new Insets(10, 10, 10, 10));
+        //bottomBox.setMargin(colourHair, new Insets(10, 10, 10, 10));
 
         /*
         CheckBox colourBox = new CheckBox("Hair");
