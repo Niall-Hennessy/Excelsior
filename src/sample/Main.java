@@ -2,6 +2,7 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -60,12 +61,10 @@ public class Main extends Application {
 
 
         ComicPanel comicPanel = new ComicPanel();
-        comicPanel.setLeftCharacter("accusing");
-        comicPanel.setRightCharacter("biting");
 
         HBox comicStrip = new HBox();
         comicStrip.getChildren().add(comicPanel);
-        comicStrip.setStyle("-fx-border-color: hotpink; -fx-border-width: 10px");
+        comicStrip.setStyle("-fx-border-color: hotpink; -fx-border-width: 1px");
 
 
         gridPane.addRow(0, menuBox);

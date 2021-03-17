@@ -27,8 +27,8 @@ public class ComicPanel extends Pane {
         imagePath = "src/images/" + imagePath + ".png";
         Image image = new Image(new FileInputStream(imagePath));
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
         this.getChildren().add(imageView);
         this.leftCharacterView = imageView;
     }
@@ -41,8 +41,8 @@ public class ComicPanel extends Pane {
         imagePath = "src/images/" + imagePath + ".png";
         Image image = new Image(new FileInputStream(imagePath));
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
         this.getChildren().add(imageView);
         this.rightCharacterView = imageView;
     }
