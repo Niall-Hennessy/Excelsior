@@ -8,9 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -18,11 +16,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Label;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Button;
 
 import java.io.FileInputStream;
 
@@ -32,9 +28,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-//        Group root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
         primaryStage.setTitle("Excelsior");
+
+        int width = (int) Screen.getPrimary().getBounds().getWidth();
+        int height = (int) Screen.getPrimary().getBounds().getHeight();
 
         GridPane gridPane = new GridPane();
 
@@ -60,54 +58,53 @@ public class Main extends Application {
         menuBar.getMenus().add(view);
 
 
-        Image image = new Image(new FileInputStream("src/images/confused.png"));
-
         HBox menuBox = new HBox(menuBar);
-        menuBox.setMinWidth(960);
+//        menuBox.setMinWidth(960);
         menuBox.setStyle("-fx-background-color: gray");
 
-        Button colourHair = new Button("Colour Hair");
-        Button colourBody = new Button("Colour Body");
-        //HBox hbox = new HBox(20, colourBody, colourHair);
-        //hbox.setSpacing(50);
-
         GridPane bottomPane = new GridPane();
-        //bottomPane.getChildren().add(new Label("Test"));
-        //bottomPane.add(colourHair, 1,1,1,1); for later
-        //bottomPane.add(colourBody, 2, 1, 1, 1); for later
-        bottomPane.setStyle("-fx-border-color: blue");
-        bottomPane.setMinSize(800, 100);
+        bottomPane.setStyle("-fx-border-color: black; -fx-border-width: 2px");
+        bottomPane.setPrefHeight(300);
+        bottomPane.setPrefWidth(width);
 
 
-        HBox bottomBox = new HBox(bottomPane);
-        bottomBox.setAlignment(Pos.BOTTOM_LEFT);
-        bottomBox.setStyle("-fx-border-color: red");
-        bottomBox.setMargin(bottomPane, new Insets(10, 10, 10, 10));
-        //bottomBox.setMargin(colourBody, new Insets(10, 10, 10, 10));
-        //bottomBox.setMargin(colourHair, new Insets(10, 10, 10, 10));
+        HBox optionBox = new HBox(bottomPane);
+        optionBox.setAlignment(Pos.BOTTOM_LEFT);
+        optionBox.setMargin(bottomPane, new Insets(10, 10, 10, 10));
 
-        /*
-        CheckBox colourBox = new CheckBox("Hair");
-        HBox colourCheckBox = new HBox(colourBox);
-        //boolean isSelected = colourCheckBox.isSelected(true);
+        ComicPanel comicPanel1 = new ComicPanel();
+        ComicPanel comicPanel2 = new ComicPanel();
+        ComicPanel comicPanel3 = new ComicPanel();
+        ComicPanel comicPanel4 = new ComicPanel();
+        ComicPanel comicPanel5 = new ComicPanel();
 
-         */
-
-        ComicPanel comicPanel = new ComicPanel();
 
         HBox comicStrip = new HBox();
-        comicStrip.getChildren().add(comicPanel);
-        comicStrip.setStyle("-fx-border-color: hotpink; -fx-border-width: 1px");
+        comicStrip.getChildren().add(comicPanel1);
+        comicStrip.getChildren().add(comicPanel2);
+        comicStrip.getChildren().add(comicPanel3);
+        comicStrip.getChildren().add(comicPanel4);
+        comicStrip.getChildren().add(comicPanel5);
+        comicStrip.setAlignment(Pos.CENTER);
+        comicStrip.setMargin(comicPanel1, new Insets(10,10,10,10));
+        comicStrip.setMargin(comicPanel2, new Insets(10,10,10,10));
+        comicStrip.setMargin(comicPanel3, new Insets(10,10,10,10));
+        comicStrip.setMargin(comicPanel4, new Insets(10,10,10,10));
+        comicStrip.setMargin(comicPanel5, new Insets(10,10,10,10));
 
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(comicStrip);
+        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setPrefHeight(320);
 
         gridPane.addRow(0, menuBox);
-        gridPane.addRow(1, comicStrip);
-        gridPane.add(bottomBox, 0, 1);
-        //gridPane.add(colourCheckBox, 0, 2);
+        gridPane.addRow(1, scrollPane);
+        gridPane.addRow(2, optionBox);
 
-        Scene scene = new Scene(gridPane, 960, 600);
+        Scene scene = new Scene(gridPane, width, height);
 
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
     }
