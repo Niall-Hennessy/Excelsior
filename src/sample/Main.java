@@ -52,7 +52,7 @@ public class Main extends Application {
 
 
         MenuBar menuBar = new MenuBar();
-        menuBar.setStyle("-fx-background-color: #F5F97F");
+        menuBar.setStyle("-fx-background-color: #B9EBFF");
 
         Menu file = new Menu("File");
         MenuItem menuItem1 = new MenuItem("Save XML");
@@ -74,10 +74,10 @@ public class Main extends Application {
 
         HBox menuBox = new HBox(menuBar);
 //        menuBox.setMinWidth(960);
-        menuBox.setStyle("-fx-background-color: #F5F97F");
+        menuBox.setStyle("-fx-background-color: #B9EBFF");
 
         GridPane bottomPane = new GridPane();
-        bottomPane.setStyle("-fx-border-color: black; -fx-background-color: #DFF4DD; -fx-border-width: 3px");
+        bottomPane.setStyle("-fx-border-color: black; -fx-background-color: #FEF7D3; -fx-border-width: 3px");//pink white FFFEF1
         bottomPane.setPrefHeight(300);
         bottomPane.setPrefWidth(width);
 
@@ -85,7 +85,7 @@ public class Main extends Application {
         HBox optionBox = new HBox(bottomPane);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
         optionBox.setMargin(bottomPane, new Insets(50, 10, 10, 10));
-        optionBox.setStyle("-fx-background-color: #F5F97F");
+        optionBox.setStyle("-fx-background-color: #B9EBFF");
         optionBox.setPrefHeight(400);
 
         ComicPanel comicPanel1 = new ComicPanel();
@@ -110,7 +110,7 @@ public class Main extends Application {
         comicStrip.setMargin(comicPanel5, new Insets(10,10,10,10));
         comicStrip.setPrefHeight(280);
         comicStrip.setPrefWidth(width);
-        comicStrip.setStyle("-fx-background-color: #FFFFFF;");
+        comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
