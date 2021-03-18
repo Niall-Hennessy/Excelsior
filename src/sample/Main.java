@@ -86,7 +86,7 @@ public class Main extends Application {
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
         optionBox.setMargin(bottomPane, new Insets(50, 10, 10, 10));
         optionBox.setStyle("-fx-background-color: #FFFFFF");
-        optionBox.setPrefHeight(500);
+        optionBox.setPrefHeight(400);
 
         ComicPanel comicPanel1 = new ComicPanel();
         ComicPanel comicPanel2 = new ComicPanel();
@@ -108,14 +108,14 @@ public class Main extends Application {
         comicStrip.setMargin(comicPanel3, new Insets(10,10,10,10));
         comicStrip.setMargin(comicPanel4, new Insets(10,10,10,10));
         comicStrip.setMargin(comicPanel5, new Insets(10,10,10,10));
-        comicStrip.setPrefHeight(300);
+        comicStrip.setPrefHeight(280);
         comicStrip.setPrefWidth(width);
         comicStrip.setStyle("-fx-background-color: #FFFFFF;");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setPrefHeight(320);
+        scrollPane.setPrefHeight(300);
        // ScrollBarTheme.setThickness(3);
 
         gridPane.addRow(0, menuBox);
