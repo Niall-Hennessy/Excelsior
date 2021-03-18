@@ -121,7 +121,8 @@ public class Main extends Application {
         gridPane.addRow(0, menuBox);
         gridPane.addRow(1, scrollPane);
         gridPane.addRow(2, optionBox);
-        gridPane.setStyle("-fx-background-color: #FFFFFF");
+        //gridPane.setStyle("-fx-background-color: #FFFFFF");
+        gridPane.setStyle("-fx-background-color: #B9EBFF");
         gridPane.setMargin(scrollPane, new Insets(0,0,0,5));
 
         Scene scene = new Scene(gridPane, width, height);
