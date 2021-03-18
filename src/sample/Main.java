@@ -52,7 +52,7 @@ public class Main extends Application {
 
 
         MenuBar menuBar = new MenuBar();
-        menuBar.setStyle("-fx-background-color: #F7705D");
+        menuBar.setStyle("-fx-background-color: #F5F97F");
 
         Menu file = new Menu("File");
         MenuItem menuItem1 = new MenuItem("Save XML");
@@ -74,10 +74,10 @@ public class Main extends Application {
 
         HBox menuBox = new HBox(menuBar);
 //        menuBox.setMinWidth(960);
-        menuBox.setStyle("-fx-background-color: #F7705D");
+        menuBox.setStyle("-fx-background-color: #F5F97F");
 
         GridPane bottomPane = new GridPane();
-        bottomPane.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF; -fx-border-width: 2px");
+        bottomPane.setStyle("-fx-border-color: black; -fx-background-color: #DFF4DD; -fx-border-width: 3px");
         bottomPane.setPrefHeight(300);
         bottomPane.setPrefWidth(width);
 
@@ -85,7 +85,7 @@ public class Main extends Application {
         HBox optionBox = new HBox(bottomPane);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
         optionBox.setMargin(bottomPane, new Insets(50, 10, 10, 10));
-        optionBox.setStyle("-fx-background-color: #FFFFFF");
+        optionBox.setStyle("-fx-background-color: #F5F97F");
         optionBox.setPrefHeight(400);
 
         ComicPanel comicPanel1 = new ComicPanel();
