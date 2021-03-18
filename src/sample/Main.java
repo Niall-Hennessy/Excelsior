@@ -41,6 +41,12 @@ public class Main extends Application {
         int width = (int) Screen.getPrimary().getBounds().getWidth();
         int height = (int) Screen.getPrimary().getBounds().getHeight();
 
+        int widthPrcnt = (width / 100) * 95;
+        int heightPrcnt = (height / 100) * 95;
+
+        primaryStage.setHeight(heightPrcnt);
+        primaryStage.setWidth(widthPrcnt);
+
 
         GridPane gridPane = new GridPane();
 
