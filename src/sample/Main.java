@@ -20,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
@@ -50,7 +51,6 @@ public class Main extends Application {
 
         GridPane mainPane = new GridPane();
 
-
         MenuBar menuBar = new MenuBar();
         menuBar.setStyle("-fx-background-color: #B9EBFF");
 
@@ -71,14 +71,12 @@ public class Main extends Application {
         Menu view = new Menu("View");
         menuBar.getMenus().add(view);
 
-
         HBox menuBox = new HBox(menuBar);
-        menuBox.setStyle("-fx-background-color: #B9EBFF");
 
-        GridPane bottomPane = new GridPane();
-        bottomPane.setStyle("-fx-border-color: black; -fx-background-color: #FEF7D3; -fx-border-width: 3px");//pink white FFFEF1
-        bottomPane.setPrefHeight(300);
-        bottomPane.setPrefWidth(width);
+        GridPane buttonLayout = new GridPane();
+        buttonLayout.setStyle("-fx-border-color: black; -fx-background-color: #FEF7D3; -fx-border-width: 3px");
+        buttonLayout.setPrefHeight(300);
+        buttonLayout.setPrefWidth(width);
 
         ColorPicker skinColorPicker = new ColorPicker();
         skinColorPicker.getStyleClass().add("button");
@@ -92,11 +90,21 @@ public class Main extends Application {
         hairColorPicker.setPrefHeight(100);
         hairColorPicker.setPrefWidth(100);
 
-        bottomPane.setHgap(50);
-        bottomPane.setVgap(50);
-        bottomPane.setPadding(new Insets(50,50,50,50));
-        bottomPane.add(skinColorPicker,0,0);
-        bottomPane.add(hairColorPicker,0,1);
+        buttonLayout.setHgap(50);
+        buttonLayout.setVgap(50);
+        buttonLayout.setPadding(new Insets(50,50,50,50));
+
+        Text skin = new Text();
+        skin.setText("Skin:");
+        skin.setStyle("-fx-font-size: 22; -fx-font-family: 'Comic Sans MS'");
+        buttonLayout.add(skin, 4, 0);
+
+        Text hair = new Text();
+        hair.setText("Hair:");
+        hair.setStyle("-fx-font-size: 22; -fx-font-family: 'Comic Sans MS'");
+        buttonLayout.add(hair, 4, 1);
+        buttonLayout.add(skinColorPicker,5,0);
+        buttonLayout.add(hairColorPicker,5,1);
 
 
         ButtonIcon buttonIcon = new ButtonIcon();
@@ -108,14 +116,14 @@ public class Main extends Application {
         Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
 
-        bottomPane.addColumn(1, lookRight, lookLeft);
-        bottomPane.addColumn(2, flipButton, mfButton);
-        bottomPane.addColumn(3, textButton, bubbleButton);
+        buttonLayout.addColumn(1, lookRight, lookLeft);
+        buttonLayout.addColumn(2, flipButton, mfButton);
+        buttonLayout.addColumn(3, textButton, bubbleButton);
 
 
-        HBox optionBox = new HBox(bottomPane);
+        HBox optionBox = new HBox(buttonLayout);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
-        optionBox.setMargin(bottomPane, new Insets(50, 10, 10, 10));
+        optionBox.setMargin(buttonLayout, new Insets(50, 10, 10, 10));
         optionBox.setStyle("-fx-background-color: #B9EBFF");
         optionBox.setPrefHeight(400);
 
@@ -132,21 +140,20 @@ public class Main extends Application {
         comicStrip.setAlignment(Pos.CENTER);
         comicStrip.setMargin(comicPanel1, new Insets(10,10,10,10));
         comicStrip.setPrefHeight(280);
-        comicStrip.setPrefWidth(width);
+        comicStrip.setPrefWidth(width - 10);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setPrefHeight(300);
-       // ScrollBarTheme.setThickness(3);
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
         mainPane.addRow(2, optionBox);
         //mainPane.setStyle("-fx-background-color: #FFFFFF");
         mainPane.setStyle("-fx-background-color: #B9EBFF");
-        mainPane.setMargin(scrollPane, new Insets(0,0,0,5));
+        mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
 
         Scene scene = new Scene(mainPane, width, height);
 
