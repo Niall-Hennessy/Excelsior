@@ -107,18 +107,32 @@ public class Main extends Application {
         buttonLayout.add(hairColorPicker,5,1);
 
 
+
         ButtonIcon buttonIcon = new ButtonIcon();
 
         Button lookLeft = buttonIcon.getButtonIcon("src/images/lookLeft.png");
+        lookLeft.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
         Button lookRight = buttonIcon.getButtonIcon("src/images/lookRight.png");
+        lookRight.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
         Button flipButton = buttonIcon.getButtonIcon("src/images/swapLR.png");
-        Button mfButton = buttonIcon.getButtonIcon("src/images/MFButton.png");
+        flipButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
+        Button genderButton = buttonIcon.getButtonIcon("src/images/MFButton.png");
+        genderButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
         Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
+        textButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
+        bubbleButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
+
+
+        Button deleteButton = buttonIcon.getButtonIcon("src/images/trashcan.png");
+        deleteButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
+
+
 
         buttonLayout.addColumn(1, lookRight, lookLeft);
-        buttonLayout.addColumn(2, flipButton, mfButton);
+        buttonLayout.addColumn(2, flipButton, genderButton);
         buttonLayout.addColumn(3, textButton, bubbleButton);
+        buttonLayout.addColumn(6, deleteButton);
 
 
         HBox optionBox = new HBox(buttonLayout);
@@ -130,8 +144,14 @@ public class Main extends Application {
 
         ComicPanel comicPanel1 = new ComicPanel();
 
-        Button newPanelLeft = buttonIcon.getButtonIcon("src/images/lookLeft.png");
-        Button newPanelRight = buttonIcon.getButtonIcon("src/images/lookLeft.png");
+        Button newPanelLeft = buttonIcon.getButtonIcon("src/images/plus.png");
+        Button newPanelRight = buttonIcon.getButtonIcon("src/images/plus.png");
+        newPanelLeft.setScaleX(0.5);
+        newPanelLeft.setScaleY(0.5);
+        newPanelRight.setScaleX(0.5);
+        newPanelRight.setScaleY(0.5);
+
+
 
         HBox comicStrip = new HBox();
         comicStrip.getChildren().add(newPanelLeft);
