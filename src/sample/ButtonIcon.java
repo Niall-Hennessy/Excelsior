@@ -12,8 +12,8 @@ public class ButtonIcon {
         FileInputStream input = new FileInputStream(imagePath);
         Image image = new Image(input);
         ImageView view = new ImageView(image);
-        view.setFitHeight(50);
-        view.setFitWidth(50);
+        view.setFitHeight(100);
+        view.setFitWidth(100);
         Button buttonIcon = new Button("", view);
 
         return buttonIcon;
