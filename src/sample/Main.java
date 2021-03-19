@@ -84,14 +84,14 @@ public class Main extends Application {
         ImageView lookLeftImageView = new ImageView(lookLeftImage);
         lookLeftImageView.setFitHeight(50);
         lookLeftImageView.setFitWidth(50);
-        Button lookLeft = new Button("Look left", lookLeftImageView);
+        Button lookLeft = new Button("", lookLeftImageView);
 
         FileInputStream lookRightImageInput = new FileInputStream("src/images/lookRight.png");
         Image lookRightImage = new Image(lookRightImageInput);
         ImageView lookRightImageView = new ImageView(lookRightImage);
         lookRightImageView.setFitHeight(50);
         lookRightImageView.setFitWidth(50);
-        Button lookRight = new Button("Look Right", lookRightImageView);
+        Button lookRight = new Button("", lookRightImageView);
 
         bottomPane.addRow(1, lookRight, lookLeft);
 
