@@ -16,10 +16,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
@@ -27,6 +24,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 
 import java.awt.*;
+import javafx.scene.control.Button;
 import java.io.FileInputStream;
 
 import java.io.FileInputStream;
@@ -81,12 +79,28 @@ public class Main extends Application {
         bottomPane.setPrefHeight(300);
         bottomPane.setPrefWidth(width);
 
+        FileInputStream lookLeftImageInput = new FileInputStream("src/images/lookLeft.png");
+        Image lookLeftImage = new Image(lookLeftImageInput);
+        ImageView lookLeftImageView = new ImageView(lookLeftImage);
+        lookLeftImageView.setFitHeight(50);
+        lookLeftImageView.setFitWidth(50);
+        Button lookLeft = new Button("Look left", lookLeftImageView);
+
+        FileInputStream lookRightImageInput = new FileInputStream("src/images/lookRight.png");
+        Image lookRightImage = new Image(lookRightImageInput);
+        ImageView lookRightImageView = new ImageView(lookRightImage);
+        lookRightImageView.setFitHeight(50);
+        lookRightImageView.setFitWidth(50);
+        Button lookRight = new Button("Look Right", lookRightImageView);
+
+        bottomPane.addRow(1, lookRight, lookLeft);
 
         HBox optionBox = new HBox(bottomPane);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
         optionBox.setMargin(bottomPane, new Insets(50, 10, 10, 10));
         optionBox.setStyle("-fx-background-color: #B9EBFF");
         optionBox.setPrefHeight(400);
+
 
         ComicPanel comicPanel1 = new ComicPanel();
         ComicPanel comicPanel2 = new ComicPanel();

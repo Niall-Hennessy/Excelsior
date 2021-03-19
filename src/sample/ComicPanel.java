@@ -17,7 +17,6 @@ public class ComicPanel extends Pane {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
         this.setPrefHeight(280);
         this.setPrefWidth(280);
-
     }
 
     public ImageView getLeftCharacterView() {
