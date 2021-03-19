@@ -28,6 +28,7 @@ import javafx.scene.control.Button;
 import java.io.FileInputStream;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class Main extends Application {
 
@@ -79,21 +80,21 @@ public class Main extends Application {
         bottomPane.setPrefHeight(300);
         bottomPane.setPrefWidth(width);
 
-        FileInputStream lookLeftImageInput = new FileInputStream("src/images/lookLeft.png");
-        Image lookLeftImage = new Image(lookLeftImageInput);
-        ImageView lookLeftImageView = new ImageView(lookLeftImage);
-        lookLeftImageView.setFitHeight(50);
-        lookLeftImageView.setFitWidth(50);
-        Button lookLeft = new Button("", lookLeftImageView);
 
-        FileInputStream lookRightImageInput = new FileInputStream("src/images/lookRight.png");
-        Image lookRightImage = new Image(lookRightImageInput);
-        ImageView lookRightImageView = new ImageView(lookRightImage);
-        lookRightImageView.setFitHeight(50);
-        lookRightImageView.setFitWidth(50);
-        Button lookRight = new Button("", lookRightImageView);
+        ButtonIcon buttonIcon = new ButtonIcon();
 
-        bottomPane.addRow(1, lookRight, lookLeft);
+        Button lookLeft = buttonIcon.getButtonIcon("src/images/lookLeft.png");
+        Button lookRight = buttonIcon.getButtonIcon("src/images/lookRight.png");
+        bottomPane.addColumn(1, lookRight, lookLeft);
+
+        Button flipButton = buttonIcon.getButtonIcon("src/images/swapLR.png");
+        Button mfButton = buttonIcon.getButtonIcon("src/images/MFButton.png");
+        bottomPane.addColumn(2, flipButton, mfButton);
+
+        Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
+        Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
+        bottomPane.addColumn(3, textButton, bubbleButton);
+
 
         HBox optionBox = new HBox(bottomPane);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
@@ -147,7 +148,6 @@ public class Main extends Application {
 
 
     }
-
 
     public static void main(String[] args) {
         launch(args);
