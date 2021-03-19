@@ -85,14 +85,13 @@ public class Main extends Application {
 
         Button lookLeft = buttonIcon.getButtonIcon("src/images/lookLeft.png");
         Button lookRight = buttonIcon.getButtonIcon("src/images/lookRight.png");
-        bottomPane.addColumn(1, lookRight, lookLeft);
-
         Button flipButton = buttonIcon.getButtonIcon("src/images/swapLR.png");
         Button mfButton = buttonIcon.getButtonIcon("src/images/MFButton.png");
-        bottomPane.addColumn(2, flipButton, mfButton);
-
         Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
+
+        bottomPane.addColumn(1, lookRight, lookLeft);
+        bottomPane.addColumn(2, flipButton, mfButton);
         bottomPane.addColumn(3, textButton, bubbleButton);
 
 
