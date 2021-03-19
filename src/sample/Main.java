@@ -19,10 +19,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
-
+import javafx.scene.control.ColorPicker;
 import java.awt.*;
 import javafx.scene.control.Button;
 import java.io.FileInputStream;
@@ -79,6 +80,17 @@ public class Main extends Application {
         bottomPane.setPrefHeight(300);
         bottomPane.setPrefWidth(width);
 
+        ColorPicker colorPicker = new ColorPicker();
+        Color value = colorPicker.getValue();
+        HBox colorBox = new HBox(colorPicker);
+        colorBox.setAlignment(Pos.TOP_RIGHT);
+       // colorBox.setPrefHeight(250);
+       // colorBox.setPrefWidth(100);
+
+        Button hairColor = new Button("Hair");
+        Button skinColor = new Button("Skin");
+
+
         FileInputStream lookLeftImageInput = new FileInputStream("src/images/lookLeft.png");
         Image lookLeftImage = new Image(lookLeftImageInput);
         ImageView lookLeftImageView = new ImageView(lookLeftImage);
@@ -93,7 +105,9 @@ public class Main extends Application {
         lookRightImageView.setFitWidth(50);
         Button lookRight = new Button("", lookRightImageView);
 
-        bottomPane.addRow(1, lookRight, lookLeft);
+
+        bottomPane.addRow(1, lookRight, lookLeft, colorBox, hairColor, skinColor);
+
 
         HBox optionBox = new HBox(bottomPane);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
