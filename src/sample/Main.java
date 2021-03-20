@@ -97,14 +97,11 @@ public class Main extends Application {
         Text skin = new Text();
         skin.setText("Skin:");
         skin.setStyle("-fx-font-size: 22; -fx-font-family: 'Comic Sans MS'");
-        buttonLayout.add(skin, 4, 0);
+
 
         Text hair = new Text();
         hair.setText("Hair:");
         hair.setStyle("-fx-font-size: 22; -fx-font-family: 'Comic Sans MS'");
-        buttonLayout.add(hair, 4, 1);
-        buttonLayout.add(skinColorPicker,5,0);
-        buttonLayout.add(hairColorPicker,5,1);
 
 
 
@@ -116,17 +113,16 @@ public class Main extends Application {
         Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
 
-
-
         Button deleteButton = buttonIcon.getButtonIcon("src/images/trashcan.png");
 
 
 
-
-        buttonLayout.addColumn(1, lookRight, lookLeft);
-        buttonLayout.addColumn(2, flipButton, genderButton);
-        buttonLayout.addColumn(3, textButton, bubbleButton);
-        buttonLayout.addColumn(6, deleteButton);
+        buttonLayout.addColumn(5, lookRight, lookLeft);
+        buttonLayout.addColumn(6, flipButton, genderButton);
+        buttonLayout.addColumn(7, textButton, bubbleButton);
+        buttonLayout.addColumn(9, skin, hair);
+        buttonLayout.addColumn(10, skinColorPicker, hairColorPicker);
+        buttonLayout.addColumn(13, deleteButton);
 
 
         HBox optionBox = new HBox(buttonLayout);
