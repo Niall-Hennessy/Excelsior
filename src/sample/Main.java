@@ -144,6 +144,8 @@ public class Main extends Application {
         newPanelLeft.setScaleY(0.5);
         newPanelRight.setScaleX(0.5);
         newPanelRight.setScaleY(0.5);
+        newPanelLeft.setStyle("-fx-border-color: black");
+        newPanelLeft.setStyle("-fx-border-color: black");
 
 
 
