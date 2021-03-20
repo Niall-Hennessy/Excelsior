@@ -109,23 +109,17 @@ public class Main extends Application {
 
 
         ButtonIcon buttonIcon = new ButtonIcon();
-
         Button lookLeft = buttonIcon.getButtonIcon("src/images/lookLeft.png");
-        lookLeft.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
         Button lookRight = buttonIcon.getButtonIcon("src/images/lookRight.png");
-        lookRight.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
         Button flipButton = buttonIcon.getButtonIcon("src/images/swapLR.png");
-        flipButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
         Button genderButton = buttonIcon.getButtonIcon("src/images/MFButton.png");
-        genderButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
         Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
-        textButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
-        bubbleButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
+
 
 
         Button deleteButton = buttonIcon.getButtonIcon("src/images/trashcan.png");
-        deleteButton.setStyle("-fx-border-color: black; -fx-background-color: #FFFFFF");
+
 
 
 

@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +16,8 @@ public class ButtonIcon {
         view.setFitHeight(100);
         view.setFitWidth(100);
         Button buttonIcon = new Button("", view);
-
+        buttonIcon.setPadding(new Insets(0,0,0,0));
+        buttonIcon.setStyle("-fx-border-color: black");
         return buttonIcon;
     }
 }
