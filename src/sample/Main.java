@@ -114,8 +114,7 @@ public class Main extends Application {
         Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
 
-        Button deleteButton = buttonIcon.getButtonIcon("src/images/trashcan.png");
-
+        Button deleteButton = buttonIcon.getButtonIcon("src/images/delete.png");
 
 
         buttonLayout.addColumn(5, lookRight, lookLeft);
@@ -141,7 +140,6 @@ public class Main extends Application {
         newPanelLeft.setScaleY(0.5);
         newPanelRight.setScaleX(0.5);
         newPanelRight.setScaleY(0.5);
-        newPanelLeft.setStyle("-fx-border-color: black");
         newPanelLeft.setStyle("-fx-border-color: black");
 
 
