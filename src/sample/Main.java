@@ -96,12 +96,13 @@ public class Main extends Application {
 
         Text skin = new Text();
         skin.setText("Skin:");
-        skin.setStyle("-fx-font-size: 22; -fx-font-family: 'Comic Sans MS'");
+        skin.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
 
 
         Text hair = new Text();
         hair.setText("Hair:");
-        hair.setStyle("-fx-font-size: 22; -fx-font-family: 'Comic Sans MS'");
+        hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
+
 
 
 
@@ -120,9 +121,9 @@ public class Main extends Application {
         buttonLayout.addColumn(5, lookRight, lookLeft);
         buttonLayout.addColumn(6, flipButton, genderButton);
         buttonLayout.addColumn(7, textButton, bubbleButton);
-        buttonLayout.addColumn(9, skin, hair);
-        buttonLayout.addColumn(10, skinColorPicker, hairColorPicker);
-        buttonLayout.addColumn(13, deleteButton);
+        buttonLayout.addColumn(18, skin, hair);
+        buttonLayout.addColumn(19, skinColorPicker, hairColorPicker);
+        buttonLayout.addColumn(25, deleteButton);
 
 
         HBox optionBox = new HBox(buttonLayout);
