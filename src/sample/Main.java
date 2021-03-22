@@ -18,6 +18,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -30,6 +32,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.ColorPicker;
 import java.awt.*;
 import javafx.scene.control.Button;
+
+import java.io.File;
 import java.io.FileInputStream;
 
 import java.io.FileInputStream;
@@ -100,11 +104,83 @@ public class Main extends Application {
                 final Stage addCharacter = new Stage();
                 addCharacter.initModality(Modality.APPLICATION_MODAL);
                 addCharacter.initOwner(primaryStage);
-                VBox dialogVbox = new VBox(20);
-                dialogVbox.getChildren().add(new Text("This is a Dialog"));
-                Scene dialogScene = new Scene(dialogVbox, 300, 200);
-                addCharacter.setScene(dialogScene);
+                ScrollPane gallery = new ScrollPane();
+                TilePane poses = new TilePane();
+
+                File folder = new File("src/images/");
+                File[] listOfFiles = folder.listFiles();
+
+                for (final File file : listOfFiles)
+                {
+                    ImageView imageView;
+                    imageView = createImageView(file);
+                    poses.getChildren().addAll(imageView);
+
+                }
+
+                gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
+                gallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                gallery.setFitToWidth(true);
+                gallery.setContent(poses);
+
+                addCharacter.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+                addCharacter.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+
+                Scene scene = new Scene(gallery);
+                addCharacter.setScene(scene);
                 addCharacter.show();
+            }
+
+            private ImageView createImageView(final File imageFile) {
+                // DEFAULT_THUMBNAIL_WIDTH is a constant you need to define
+                // The last two arguments are: preserveRatio, and use smooth (slower)
+                // resizing
+
+                ImageView imageView = null;
+                try {
+                    final Image image = new Image(new FileInputStream(imageFile), 150, 0, true,
+                            true);
+                    imageView = new ImageView(image);
+                    imageView.setFitWidth(150);
+                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+
+                            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+
+                                if (mouseEvent.getClickCount() == 2) {
+                                    try {
+                                        BorderPane borderPane = new BorderPane();
+                                        ImageView imageView = new ImageView();
+                                        Image image = new Image(new FileInputStream(imageFile));
+                                        imageView.setImage(image);
+                                        imageView.setStyle("-fx-background-color: BLACK");
+                                        imageView.setFitHeight(primaryStage.getHeight() - 10);
+                                        imageView.setPreserveRatio(true);
+                                        imageView.setSmooth(true);
+                                        imageView.setCache(true);
+                                        borderPane.setCenter(imageView);
+                                        borderPane.setStyle("-fx-background-color: BLACK");
+                                        Stage newStage = new Stage();
+                                        newStage.setWidth(primaryStage.getWidth());
+                                        newStage.setHeight(primaryStage.getHeight());
+                                        newStage.setTitle(imageFile.getName());
+                                        Scene scene = new Scene(borderPane, Color.BLACK);
+                                        newStage.setScene(scene);
+                                        newStage.show();
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        }
+                    });
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                return imageView;
             }
         });
 
@@ -167,6 +243,7 @@ public class Main extends Application {
 
 
 
+
         HBox comicStrip = new HBox();
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.getChildren().add(comicPanel1);
@@ -181,6 +258,8 @@ public class Main extends Application {
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setPrefHeight(300);
+
+        
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
