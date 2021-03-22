@@ -2,6 +2,8 @@ package sample;
 
 import com.sun.webkit.graphics.ScrollBarTheme;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,17 +18,22 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.ColorPicker;
 import java.awt.*;
 import javafx.scene.control.Button;
+
+import java.io.File;
 import java.io.FileInputStream;
 
 import java.io.FileInputStream;
@@ -78,34 +85,11 @@ public class Main extends Application {
         buttonLayout.setPrefHeight(300);
         buttonLayout.setPrefWidth(width);
 
-        ColorPicker skinColorPicker = new ColorPicker();
-        skinColorPicker.getStyleClass().add("button");
-        skinColorPicker.setStyle("-fx-color-label-visible: false ; -fx-color-rect-width: 100; -fx-color-rect-height: 100; -fx-padding: -10");
-        skinColorPicker.setPrefHeight(100);
-        skinColorPicker.setPrefWidth(100);
-
-        ColorPicker hairColorPicker = new ColorPicker();
-        hairColorPicker.getStyleClass().add("button");
-        hairColorPicker.setStyle("-fx-color-label-visible: false ; -fx-color-rect-width: 100; -fx-color-rect-height: 100; -fx-padding: -10");
-        hairColorPicker.setPrefHeight(100);
-        hairColorPicker.setPrefWidth(100);
-
         buttonLayout.setHgap(50);
         buttonLayout.setVgap(50);
         buttonLayout.setPadding(new Insets(50,50,50,50));
 
-        Text skin = new Text();
-        skin.setText("Skin:");
-        skin.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
-
-
-        Text hair = new Text();
-        hair.setText("Hair:");
-        hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
-
-
-
-
+//      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
         Button lookLeft = buttonIcon.getButtonIcon("src/images/lookLeft.png");
         Button lookRight = buttonIcon.getButtonIcon("src/images/lookRight.png");
@@ -114,8 +98,120 @@ public class Main extends Application {
         Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
 
-        Button deleteButton = buttonIcon.getButtonIcon("src/images/delete.png");
+        lookLeft.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                final Stage addCharacter = new Stage();
+                addCharacter.initModality(Modality.APPLICATION_MODAL);
+                addCharacter.initOwner(primaryStage);
+                ScrollPane gallery = new ScrollPane();
+                TilePane poses = new TilePane();
 
+                File folder = new File("src/images/");
+                File[] listOfFiles = folder.listFiles();
+
+                for (final File file : listOfFiles)
+                {
+                    ImageView imageView;
+                    imageView = createImageView(file);
+                    poses.getChildren().addAll(imageView);
+
+                }
+
+                gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
+                gallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                gallery.setFitToWidth(true);
+                gallery.setContent(poses);
+
+                addCharacter.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+                addCharacter.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+
+                Scene scene = new Scene(gallery);
+                addCharacter.setScene(scene);
+                addCharacter.show();
+            }
+
+            private ImageView createImageView(final File imageFile) {
+                // DEFAULT_THUMBNAIL_WIDTH is a constant you need to define
+                // The last two arguments are: preserveRatio, and use smooth (slower)
+                // resizing
+
+                ImageView imageView = null;
+                try {
+                    final Image image = new Image(new FileInputStream(imageFile), 150, 0, true,
+                            true);
+                    imageView = new ImageView(image);
+                    imageView.setFitWidth(150);
+                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+
+                            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+
+                                if (mouseEvent.getClickCount() == 2) {
+                                    try {
+                                        BorderPane borderPane = new BorderPane();
+                                        ImageView imageView = new ImageView();
+                                        Image image = new Image(new FileInputStream(imageFile));
+                                        imageView.setImage(image);
+                                        imageView.setStyle("-fx-background-color: BLACK");
+                                        imageView.setFitHeight(primaryStage.getHeight() - 10);
+                                        imageView.setPreserveRatio(true);
+                                        imageView.setSmooth(true);
+                                        imageView.setCache(true);
+                                        borderPane.setCenter(imageView);
+                                        borderPane.setStyle("-fx-background-color: BLACK");
+                                        Stage newStage = new Stage();
+                                        newStage.setWidth(primaryStage.getWidth());
+                                        newStage.setHeight(primaryStage.getHeight());
+                                        newStage.setTitle(imageFile.getName());
+                                        Scene scene = new Scene(borderPane, Color.BLACK);
+                                        newStage.setScene(scene);
+                                        newStage.show();
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        }
+                    });
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                return imageView;
+            }
+        });
+
+        lookRight.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                final Stage addCharacter = new Stage();
+                addCharacter.initModality(Modality.APPLICATION_MODAL);
+                addCharacter.initOwner(primaryStage);
+                VBox dialogVbox = new VBox(20);
+                dialogVbox.getChildren().add(new Text("This is a Dialog"));
+                Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                addCharacter.setScene(dialogScene);
+                addCharacter.show();
+            }
+        });
+
+        Text skin = new Text();
+        skin.setText("Skin:");
+        skin.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
+
+        Text hair = new Text();
+        hair.setText("Hair:");
+        hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
+
+        ColorPicker skinColorPicker = new ColorPicker();
+        ColorPicker hairColorPicker = new ColorPicker();
+        skinColorPicker = ButtonIcon.colorPickerStyling(skinColorPicker);
+        hairColorPicker = ButtonIcon.colorPickerStyling(hairColorPicker);
+
+        Button deleteButton = buttonIcon.getButtonIcon("src/images/delete.png");
 
         buttonLayout.addColumn(5, lookRight, lookLeft);
         buttonLayout.addColumn(6, flipButton, genderButton);
@@ -123,6 +219,7 @@ public class Main extends Application {
         buttonLayout.addColumn(18, skin, hair);
         buttonLayout.addColumn(19, skinColorPicker, hairColorPicker);
         buttonLayout.addColumn(25, deleteButton);
+
 
 
         HBox optionBox = new HBox(buttonLayout);
@@ -144,6 +241,7 @@ public class Main extends Application {
 
 
 
+
         HBox comicStrip = new HBox();
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.getChildren().add(comicPanel1);
@@ -158,6 +256,8 @@ public class Main extends Application {
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setPrefHeight(300);
+
+        
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
