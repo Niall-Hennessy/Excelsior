@@ -91,12 +91,12 @@ public class Main extends Application {
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
-        Button lookLeft = buttonIcon.getButtonIcon("src/images/lookLeft.png");
-        Button lookRight = buttonIcon.getButtonIcon("src/images/lookRight.png");
-        Button flipButton = buttonIcon.getButtonIcon("src/images/swapLR.png");
-        Button genderButton = buttonIcon.getButtonIcon("src/images/MFButton.png");
-        Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
-        Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
+        Button lookLeft = buttonIcon.getButtonIcon("src/images/buttons/lookLeft.png");
+        Button lookRight = buttonIcon.getButtonIcon("src/images/buttons/lookRight.png");
+        Button flipButton = buttonIcon.getButtonIcon("src/images/buttons/swapLR.png");
+        Button genderButton = buttonIcon.getButtonIcon("src/images/buttons/MFButton.png");
+        Button textButton = buttonIcon.getButtonIcon("src/images/buttons/T_Button.png");
+        Button bubbleButton = buttonIcon.getButtonIcon("src/images/buttons/speech_bubble.png");
 
         lookLeft.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -107,7 +107,7 @@ public class Main extends Application {
                 ScrollPane gallery = new ScrollPane();
                 TilePane poses = new TilePane();
 
-                File folder = new File("src/images/");
+                File folder = new File("src/images/characters");
                 File[] listOfFiles = folder.listFiles();
 
                 for (final File file : listOfFiles)
@@ -211,7 +211,7 @@ public class Main extends Application {
         skinColorPicker = ButtonIcon.colorPickerStyling(skinColorPicker);
         hairColorPicker = ButtonIcon.colorPickerStyling(hairColorPicker);
 
-        Button deleteButton = buttonIcon.getButtonIcon("src/images/delete.png");
+        Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
 
         buttonLayout.addColumn(5, lookRight, lookLeft);
         buttonLayout.addColumn(6, flipButton, genderButton);
@@ -231,8 +231,8 @@ public class Main extends Application {
 
         ComicPanel comicPanel1 = new ComicPanel();
 
-        Button newPanelLeft = buttonIcon.getButtonIcon("src/images/plus.png");
-        Button newPanelRight = buttonIcon.getButtonIcon("src/images/plus.png");
+        Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
+        Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         newPanelLeft.setScaleX(0.5);
         newPanelLeft.setScaleY(0.5);
         newPanelRight.setScaleX(0.5);
