@@ -78,34 +78,11 @@ public class Main extends Application {
         buttonLayout.setPrefHeight(300);
         buttonLayout.setPrefWidth(width);
 
-        ColorPicker skinColorPicker = new ColorPicker();
-        skinColorPicker.getStyleClass().add("button");
-        skinColorPicker.setStyle("-fx-color-label-visible: false ; -fx-color-rect-width: 100; -fx-color-rect-height: 100; -fx-padding: -10");
-        skinColorPicker.setPrefHeight(100);
-        skinColorPicker.setPrefWidth(100);
-
-        ColorPicker hairColorPicker = new ColorPicker();
-        hairColorPicker.getStyleClass().add("button");
-        hairColorPicker.setStyle("-fx-color-label-visible: false ; -fx-color-rect-width: 100; -fx-color-rect-height: 100; -fx-padding: -10");
-        hairColorPicker.setPrefHeight(100);
-        hairColorPicker.setPrefWidth(100);
-
         buttonLayout.setHgap(50);
         buttonLayout.setVgap(50);
         buttonLayout.setPadding(new Insets(50,50,50,50));
 
-        Text skin = new Text();
-        skin.setText("Skin:");
-        skin.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
-
-
-        Text hair = new Text();
-        hair.setText("Hair:");
-        hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
-
-
-
-
+//      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
         Button lookLeft = buttonIcon.getButtonIcon("src/images/lookLeft.png");
         Button lookRight = buttonIcon.getButtonIcon("src/images/lookRight.png");
@@ -114,8 +91,20 @@ public class Main extends Application {
         Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
 
-        Button deleteButton = buttonIcon.getButtonIcon("src/images/trashcan.png");
+        Text skin = new Text();
+        skin.setText("Skin:");
+        skin.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
 
+        Text hair = new Text();
+        hair.setText("Hair:");
+        hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
+
+        ColorPicker skinColorPicker = new ColorPicker();
+        ColorPicker hairColorPicker = new ColorPicker();
+        skinColorPicker = ButtonIcon.colorPickerStyling(skinColorPicker);
+        hairColorPicker = ButtonIcon.colorPickerStyling(hairColorPicker);
+
+        Button deleteButton = buttonIcon.getButtonIcon("src/images/trashcan.png");
 
 
         buttonLayout.addColumn(5, lookRight, lookLeft);
@@ -124,6 +113,7 @@ public class Main extends Application {
         buttonLayout.addColumn(18, skin, hair);
         buttonLayout.addColumn(19, skinColorPicker, hairColorPicker);
         buttonLayout.addColumn(25, deleteButton);
+
 
 
         HBox optionBox = new HBox(buttonLayout);
