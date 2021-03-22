@@ -2,6 +2,8 @@ package sample;
 
 import com.sun.webkit.graphics.ScrollBarTheme;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
@@ -90,6 +93,34 @@ public class Main extends Application {
         Button genderButton = buttonIcon.getButtonIcon("src/images/MFButton.png");
         Button textButton = buttonIcon.getButtonIcon("src/images/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/speech_bubble.png");
+
+        lookLeft.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                final Stage addCharacter = new Stage();
+                addCharacter.initModality(Modality.APPLICATION_MODAL);
+                addCharacter.initOwner(primaryStage);
+                VBox dialogVbox = new VBox(20);
+                dialogVbox.getChildren().add(new Text("This is a Dialog"));
+                Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                addCharacter.setScene(dialogScene);
+                addCharacter.show();
+            }
+        });
+
+        lookRight.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                final Stage addCharacter = new Stage();
+                addCharacter.initModality(Modality.APPLICATION_MODAL);
+                addCharacter.initOwner(primaryStage);
+                VBox dialogVbox = new VBox(20);
+                dialogVbox.getChildren().add(new Text("This is a Dialog"));
+                Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                addCharacter.setScene(dialogScene);
+                addCharacter.show();
+            }
+        });
 
         Text skin = new Text();
         skin.setText("Skin:");
