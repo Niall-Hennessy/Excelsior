@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -24,11 +26,12 @@ public class ComicPanel extends Pane {
     }
 
     public void setLeftCharacter(String imagePath) throws FileNotFoundException {
-        imagePath = "src/images/" + imagePath + ".png";
         Image image = new Image(new FileInputStream(imagePath));
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
+        imageView.setY(this.getTranslateY() + 100);
+        imageView.setX(this.getTranslateX() + 10);
         this.getChildren().add(imageView);
         this.leftCharacterView = imageView;
     }
@@ -38,11 +41,16 @@ public class ComicPanel extends Pane {
     }
 
     public void setRightCharacter(String imagePath) throws FileNotFoundException {
-        imagePath = "src/images/" + imagePath + ".png";
         Image image = new Image(new FileInputStream(imagePath));
+
+
+
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
+        imageView.setY(this.getTranslateY() + 100);
+        imageView.setX(this.getTranslateX() + 160);
+
         this.getChildren().add(imageView);
         this.rightCharacterView = imageView;
     }

@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -58,6 +57,8 @@ public class Main extends Application {
 
         GridPane mainPane = new GridPane();
 
+        ComicPanel comicPanel = new ComicPanel();
+
         MenuBar menuBar = new MenuBar();
         menuBar.setStyle("-fx-background-color: #B9EBFF");
 
@@ -91,14 +92,15 @@ public class Main extends Application {
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
-        Button lookLeft = buttonIcon.getButtonIcon("src/images/buttons/lookLeft.png");
-        Button lookRight = buttonIcon.getButtonIcon("src/images/buttons/lookRight.png");
+        Button rightCharacter = buttonIcon.getButtonIcon("src/images/buttons/lookLeft.png");
+        Button leftCharacter = buttonIcon.getButtonIcon("src/images/buttons/lookRight.png");
         Button flipButton = buttonIcon.getButtonIcon("src/images/buttons/swapLR.png");
         Button genderButton = buttonIcon.getButtonIcon("src/images/buttons/MFButton.png");
         Button textButton = buttonIcon.getButtonIcon("src/images/buttons/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/buttons/speech_bubble.png");
 
-        lookLeft.setOnAction(new EventHandler<ActionEvent>() {
+        rightCharacter.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent event) {
                 final Stage addCharacter = new Stage();
@@ -151,24 +153,7 @@ public class Main extends Application {
 
                                 if (mouseEvent.getClickCount() == 2) {
                                     try {
-                                        BorderPane borderPane = new BorderPane();
-                                        ImageView imageView = new ImageView();
-                                        Image image = new Image(new FileInputStream(imageFile));
-                                        imageView.setImage(image);
-                                        imageView.setStyle("-fx-background-color: BLACK");
-                                        imageView.setFitHeight(primaryStage.getHeight() - 10);
-                                        imageView.setPreserveRatio(true);
-                                        imageView.setSmooth(true);
-                                        imageView.setCache(true);
-                                        borderPane.setCenter(imageView);
-                                        borderPane.setStyle("-fx-background-color: BLACK");
-                                        Stage newStage = new Stage();
-                                        newStage.setWidth(primaryStage.getWidth());
-                                        newStage.setHeight(primaryStage.getHeight());
-                                        newStage.setTitle(imageFile.getName());
-                                        Scene scene = new Scene(borderPane, Color.BLACK);
-                                        newStage.setScene(scene);
-                                        newStage.show();
+                                        comicPanel.setRightCharacter(imageFile.getPath());
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -184,17 +169,73 @@ public class Main extends Application {
             }
         });
 
-        lookRight.setOnAction(new EventHandler<ActionEvent>() {
+        leftCharacter.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent event) {
                 final Stage addCharacter = new Stage();
                 addCharacter.initModality(Modality.APPLICATION_MODAL);
                 addCharacter.initOwner(primaryStage);
-                VBox dialogVbox = new VBox(20);
-                dialogVbox.getChildren().add(new Text("This is a Dialog"));
-                Scene dialogScene = new Scene(dialogVbox, 300, 200);
-                addCharacter.setScene(dialogScene);
+                ScrollPane gallery = new ScrollPane();
+                TilePane poses = new TilePane();
+
+                File folder = new File("src/images/characters");
+                File[] listOfFiles = folder.listFiles();
+
+                for (final File file : listOfFiles)
+                {
+                    ImageView imageView;
+                    imageView = createImageView(file);
+                    poses.getChildren().addAll(imageView);
+
+                }
+
+                gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
+                gallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                gallery.setFitToWidth(true);
+                gallery.setContent(poses);
+
+                addCharacter.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+                addCharacter.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+
+                Scene scene = new Scene(gallery);
+                addCharacter.setScene(scene);
                 addCharacter.show();
+            }
+
+            private ImageView createImageView(final File imageFile) {
+                // DEFAULT_THUMBNAIL_WIDTH is a constant you need to define
+                // The last two arguments are: preserveRatio, and use smooth (slower)
+                // resizing
+
+                ImageView imageView = null;
+                try {
+                    final Image image = new Image(new FileInputStream(imageFile), 150, 0, true,
+                            true);
+                    imageView = new ImageView(image);
+                    imageView.setFitWidth(150);
+                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+
+                            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+
+                                if (mouseEvent.getClickCount() == 2) {
+                                    try {
+                                        comicPanel.setLeftCharacter(imageFile.getPath());
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        }
+                    });
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                return imageView;
             }
         });
 
@@ -213,7 +254,7 @@ public class Main extends Application {
 
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
 
-        buttonLayout.addColumn(5, lookRight, lookLeft);
+        buttonLayout.addColumn(5, leftCharacter, rightCharacter);
         buttonLayout.addColumn(6, flipButton, genderButton);
         buttonLayout.addColumn(7, textButton, bubbleButton);
         buttonLayout.addColumn(18, skin, hair);
@@ -229,7 +270,6 @@ public class Main extends Application {
         optionBox.setPrefHeight(400);
 
 
-        ComicPanel comicPanel1 = new ComicPanel();
 
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
@@ -244,10 +284,10 @@ public class Main extends Application {
 
         HBox comicStrip = new HBox();
         comicStrip.getChildren().add(newPanelLeft);
-        comicStrip.getChildren().add(comicPanel1);
+        comicStrip.getChildren().add(comicPanel);
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.setAlignment(Pos.CENTER);
-        comicStrip.setMargin(comicPanel1, new Insets(10,10,10,10));
+        comicStrip.setMargin(comicPanel, new Insets(10,10,10,10));
         comicStrip.setPrefHeight(280);
         comicStrip.setPrefWidth(width - 10);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
