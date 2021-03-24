@@ -1,40 +1,25 @@
 package sample;
 
-import com.sun.webkit.graphics.ScrollBarTheme;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.text.FontWeight;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.scene.layout.Pane;
-import javafx.scene.control.ColorPicker;
-import java.awt.*;
-import javafx.scene.control.Button;
 
 import java.io.File;
-import java.io.FileInputStream;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -54,15 +39,11 @@ public class Main extends Application {
         primaryStage.setHeight(heightPrcnt);
         primaryStage.setWidth(widthPrcnt);
 
-
         GridPane mainPane = new GridPane();
 
         ComicPanel comicPanel = new ComicPanel();
 
         final String[] character = new String[1];
-
-        final ImageView[] selectedImageView = {null};
-
 
         MenuBar menuBar = new MenuBar();
         menuBar.setStyle("-fx-background-color: #B9EBFF");
@@ -140,9 +121,6 @@ public class Main extends Application {
             }
 
             private ImageView createImageView(final File imageFile) {
-                // DEFAULT_THUMBNAIL_WIDTH is a constant you need to define
-                // The last two arguments are: preserveRatio, and use smooth (slower)
-                // resizing
 
                 ImageView imageView = null;
                 try {
@@ -212,9 +190,6 @@ public class Main extends Application {
             }
 
             private ImageView createImageView(final File imageFile) {
-                // DEFAULT_THUMBNAIL_WIDTH is a constant you need to define
-                // The last two arguments are: preserveRatio, and use smooth (slower)
-                // resizing
 
                 ImageView imageView = null;
                 try {
@@ -283,15 +258,11 @@ public class Main extends Application {
         buttonLayout.addColumn(19, skinColorPicker, hairColorPicker);
         buttonLayout.addColumn(25, deleteButton);
 
-
-
         HBox optionBox = new HBox(buttonLayout);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
         optionBox.setMargin(buttonLayout, new Insets(50, 10, 10, 10));
         optionBox.setStyle("-fx-background-color: #B9EBFF");
         optionBox.setPrefHeight(400);
-
-
 
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
@@ -300,9 +271,6 @@ public class Main extends Application {
         newPanelRight.setScaleX(0.5);
         newPanelRight.setScaleY(0.5);
         newPanelLeft.setStyle("-fx-border-color: black");
-
-
-
 
         HBox comicStrip = new HBox();
         comicStrip.getChildren().add(newPanelLeft);
@@ -319,12 +287,9 @@ public class Main extends Application {
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setPrefHeight(300);
 
-        
-
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
         mainPane.addRow(2, optionBox);
-        //mainPane.setStyle("-fx-background-color: #FFFFFF");
         mainPane.setStyle("-fx-background-color: #B9EBFF");
         mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
 
@@ -342,7 +307,7 @@ public class Main extends Application {
                 if(x < 115 && x > 3 && y > 110 && y < 205)
 
                     character[0] = "left";
-                else if(x < 280 && x > 125 && y > 110 && y < 205)
+                else if(x < 280 && x > 170 && y > 110 && y < 205)
                     character[0] = "right";
                 else
                     character[0] = "none";
@@ -354,8 +319,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.show();
-
-
     }
 
     public static void main(String[] args) {

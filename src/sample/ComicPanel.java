@@ -27,8 +27,6 @@ public class ComicPanel extends Pane {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
         this.setPrefHeight(280);
         this.setPrefWidth(280);
-
-        leftCharacterView.setPickOnBounds(true);
     }
 
     public ImageView getLeftCharacterView() {
@@ -73,9 +71,9 @@ public class ComicPanel extends Pane {
         ImageView flipCharacter;
 
         if(character.matches("left"))
-            flipCharacter = leftCharacterView;
+            flipCharacter = (ImageView) leftCharacterWrapper.getChildren().get(0);
         else
-            flipCharacter = rightCharacterView;
+            flipCharacter = (ImageView) rightCharacterWrapper.getChildren().get(0);
 
         flipCharacter.setRotationAxis(Rotate.Y_AXIS);
         if(flipCharacter.getRotate() == 180)
@@ -83,10 +81,20 @@ public class ComicPanel extends Pane {
         else
             flipCharacter.setRotate(180);
 
-        if(character.matches("left"))
-            leftCharacterWrapper.getChildren().add(flipCharacter);
-        else
-            this.rightCharacterView = flipCharacter;
+        if(character.matches("left")) {
+            leftCharacterWrapper = new BorderPane(flipCharacter);
+            leftCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
+            leftCharacterWrapper.setTranslateX(this.getTranslateX() + 10);
+            leftCharacterWrapper.setStyle("-fx-border-color: cyan");
+            this.getChildren().add(leftCharacterWrapper);
+        }
+        else {
+            rightCharacterWrapper = new BorderPane(flipCharacter);
+            rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
+            rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
+            rightCharacterWrapper.setStyle("-fx-border-color: cyan");
+            this.getChildren().add(rightCharacterWrapper);
+        }
 
     }
 
@@ -96,10 +104,12 @@ public class ComicPanel extends Pane {
 
         if(character.matches("left")) {
             System.out.println("LEFTS");
-            leftCharacterWrapper.setStyle("-fx-border-color: black");
+            leftCharacterWrapper.setStyle("-fx-border-color: cyan");
+            rightCharacterWrapper.setStyle("-fx-border-color: white");
         }
         else if(character.matches("right")) {
-            rightCharacterWrapper.setStyle("-fx-border-color: black");
+            rightCharacterWrapper.setStyle("-fx-border-color: cyan");
+            leftCharacterWrapper.setStyle("-fx-border-color: white");
         }
         else {
             leftCharacterWrapper.setStyle("-fx-border-color: white");
