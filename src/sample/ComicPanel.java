@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Rotate;
 
@@ -16,8 +17,10 @@ import java.io.FileNotFoundException;
 
 public class ComicPanel extends Pane {
 
+
     ImageView leftCharacterView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
     ImageView rightCharacterView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
+    BorderPane leftCharacterWrapper = new BorderPane(leftCharacterView);
 
     public ComicPanel() throws FileNotFoundException {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
@@ -38,8 +41,11 @@ public class ComicPanel extends Pane {
         imageView.setFitWidth(100);
         imageView.setY(this.getTranslateY() + 100);
         imageView.setX(this.getTranslateX() + 10);
-        this.getChildren().add(imageView);
-        this.leftCharacterView = imageView;
+        leftCharacterWrapper = new BorderPane(imageView);
+        leftCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
+        leftCharacterWrapper.setTranslateX(this.getTranslateX() + 10);
+        this.getChildren().add(leftCharacterWrapper);
+
     }
 
     public ImageView getRightCharacter() {
@@ -75,7 +81,7 @@ public class ComicPanel extends Pane {
             flipCharacter.setRotate(180);
 
         if(character.matches("left"))
-            this.leftCharacterView = flipCharacter;
+            leftCharacterWrapper.getChildren().add(flipCharacter);
         else
             this.rightCharacterView = flipCharacter;
 
@@ -87,16 +93,14 @@ public class ComicPanel extends Pane {
 
         if(character.matches("left")) {
             System.out.println("LEFTS");
-            leftCharacterView.setStyle("-");
-            rightCharacterView.setStyle("-fx-border-width: 0");
+            leftCharacterWrapper.setStyle("-fx-border-color: black");
         }
         else if(character.matches("right")) {
             rightCharacterView.setStyle("-fx-border-color: cyan; -fx-border-width: 1");
             leftCharacterView.setStyle("-fx-border-width: 0");
         }
         else {
-            leftCharacterView.setStyle("-fx-border-width: 0");
-            rightCharacterView.setStyle("-fx-border-width: 0");
+            leftCharacterWrapper.setStyle("-fx-border-color: white");
         }
     }
 

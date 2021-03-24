@@ -340,6 +340,7 @@ public class Main extends Application {
                 System.out.println("Y: " + y);
 
                 if(x < 115 && x > 3 && y > 110 && y < 205)
+
                     character[0] = "left";
                 else if(x < 280 && x > 125 && y > 110 && y < 205)
                     character[0] = "right";
