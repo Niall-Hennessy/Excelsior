@@ -59,6 +59,11 @@ public class Main extends Application {
 
         ComicPanel comicPanel = new ComicPanel();
 
+        final String[] character = new String[1];
+
+        final ImageView[] selectedImageView = {null};
+
+
         MenuBar menuBar = new MenuBar();
         menuBar.setStyle("-fx-background-color: #B9EBFF");
 
@@ -239,6 +244,19 @@ public class Main extends Application {
             }
         });
 
+        flipButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(character[0] == null || character[0].matches("none"))
+                    return;
+
+                System.out.println("Charater 0 is: " + character[0]);
+
+                comicPanel.flipOrientation(character[0]);
+
+            }
+        });
+
         Text skin = new Text();
         skin.setText("Skin:");
         skin.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
@@ -307,6 +325,26 @@ public class Main extends Application {
         mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
 
         Scene scene = new Scene(mainPane, width, height);
+
+        comicPanel.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                double x = mouseEvent.getX();
+                double y = mouseEvent.getY();
+
+                System.out.println("X: " + x);
+                System.out.println("Y: " + y);
+
+                if(x < 115 && x > 3 && y > 110 && y < 205)
+                    character[0] = "left";
+                else if(x < 280 && x > 125 && y > 110 && y < 205)
+                    character[0] = "right";
+                else
+                    character[0] = "none";
+
+                comicPanel.selectCharacter(character[0]);
+            }
+        });
 
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
