@@ -106,9 +106,10 @@ public class Main extends Application {
 
         rightCharacter.setOnAction(new EventHandler<ActionEvent>() {
 
+            final Stage addCharacter = new Stage();
+
             @Override
             public void handle(ActionEvent event) {
-                final Stage addCharacter = new Stage();
                 addCharacter.initModality(Modality.APPLICATION_MODAL);
                 addCharacter.initOwner(primaryStage);
                 ScrollPane gallery = new ScrollPane();
@@ -159,6 +160,7 @@ public class Main extends Application {
                                 if (mouseEvent.getClickCount() == 2) {
                                     try {
                                         comicPanel.setRightCharacter(imageFile.getPath());
+                                        addCharacter.close();
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -176,9 +178,10 @@ public class Main extends Application {
 
         leftCharacter.setOnAction(new EventHandler<ActionEvent>() {
 
+            final Stage addCharacter = new Stage();
+
             @Override
             public void handle(ActionEvent event) {
-                final Stage addCharacter = new Stage();
                 addCharacter.initModality(Modality.APPLICATION_MODAL);
                 addCharacter.initOwner(primaryStage);
                 ScrollPane gallery = new ScrollPane();
@@ -229,6 +232,7 @@ public class Main extends Application {
                                 if (mouseEvent.getClickCount() == 2) {
                                     try {
                                         comicPanel.setLeftCharacter(imageFile.getPath());
+                                        addCharacter.close();
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
