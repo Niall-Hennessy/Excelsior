@@ -91,8 +91,11 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                addCharacter.initModality(Modality.APPLICATION_MODAL);
-                addCharacter.initOwner(primaryStage);
+
+                if(addCharacter.isShowing()) {
+                    addCharacter.initModality(Modality.APPLICATION_MODAL);
+                    addCharacter.initOwner(primaryStage);
+                }
                 ScrollPane gallery = new ScrollPane();
                 TilePane poses = new TilePane();
 
@@ -160,8 +163,11 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                addCharacter.initModality(Modality.APPLICATION_MODAL);
-                addCharacter.initOwner(primaryStage);
+
+                if(addCharacter.isShowing()) {
+                    addCharacter.initModality(Modality.APPLICATION_MODAL);
+                    addCharacter.initOwner(primaryStage);
+                }
                 ScrollPane gallery = new ScrollPane();
                 TilePane poses = new TilePane();
 
