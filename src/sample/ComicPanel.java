@@ -21,6 +21,7 @@ public class ComicPanel extends Pane {
     ImageView leftCharacterView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
     ImageView rightCharacterView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
     BorderPane leftCharacterWrapper = new BorderPane(leftCharacterView);
+    BorderPane rightCharacterWrapper = new BorderPane(leftCharacterView);
 
     public ComicPanel() throws FileNotFoundException {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
@@ -61,8 +62,10 @@ public class ComicPanel extends Pane {
         imageView.setX(this.getTranslateX() + 170);
         imageView.setRotationAxis(Rotate.Y_AXIS);
         imageView.setRotate(180);
-        this.getChildren().add(imageView);
-        this.rightCharacterView = imageView;
+        rightCharacterWrapper = new BorderPane(imageView);
+        rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
+        rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
+        this.getChildren().add(rightCharacterWrapper);
     }
 
     public void flipOrientation(String character){
@@ -96,11 +99,11 @@ public class ComicPanel extends Pane {
             leftCharacterWrapper.setStyle("-fx-border-color: black");
         }
         else if(character.matches("right")) {
-            rightCharacterView.setStyle("-fx-border-color: cyan; -fx-border-width: 1");
-            leftCharacterView.setStyle("-fx-border-width: 0");
+            rightCharacterWrapper.setStyle("-fx-border-color: black");
         }
         else {
             leftCharacterWrapper.setStyle("-fx-border-color: white");
+            rightCharacterWrapper.setStyle("-fx-border-color: white");
         }
     }
 
