@@ -39,8 +39,6 @@ public class ComicPanel extends Pane {
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
-        imageView.setY(this.getTranslateY() + 100);
-        imageView.setX(this.getTranslateX() + 10);
         leftCharacterWrapper = new BorderPane(imageView);
         leftCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
         leftCharacterWrapper.setTranslateX(this.getTranslateX() + 10);
@@ -54,12 +52,11 @@ public class ComicPanel extends Pane {
     }
 
     public void setRightCharacter(String imagePath) throws FileNotFoundException {
+        this.getChildren().remove(rightCharacterWrapper);
         Image image = new Image(new FileInputStream(imagePath));
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
-        imageView.setY(this.getTranslateY() + 100);
-        imageView.setX(this.getTranslateX() + 170);
         imageView.setRotationAxis(Rotate.Y_AXIS);
         imageView.setRotate(180);
         rightCharacterWrapper = new BorderPane(imageView);
