@@ -142,6 +142,7 @@ public class Main extends Application {
                                     try {
                                         comicPanel.setRightCharacter(imageFile.getPath());
                                         addCharacter.close();
+                                        character[0] = "right";
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -214,6 +215,7 @@ public class Main extends Application {
                                     try {
                                         comicPanel.setLeftCharacter(imageFile.getPath());
                                         addCharacter.close();
+                                        character[0] = "left";
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -310,10 +312,9 @@ public class Main extends Application {
                 System.out.println("X: " + x);
                 System.out.println("Y: " + y);
 
-                if(x < 115 && x > 3 && y > 110 && y < 205)
-
+                if(x <= 110 && x >= 10 && y >= 100 && y <= 200)
                     character[0] = "left";
-                else if(x < 280 && x > 170 && y > 110 && y < 205)
+                else if(x <= 270 && x >= 170 && y >= 100 && y <= 200)
                     character[0] = "right";
                 else
                     character[0] = "none";

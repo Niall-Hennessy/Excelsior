@@ -34,6 +34,7 @@ public class ComicPanel extends Pane {
     }
 
     public void setLeftCharacter(String imagePath) throws FileNotFoundException {
+        this.getChildren().remove(leftCharacterWrapper);
         Image image = new Image(new FileInputStream(imagePath));
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(100);
@@ -44,7 +45,8 @@ public class ComicPanel extends Pane {
         leftCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
         leftCharacterWrapper.setTranslateX(this.getTranslateX() + 10);
         this.getChildren().add(leftCharacterWrapper);
-
+        leftCharacterWrapper.setStyle("-fx-border-color: cyan");
+        rightCharacterWrapper.setStyle("-fx-border-color: white");
     }
 
     public ImageView getRightCharacter() {
@@ -64,6 +66,8 @@ public class ComicPanel extends Pane {
         rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
         rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
         this.getChildren().add(rightCharacterWrapper);
+        leftCharacterWrapper.setStyle("-fx-border-color: white");
+        rightCharacterWrapper.setStyle("-fx-border-color: cyan");
     }
 
     public void flipOrientation(String character){
