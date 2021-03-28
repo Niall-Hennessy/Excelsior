@@ -3,6 +3,7 @@ package sample;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -115,6 +116,35 @@ public class ComicPanel extends Pane {
         else {
             leftCharacterWrapper.setStyle("-fx-border-color: white");
             rightCharacterWrapper.setStyle("-fx-border-color: white");
+        }
+    }
+
+    public void swapSex(String character){
+
+        ImageView sexCharacter;
+
+        ColorAdjust sexSwap = new ColorAdjust();
+
+        if(character.matches("left"))
+            sexCharacter = (ImageView) leftCharacterWrapper.getChildren().get(0);
+        else
+            sexCharacter = (ImageView) rightCharacterWrapper.getChildren().get(0);
+
+        sexCharacter.setEffect(sexSwap);
+
+        if(character.matches("left")) {
+            leftCharacterWrapper = new BorderPane(sexCharacter);
+            leftCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
+            leftCharacterWrapper.setTranslateX(this.getTranslateX() + 10);
+            leftCharacterWrapper.setStyle("-fx-border-color: cyan");
+            this.getChildren().add(leftCharacterWrapper);
+        }
+        else {
+            rightCharacterWrapper = new BorderPane(sexCharacter);
+            rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
+            rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
+            rightCharacterWrapper.setStyle("-fx-border-color: cyan");
+            this.getChildren().add(rightCharacterWrapper);
         }
     }
 

@@ -244,6 +244,19 @@ public class Main extends Application {
             }
         });
 
+        genderButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(character[0] == null || character[0].matches("none"))
+                    return;
+
+                System.out.println("Charater 0 is: " + character[0]);
+
+                comicPanel.swapSex(character[0]);
+
+            }
+        });
+
         Text skin = new Text();
         skin.setText("Skin:");
         skin.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
