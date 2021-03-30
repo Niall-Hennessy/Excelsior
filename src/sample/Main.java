@@ -2,6 +2,7 @@ package sample;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -66,6 +68,11 @@ public class Main extends Application {
         menuBar.getMenus().add(view);
 
         HBox menuBox = new HBox(menuBar);
+
+        final ColorPicker[] skinColorPicker = {new ColorPicker()};
+        final ColorPicker[] hairColorPicker = {new ColorPicker()};
+        skinColorPicker[0] = ButtonIcon.colorPickerStyling(skinColorPicker[0]);
+        hairColorPicker[0] = ButtonIcon.colorPickerStyling(hairColorPicker[0]);
 
         GridPane buttonLayout = new GridPane();
         buttonLayout.setStyle("-fx-border-color: black; -fx-background-color: #FEF7D3; -fx-border-width: 3px");
@@ -143,6 +150,8 @@ public class Main extends Application {
                                         comicPanel.setRightCharacter(imageFile.getPath());
                                         addCharacter.close();
                                         character[0] = "right";
+                                        skinColorPicker[0].setValue(comicPanel.getRightCharacterSkin());
+                                        hairColorPicker[0].setValue(comicPanel.getRightCharacterHair());
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -216,6 +225,8 @@ public class Main extends Application {
                                         comicPanel.setLeftCharacter(imageFile.getPath());
                                         addCharacter.close();
                                         character[0] = "left";
+                                        skinColorPicker[0].setValue(comicPanel.getLeftCharacterSkin());
+                                        hairColorPicker[0].setValue(comicPanel.getLeftCharacterHair());
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -252,8 +263,26 @@ public class Main extends Application {
 
                 System.out.println("Charater 0 is: " + character[0]);
 
-                comicPanel.swapSex(character[0]);
+//                comicPanel.swapSex(character[0]);
 
+            }
+        });
+
+        skinColorPicker[0].setOnAction(new EventHandler() {
+            public void handle(Event t) {
+                if(character[0].matches("left"))
+                    comicPanel.setLeftCharacterSkin(skinColorPicker[0].getValue());
+                else if(character[0].matches("right"))
+                    comicPanel.setRightCharacterSkin(skinColorPicker[0].getValue());
+            }
+        });
+
+        hairColorPicker[0].setOnAction(new EventHandler() {
+            public void handle(Event t) {
+                if(character[0].matches("left"))
+                    comicPanel.setLeftCharacterHair(hairColorPicker[0].getValue());
+                else if(character[0].matches("right"))
+                    comicPanel.setRightCharacterHair(hairColorPicker[0].getValue());
             }
         });
 
@@ -265,18 +294,13 @@ public class Main extends Application {
         hair.setText("Hair:");
         hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
 
-        ColorPicker skinColorPicker = new ColorPicker();
-        ColorPicker hairColorPicker = new ColorPicker();
-        skinColorPicker = ButtonIcon.colorPickerStyling(skinColorPicker);
-        hairColorPicker = ButtonIcon.colorPickerStyling(hairColorPicker);
-
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
 
         buttonLayout.addColumn(5, leftCharacter, rightCharacter);
         buttonLayout.addColumn(6, flipButton, genderButton);
         buttonLayout.addColumn(7, textButton, bubbleButton);
         buttonLayout.addColumn(18, skin, hair);
-        buttonLayout.addColumn(19, skinColorPicker, hairColorPicker);
+        buttonLayout.addColumn(19, skinColorPicker[0], hairColorPicker[0]);
         buttonLayout.addColumn(25, deleteButton);
 
         HBox optionBox = new HBox(buttonLayout);
@@ -325,12 +349,21 @@ public class Main extends Application {
                 System.out.println("X: " + x);
                 System.out.println("Y: " + y);
 
-                if(x <= 110 && x >= 10 && y >= 100 && y <= 200)
+                if(x <= 110 && x >= 10 && y >= 100 && y <= 200) {
+                    skinColorPicker[0].setValue(comicPanel.getLeftCharacterSkin());
+                    hairColorPicker[0].setValue(comicPanel.getLeftCharacterHair());
                     character[0] = "left";
-                else if(x <= 270 && x >= 170 && y >= 100 && y <= 200)
+                }
+                else if(x <= 270 && x >= 170 && y >= 100 && y <= 200) {
+                    skinColorPicker[0].setValue(comicPanel.getRightCharacterSkin());
+                    hairColorPicker[0].setValue(comicPanel.getRightCharacterHair());
                     character[0] = "right";
-                else
+                }
+                else {
+                    skinColorPicker[0].setValue(new Color(1,1,1,1));
+                    hairColorPicker[0].setValue(new Color(1,1,1,1));
                     character[0] = "none";
+                }
 
                 comicPanel.selectCharacter(character[0]);
             }
