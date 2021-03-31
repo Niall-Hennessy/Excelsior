@@ -3,6 +3,7 @@ package sample;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.chart.Axis;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseButton;
@@ -69,8 +70,8 @@ public class ComicPanel extends Pane {
         rightCharacterView = imageView;
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
-        imageView.setRotationAxis(Rotate.Y_AXIS);
-        imageView.setRotate(180);
+//        imageView.setRotationAxis(Rotate.Y_AXIS);
+//        imageView.setRotate(180);
         rightCharacterWrapper = new BorderPane(imageView);
         rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
         rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
@@ -156,6 +157,9 @@ public class ComicPanel extends Pane {
                     } else if (color.equals(Color.web("#F9FF00"))) {
                         pixelWriter.setColor(x, y, leftCharacterHair);
                     }
+                    else {
+                        pixelWriter.setColor(x, y, color);
+                    }
                 }
             }
 
@@ -163,11 +167,12 @@ public class ComicPanel extends Pane {
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
 
-            leftCharacterWrapper.getChildren().removeAll();
+            this.getChildren().remove(leftCharacterWrapper);
             leftCharacterWrapper = new BorderPane(imageView);
             leftCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
             leftCharacterWrapper.setTranslateX(this.getTranslateX() + 10);
             leftCharacterWrapper.setStyle("-fx-border-color: cyan");
+            rightCharacterWrapper.setStyle("-fx-border-color: white");
             this.getChildren().add(leftCharacterWrapper);
         }
         else if(character.matches("right")){
@@ -192,19 +197,24 @@ public class ComicPanel extends Pane {
                     } else if (color.equals(Color.web("#F9FF00"))) {
                         pixelWriter.setColor(x, y, rightCharacterHair);
                     }
+                    else {
+                        pixelWriter.setColor(x, y, color);
+                    }
                 }
             }
 
             ImageView imageView = new ImageView(writableImage);
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
+            imageView.setRotationAxis(Rotate.Y_AXIS);
             imageView.setRotate(180);
 
-            rightCharacterWrapper.getChildren().removeAll();
+            this.getChildren().remove(rightCharacterWrapper);
             rightCharacterWrapper = new BorderPane(imageView);
             rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
             rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
             rightCharacterWrapper.setStyle("-fx-border-color: cyan");
+            leftCharacterWrapper.setStyle("-fx-border-color: white");
             this.getChildren().add(rightCharacterWrapper);
         }
     }
