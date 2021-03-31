@@ -31,6 +31,8 @@ public class ComicPanel extends Pane {
     Color rightCharacterHair = Color.rgb(240,255,0,1);
     Color rightCharacterSkin = Color.rgb(255,232,216,1);
 
+    boolean leftFemale = true;
+    boolean rightFemale = true;
 
     public ComicPanel() throws FileNotFoundException {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
@@ -114,6 +116,16 @@ public class ComicPanel extends Pane {
 
     }
 
+    public void genderSwap(String character){
+
+        if(character.matches("left"))
+            leftFemale = !leftFemale;
+        else
+            rightFemale = !rightFemale;
+
+        updateImage(character);
+    }
+
     public void selectCharacter(String character){
 
         System.out.println("Character: " + character);
@@ -151,17 +163,28 @@ public class ComicPanel extends Pane {
                     Color color = pixelReader.getColor(x, y);
 
                     if (color.equals(Color.web("0xf0ff00ff"))) {
-                        pixelWriter.setColor(x, y, leftCharacterHair);
+                        if(!leftFemale)
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                        else
+                            pixelWriter.setColor(x, y, leftCharacterHair);
                     } else if (color.equals(Color.web("0xffe8d8ff"))) {
                         pixelWriter.setColor(x, y, leftCharacterSkin);
                     } else if (color.equals(Color.web("#F9FF00"))) {
                         pixelWriter.setColor(x, y, leftCharacterHair);
+                    }else if (color.equals(Color.web("#ECB4B5")) && !leftFemale) {
+                        pixelWriter.setColor(x, y, Color.WHITE);
+                    }else if (color.equals(Color.web("#FF0000")) && !leftFemale) {
+                        pixelWriter.setColor(x, y, leftCharacterSkin);
+                    }
+                    else if(isOnLine(Color.web("#FF0000"), leftCharacterSkin, color)){
+                        pixelWriter.setColor(x, y, leftCharacterSkin);
                     }
                     else {
                         pixelWriter.setColor(x, y, color);
                     }
                 }
             }
+
 
             ImageView imageView = new ImageView(writableImage);
             imageView.setFitHeight(100);
@@ -191,11 +214,18 @@ public class ComicPanel extends Pane {
                     Color color = pixelReader.getColor(x, y);
 
                     if (color.equals(Color.web("0xf0ff00ff"))) {
-                        pixelWriter.setColor(x, y, rightCharacterHair);
+                        if(!leftFemale)
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                        else
+                            pixelWriter.setColor(x, y, rightCharacterHair);
                     } else if (color.equals(Color.web("0xffe8d8ff"))) {
                         pixelWriter.setColor(x, y, rightCharacterSkin);
                     } else if (color.equals(Color.web("#F9FF00"))) {
                         pixelWriter.setColor(x, y, rightCharacterHair);
+                    }else if (color.equals(Color.web("#ECB4B5")) && !rightFemale) {
+                        pixelWriter.setColor(x, y, Color.WHITE);
+                    }else if (color.equals(Color.web("#FF0000")) && !rightFemale) {
+                        pixelWriter.setColor(x, y, rightCharacterSkin);
                     }
                     else {
                         pixelWriter.setColor(x, y, color);
@@ -255,5 +285,30 @@ public class ComicPanel extends Pane {
     public void setRightCharacterSkin(Color rightCharacterSkin) {
         this.rightCharacterSkin = rightCharacterSkin;
         updateImage("right");
+    }
+
+    public boolean isOnLine(Color p1, Color p2, Color p3)
+    {
+        int p1RedColor = Integer.parseInt(p1.toString().substring(2,4), 16);
+        int p1GreenColor = Integer.parseInt(p1.toString().substring(4,6), 16);
+        int p1BlueColor = Integer.parseInt(p1.toString().substring(6,8), 16);
+
+        int p2RedColor = Integer.parseInt(p2.toString().substring(2,4), 16);
+        int p2GreenColor = Integer.parseInt(p2.toString().substring(4,6), 16);
+        int p2BlueColor = Integer.parseInt(p2.toString().substring(6,8), 16);
+
+        int p3RedColor = Integer.parseInt(p3.toString().substring(2,4), 16);
+        int p3GreenColor = Integer.parseInt(p3.toString().substring(4,6), 16);
+        int p3BlueColor = Integer.parseInt(p3.toString().substring(6,8), 16);
+
+
+
+        if((p3RedColor - p1RedColor) / (p2RedColor - p1RedColor) == (p3GreenColor - p1GreenColor) / (p2GreenColor - p1GreenColor) &&
+                (p3RedColor - p1RedColor) / (p2RedColor - p1RedColor) == (p3BlueColor - p1BlueColor) / (p2BlueColor - p1BlueColor)){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
