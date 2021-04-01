@@ -296,19 +296,6 @@ public class ComicPanel extends Pane {
 
     public boolean isOnLine(Color p1, Color p2, Color p3)
     {
-        double p1RedColor = p1.getRed();
-        double p1GreenColor = p1.getGreen();
-        double p1BlueColor = p1.getBlue();
-
-        double p2RedColor = p2.getRed();
-        double p2GreenColor = p2.getGreen();
-        double p2BlueColor = p2.getBlue();
-
-        double p3RedColor = p3.getRed();
-        double p3GreenColor = p3.getGreen();
-        double p3BlueColor = p3.getBlue();
-
-
         boolean red = false;
         boolean green = false;
         boolean blue = false;
@@ -317,20 +304,20 @@ public class ComicPanel extends Pane {
         double greenVal = 0;
         double blueVal = 1;
 
-        if(p1RedColor == p2RedColor)
-            red = p1RedColor == p3RedColor;
+        if(p1.getRed() == p2.getRed())
+            red = p1.getRed() == p3.getRed();
         else
-            redVal = (p3RedColor - p1RedColor) / (p2RedColor - p1RedColor);red = redVal >= 0 && redVal <= 1;
+            redVal = (p3.getRed() - p1.getRed()) / (p2.getRed() - p1.getRed());red = redVal >= 0 && redVal <= 1;
 
-        if(p1GreenColor == p2GreenColor)
-            green = p1GreenColor == p3GreenColor;
+        if(p1.getGreen() == p2.getGreen())
+            green = p1.getGreen() == p3.getGreen();
         else
-            greenVal = (p3GreenColor - p1GreenColor) / (p2GreenColor - p1GreenColor);green = greenVal >= 0 && greenVal <= 1;
+            greenVal = (p3.getGreen() - p1.getGreen()) / (p2.getGreen() - p1.getGreen());green = greenVal >= 0 && greenVal <= 1;
 
-        if(p1BlueColor == p2BlueColor)
-            blue = p1BlueColor == p3BlueColor;
+        if(p1.getBlue() == p2.getBlue())
+            blue = p1.getBlue() == p3.getBlue();
         else
-            blueVal = (p3BlueColor - p1BlueColor) / (p2BlueColor - p1BlueColor);blue = blueVal >= 0 && blueVal <= 1;
+            blueVal = (p3.getBlue() - p1.getBlue()) / (p2.getBlue() - p1.getBlue());blue = blueVal >= 0 && blueVal <= 1;
 
         if(red && green && blue)
             return true;
