@@ -58,7 +58,7 @@ public class ComicPanel extends Pane {
         leftCharacterWrapper.setStyle("-fx-border-color: cyan");
         rightCharacterWrapper.setStyle("-fx-border-color: white");
 
-//        updateImage("left");
+        updateImage("left");
     }
 
     public ImageView getRightCharacter() {
@@ -164,15 +164,18 @@ public class ComicPanel extends Pane {
 
                     if(color.equals(Color.WHITE)){
                         continue;
-                    }
-                    else if (color.equals(Color.web("0xf0ff00ff"))) {
+                    }else if(color.equals(Color.BLACK)){
+                        pixelWriter.setColor(x, y, color);
+                    } else if(color.equals(Color.web("#A03E00"))){
+                        pixelWriter.setColor(x, y, color);
+                    }else if (color.equals(Color.web("0xffe8d8ff"))) {
+                        pixelWriter.setColor(x, y, leftCharacterSkin);
+                    } else if (color.equals(Color.web("0xf0ff00ff"))) {
                         if(!leftFemale)
                             pixelWriter.setColor(x, y, Color.WHITE);
                         else
                             pixelWriter.setColor(x, y, leftCharacterHair);
-                    } else if (color.equals(Color.web("0xffe8d8ff"))) {
-                        pixelWriter.setColor(x, y, leftCharacterSkin);
-                    } else if (color.equals(Color.web("#F9FF00"))) {
+                    }else if (color.equals(Color.web("#F9FF00"))) {
                         pixelWriter.setColor(x, y, leftCharacterHair);
                     }else if (color.equals(Color.web("#ECB4B5")) && !leftFemale) {
                         pixelWriter.setColor(x, y, Color.WHITE);
@@ -189,7 +192,6 @@ public class ComicPanel extends Pane {
                     }
                 }
             }
-
 
             ImageView imageView = new ImageView(writableImage);
             imageView.setFitHeight(100);
@@ -294,18 +296,18 @@ public class ComicPanel extends Pane {
 
     public boolean isOnLine(Color p1, Color p2, Color p3)
     {
+        double p1RedColor = p1.getRed();
+        double p1GreenColor = p1.getGreen();
+        double p1BlueColor = p1.getBlue();
 
-        double p1RedColor = Integer.parseInt(p1.toString().substring(2,4), 16);
-        double p1GreenColor = Integer.parseInt(p1.toString().substring(4,6), 16);
-        double p1BlueColor = Integer.parseInt(p1.toString().substring(6,8), 16);
+        double p2RedColor = p2.getRed();
+        double p2GreenColor = p2.getGreen();
+        double p2BlueColor = p2.getBlue();
 
-        double p2RedColor = Integer.parseInt(p2.toString().substring(2,4), 16);
-        double p2GreenColor = Integer.parseInt(p2.toString().substring(4,6), 16);
-        double p2BlueColor = Integer.parseInt(p2.toString().substring(6,8), 16);
+        double p3RedColor = p3.getRed();
+        double p3GreenColor = p3.getGreen();
+        double p3BlueColor = p3.getBlue();
 
-        double p3RedColor = Integer.parseInt(p3.toString().substring(2,4), 16);
-        double p3GreenColor = Integer.parseInt(p3.toString().substring(4,6), 16);
-        double p3BlueColor = Integer.parseInt(p3.toString().substring(6,8), 16);
 
         boolean red = false;
         boolean green = false;
@@ -315,71 +317,27 @@ public class ComicPanel extends Pane {
         double greenVal = 0;
         double blueVal = 1;
 
-        if(p1RedColor - p2RedColor == 0){
-            if(p1RedColor == p3RedColor)
-            {
-                red = true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        if(p1RedColor == p2RedColor)
+            red = p1RedColor == p3RedColor;
         else
-        {
-            redVal = (p3RedColor - p1RedColor) / (p2RedColor - p1RedColor);
+            redVal = (p3RedColor - p1RedColor) / (p2RedColor - p1RedColor);red = redVal >= 0 && redVal <= 1;
 
-            if(redVal >= 0 && redVal <= 1)
-                red = true;
-        }
-
-        if(p1GreenColor - p2GreenColor == 0){
-            if(p1GreenColor == p3GreenColor)
-            {
-                green = true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        if(p1GreenColor == p2GreenColor)
+            green = p1GreenColor == p3GreenColor;
         else
-        {
-            greenVal = (p3GreenColor - p1GreenColor) / (p2GreenColor - p1GreenColor);
+            greenVal = (p3GreenColor - p1GreenColor) / (p2GreenColor - p1GreenColor);green = greenVal >= 0 && greenVal <= 1;
 
-            if(greenVal >= 0 && greenVal <= 1)
-                green = true;
-        }
-
-        if(p1BlueColor - p2BlueColor == 0){
-            if(p1BlueColor == p3BlueColor)
-            {
-                blue = true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        if(p1BlueColor == p2BlueColor)
+            blue = p1BlueColor == p3BlueColor;
         else
-        {
-            blueVal = (p3BlueColor - p1BlueColor) / (p2BlueColor - p1BlueColor);
+            blueVal = (p3BlueColor - p1BlueColor) / (p2BlueColor - p1BlueColor);blue = blueVal >= 0 && blueVal <= 1;
 
-            if(blueVal >= 0 && blueVal <= 1)
-                blue = true;
-        }
-
-        if(red && green && blue) {
-            System.out.println("Found Anti-Aliasling: " + p3.toString());
+        if(red && green && blue)
             return true;
-        }
-        else if(redVal == greenVal && redVal == blueVal){
-            System.out.println("Found Anti-Aliasling: " + p3.toString());
+        else if(redVal == greenVal && redVal == blueVal)
             return true;
-        }
-        else{
+        else
             return false;
-        }
 
     }
 }
