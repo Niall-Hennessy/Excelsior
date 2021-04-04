@@ -262,10 +262,7 @@ public class Main extends Application {
                 if(character[0] == null || character[0].matches("none"))
                     return;
 
-                System.out.println("Charater 0 is: " + character[0]);
-
-//                comicPanel.swapSex(character[0]);
-
+                comicPanel.genderSwap(character[0]);
             }
         });
 
