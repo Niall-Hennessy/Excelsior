@@ -16,6 +16,8 @@ import javafx.scene.transform.Rotate;
 import javax.swing.plaf.PanelUI;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ComicPanel extends Pane {
 
@@ -72,8 +74,8 @@ public class ComicPanel extends Pane {
         rightCharacterView = imageView;
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
-//        imageView.setRotationAxis(Rotate.Y_AXIS);
-//        imageView.setRotate(180);
+        imageView.setRotationAxis(Rotate.Y_AXIS);
+        imageView.setRotate(180);
         rightCharacterWrapper = new BorderPane(imageView);
         rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
         rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
@@ -156,6 +158,7 @@ public class ComicPanel extends Pane {
             WritableImage writableImage = new WritableImage(width, height);
 
             PixelReader pixelReader = image.getPixelReader();
+            PixelReader wPixelReader = writableImage.getPixelReader();
             PixelWriter pixelWriter = writableImage.getPixelWriter();
 
             for (int y = 0; y < height; y++) {
@@ -163,31 +166,67 @@ public class ComicPanel extends Pane {
                     Color color = pixelReader.getColor(x, y);
 
                     if(color.equals(Color.WHITE)){
-                        continue;
+                        pixelWriter.setColor(x, y, color);
                     }else if(color.equals(Color.BLACK)){
                         pixelWriter.setColor(x, y, color);
-                    } else if(color.equals(Color.web("#A03E00"))){
+                    }
+                    else  if(isOnLine(Color.web("#A03E00"), Color.BLACK, color)){
+                        pixelWriter.setColor(x,y,color);
+                    }
+                    else  if(isOnLine(Color.WHITE, Color.web("#A03E00"), color)){
+                        pixelWriter.setColor(x,y,color);
+                    }
+                    else  if(isOnLine(Color.WHITE, Color.BLACK, color)){
+                        pixelWriter.setColor(x,y,color);
+                    }
+                    else if(color.equals(Color.web("#A03E00"))){//Shoe Colour
                         pixelWriter.setColor(x, y, color);
-                    }else if (color.equals(Color.web("0xffe8d8ff"))) {
+                    }
+                    else  if(isOnLine(Color.web("#A03E00"), Color.BLACK, color)){
+                        pixelWriter.setColor(x,y,color);
+                    }
+                    else if (color.equals(Color.web("#FFE8D8"))) {//Skin Colour
                         pixelWriter.setColor(x, y, leftCharacterSkin);
-                    } else if (color.equals(Color.web("0xf0ff00ff"))) {
-                        if(!leftFemale)
+                    } else if (color.equals(Color.web("#F0FF00"))) {//Female Hair Colour
+                        if(!leftFemale) {
                             pixelWriter.setColor(x, y, Color.WHITE);
+                        }
                         else
                             pixelWriter.setColor(x, y, leftCharacterHair);
-                    }else if (color.equals(Color.web("#F9FF00"))) {
+                    }else if (color.equals(Color.web("#F9FF00"))) {//Male Hair Colour
                         pixelWriter.setColor(x, y, leftCharacterHair);
-                    }else if (color.equals(Color.web("#ECB4B5")) && !leftFemale) {
-                        pixelWriter.setColor(x, y, Color.WHITE);
-                    }else if (color.equals(Color.web("#FF0000")) && !leftFemale) {
+                    }
+                    else if (color.equals(Color.web("#FF0000")) && !leftFemale) {//Red Colour
                         pixelWriter.setColor(x, y, leftCharacterSkin);
-                    }else if(isOnLine(Color.web("#FF0000"), leftCharacterSkin, color) && !leftFemale){
+                    }
+                    else if(isOnLine(Color.web("#FF0000"), leftCharacterSkin, color) && !leftFemale){
                         pixelWriter.setColor(x, y, leftCharacterSkin);
-                    }else if(isOnLine(Color.web("#ECB4B5"), Color.WHITE, color) && !leftFemale){
-                        pixelWriter.setColor(x, y, Color.WHITE);
-                    }else if(isOnLine(Color.web("0xf0ff00ff"), Color.WHITE, color) && !leftFemale){
-                        pixelWriter.setColor(x, y, Color.WHITE);
-                    }else {
+                    }
+                    else if(isOnLine(Color.web("#ECB4B5"), Color.WHITE, color) && !leftFemale){
+                        if(wPixelReader.getColor(x, y - 1).equals(Color.WHITE)) {
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                        }
+                        else if(wPixelReader.getColor(x, y - 1).equals(Color.WHITE)) {
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                        }else if(wPixelReader.getColor(x - 1, y).equals(Color.WHITE)) {
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                        }else if(wPixelReader.getColor(x - 1, y - 1).equals(Color.WHITE)) {
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                        }
+                        else
+                            pixelWriter.setColor(x, y, color);
+                    }
+                    else if(isOnLine(Color.web("#FF0000"), Color.web("#FFA1A1"), color) && !leftFemale){
+                        pixelWriter.setColor(x, y, leftCharacterSkin);
+                    }
+                    else if(x < 400 && x > 200 && !leftFemale){
+                        if(color.toString().substring(2,4).matches("ff")) {
+
+                            System.out.println(color.toString());
+                            pixelWriter.setColor(x, y, leftCharacterSkin);
+                        }
+                    }
+                    else {
                         pixelWriter.setColor(x, y, color);
                     }
                 }
@@ -196,6 +235,9 @@ public class ComicPanel extends Pane {
             ImageView imageView = new ImageView(writableImage);
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
+            imageView.setSmooth(false);
+            imageView.setRotationAxis(Rotate.Y_AXIS);
+            imageView.setRotate(leftCharacterWrapper.getChildren().get(0).getRotate());
 
             this.getChildren().remove(leftCharacterWrapper);
             leftCharacterWrapper = new BorderPane(imageView);
@@ -220,21 +262,32 @@ public class ComicPanel extends Pane {
                 for (int x = 0; x < width; x++) {
                     Color color = pixelReader.getColor(x, y);
 
-                    if (color.equals(Color.web("0xf0ff00ff"))) {
-                        if(!leftFemale)
+                    if(color.equals(Color.WHITE)){
+                        continue;
+                    }else if(color.equals(Color.BLACK)){
+                        pixelWriter.setColor(x, y, color);
+                    } else if(color.equals(Color.web("#A03E00"))){
+                        pixelWriter.setColor(x, y, color);
+                    }else if (color.equals(Color.web("0xffe8d8ff"))) {
+                        pixelWriter.setColor(x, y, rightCharacterSkin);
+                    } else if (color.equals(Color.web("0xf0ff00ff"))) {
+                        if(!rightFemale)
                             pixelWriter.setColor(x, y, Color.WHITE);
                         else
                             pixelWriter.setColor(x, y, rightCharacterHair);
-                    } else if (color.equals(Color.web("0xffe8d8ff"))) {
-                        pixelWriter.setColor(x, y, rightCharacterSkin);
-                    } else if (color.equals(Color.web("#F9FF00"))) {
+                    }else if (color.equals(Color.web("#F9FF00"))) {
                         pixelWriter.setColor(x, y, rightCharacterHair);
                     }else if (color.equals(Color.web("#ECB4B5")) && !rightFemale) {
                         pixelWriter.setColor(x, y, Color.WHITE);
                     }else if (color.equals(Color.web("#FF0000")) && !rightFemale) {
                         pixelWriter.setColor(x, y, rightCharacterSkin);
-                    }
-                    else {
+                    }else if(isOnLine(Color.web("#FF0000"), rightCharacterSkin, color) && !rightFemale){
+                        pixelWriter.setColor(x, y, rightCharacterSkin);
+                    }else if(isOnLine(Color.web("#ECB4B5"), Color.WHITE, color) && !rightFemale){
+                        pixelWriter.setColor(x, y, Color.WHITE);
+                    }else if(isOnLine(Color.web("0xf0ff00ff"), Color.WHITE, color) && !rightFemale){
+                        pixelWriter.setColor(x, y, Color.WHITE);
+                    }else {
                         pixelWriter.setColor(x, y, color);
                     }
                 }
@@ -243,8 +296,9 @@ public class ComicPanel extends Pane {
             ImageView imageView = new ImageView(writableImage);
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
+            imageView.setSmooth(false);
             imageView.setRotationAxis(Rotate.Y_AXIS);
-            imageView.setRotate(180);
+            imageView.setRotate(rightCharacterWrapper.getChildren().get(0).getRotate());
 
             this.getChildren().remove(rightCharacterWrapper);
             rightCharacterWrapper = new BorderPane(imageView);
@@ -296,35 +350,48 @@ public class ComicPanel extends Pane {
 
     public boolean isOnLine(Color p1, Color p2, Color p3)
     {
+
         boolean red = false;
         boolean green = false;
         boolean blue = false;
 
         double redVal = -1;
-        double greenVal = 0;
-        double blueVal = 1;
+        double greenVal = -2;
+        double blueVal = -3;
 
-        if(p1.getRed() == p2.getRed())
-            red = p1.getRed() == p3.getRed();
+
+        if(Double.compare(p1.getRed(), p2.getRed()) == 0)
+            red = Double.compare(p1.getRed(), p3.getRed()) == 0;
         else
-            redVal = (p3.getRed() - p1.getRed()) / (p2.getRed() - p1.getRed());red = redVal >= 0 && redVal <= 1;
+            redVal = round((p3.getRed() - p1.getRed()) / (p2.getRed() - p1.getRed()), 1);
 
-        if(p1.getGreen() == p2.getGreen())
-            green = p1.getGreen() == p3.getGreen();
+        if(Double.compare(p1.getGreen(), p2.getGreen()) == 0)//who the QUACK wrote a language that cannot cast between ints and booleans
+            green = Double.compare(p1.getGreen(), p3.getGreen()) == 0;
         else
-            greenVal = (p3.getGreen() - p1.getGreen()) / (p2.getGreen() - p1.getGreen());green = greenVal >= 0 && greenVal <= 1;
+            greenVal = round((p3.getGreen() - p1.getGreen()) / (p2.getGreen() - p1.getGreen()),1);
 
-        if(p1.getBlue() == p2.getBlue())
-            blue = p1.getBlue() == p3.getBlue();
+        if(Double.compare(p1.getBlue(), p2.getBlue()) == 0)
+            blue = Double.compare(p1.getBlue(), p3.getBlue()) == 0;
         else
-            blueVal = (p3.getBlue() - p1.getBlue()) / (p2.getBlue() - p1.getBlue());blue = blueVal >= 0 && blueVal <= 1;
+            blueVal = round((p3.getBlue() - p1.getBlue()) / (p2.getBlue() - p1.getBlue()),1);
 
-        if(red && green && blue)
+
+
+        if((Double.compare(redVal, greenVal) == 0 && Double.compare(redVal, blueVal) == 0) || (red && Double.compare(greenVal, blueVal) == 0) ||
+                (green && Double.compare(redVal, blueVal) == 0) || (green && red)) {
+
             return true;
-        else if(redVal == greenVal && redVal == blueVal)
-            return true;
+        }
         else
             return false;
 
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
