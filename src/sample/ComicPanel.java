@@ -170,20 +170,8 @@ public class ComicPanel extends Pane {
                     }else if(color.equals(Color.BLACK)){
                         pixelWriter.setColor(x, y, color);
                     }
-                    else  if(isOnLine(Color.web("#A03E00"), Color.BLACK, color)){
-                        pixelWriter.setColor(x,y,color);
-                    }
-                    else  if(isOnLine(Color.WHITE, Color.web("#A03E00"), color)){
-                        pixelWriter.setColor(x,y,color);
-                    }
-                    else  if(isOnLine(Color.WHITE, Color.BLACK, color)){
-                        pixelWriter.setColor(x,y,color);
-                    }
                     else if(color.equals(Color.web("#A03E00"))){//Shoe Colour
                         pixelWriter.setColor(x, y, color);
-                    }
-                    else  if(isOnLine(Color.web("#A03E00"), Color.BLACK, color)){
-                        pixelWriter.setColor(x,y,color);
                     }
                     else if (color.equals(Color.web("#FFE8D8"))) {//Skin Colour
                         pixelWriter.setColor(x, y, leftCharacterSkin);
@@ -196,35 +184,29 @@ public class ComicPanel extends Pane {
                     }else if (color.equals(Color.web("#F9FF00"))) {//Male Hair Colour
                         pixelWriter.setColor(x, y, leftCharacterHair);
                     }
-                    else if (color.equals(Color.web("#FF0000")) && !leftFemale) {//Red Colour
-                        pixelWriter.setColor(x, y, leftCharacterSkin);
+                    else if(isOnLine(Color.web("#C9E1E3"),Color.web("#75959C"),color)){
+                        pixelWriter.setColor(x, y, color);
                     }
-                    else if(isOnLine(Color.web("#FF0000"), leftCharacterSkin, color) && !leftFemale){
-                        pixelWriter.setColor(x, y, leftCharacterSkin);
-                    }
-                    else if(isOnLine(Color.web("#ECB4B5"), Color.WHITE, color) && !leftFemale){
-                        if(wPixelReader.getColor(x, y - 1).equals(Color.WHITE)) {
+                    else if (color.equals(Color.web("#ECB4B5")) && !leftFemale){
+
+                        if(x < 400 && x > 360 && y > 160 && y < 250)
                             pixelWriter.setColor(x, y, Color.WHITE);
-                        }
-                        else if(wPixelReader.getColor(x, y - 1).equals(Color.WHITE)) {
-                            pixelWriter.setColor(x, y, Color.WHITE);
-                        }else if(wPixelReader.getColor(x - 1, y).equals(Color.WHITE)) {
-                            pixelWriter.setColor(x, y, Color.WHITE);
-                        }else if(wPixelReader.getColor(x - 1, y - 1).equals(Color.WHITE)) {
-                            pixelWriter.setColor(x, y, Color.WHITE);
-                        }
-                        else
+                        else if(x < 385 && x > 250 && y > 155 && y < 300)
                             pixelWriter.setColor(x, y, color);
+                        else if(x < 423 && x > 255 && y > 290 && y < 350)
+                            pixelWriter.setColor(x, y, color);
+                        else
+                            pixelWriter.setColor(x, y, Color.WHITE);
                     }
                     else if(isOnLine(Color.web("#FF0000"), Color.web("#FFA1A1"), color) && !leftFemale){
                         pixelWriter.setColor(x, y, leftCharacterSkin);
                     }
-                    else if(x < 400 && x > 200 && !leftFemale){
+                    else if(x < 400 && x > 200 && y > 200 && !leftFemale){
                         if(color.toString().substring(2,4).matches("ff")) {
-
-                            System.out.println(color.toString());
                             pixelWriter.setColor(x, y, leftCharacterSkin);
                         }
+                        else
+                            pixelWriter.setColor(x, y, color);
                     }
                     else {
                         pixelWriter.setColor(x, y, color);
@@ -263,31 +245,49 @@ public class ComicPanel extends Pane {
                     Color color = pixelReader.getColor(x, y);
 
                     if(color.equals(Color.WHITE)){
-                        continue;
+                        pixelWriter.setColor(x, y, color);
                     }else if(color.equals(Color.BLACK)){
                         pixelWriter.setColor(x, y, color);
-                    } else if(color.equals(Color.web("#A03E00"))){
+                    }
+                    else if(color.equals(Color.web("#A03E00"))){//Shoe Colour
                         pixelWriter.setColor(x, y, color);
-                    }else if (color.equals(Color.web("0xffe8d8ff"))) {
+                    }
+                    else if (color.equals(Color.web("#FFE8D8"))) {//Skin Colour
                         pixelWriter.setColor(x, y, rightCharacterSkin);
-                    } else if (color.equals(Color.web("0xf0ff00ff"))) {
-                        if(!rightFemale)
+                    } else if (color.equals(Color.web("#F0FF00"))) {//Female Hair Colour
+                        if(!rightFemale) {
                             pixelWriter.setColor(x, y, Color.WHITE);
+                        }
                         else
                             pixelWriter.setColor(x, y, rightCharacterHair);
-                    }else if (color.equals(Color.web("#F9FF00"))) {
+                    }else if (color.equals(Color.web("#F9FF00"))) {//Male Hair Colour
                         pixelWriter.setColor(x, y, rightCharacterHair);
-                    }else if (color.equals(Color.web("#ECB4B5")) && !rightFemale) {
-                        pixelWriter.setColor(x, y, Color.WHITE);
-                    }else if (color.equals(Color.web("#FF0000")) && !rightFemale) {
+                    }
+                    else if(isOnLine(Color.web("#C9E1E3"),Color.web("#75959C"),color)){
+                        pixelWriter.setColor(x, y, color);
+                    }
+                    else if (color.equals(Color.web("#ECB4B5")) && !rightFemale){
+
+                        if(x < 400 && x > 360 && y > 160 && y < 250)
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                        else if(x < 385 && x > 250 && y > 155 && y < 300)
+                            pixelWriter.setColor(x, y, color);
+                        else if(x < 423 && x > 255 && y > 290 && y < 350)
+                            pixelWriter.setColor(x, y, color);
+                        else
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                    }
+                    else if(isOnLine(Color.web("#FF0000"), Color.web("#FFA1A1"), color) && !rightFemale){
                         pixelWriter.setColor(x, y, rightCharacterSkin);
-                    }else if(isOnLine(Color.web("#FF0000"), rightCharacterSkin, color) && !rightFemale){
-                        pixelWriter.setColor(x, y, rightCharacterSkin);
-                    }else if(isOnLine(Color.web("#ECB4B5"), Color.WHITE, color) && !rightFemale){
-                        pixelWriter.setColor(x, y, Color.WHITE);
-                    }else if(isOnLine(Color.web("0xf0ff00ff"), Color.WHITE, color) && !rightFemale){
-                        pixelWriter.setColor(x, y, Color.WHITE);
-                    }else {
+                    }
+                    else if(x < 400 && x > 200 && y > 200 && !rightFemale){
+                        if(color.toString().substring(2,4).matches("ff")) {
+                            pixelWriter.setColor(x, y, rightCharacterSkin);
+                        }
+                        else
+                            pixelWriter.setColor(x, y, color);
+                    }
+                    else {
                         pixelWriter.setColor(x, y, color);
                     }
                 }
