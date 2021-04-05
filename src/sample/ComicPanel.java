@@ -363,17 +363,17 @@ public class ComicPanel extends Pane {
         if(Double.compare(p1.getRed(), p2.getRed()) == 0)
             red = Double.compare(p1.getRed(), p3.getRed()) == 0;
         else
-            redVal = round((p3.getRed() - p1.getRed()) / (p2.getRed() - p1.getRed()), 1);
+            redVal = decimalConverter((p3.getRed() - p1.getRed()) / (p2.getRed() - p1.getRed()));
 
         if(Double.compare(p1.getGreen(), p2.getGreen()) == 0)//who the QUACK wrote a language that cannot cast between ints and booleans
             green = Double.compare(p1.getGreen(), p3.getGreen()) == 0;
         else
-            greenVal = round((p3.getGreen() - p1.getGreen()) / (p2.getGreen() - p1.getGreen()),1);
+            greenVal = decimalConverter((p3.getGreen() - p1.getGreen()) / (p2.getGreen() - p1.getGreen()));
 
         if(Double.compare(p1.getBlue(), p2.getBlue()) == 0)
             blue = Double.compare(p1.getBlue(), p3.getBlue()) == 0;
         else
-            blueVal = round((p3.getBlue() - p1.getBlue()) / (p2.getBlue() - p1.getBlue()),1);
+            blueVal = decimalConverter((p3.getBlue() - p1.getBlue()) / (p2.getBlue() - p1.getBlue()));
 
 
 
@@ -387,11 +387,9 @@ public class ComicPanel extends Pane {
 
     }
 
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        BigDecimal bd = BigDecimal.valueOf(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+    public static double decimalConverter(double decimal) {
+        BigDecimal bigDecimal = BigDecimal.valueOf(decimal);
+        bigDecimal = bigDecimal.setScale(1, RoundingMode.HALF_UP);
+        return bigDecimal.doubleValue();
     }
 }
