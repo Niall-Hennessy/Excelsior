@@ -184,6 +184,9 @@ public class ComicPanel extends Pane {
                     }else if (color.equals(Color.web("#F9FF00"))) {//Male Hair Colour
                         pixelWriter.setColor(x, y, leftCharacterHair);
                     }
+                    else if(isOnLine(Color.web("#F0FF00"), Color.web("#F9FF00"), color)){
+                        pixelWriter.setColor(x, y, leftCharacterHair);
+                    }
                     else if(isOnLine(Color.web("#C9E1E3"),Color.web("#75959C"),color)){
                         pixelWriter.setColor(x, y, color);
                     }
