@@ -23,6 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -93,6 +94,8 @@ public class Main extends Application {
         Button genderButton = buttonIcon.getButtonIcon("src/images/buttons/MFButton.png");
         Button textButton = buttonIcon.getButtonIcon("src/images/buttons/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/buttons/speech_bubble.png");
+        Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
+
 
         rightCharacter.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -267,6 +270,83 @@ public class Main extends Application {
             }
         });
 
+        //pop up for when they hit the bubble button for left character
+        bubbleButton.setOnAction(new EventHandler<ActionEvent>() {
+
+            final Stage addBubble = new Stage();
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(addBubble.isShowing()) {
+                    addBubble.initModality(Modality.APPLICATION_MODAL);
+                    addBubble.initOwner(primaryStage);
+                }
+                ScrollPane bubbleGallery = new ScrollPane();
+                TilePane bubbles = new TilePane();
+
+                File folder = new File("src/images/bubbles");
+                File[] listOfFiles = folder.listFiles();
+
+                for (final File file : listOfFiles)
+                {
+                    ImageView imageView;
+                    imageView = createImageView(file);
+                    bubbles.getChildren().addAll(imageView);
+
+                }
+
+                bubbleGallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
+                bubbleGallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                bubbleGallery.setFitToWidth(true);
+                bubbleGallery.setContent(bubbles);
+
+                addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+
+                Scene scene = new Scene(bubbleGallery);
+                addBubble.setScene(scene);
+                addBubble.show();
+            }
+
+            private ImageView createImageView(final File imageFile) {
+
+                ImageView imageView = null;
+                try {
+                    final Image image = new Image(new FileInputStream(imageFile), 150, 0, true,
+                            true);
+                    imageView = new ImageView(image);
+                    imageView.setFitWidth(150);
+                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+
+                            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+
+                                if (mouseEvent.getClickCount() == 2) {
+                                    try {
+                                        comicPanel.setLeftCharacter(imageFile.getPath());
+                                        addBubble.close();
+                                        character[0] = "left";
+                                        skinColorPicker[0].setValue(comicPanel.getLeftCharacterSkin());
+                                        hairColorPicker[0].setValue(comicPanel.getLeftCharacterHair());
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        }
+                    });
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                return imageView;
+            }
+        });
+
+
         skinColorPicker[0].setOnAction(new EventHandler() {
             public void handle(Event t) {
                 if(character[0].matches("left"))
@@ -293,7 +373,6 @@ public class Main extends Application {
         hair.setText("Hair:");
         hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
 
-        Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
 
         buttonLayout.addColumn(5, leftCharacter, rightCharacter);
         buttonLayout.addColumn(6, flipButton, genderButton);
@@ -368,9 +447,16 @@ public class Main extends Application {
             }
         });
 
+
+
+
+
+
+
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {
