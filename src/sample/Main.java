@@ -16,6 +16,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -288,6 +289,12 @@ public class Main extends Application {
                 File folder = new File("src/images/bubbles");
                 File[] listOfFiles = folder.listFiles();
 
+                TextField textfield = new TextField();
+                HBox textbox = new HBox(textfield);
+
+
+
+
                 for (final File file : listOfFiles)
                 {
                     ImageView imageView;
@@ -304,7 +311,12 @@ public class Main extends Application {
                 addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
                 addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
 
-                Scene scene = new Scene(bubbleGallery);
+                StackPane stackPane = new StackPane();
+                stackPane.getChildren().add(textbox);
+                stackPane.getChildren().add(bubbleGallery);
+
+
+                Scene scene = new Scene(stackPane, 300, 300);
                 addBubble.setScene(scene);
                 addBubble.show();
             }
