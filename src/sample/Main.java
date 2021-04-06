@@ -326,7 +326,7 @@ public class Main extends Application {
 
                                 if (mouseEvent.getClickCount() == 2) {
                                     try {
-                                        comicPanel.setLeftCharacter(imageFile.getPath());
+                                        comicPanel.setLeftBubble(imageFile.getPath());
                                         addBubble.close();
                                         character[0] = "left";
                                         skinColorPicker[0].setValue(comicPanel.getLeftCharacterSkin());

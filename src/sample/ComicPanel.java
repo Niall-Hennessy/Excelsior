@@ -395,4 +395,14 @@ public class ComicPanel extends Pane {
         bigDecimal = bigDecimal.setScale(1, RoundingMode.HALF_UP);
         return bigDecimal.doubleValue();
     }
+
+    public void setLeftBubble(String imagePath) throws FileNotFoundException {
+        Image image = new Image(new FileInputStream(imagePath));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
+        imageView.setTranslateY(this.getTranslateY() + 80);
+        imageView.setTranslateX(this.getTranslateX() + 40);
+        this.getChildren().add(imageView);
+    }
 }
