@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -336,7 +337,7 @@ public class Main extends Application {
         mainPane.setStyle("-fx-background-color: #B9EBFF");
         mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
 
-        Scene scene = new Scene(mainPane, width, height);
+        Scene scene = new Scene(mainPane, width, height, false);
 
         comicPanel.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
