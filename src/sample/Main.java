@@ -100,42 +100,70 @@ public class Main extends Application {
         final Stage toolTip = new Stage();
         toolTip.initStyle(StageStyle.UNDECORATED);
 
+        HoverTips hoverTips = new HoverTips();
+        hoverTips.setToolTip(toolTip);
+        hoverTips.setPrimaryStage(primaryStage);
+
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
-                if(toolTip.isShowing()) {
-                    toolTip.initModality(Modality.APPLICATION_MODAL);
-                    toolTip.initOwner(primaryStage);
-                }
-
-                Text testText = new Text("Set the Right Character");
-
-                BorderPane borderPane = new BorderPane(testText);
-
-                toolTip.setX(mouseEvent.getScreenX() + 5);
-                toolTip.setY(mouseEvent.getScreenY() - 15);
-
-                Scene scene = new Scene(borderPane);
-                toolTip.setScene(scene);
-                toolTip.show();
+                hoverTips.buttonToolTip("Set the Right Character", mouseEvent, rightCharacter);
             }
         });
 
-        rightCharacter.setOnMouseMoved(new EventHandler<MouseEvent>() {
+        leftCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                toolTip.setX(mouseEvent.getScreenX() + 5);
-                toolTip.setY(mouseEvent.getScreenY() - 15);
+                hoverTips.buttonToolTip("Set the Left Character", mouseEvent, leftCharacter);
             }
         });
 
-        rightCharacter.setOnMouseExited(new EventHandler<MouseEvent>() {
-
+        flipButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip("Flip Direction of the Selected Character", mouseEvent, flipButton);
+            }
+        });
 
-                toolTip.close();
+        genderButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip("Change Selected Characters Gender", mouseEvent, genderButton);
+            }
+        });
+
+        textButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip("Set Caption Text for Bottom or Top of Panel", mouseEvent, textButton);
+            }
+        });
+
+        bubbleButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip("Insert Speach or Thought Bubble of Selected Character", mouseEvent, bubbleButton);
+            }
+        });
+
+        deleteButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip("Delete Selected Object", mouseEvent, deleteButton);
+            }
+        });
+
+        skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.colorToolTip("Choose Skin Colour", mouseEvent, skinColorPicker[0]);
+            }
+        });
+
+        hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.colorToolTip("Choose Hair Colour", mouseEvent, hairColorPicker[0]);
             }
         });
 
