@@ -14,15 +14,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.event.MouseAdapter;
 import java.io.File;
@@ -97,6 +95,49 @@ public class Main extends Application {
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/buttons/speech_bubble.png");
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
 
+
+
+        final Stage toolTip = new Stage();
+        toolTip.initStyle(StageStyle.UNDECORATED);
+
+        rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+                if(toolTip.isShowing()) {
+                    toolTip.initModality(Modality.APPLICATION_MODAL);
+                    toolTip.initOwner(primaryStage);
+                }
+
+                Text testText = new Text("Set the Right Character");
+
+                BorderPane borderPane = new BorderPane(testText);
+
+                toolTip.setX(mouseEvent.getScreenX() + 5);
+                toolTip.setY(mouseEvent.getScreenY() - 15);
+
+                Scene scene = new Scene(borderPane);
+                toolTip.setScene(scene);
+                toolTip.show();
+            }
+        });
+
+        rightCharacter.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                toolTip.setX(mouseEvent.getScreenX() + 5);
+                toolTip.setY(mouseEvent.getScreenY() - 15);
+            }
+        });
+
+        rightCharacter.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+                toolTip.close();
+            }
+        });
 
         rightCharacter.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -292,9 +333,6 @@ public class Main extends Application {
                 TextField textfield = new TextField();
                 HBox textbox = new HBox(textfield);
 
-
-
-
                 for (final File file : listOfFiles)
                 {
                     ImageView imageView;
@@ -303,20 +341,22 @@ public class Main extends Application {
 
                 }
 
+                addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/2);
+                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
+
                 bubbleGallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
                 bubbleGallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 bubbleGallery.setFitToWidth(true);
                 bubbleGallery.setContent(bubbles);
 
-                addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+                bubbleGallery.setPrefWidth(addBubble.getWidth());
+                textbox.setPrefWidth(addBubble.getWidth());
 
-                StackPane stackPane = new StackPane();
-                stackPane.getChildren().add(textbox);
-                stackPane.getChildren().add(bubbleGallery);
+                GridPane stackPane = new GridPane();
+                stackPane.addRow(1, bubbleGallery);
+                stackPane.addRow(2, textbox);
 
-
-                Scene scene = new Scene(stackPane, 300, 300);
+                Scene scene = new Scene(stackPane);
                 addBubble.setScene(scene);
                 addBubble.show();
             }
