@@ -317,13 +317,22 @@ public class Main extends Application {
 
             final Stage addBubble = new Stage();
 
+
+            Pane bubbleDisplay = new Pane();
+            ImageView bubbleImageView = new ImageView();
+
             @Override
             public void handle(ActionEvent event) {
+
+                Button submit = new Button("Submit");
+
+                bubbleDisplay.getChildren().add(bubbleImageView);
 
                 if(addBubble.isShowing()) {
                     addBubble.initModality(Modality.APPLICATION_MODAL);
                     addBubble.initOwner(primaryStage);
                 }
+
                 ScrollPane bubbleGallery = new ScrollPane();
                 TilePane bubbles = new TilePane();
 
@@ -352,9 +361,22 @@ public class Main extends Application {
                 bubbleGallery.setPrefWidth(addBubble.getWidth());
                 textbox.setPrefWidth(addBubble.getWidth());
 
+
+
                 GridPane stackPane = new GridPane();
                 stackPane.addRow(1, bubbleGallery);
-                stackPane.addRow(2, textbox);
+                stackPane.addRow(2, bubbleDisplay);
+                stackPane.addRow(3, textbox);
+                stackPane.addRow(4, submit);
+
+                submit.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        comicPanel.setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText());
+                        bubbleDisplay.getChildren().remove(bubbleImageView);
+                        addBubble.close();
+                    }
+                });
 
                 Scene scene = new Scene(stackPane);
                 addBubble.setScene(scene);
@@ -377,16 +399,7 @@ public class Main extends Application {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 2) {
-                                    try {
-                                        comicPanel.setLeftBubble(imageFile.getPath());
-                                        addBubble.close();
-                                        character[0] = "left";
-                                        skinColorPicker[0].setValue(comicPanel.getLeftCharacterSkin());
-                                        hairColorPicker[0].setValue(comicPanel.getLeftCharacterHair());
-                                    } catch (FileNotFoundException e) {
-                                        e.printStackTrace();
-                                    }
-
+                                        ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
                                 }
                             }
                         }

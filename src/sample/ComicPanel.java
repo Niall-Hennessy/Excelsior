@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
 import javax.swing.plaf.PanelUI;
@@ -33,13 +34,16 @@ public class ComicPanel extends Pane {
     Color rightCharacterHair = Color.rgb(240,255,0,1);
     Color rightCharacterSkin = Color.rgb(255,232,216,1);
 
+    TextBubble leftTextBubble = null;
+    TextBubble rightTextBubble = null;
+
     boolean leftFemale = true;
     boolean rightFemale = true;
 
     public ComicPanel() throws FileNotFoundException {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
         this.setPrefHeight(280);
-        this.setPrefWidth(280);
+        this.setPrefWidth(350);
     }
 
     public ImageView getLeftCharacterView() {
@@ -396,13 +400,20 @@ public class ComicPanel extends Pane {
         return bigDecimal.doubleValue();
     }
 
-    public void setLeftBubble(String imagePath) throws FileNotFoundException {
-        Image image = new Image(new FileInputStream(imagePath));
+    public void setLeftBubble(Image image, String text){
+        if(this.getChildren().size() > 1)
+            this.getChildren().remove(1);
+
+
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(50);
         imageView.setFitWidth(50);
-        imageView.setTranslateY(this.getTranslateY() + 80);
-        imageView.setTranslateX(this.getTranslateX() + 40);
-        this.getChildren().add(imageView);
+
+        leftTextBubble = new TextBubble(imageView, text);
+        leftTextBubble.setTranslateX(this.getTranslateX() + 50);
+        leftTextBubble.setTranslateY(this.getTranslateY() + 50);
+
+
+        this.getChildren().add(leftTextBubble);
     }
 }
