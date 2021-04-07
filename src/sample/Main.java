@@ -102,7 +102,6 @@ public class Main extends Application {
 
         HoverTips hoverTips = new HoverTips();
         hoverTips.setToolTip(toolTip);
-        hoverTips.setPrimaryStage(primaryStage);
 
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override

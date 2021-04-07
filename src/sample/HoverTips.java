@@ -11,22 +11,12 @@ import javafx.stage.Stage;
 
 public class HoverTips {
     Stage toolTip = null;
-    Stage primaryStage = null;
 
     public void setToolTip(Stage toolTip) {
         this.toolTip = toolTip;
     }
 
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
-
     public void colorToolTip(String message, MouseEvent mouseEvent, ColorPicker local) {
-        if(toolTip.isShowing()) {
-            toolTip.initModality(Modality.APPLICATION_MODAL);
-            toolTip.initOwner(primaryStage);
-        }
         Text testText = new Text(message);
         BorderPane borderPane = new BorderPane(testText);
         toolTip.setX(mouseEvent.getScreenX() + 5);
@@ -53,10 +43,6 @@ public class HoverTips {
     }
 
     public void buttonToolTip(String message, MouseEvent mouseEvent, Button local) {
-        if(toolTip.isShowing()) {
-            toolTip.initModality(Modality.APPLICATION_MODAL);
-            toolTip.initOwner(primaryStage);
-        }
         Text testText = new Text(message);
         BorderPane borderPane = new BorderPane(testText);
         toolTip.setX(mouseEvent.getScreenX() + 5);
