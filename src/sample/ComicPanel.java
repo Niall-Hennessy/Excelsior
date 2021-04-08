@@ -405,8 +405,15 @@ public class ComicPanel extends Pane {
 
 
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
+        if(text.length() > 40){
+            imageView.setFitHeight(80);
+            imageView.setFitWidth(50);
+        }
+        else{
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+        }
+
 
         leftTextBubble = new TextBubble(imageView, text);
         leftTextBubble.setTranslateX(this.getTranslateX() + 50);
