@@ -103,66 +103,76 @@ public class Main extends Application {
         HoverTips hoverTips = new HoverTips();
         hoverTips.setToolTip(toolTip);
 
+        String tipRightCharacter    = "Set Right Character";
+        String tipLeftCharacter     = "Set Left Character";
+        String tipFlipButton        = "Flip Direction of the Selected Character";
+        String tipGenderButton      = "Change Selected Character's Gender";
+        String tipTextButton        = "Set Caption Text for Bottom or Top of Panel";
+        String tipBubbleButton      = "Insert Text Bubble for Selected Character";
+        String tipDeleteButton      = "Delete Selected Object";
+        String tipskinColorPicker   = "Choose Skin Colour";
+        String tiphairColorPicker   = "Choose Hair Colour";
+
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.buttonToolTip("Set the Right Character", mouseEvent, rightCharacter);
+                hoverTips.buttonToolTip(tipRightCharacter, mouseEvent, rightCharacter);
             }
         });
 
         leftCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.buttonToolTip("Set the Left Character", mouseEvent, leftCharacter);
+                hoverTips.buttonToolTip(tipLeftCharacter, mouseEvent, leftCharacter);
             }
         });
 
         flipButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.buttonToolTip("Flip Direction of the Selected Character", mouseEvent, flipButton);
+                hoverTips.buttonToolTip(tipFlipButton, mouseEvent, flipButton);
             }
         });
 
         genderButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.buttonToolTip("Change Selected Characters Gender", mouseEvent, genderButton);
+                hoverTips.buttonToolTip(tipGenderButton, mouseEvent, genderButton);
             }
         });
 
         textButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.buttonToolTip("Set Caption Text for Bottom or Top of Panel", mouseEvent, textButton);
+                hoverTips.buttonToolTip(tipTextButton, mouseEvent, textButton);
             }
         });
 
         bubbleButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.buttonToolTip("Insert Speach or Thought Bubble of Selected Character", mouseEvent, bubbleButton);
+                hoverTips.buttonToolTip(tipBubbleButton, mouseEvent, bubbleButton);
             }
         });
 
         deleteButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.buttonToolTip("Delete Selected Object", mouseEvent, deleteButton);
+                hoverTips.buttonToolTip(tipDeleteButton, mouseEvent, deleteButton);
             }
         });
 
         skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.colorToolTip("Choose Skin Colour", mouseEvent, skinColorPicker[0]);
+                hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
             }
         });
 
         hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.colorToolTip("Choose Hair Colour", mouseEvent, hairColorPicker[0]);
+                hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
             }
         });
 
