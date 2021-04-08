@@ -403,6 +403,7 @@ public class Main extends Application {
                             true);
                     imageView = new ImageView(image);
                     imageView.setFitWidth(150);
+                    imageView.setPickOnBounds(true);
                     imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
                         @Override
