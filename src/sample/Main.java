@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -343,6 +345,17 @@ public class Main extends Application {
                 File[] listOfFiles = folder.listFiles();
 
                 TextField textfield = new TextField();
+
+                textfield.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                        if (textfield.getText().length() > 60) {
+                            String s = textfield.getText().substring(0, 60);
+                            textfield.setText(s);
+                        }
+                    }
+                });
+
                 HBox textbox = new HBox(textfield);
 
                 for (final File file : listOfFiles)
