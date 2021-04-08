@@ -82,7 +82,7 @@ public class ComicPanel extends Pane {
         imageView.setRotate(180);
         rightCharacterWrapper = new BorderPane(imageView);
         rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
-        rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
+        rightCharacterWrapper.setTranslateX(this.getTranslateX() + 240);
         this.getChildren().add(rightCharacterWrapper);
         leftCharacterWrapper.setStyle("-fx-border-color: white");
         rightCharacterWrapper.setStyle("-fx-border-color: cyan");
@@ -115,7 +115,7 @@ public class ComicPanel extends Pane {
         else {
             rightCharacterWrapper = new BorderPane(flipCharacter);
             rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
-            rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
+            rightCharacterWrapper.setTranslateX(this.getTranslateX() + 240);
             rightCharacterWrapper.setStyle("-fx-border-color: cyan");
             this.getChildren().add(rightCharacterWrapper);
         }
@@ -310,7 +310,7 @@ public class ComicPanel extends Pane {
             this.getChildren().remove(rightCharacterWrapper);
             rightCharacterWrapper = new BorderPane(imageView);
             rightCharacterWrapper.setTranslateY(this.getTranslateY() + 100);
-            rightCharacterWrapper.setTranslateX(this.getTranslateX() + 170);
+            rightCharacterWrapper.setTranslateX(this.getTranslateX() + 240);
             rightCharacterWrapper.setStyle("-fx-border-color: cyan");
             leftCharacterWrapper.setStyle("-fx-border-color: white");
             this.getChildren().add(rightCharacterWrapper);
@@ -401,8 +401,7 @@ public class ComicPanel extends Pane {
     }
 
     public void setLeftBubble(Image image, String text){
-        if(this.getChildren().size() > 1)
-            this.getChildren().remove(1);
+        this.getChildren().remove(leftTextBubble);
 
 
         ImageView imageView = new ImageView(image);
@@ -415,5 +414,21 @@ public class ComicPanel extends Pane {
 
 
         this.getChildren().add(leftTextBubble);
+    }
+
+    public void setRightBubble(Image image, String text){
+        this.getChildren().remove(rightTextBubble);
+
+
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
+
+        rightTextBubble = new TextBubble(imageView, text);
+        rightTextBubble.setTranslateX(this.getTranslateX() + 250);
+        rightTextBubble.setTranslateY(this.getTranslateY() + 50);
+
+
+        this.getChildren().add(rightTextBubble);
     }
 }
