@@ -100,42 +100,79 @@ public class Main extends Application {
         final Stage toolTip = new Stage();
         toolTip.initStyle(StageStyle.UNDECORATED);
 
+        HoverTips hoverTips = new HoverTips();
+        hoverTips.setToolTip(toolTip);
+
+        String tipRightCharacter    = "Set Right Character";
+        String tipLeftCharacter     = "Set Left Character";
+        String tipFlipButton        = "Flip Direction of the Selected Character";
+        String tipGenderButton      = "Change Selected Character's Gender";
+        String tipTextButton        = "Set Caption Text for Bottom or Top of Panel";
+        String tipBubbleButton      = "Insert Text Bubble for Selected Character";
+        String tipDeleteButton      = "Delete Selected Object";
+        String tipskinColorPicker   = "Choose Skin Colour";
+        String tiphairColorPicker   = "Choose Hair Colour";
+
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
-                if(toolTip.isShowing()) {
-                    toolTip.initModality(Modality.APPLICATION_MODAL);
-                    toolTip.initOwner(primaryStage);
-                }
-
-                Text testText = new Text("Set the Right Character");
-
-                BorderPane borderPane = new BorderPane(testText);
-
-                toolTip.setX(mouseEvent.getScreenX() + 5);
-                toolTip.setY(mouseEvent.getScreenY() - 15);
-
-                Scene scene = new Scene(borderPane);
-                toolTip.setScene(scene);
-                toolTip.show();
+                hoverTips.buttonToolTip(tipRightCharacter, mouseEvent, rightCharacter);
             }
         });
 
-        rightCharacter.setOnMouseMoved(new EventHandler<MouseEvent>() {
+        leftCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                toolTip.setX(mouseEvent.getScreenX() + 5);
-                toolTip.setY(mouseEvent.getScreenY() - 15);
+                hoverTips.buttonToolTip(tipLeftCharacter, mouseEvent, leftCharacter);
             }
         });
 
-        rightCharacter.setOnMouseExited(new EventHandler<MouseEvent>() {
-
+        flipButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip(tipFlipButton, mouseEvent, flipButton);
+            }
+        });
 
-                toolTip.close();
+        genderButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip(tipGenderButton, mouseEvent, genderButton);
+            }
+        });
+
+        textButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip(tipTextButton, mouseEvent, textButton);
+            }
+        });
+
+        bubbleButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip(tipBubbleButton, mouseEvent, bubbleButton);
+            }
+        });
+
+        deleteButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip(tipDeleteButton, mouseEvent, deleteButton);
+            }
+        });
+
+        skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+            }
+        });
+
+        hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
             }
         });
 
