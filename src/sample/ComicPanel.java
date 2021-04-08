@@ -403,39 +403,57 @@ public class ComicPanel extends Pane {
     public void setLeftBubble(Image image, String text){
         this.getChildren().remove(leftTextBubble);
 
-
         ImageView imageView = new ImageView(image);
-        if(text.length() > 40){
-            imageView.setFitHeight(80);
-            imageView.setFitWidth(50);
-        }
-        else{
-            imageView.setFitHeight(50);
-            imageView.setFitWidth(50);
-        }
-
-
         leftTextBubble = new TextBubble(imageView, text);
+
+        if(text.length() < 11) {
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(100);
+            leftTextBubble.setTranslateY(this.getTranslateY() + 50);
+        } else if(text.length() < 21) {
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(165);
+            leftTextBubble.setTranslateY(this.getTranslateY() + 50);
+        } else if(text.length() < 41) {
+            imageView.setFitHeight(60);
+            imageView.setFitWidth(165);
+            leftTextBubble.setTranslateY(this.getTranslateY() + 35);
+        } else {
+            imageView.setFitHeight(90);
+            imageView.setFitWidth(165);
+            leftTextBubble.setTranslateY(this.getTranslateY() + 25);
+        }
+
         leftTextBubble.setTranslateX(this.getTranslateX() + 50);
-        leftTextBubble.setTranslateY(this.getTranslateY() + 50);
-
-
         this.getChildren().add(leftTextBubble);
     }
+
 
     public void setRightBubble(Image image, String text){
         this.getChildren().remove(rightTextBubble);
 
-
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
-
         rightTextBubble = new TextBubble(imageView, text);
+
+        if(text.length() < 11) {
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(100);
+            rightTextBubble.setTranslateY(this.getTranslateY() + 50);
+        } else if(text.length() < 21) {
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(165);
+            rightTextBubble.setTranslateY(this.getTranslateY() + 50);
+        } else if(text.length() < 41) {
+            imageView.setFitHeight(60);
+            imageView.setFitWidth(165);
+            rightTextBubble.setTranslateY(this.getTranslateY() + 35);
+        } else {
+            imageView.setFitHeight(90);
+            imageView.setFitWidth(165);
+            rightTextBubble.setTranslateY(this.getTranslateY() + 25);
+        }
+
         rightTextBubble.setTranslateX(this.getTranslateX() + 250);
-        rightTextBubble.setTranslateY(this.getTranslateY() + 50);
-
-
         this.getChildren().add(rightTextBubble);
     }
 }

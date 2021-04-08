@@ -14,7 +14,7 @@ public class TextBubble extends Pane {
         this.text.setText(text);
         this.text.setTranslateX(bubble.getTranslateX() + 20);
         this.text.setTranslateY(bubble.getTranslateY() + 20);
-        bubble.setFitWidth(this.getWidth());
+        //bubble.setFitWidth(this.getWidth());
         this.getChildren().add(bubble);
         this.getChildren().add(this.text);
     }

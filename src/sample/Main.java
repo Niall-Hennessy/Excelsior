@@ -414,10 +414,10 @@ public class Main extends Application {
 
                 ImageView imageView = null;
                 try {
-                    final Image image = new Image(new FileInputStream(imageFile), 150, 0, true,
+                    final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
                             true);
                     imageView = new ImageView(image);
-                    imageView.setFitWidth(150);
+                    //imageView.setFitWidth(150);
                     imageView.setPickOnBounds(true);
                     imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
