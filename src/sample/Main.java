@@ -375,6 +375,8 @@ public class Main extends Application {
                 submit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        if(textfield.getText().replaceAll("\\s", "").matches(""))
+                            return;
 
                         if(textfield.getText().matches("") || ((ImageView)bubbleDisplay.getChildren().get(0)).getImage() == null)
                             return;
