@@ -388,11 +388,6 @@ public class Main extends Application {
 
                 HBox fontbox = new HBox(fontDrop);
 
-
-
-
-
-
                 bubbleDisplay.getChildren().add(bubbleImageView);
 
                 if(addBubble.isShowing()) {
@@ -413,7 +408,7 @@ public class Main extends Application {
 
                 if(character[0].matches("left") && comicPanel.leftTextBubble != null)
                     textfield.setText(comicPanel.leftTextBubble.getText().getText());
-                else if(comicPanel.rightTextBubble != null)
+                else if(character[0].matches("right") && comicPanel.rightTextBubble != null)
                     textfield.setText(comicPanel.rightTextBubble.getText().getText());
 
                 textfield.textProperty().addListener(new ChangeListener<String>() {

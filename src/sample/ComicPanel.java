@@ -475,26 +475,56 @@ public class ComicPanel extends Pane {
 
     public void setRightBubble(Image image, String text){
         this.getChildren().remove(rightTextBubble);
+        double checkS = image.getWidth() + image.getHeight();
 
         ImageView imageView = new ImageView(image);
-        rightTextBubble = new TextBubble(imageView, text);
 
-        if(text.length() < 11) {
-            imageView.setFitHeight(30);
-            imageView.setFitWidth(100);
-            rightTextBubble.setTranslateY(this.getTranslateY() + 50);
-        } else if(text.length() < 21) {
-            imageView.setFitHeight(30);
-            imageView.setFitWidth(165);
-            rightTextBubble.setTranslateY(this.getTranslateY() + 50);
-        } else if(text.length() < 41) {
-            imageView.setFitHeight(60);
-            imageView.setFitWidth(165);
-            rightTextBubble.setTranslateY(this.getTranslateY() + 35);
-        } else {
-            imageView.setFitHeight(90);
-            imageView.setFitWidth(165);
-            rightTextBubble.setTranslateY(this.getTranslateY() + 25);
+        if (checkS == 295.0) {       // regular shaped bubbles
+            rightTextBubble = new TextBubble(imageView, text);
+
+            if (text.length() < 21) {
+                int len = text.length() * 7 + 45;
+                imageView.setFitHeight(40);
+                if (len > 165) {
+                    imageView.setFitWidth(165);
+                } else {
+                    imageView.setFitWidth(len);
+                }
+                rightTextBubble.setTranslateY(this.getTranslateY() + 60);
+            } else if (text.length() < 41) {
+                imageView.setFitHeight(60);
+                imageView.setFitWidth(165);
+                rightTextBubble.setTranslateY(this.getTranslateY() + 40);
+            } else {
+                imageView.setFitHeight(85);
+                imageView.setFitWidth(165);
+                rightTextBubble.setTranslateY(this.getTranslateY() + 25);
+            }
+        } else {    // irregular bubbles
+            rightTextBubble = new TextBubble(imageView, text);
+            rightTextBubble.getText().setTranslateY(25);
+
+            if (text.length() < 21) {
+                int len = text.length() * 7 + 45;
+                imageView.setFitHeight(75);
+                if (len > 165) {
+                    imageView.setFitWidth(165);
+                } else {
+                    imageView.setFitWidth(len);
+                }
+                rightTextBubble.setTranslateY(this.getTranslateY() + 50);
+                rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 33);
+            } else if (text.length() < 41) {
+                imageView.setFitHeight(105);
+                imageView.setFitWidth(165);
+                rightTextBubble.setTranslateY(this.getTranslateY() + 40);
+                rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 38);
+            } else {
+                imageView.setFitHeight(130);
+                imageView.setFitWidth(165);
+                rightTextBubble.setTranslateY(this.getTranslateY() + 25);
+                rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 42);
+            }
         }
 
         rightTextBubble.setTranslateX(this.getTranslateX() + 250);
