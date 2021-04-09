@@ -411,6 +411,11 @@ public class Main extends Application {
 
                 TextField textfield = new TextField();
 
+                if(character[0].matches("left") && comicPanel.leftTextBubble != null)
+                    textfield.setText(comicPanel.leftTextBubble.getText().getText());
+                else if(comicPanel.rightTextBubble != null)
+                    textfield.setText(comicPanel.rightTextBubble.getText().getText());
+
                 textfield.textProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
