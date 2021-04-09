@@ -331,7 +331,20 @@ public class Main extends Application {
                 submit.setStyle("-fx-background-color: #C8FFB9; -fx-border-color: black; -fx-border-width: 1px");
                 Button cancel = new Button("X");
                 cancel.setStyle("-fx-background-color: #FFB198; -fx-border-color: black; -fx-border-width: 1px");
+                Button italic = new Button("Italic");
+                italic.setStyle("-fx-background-color: #F8FFB9; -fx-border-color: black; -fx-border-width: 1px");
+                Button bold = new Button("Bold");
+                bold.setStyle("-fx-background-color: #F8FFB9; -fx-border-color: black; -fx-border-width: 1px");
+                Button fonts = new Button("Font");
+                fonts.setStyle("-fx-background-color: #F8FFB9; -fx-border-color: black; -fx-border-width: 1px");
 
+
+                ComboBox fontDrop = new ComboBox();
+
+                fontDrop.getItems().add("Choice 1");
+                fontDrop.getItems().add("Choice 2");
+
+                HBox fontbox = new HBox(fontDrop);
 
                 bubbleDisplay.getChildren().add(bubbleImageView);
 
@@ -383,7 +396,6 @@ public class Main extends Application {
                 stackPane.setMargin(submit, new Insets(10,10,10,10));
                 stackPane.setMargin(cancel, new Insets(10, 10, 10, 10));
                 stackPane.setMargin(bubbleDisplay, new Insets(10, 10, 10, 10));
-               // stackPane.setMargin(textbox, new Insets(10, 10, 10, 10));
 
 
                 stackPane.add(bubbleGallery, 1, 1);
@@ -391,6 +403,10 @@ public class Main extends Application {
                 stackPane.add(textbox, 1, 3);
                 stackPane.add(submit, 1, 4);
                 stackPane.addColumn(4, cancel);
+                stackPane.add(italic, 1, 5);
+                stackPane.add(bold, 1, 6);
+                stackPane.add(fonts, 1, 7);
+                stackPane.add(fontbox, 1, 8);
 
 
                 cancel.setOnAction(new EventHandler<ActionEvent>() {
