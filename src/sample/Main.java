@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -352,23 +354,78 @@ public class Main extends Application {
         //pop up for when they hit the bubble button for left character
         bubbleButton.setOnAction(new EventHandler<ActionEvent>() {
 
-            final Stage addBubble = new Stage();
+            final Stage addBubble = new Stage(StageStyle.UNDECORATED);
+
+            Pane bubbleDisplay = new Pane();
+            ImageView bubbleImageView = new ImageView();
+
+            private double xOffset = 0;
+            private double yOffset = 0;
 
             @Override
             public void handle(ActionEvent event) {
+
+                if(character[0] == null || character[0].matches("none")) {
+                    return;
+                }
+
+                Button submit = new Button("Submit");
+                submit.getStyleClass().add("submit");
+                Button cancel = new Button("X");
+                cancel.getStyleClass().add("cancel");
+                Button italic = new Button("Italic");
+                italic.getStyleClass().add("italic");
+                Button bold = new Button("Bold");
+                bold.getStyleClass().add("bold");
+                Button fonts = new Button("Font");
+                fonts.getStyleClass().add("fonts");
+
+
+                ComboBox fontDrop = new ComboBox();
+
+                fontDrop.getItems().add("Choice 1");
+                fontDrop.getItems().add("Choice 2");
+
+                HBox fontbox = new HBox(fontDrop);
+
+
+
+
+
+
+                bubbleDisplay.getChildren().add(bubbleImageView);
 
                 if(addBubble.isShowing()) {
                     addBubble.initModality(Modality.APPLICATION_MODAL);
                     addBubble.initOwner(primaryStage);
                 }
+
                 ScrollPane bubbleGallery = new ScrollPane();
                 TilePane bubbles = new TilePane();
+                bubbles.setStyle("-fx-background-color: #B9EBFF; -fx-border-color: black; -fx-border-width: 1px");
+                bubbles.setMinHeight(120);
+
 
                 File folder = new File("src/images/bubbles");
                 File[] listOfFiles = folder.listFiles();
 
                 TextField textfield = new TextField();
+
+                textfield.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                        if (textfield.getText().length() > 60) {
+                            String s = textfield.getText().substring(0, 60);
+                            textfield.setText(s);
+                        }
+                    }
+                });
+
                 HBox textbox = new HBox(textfield);
+                textfield.setPrefWidth(800);
+                textfield.setPrefHeight(50);
+                textbox.setMargin(textfield, new Insets(10, 10, 10, 10));
+
 
                 for (final File file : listOfFiles)
                 {
@@ -379,7 +436,7 @@ public class Main extends Application {
                 }
 
                 addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/2);
-                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
+                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/1.5);
 
                 bubbleGallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
                 bubbleGallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -389,12 +446,69 @@ public class Main extends Application {
                 bubbleGallery.setPrefWidth(addBubble.getWidth());
                 textbox.setPrefWidth(addBubble.getWidth());
 
+
+
                 GridPane stackPane = new GridPane();
-                stackPane.addRow(1, bubbleGallery);
-                stackPane.addRow(2, textbox);
+                stackPane.setStyle("-fx-background-color: #E6B9FF; -fx-border-color: black; -fx-border-width: 1px");
+              /*  stackPane.setMargin(bubbleGallery, new Insets(10, 10, 10, 10));
+                stackPane.setMargin(submit, new Insets(10,10,10,10));
+                stackPane.setMargin(cancel, new Insets(10, 10, 10, 10));
+                stackPane.setMargin(bubbleDisplay, new Insets(10, 10, 10, 10)); */
+
+
+                stackPane.add(bubbleGallery, 1, 1);
+                stackPane.add(bubbleDisplay, 1, 2);
+                stackPane.add(textbox, 1, 3);
+                stackPane.add(submit, 1, 4);
+                stackPane.addColumn(4, cancel);
+                stackPane.add(italic, 1, 5);
+                stackPane.add(bold, 1, 6);
+                stackPane.add(fonts, 1, 7);
+                stackPane.add(fontbox, 1, 8);
+
+
+
+                cancel.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                        bubbleDisplay.getChildren().remove(bubbleImageView);
+                        addBubble.close();
+                    }
+                });
+
+                submit.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if(textfield.getText().replaceAll("\\s", "").matches(""))
+                            return;
+
+                        if(textfield.getText().matches("") || ((ImageView)bubbleDisplay.getChildren().get(0)).getImage() == null)
+                            return;
+
+                        if(character[0].matches("left"))
+                            comicPanel.setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText());
+                        else if(character[0].matches("right"))
+                            comicPanel.setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText());
+
+
+                        bubbleDisplay.getChildren().remove(bubbleImageView);
+                        addBubble.close();
+                    }
+                });
 
                 Scene scene = new Scene(stackPane);
                 addBubble.setScene(scene);
+
+                scene.getStylesheets().add("sample/style.css");
+
+                scene.setOnMousePressed(pressEvent -> {
+                    scene.setOnMouseDragged(dragEvent -> {
+                        addBubble.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+                        addBubble.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+                    });
+                });
+
                 addBubble.show();
             }
 
@@ -402,10 +516,11 @@ public class Main extends Application {
 
                 ImageView imageView = null;
                 try {
-                    final Image image = new Image(new FileInputStream(imageFile), 150, 0, true,
+                    final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
                             true);
                     imageView = new ImageView(image);
-                    imageView.setFitWidth(150);
+                    //imageView.setFitWidth(150);
+                    imageView.setPickOnBounds(true);
                     imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
                         @Override
@@ -413,17 +528,8 @@ public class Main extends Application {
 
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
-                                if (mouseEvent.getClickCount() == 2) {
-                                    try {
-                                        comicPanel.setLeftBubble(imageFile.getPath());
-                                        addBubble.close();
-                                        character[0] = "left";
-                                        skinColorPicker[0].setValue(comicPanel.getLeftCharacterSkin());
-                                        hairColorPicker[0].setValue(comicPanel.getLeftCharacterHair());
-                                    } catch (FileNotFoundException e) {
-                                        e.printStackTrace();
-                                    }
-
+                                if (mouseEvent.getClickCount() == 1) {
+                                        ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
                                 }
                             }
                         }
@@ -521,7 +627,7 @@ public class Main extends Application {
                     hairColorPicker[0].setValue(comicPanel.getLeftCharacterHair());
                     character[0] = "left";
                 }
-                else if(x <= 270 && x >= 170 && y >= 100 && y <= 200) {
+                else if(x <= 340 && x >= 240 && y >= 100 && y <= 200) {
                     skinColorPicker[0].setValue(comicPanel.getRightCharacterSkin());
                     hairColorPicker[0].setValue(comicPanel.getRightCharacterHair());
                     character[0] = "right";
