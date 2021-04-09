@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 
 import java.io.FileInputStream;
@@ -107,7 +108,7 @@ public class ComicPanel extends Pane {
             this.getChildren().add(leftCharacterWrapper);
 
             if(leftTextBubble != null)
-                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText());
+                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText(), leftTextBubble.getText().getFont());
         }
         else {
             rightCharacterWrapper = new BorderPane(flipCharacter);
@@ -117,7 +118,7 @@ public class ComicPanel extends Pane {
             this.getChildren().add(rightCharacterWrapper);
 
             if(rightTextBubble != null)
-                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText());
+                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText(), rightTextBubble.getText().getFont());
         }
 
     }
@@ -238,7 +239,7 @@ public class ComicPanel extends Pane {
 
 
             if(leftTextBubble != null)
-                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText());
+                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText(), leftTextBubble.getText().getFont());
         }
         else if(character.matches("right")){
             Image image = rightCharacterView.getImage();
@@ -320,7 +321,7 @@ public class ComicPanel extends Pane {
             this.getChildren().add(rightCharacterWrapper);
 
             if(rightTextBubble != null)
-                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText());
+                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText(), rightTextBubble.getText().getFont());
         }
 
     }
@@ -408,14 +409,14 @@ public class ComicPanel extends Pane {
         return bigDecimal.doubleValue();
     }
 
-    public void setLeftBubble(Image image, String text) {
+    public void setLeftBubble(Image image, String text, Font font) {
         this.getChildren().remove(leftTextBubble);
         double checkS = image.getWidth() + image.getHeight();
 
         ImageView imageView = new ImageView(image);
 
         if (checkS == 295.0) {       // regular shaped bubbles
-            leftTextBubble = new TextBubble(imageView, text);
+            leftTextBubble = new TextBubble(imageView, text, font);
 
             if (text.length() < 21) {
                 int len = text.length() * 7 + 45;
@@ -436,7 +437,7 @@ public class ComicPanel extends Pane {
                 leftTextBubble.setTranslateY(this.getTranslateY() + 25);
             }
         } else {    // irregular bubbles
-            leftTextBubble = new TextBubble(imageView, text);
+            leftTextBubble = new TextBubble(imageView, text, font);
             leftTextBubble.getText().setTranslateY(25);
 
             if (text.length() < 21) {
@@ -490,7 +491,7 @@ public class ComicPanel extends Pane {
     }
 
 
-    public void setRightBubble(Image image, String text){
+    public void setRightBubble(Image image, String text, Font font){
         this.getChildren().remove(rightTextBubble);
         double checkS = image.getWidth() + image.getHeight();
 
@@ -500,7 +501,7 @@ public class ComicPanel extends Pane {
         imageView.setRotate(180);
 
         if (checkS == 295.0) {       // regular shaped bubbles
-            rightTextBubble = new TextBubble(imageView, text);
+            rightTextBubble = new TextBubble(imageView, text, font);
 
             if (text.length() < 21) {
                 int len = text.length() * 7 + 45;
@@ -521,7 +522,7 @@ public class ComicPanel extends Pane {
                 rightTextBubble.setTranslateY(this.getTranslateY() + 25);
             }
         } else {    // irregular bubbles
-            rightTextBubble = new TextBubble(imageView, text);
+            rightTextBubble = new TextBubble(imageView, text, font);
             rightTextBubble.getText().setTranslateY(25);
 
             if (text.length() < 21) {

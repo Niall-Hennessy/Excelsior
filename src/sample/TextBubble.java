@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class TextBubble extends Pane {
@@ -9,9 +10,10 @@ public class TextBubble extends Pane {
     ImageView bubble;
     Text text = new Text();
 
-    public TextBubble(ImageView bubble, String text) {
+    public TextBubble(ImageView bubble, String text, Font font) {
         text = parseText(text, 20);
         this.text.setText(text);
+        this.text.setFont(font);
         this.text.setTranslateX(bubble.getTranslateX() + 20);
         this.text.setTranslateY(bubble.getTranslateY() + 20);
         //bubble.setFitWidth(this.getWidth());

@@ -18,6 +18,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -406,14 +409,20 @@ public class Main extends Application {
 
                 TextField textfield = new TextField();
 
+                final boolean[] isBold = {false};
+                final boolean[] isItalic = {false};
+
                 if(character[0].matches("left") && comicPanel.leftTextBubble != null)
                     textfield.setText(comicPanel.leftTextBubble.getText().getText());
                 else if(character[0].matches("right") && comicPanel.rightTextBubble != null)
                     textfield.setText(comicPanel.rightTextBubble.getText().getText());
 
+                final Text[] characterCounter = {new Text("0/60")};
+
                 textfield.textProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                        characterCounter[0].setText(Integer.toString(textfield.getText().length()) + "/60");
                         if (textfield.getText().length() > 60) {
                             String s = textfield.getText().substring(0, 60);
                             textfield.setText(s);
@@ -425,7 +434,6 @@ public class Main extends Application {
                 textfield.setPrefWidth(800);
                 textfield.setPrefHeight(50);
                 textbox.setMargin(textfield, new Insets(10, 10, 10, 10));
-
 
                 for (final File file : listOfFiles)
                 {
@@ -456,17 +464,48 @@ public class Main extends Application {
                 stackPane.setMargin(bubbleDisplay, new Insets(10, 10, 10, 10)); */
 
 
-                stackPane.add(bubbleGallery, 1, 1);
-                stackPane.add(bubbleDisplay, 1, 2);
-                stackPane.add(textbox, 1, 3);
-                stackPane.add(submit, 1, 4);
-                stackPane.addColumn(4, cancel);
-                stackPane.add(italic, 1, 5);
-                stackPane.add(bold, 1, 6);
-                stackPane.add(fonts, 1, 7);
-                stackPane.add(fontbox, 1, 8);
+                stackPane.addRow(1, cancel);
+                stackPane.add(bubbleGallery, 1, 2);
+                stackPane.add(bubbleDisplay, 1, 3);
+                stackPane.add(textbox, 1, 4);
+                stackPane.addRow(5, characterCounter[0]);
+                stackPane.add(submit, 1, 6);
+                stackPane.add(italic, 1, 7);
+                stackPane.add(bold, 1, 8);
+                stackPane.add(fonts, 1, 9);
+                stackPane.add(fontbox, 1, 10);
 
+                bold.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        isBold[0] = !isBold[0];
 
+                        if(isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(!isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(isBold[0] && !isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+                        else
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
+                    }
+                });
+
+                italic.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        isItalic[0] = !isItalic[0];
+
+                        if(isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(!isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(isBold[0] && !isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+                        else
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
+                    }
+                });
 
                 cancel.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -486,10 +525,19 @@ public class Main extends Application {
                         if(textfield.getText().matches("") || ((ImageView)bubbleDisplay.getChildren().get(0)).getImage() == null)
                             return;
 
+                        if(isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(!isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(isBold[0] && !isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+                        else
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
+
                         if(character[0].matches("left"))
-                            comicPanel.setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText());
+                            comicPanel.setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
                         else if(character[0].matches("right"))
-                            comicPanel.setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText());
+                            comicPanel.setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
 
 
                         bubbleDisplay.getChildren().remove(bubbleImageView);
