@@ -328,24 +328,15 @@ public class Main extends Application {
                 }
 
                 Button submit = new Button("Submit");
-                submit.setStyle("-fx-background-color: #C8FFB9; -fx-border-color: black; -fx-border-width: 1px");
+                submit.getStyleClass().add("submit");
                 Button cancel = new Button("X");
-                cancel.setStyle("-fx-background-color: #FFB198; -fx-border-color: black; -fx-border-width: 1px");
+                cancel.getStyleClass().add("cancel");
                 Button italic = new Button("Italic");
-                italic.setStyle("-fx-background-color: #F8FFB9; -fx-border-color: black; -fx-border-width: 1px");
+                italic.getStyleClass().add("italic");
                 Button bold = new Button("Bold");
-                bold.setStyle("-fx-background-color: #F8FFB9; -fx-border-color: black; -fx-border-width: 1px");
+                bold.getStyleClass().add("bold");
                 Button fonts = new Button("Font");
-                //fonts.setStyle("-fx-background-color: #F8FFB9; -fx-border-color: black; -fx-border-width: 1px");
-
-                //TEST
-              //  final String IDLE_BUTTON_STYLE = "fx-background-color: #FF9898";
-               // final String HOVERED_BUTTON_STYLE = "fx-background-color: #98B9FF";
-
-                //fonts.setStyle(IDLE_BUTTON_STYLE);
-                //fonts.setOnMouseEntered(e -> fonts.setStyle(HOVERED_BUTTON_STYLE));
-                //fonts.setOnMouseExited(e -> fonts.setStyle(IDLE_BUTTON_STYLE));
-                //TEST
+                fonts.getStyleClass().add("fonts");
 
 
                 ComboBox fontDrop = new ComboBox();
@@ -401,10 +392,10 @@ public class Main extends Application {
 
                 GridPane stackPane = new GridPane();
                 stackPane.setStyle("-fx-background-color: #E6B9FF; -fx-border-color: black; -fx-border-width: 1px");
-                stackPane.setMargin(bubbleGallery, new Insets(10, 10, 10, 10));
+              /*  stackPane.setMargin(bubbleGallery, new Insets(10, 10, 10, 10));
                 stackPane.setMargin(submit, new Insets(10,10,10,10));
                 stackPane.setMargin(cancel, new Insets(10, 10, 10, 10));
-                stackPane.setMargin(bubbleDisplay, new Insets(10, 10, 10, 10));
+                stackPane.setMargin(bubbleDisplay, new Insets(10, 10, 10, 10)); */
 
 
                 stackPane.add(bubbleGallery, 1, 1);
@@ -446,7 +437,20 @@ public class Main extends Application {
                 });
 
                 Scene scene = new Scene(stackPane);
+                scene.getStylesheets().add("sample/style.css");
+                if(scene.getStylesheets().get(0) == null)
+                {
+                    scene.getStylesheets().get(0).toString();
+                }
                 addBubble.setScene(scene);
+
+                scene.setOnMousePressed(pressEvent -> {
+                    scene.setOnMouseDragged(dragEvent -> {
+                        addBubble.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+                        addBubble.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+                    });
+                });
+
                 addBubble.show();
             }
 
