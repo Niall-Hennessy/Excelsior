@@ -530,7 +530,7 @@ public class ComicPanel extends Pane {
             }
         }
 
-        rightTextBubble.setTranslateX(this.getTranslateX() + 200);
+        rightTextBubble.setTranslateX(this.getTranslateX() + 150);
         this.getChildren().add(rightTextBubble);
     }
 }
