@@ -111,6 +111,9 @@ public class ComicPanel extends Pane {
             leftCharacterWrapper.setTranslateX(this.getTranslateX() + 10);
             leftCharacterWrapper.setStyle("-fx-border-color: cyan");
             this.getChildren().add(leftCharacterWrapper);
+
+            if(leftTextBubble != null)
+                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText());
         }
         else {
             rightCharacterWrapper = new BorderPane(flipCharacter);
@@ -118,6 +121,9 @@ public class ComicPanel extends Pane {
             rightCharacterWrapper.setTranslateX(this.getTranslateX() + 240);
             rightCharacterWrapper.setStyle("-fx-border-color: cyan");
             this.getChildren().add(rightCharacterWrapper);
+
+            if(rightTextBubble != null)
+                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText());
         }
 
     }
@@ -235,6 +241,10 @@ public class ComicPanel extends Pane {
             leftCharacterWrapper.setStyle("-fx-border-color: cyan");
             rightCharacterWrapper.setStyle("-fx-border-color: white");
             this.getChildren().add(leftCharacterWrapper);
+
+
+            if(leftTextBubble != null)
+                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText());
         }
         else if(character.matches("right")){
             Image image = rightCharacterView.getImage();
@@ -314,7 +324,11 @@ public class ComicPanel extends Pane {
             rightCharacterWrapper.setStyle("-fx-border-color: cyan");
             leftCharacterWrapper.setStyle("-fx-border-color: white");
             this.getChildren().add(rightCharacterWrapper);
+
+            if(rightTextBubble != null)
+                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText());
         }
+
     }
 
 
@@ -400,35 +414,90 @@ public class ComicPanel extends Pane {
         return bigDecimal.doubleValue();
     }
 
-    public void setLeftBubble(Image image, String text){
+    public void setLeftBubble(Image image, String text) {
         this.getChildren().remove(leftTextBubble);
-
+        double checkS = image.getWidth() + image.getHeight();
 
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
 
-        leftTextBubble = new TextBubble(imageView, text);
+        if (checkS == 295.0) {       // regular shaped bubbles
+            leftTextBubble = new TextBubble(imageView, text);
+
+            if (text.length() < 21) {
+                int len = text.length() * 7 + 45;
+                imageView.setFitHeight(40);
+                if (len > 165) {
+                    imageView.setFitWidth(165);
+                } else {
+                    imageView.setFitWidth(len);
+                }
+                leftTextBubble.setTranslateY(this.getTranslateY() + 60);
+            } else if (text.length() < 41) {
+                imageView.setFitHeight(60);
+                imageView.setFitWidth(165);
+                leftTextBubble.setTranslateY(this.getTranslateY() + 40);
+            } else {
+                imageView.setFitHeight(85);
+                imageView.setFitWidth(165);
+                leftTextBubble.setTranslateY(this.getTranslateY() + 25);
+            }
+        } else {    // irregular bubbles
+            leftTextBubble = new TextBubble(imageView, text);
+            leftTextBubble.getText().setTranslateY(25);
+
+            if (text.length() < 21) {
+                int len = text.length() * 7 + 45;
+                imageView.setFitHeight(75);
+                if (len > 165) {
+                    imageView.setFitWidth(165);
+                } else {
+                    imageView.setFitWidth(len);
+                }
+                leftTextBubble.setTranslateY(this.getTranslateY() + 50);
+                leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 33);
+            } else if (text.length() < 41) {
+                imageView.setFitHeight(105);
+                imageView.setFitWidth(165);
+                leftTextBubble.setTranslateY(this.getTranslateY() + 40);
+                leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 38);
+            } else {
+                imageView.setFitHeight(130);
+                imageView.setFitWidth(165);
+                leftTextBubble.setTranslateY(this.getTranslateY() + 25);
+                leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 42);
+            }
+        }
+
         leftTextBubble.setTranslateX(this.getTranslateX() + 50);
-        leftTextBubble.setTranslateY(this.getTranslateY() + 50);
-
-
         this.getChildren().add(leftTextBubble);
     }
+
 
     public void setRightBubble(Image image, String text){
         this.getChildren().remove(rightTextBubble);
 
-
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
-
         rightTextBubble = new TextBubble(imageView, text);
+
+        if(text.length() < 11) {
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(100);
+            rightTextBubble.setTranslateY(this.getTranslateY() + 50);
+        } else if(text.length() < 21) {
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(165);
+            rightTextBubble.setTranslateY(this.getTranslateY() + 50);
+        } else if(text.length() < 41) {
+            imageView.setFitHeight(60);
+            imageView.setFitWidth(165);
+            rightTextBubble.setTranslateY(this.getTranslateY() + 35);
+        } else {
+            imageView.setFitHeight(90);
+            imageView.setFitWidth(165);
+            rightTextBubble.setTranslateY(this.getTranslateY() + 25);
+        }
+
         rightTextBubble.setTranslateX(this.getTranslateX() + 250);
-        rightTextBubble.setTranslateY(this.getTranslateY() + 50);
-
-
         this.getChildren().add(rightTextBubble);
     }
 }
