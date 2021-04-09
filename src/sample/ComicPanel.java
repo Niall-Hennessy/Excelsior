@@ -479,6 +479,9 @@ public class ComicPanel extends Pane {
 
         ImageView imageView = new ImageView(image);
 
+        imageView.setRotationAxis(Rotate.Y_AXIS);
+        imageView.setRotate(180);
+
         if (checkS == 295.0) {       // regular shaped bubbles
             rightTextBubble = new TextBubble(imageView, text);
 
@@ -527,7 +530,7 @@ public class ComicPanel extends Pane {
             }
         }
 
-        rightTextBubble.setTranslateX(this.getTranslateX() + 250);
+        rightTextBubble.setTranslateX(this.getTranslateX() + 200);
         this.getChildren().add(rightTextBubble);
     }
 }
