@@ -336,7 +336,16 @@ public class Main extends Application {
                 Button bold = new Button("Bold");
                 bold.setStyle("-fx-background-color: #F8FFB9; -fx-border-color: black; -fx-border-width: 1px");
                 Button fonts = new Button("Font");
-                fonts.setStyle("-fx-background-color: #F8FFB9; -fx-border-color: black; -fx-border-width: 1px");
+                //fonts.setStyle("-fx-background-color: #F8FFB9; -fx-border-color: black; -fx-border-width: 1px");
+
+                //TEST
+              //  final String IDLE_BUTTON_STYLE = "fx-background-color: #FF9898";
+               // final String HOVERED_BUTTON_STYLE = "fx-background-color: #98B9FF";
+
+                //fonts.setStyle(IDLE_BUTTON_STYLE);
+                //fonts.setOnMouseEntered(e -> fonts.setStyle(HOVERED_BUTTON_STYLE));
+                //fonts.setOnMouseExited(e -> fonts.setStyle(IDLE_BUTTON_STYLE));
+                //TEST
 
 
                 ComboBox fontDrop = new ComboBox();
