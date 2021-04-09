@@ -111,6 +111,9 @@ public class ComicPanel extends Pane {
             leftCharacterWrapper.setTranslateX(this.getTranslateX() + 10);
             leftCharacterWrapper.setStyle("-fx-border-color: cyan");
             this.getChildren().add(leftCharacterWrapper);
+
+            if(leftTextBubble != null)
+                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText());
         }
         else {
             rightCharacterWrapper = new BorderPane(flipCharacter);
@@ -118,6 +121,9 @@ public class ComicPanel extends Pane {
             rightCharacterWrapper.setTranslateX(this.getTranslateX() + 240);
             rightCharacterWrapper.setStyle("-fx-border-color: cyan");
             this.getChildren().add(rightCharacterWrapper);
+
+            if(rightTextBubble != null)
+                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText());
         }
 
     }
@@ -235,6 +241,10 @@ public class ComicPanel extends Pane {
             leftCharacterWrapper.setStyle("-fx-border-color: cyan");
             rightCharacterWrapper.setStyle("-fx-border-color: white");
             this.getChildren().add(leftCharacterWrapper);
+
+
+            if(leftTextBubble != null)
+                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText());
         }
         else if(character.matches("right")){
             Image image = rightCharacterView.getImage();
@@ -314,7 +324,11 @@ public class ComicPanel extends Pane {
             rightCharacterWrapper.setStyle("-fx-border-color: cyan");
             leftCharacterWrapper.setStyle("-fx-border-color: white");
             this.getChildren().add(rightCharacterWrapper);
+
+            if(rightTextBubble != null)
+                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText());
         }
+
     }
 
 
