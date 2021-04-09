@@ -1,24 +1,18 @@
 package sample;
 
 import javafx.event.EventHandler;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.chart.Axis;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
-import javax.swing.plaf.PanelUI;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ComicPanel extends Pane {
 
@@ -468,6 +462,29 @@ public class ComicPanel extends Pane {
             }
         }
 
+        leftTextBubble.getChildren().get(0).setOnMousePressed(pressEvent -> {
+            leftTextBubble.getChildren().get(0).setOnMouseDragged(dragEvent -> {
+
+                double offsetX = dragEvent.getScreenX() - pressEvent.getSceneX() + 50;
+                double offsetY = dragEvent.getScreenY() - pressEvent.getSceneY() + 30;
+
+                if(offsetX > this.getTranslateX() + 350 - leftTextBubble.getWidth())
+                    offsetX = this.getTranslateX() + 350 - leftTextBubble.getWidth();
+
+                if(offsetX < this.getTranslateX())
+                    offsetX = this.getTranslateX();
+
+                if(offsetY > this.getTranslateY() + 260 - leftTextBubble.getHeight())
+                    offsetY = this.getTranslateY() + 260 - leftTextBubble.getHeight();
+
+                if(offsetY < this.getTranslateY() + 5)
+                    offsetY = this.getTranslateY() + 5;
+
+                leftTextBubble.setTranslateX(offsetX);
+                leftTextBubble.setTranslateY(offsetY);
+            });
+        });
+
         leftTextBubble.setTranslateX(this.getTranslateX() + 50);
         this.getChildren().add(leftTextBubble);
     }
@@ -529,6 +546,29 @@ public class ComicPanel extends Pane {
                 rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 42);
             }
         }
+
+        rightTextBubble.getChildren().get(0).setOnMousePressed(pressEvent -> {
+            rightTextBubble.getChildren().get(0).setOnMouseDragged(dragEvent -> {
+
+                double offsetX = dragEvent.getScreenX() - pressEvent.getSceneX() + 150;
+                double offsetY = dragEvent.getScreenY() - pressEvent.getSceneY() + 30;
+
+                if(offsetX > this.getTranslateX() + 350 - rightTextBubble.getWidth())
+                    offsetX = this.getTranslateX() + 350 - rightTextBubble.getWidth();
+
+                if(offsetX < this.getTranslateX())
+                    offsetX = this.getTranslateX();
+
+                if(offsetY > this.getTranslateY() + 260 - rightTextBubble.getHeight())
+                    offsetY = this.getTranslateY() + 260 - rightTextBubble.getHeight();
+
+                if(offsetY < this.getTranslateY() + 5)
+                    offsetY = this.getTranslateY() + 5;
+
+                rightTextBubble.setTranslateX(offsetX);
+                rightTextBubble.setTranslateY(offsetY);
+            });
+        });
 
         rightTextBubble.setTranslateX(this.getTranslateX() + 150);
         this.getChildren().add(rightTextBubble);
