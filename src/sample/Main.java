@@ -351,7 +351,7 @@ public class Main extends Application {
             }
         });
 
-        //pop up for when they hit the bubble button for left character
+        //pop up for when they hit the bubble button for speech
         bubbleButton.setOnAction(new EventHandler<ActionEvent>() {
 
             final Stage addBubble = new Stage(StageStyle.UNDECORATED);
@@ -371,14 +371,14 @@ public class Main extends Application {
 
                 Button submit = new Button("Submit");
                 submit.getStyleClass().add("submit");
-                Button cancel = new Button("X");
+                Button escape = new Button("X");
+                escape.getStyleClass().add("escape");
+                Button cancel = new Button("Cancel");
                 cancel.getStyleClass().add("cancel");
                 Button italic = new Button("Italic");
                 italic.getStyleClass().add("italic");
                 Button bold = new Button("Bold");
                 bold.getStyleClass().add("bold");
-
-
 
                 bubbleDisplay.getChildren().add(bubbleImageView);
 
@@ -388,8 +388,9 @@ public class Main extends Application {
                 }
 
                 ScrollPane bubbleGallery = new ScrollPane();
+                bubbleGallery.getStyleClass().add("bubbleGallery");
                 TilePane bubbles = new TilePane();
-                bubbles.setStyle("-fx-background-color: #B9EBFF; -fx-border-color: black; -fx-border-width: 1px");
+                bubbles.getStyleClass().add("bubbles");
                 bubbles.setMinHeight(120);
 
 
@@ -441,25 +442,37 @@ public class Main extends Application {
 
 
                 GridPane stackPane = new GridPane();
-                stackPane.setStyle("-fx-background-color: #E6B9FF; -fx-border-color: black; -fx-border-width: 1px");
-              /*  stackPane.setMargin(bubbleGallery, new Insets(10, 10, 10, 10));
+                stackPane.getStyleClass().add("stackPane");
+
+                stackPane.setMargin(bubbleGallery, new Insets(10, 10, 10, 10));
                 stackPane.setMargin(submit, new Insets(10,10,10,10));
-                stackPane.setMargin(cancel, new Insets(10, 10, 10, 10));
-                stackPane.setMargin(bubbleDisplay, new Insets(10, 10, 10, 10)); */
+                stackPane.setMargin(escape, new Insets(10, 10, 0, 0));
+                stackPane.setMargin(bubbleDisplay, new Insets(10, 10, 10, 10)); //for when a bubble is selected
+                //stackPane.setMargin(bubbles, new Insets(50, 10, 10, 10));//should be the container of the bubbles
 
 
                 stackPane.add(bubbleGallery, 1, 1);
                 stackPane.add(bubbleDisplay, 1, 2);
                 stackPane.add(textbox, 1, 3);
                 stackPane.add(submit, 1, 4);
-                stackPane.addColumn(4, cancel);
+                stackPane.addColumn(4, escape);
                 stackPane.add(italic, 1, 5);
                 stackPane.add(bold, 1, 6);
+                stackPane.add(cancel,1, 7);
 
 
 
 
                 cancel.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                        bubbleDisplay.getChildren().remove(bubbleImageView);
+                        addBubble.close();
+                    }
+                });
+
+                escape.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
 
