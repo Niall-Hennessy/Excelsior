@@ -346,6 +346,11 @@ public class Main extends Application {
 
                 HBox fontbox = new HBox(fontDrop);
 
+
+
+
+
+
                 bubbleDisplay.getChildren().add(bubbleImageView);
 
                 if(addBubble.isShowing()) {
