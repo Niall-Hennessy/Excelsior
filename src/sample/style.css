@@ -1,10 +1,10 @@
-.fonts, .bold, .italic{
+.bold, .italic{
     -fx-background-color: #BABCC1;
     -fx-border-color: black;
     -fx-border-width: 2px;
 }
 
-.fonts:hover, .bold:hover, .italic:hover {
+ .bold:hover, .italic:hover {
     -fx-background-color: #7E7F81;
 }
 

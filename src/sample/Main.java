@@ -377,19 +377,6 @@ public class Main extends Application {
                 italic.getStyleClass().add("italic");
                 Button bold = new Button("Bold");
                 bold.getStyleClass().add("bold");
-                Button fonts = new Button("Font");
-                fonts.getStyleClass().add("fonts");
-
-
-                ComboBox fontDrop = new ComboBox();
-
-                fontDrop.getItems().add("Choice 1");
-                fontDrop.getItems().add("Choice 2");
-
-                HBox fontbox = new HBox(fontDrop);
-
-
-
 
 
 
@@ -468,8 +455,7 @@ public class Main extends Application {
                 stackPane.addColumn(4, cancel);
                 stackPane.add(italic, 1, 5);
                 stackPane.add(bold, 1, 6);
-                stackPane.add(fonts, 1, 7);
-                stackPane.add(fontbox, 1, 8);
+
 
 
 
