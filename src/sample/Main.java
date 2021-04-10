@@ -412,19 +412,21 @@ public class Main extends Application {
                 final boolean[] isBold = {false};
                 final boolean[] isItalic = {false};
 
-                if(character[0].matches("left") && comicPanel.leftTextBubble != null)
-                    textfield.setText(comicPanel.leftTextBubble.getText().getText());
+                if(character[0].matches("left") && comicPanel.leftTextBubble != null) {
+                    textfield.setText(comicPanel.leftTextBubble.getText().getText().replaceAll("\n", " "));
+                }
                 else if(character[0].matches("right") && comicPanel.rightTextBubble != null)
                     textfield.setText(comicPanel.rightTextBubble.getText().getText());
 
-                final Text[] characterCounter = {new Text("0/60")};
+
+                final Text[] characterCounter = {new Text(textfield.getText().length() + "/50")};
 
                 textfield.textProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-                        characterCounter[0].setText(Integer.toString(textfield.getText().length()) + "/60");
-                        if (textfield.getText().length() > 60) {
-                            String s = textfield.getText().substring(0, 60);
+                        characterCounter[0].setText(Integer.toString(textfield.getText().length()) + "/50");
+                        if (textfield.getText().length() > 50) {
+                            String s = textfield.getText().substring(0, 50);
                             textfield.setText(s);
                         }
                     }
@@ -468,7 +470,7 @@ public class Main extends Application {
                 stackPane.add(bubbleGallery, 1, 2);
                 stackPane.add(bubbleDisplay, 1, 3);
                 stackPane.add(textbox, 1, 4);
-                stackPane.addRow(5, characterCounter[0]);
+                stackPane.add(characterCounter[0], 2, 5);
                 stackPane.add(submit, 1, 6);
                 stackPane.add(italic, 1, 7);
                 stackPane.add(bold, 1, 8);

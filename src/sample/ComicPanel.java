@@ -441,7 +441,7 @@ public class ComicPanel extends Pane {
             leftTextBubble = new TextBubble(imageView, text, font);
             leftTextBubble.getText().setTranslateY(25);
 
-            if (text.length() < 21) {
+            if (text.length() <= 20) {
                 int len = text.length() * 7 + 45;
                 imageView.setFitHeight(75);
                 if (len > 165) {
@@ -451,7 +451,7 @@ public class ComicPanel extends Pane {
                 }
                 leftTextBubble.setTranslateY(this.getTranslateY() + 50);
                 leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 33);
-            } else if (text.length() < 41) {
+            } else if (text.length() <= 40) {
                 imageView.setFitHeight(105);
                 imageView.setFitWidth(165);
                 leftTextBubble.setTranslateY(this.getTranslateY() + 40);
@@ -468,7 +468,7 @@ public class ComicPanel extends Pane {
             leftTextBubble.getScene().setCursor(Cursor.MOVE);
         });
 
-        leftTextBubble.setOnMouseEntered(mouseEvent -> {
+        leftTextBubble.getChildren().get(0).setOnMouseEntered(mouseEvent -> {
             leftTextBubble.getScene().setCursor(Cursor.MOVE);
             leftTextBubble.setOnMousePressed(pressEvent -> {
                 leftTextBubble.setOnMouseDragged(dragEvent -> {
@@ -587,7 +587,7 @@ public class ComicPanel extends Pane {
             rightTextBubble.getScene().setCursor(Cursor.MOVE);
         });
 
-        rightTextBubble.setOnMouseEntered(mouseEvent -> {
+        rightTextBubble.getChildren().get(0).setOnMouseEntered(mouseEvent -> {
             rightTextBubble.getScene().setCursor(Cursor.MOVE);
             rightTextBubble.setOnMousePressed(pressEvent -> {
                 rightTextBubble.setOnMouseDragged(dragEvent -> {
