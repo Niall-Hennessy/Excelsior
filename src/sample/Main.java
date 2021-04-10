@@ -417,7 +417,7 @@ public class Main extends Application {
                 HBox textbox = new HBox(textfield);
                 textfield.setPrefWidth(800);
                 textfield.setPrefHeight(50);
-                textbox.setMargin(textfield, new Insets(10, 10, 10, 10));
+
 
 
                 for (final File file : listOfFiles)
@@ -428,10 +428,10 @@ public class Main extends Application {
 
                 }
 
-                addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/2);
-                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/1.5);
+                addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.5);
+                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/1.2);
 
-                bubbleGallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
+                bubbleGallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizontal
                 bubbleGallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 bubbleGallery.setFitToWidth(true);
                 bubbleGallery.setContent(bubbles);
@@ -441,26 +441,29 @@ public class Main extends Application {
 
 
 
-                GridPane stackPane = new GridPane();
-                stackPane.getStyleClass().add("stackPane");
+                GridPane bubbleGrid = new GridPane();
+                bubbleGrid.setPadding(new Insets(10, 10, 10, 10));
+                bubbleGrid.setVgap(5);
+                bubbleGrid.setHgap(5);
+                bubbleGrid.getStyleClass().add("bubbleGrid");
 
-                stackPane.setMargin(bubbleGallery, new Insets(10, 10, 10, 10));
-                stackPane.setMargin(submit, new Insets(10,10,10,10));
-                stackPane.setMargin(escape, new Insets(10, 10, 0, 0));
-                stackPane.setMargin(bubbleDisplay, new Insets(10, 10, 10, 10)); //for when a bubble is selected
-                //stackPane.setMargin(bubbles, new Insets(50, 10, 10, 10));//should be the container of the bubbles
-
-
-                stackPane.add(bubbleGallery, 1, 1);
-                stackPane.add(bubbleDisplay, 1, 2);
-                stackPane.add(textbox, 1, 3);
-                stackPane.add(submit, 1, 4);
-                stackPane.addColumn(4, escape);
-                stackPane.add(italic, 1, 5);
-                stackPane.add(bold, 1, 6);
-                stackPane.add(cancel,1, 7);
-
-
+                // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
+                bubbleGrid.add(escape, 4, 1, 1, 1);
+                bubbleGrid.add(bubbleGallery, 0, 2, 3, 3);
+                bubbleGrid.setMargin(bubbleGallery, new Insets (10, 10, 10, 30));//its 30 to balance out the x buttons margins and get the otherside right
+                bubbleGrid.add(bubbleDisplay, 0, 5, 3, 3);
+                bubbleGrid.setMargin(bubbleDisplay, new Insets (10, 10, 10, 30));
+                bubbleGrid.add(italic, 0,8, 1, 1 );
+                bubbleGrid.setMargin(italic, new Insets (5, 2, 2, 30));
+                bubbleGrid.add(bold, 1, 8, 1, 1);
+                bubbleGrid.setMargin(bold, new Insets (5, 2, 2, 0));
+                bubbleGrid.add(textbox, 0, 9, 3, 1);
+                bubbleGrid.setMargin(textbox, new Insets (10, 10, 10, 30));
+                bubbleGrid.add(submit, 0, 11, 1, 1);
+                bubbleGrid.setMargin(submit, new Insets (2, 2, 2, 30));
+                bubbleGrid.add(cancel,1, 11, 1, 1);
+                bubbleGrid.setMargin(cancel, new Insets (2, 2, 2, 2));
+                
 
 
                 cancel.setOnAction(new EventHandler<ActionEvent>() {
@@ -501,7 +504,7 @@ public class Main extends Application {
                     }
                 });
 
-                Scene scene = new Scene(stackPane);
+                Scene scene = new Scene(bubbleGrid);
                 addBubble.setScene(scene);
 
                 scene.getStylesheets().add("sample/style.css");

@@ -1,7 +1,11 @@
-.bold, .italic{
+.bold {
     -fx-background-color: #E5A6FF;
-    /*-fx-border-color: black;
-    -fx-border-width: 2px;*/
+    -fx-font-weight: bold;
+}
+
+.italic {
+    -fx-background-color: #E5A6FF;
+    -fx-font-style: italic;
 }
 
  .bold:hover, .italic:hover {
@@ -13,15 +17,15 @@
 }
 
 .escape:hover {
-    -fx-background-color: #FFB198;
+    -fx-background-color: #FF3D3D;
 }
 
 .submit {
-    -fx-background-color: #72FC53;
+    -fx-background-color: #98FF81;
 }
 
 .submit:hover {
-    -fx-background-color: #58C63F;
+    -fx-background-color: #3FFF13; /*#58C63F;*/
 }
 
 .cancel {
@@ -39,7 +43,7 @@
 }
 
 
-.stackPane {
+.bubbleGrid {
     -fx-background-color: #E6B9FF; /*PURPLE BORDER STAGE*/
     -fx-border-color: black;
     -fx-border-width: 1px;
