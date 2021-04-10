@@ -354,7 +354,7 @@ public class Main extends Application {
             }
         });
 
-        //pop up for when they hit the bubble button for left character
+        //pop up for when they hit the bubble button for speech
         bubbleButton.setOnAction(new EventHandler<ActionEvent>() {
 
             final Stage addBubble = new Stage(StageStyle.UNDECORATED);
@@ -374,7 +374,9 @@ public class Main extends Application {
 
                 Button submit = new Button("Submit");
                 submit.getStyleClass().add("submit");
-                Button cancel = new Button("X");
+                Button escape = new Button("X");
+                escape.getStyleClass().add("escape");
+                Button cancel = new Button("Cancel");
                 cancel.getStyleClass().add("cancel");
                 Button italic = new Button("Italic");
                 italic.getStyleClass().add("italic");
@@ -384,12 +386,12 @@ public class Main extends Application {
                 fonts.getStyleClass().add("fonts");
 
 
-                ComboBox fontDrop = new ComboBox();
-
-                fontDrop.getItems().add("Choice 1");
-                fontDrop.getItems().add("Choice 2");
-
-                HBox fontbox = new HBox(fontDrop);
+//                ComboBox fontDrop = new ComboBox();
+//
+//                fontDrop.getItems().add("Choice 1");
+//                fontDrop.getItems().add("Choice 2");
+//
+//                HBox fontbox = new HBox(fontDrop);
 
                 bubbleDisplay.getChildren().add(bubbleImageView);
 
@@ -399,8 +401,9 @@ public class Main extends Application {
                 }
 
                 ScrollPane bubbleGallery = new ScrollPane();
+                bubbleGallery.getStyleClass().add("bubbleGallery");
                 TilePane bubbles = new TilePane();
-                bubbles.setStyle("-fx-background-color: #B9EBFF; -fx-border-color: black; -fx-border-width: 1px");
+                bubbles.getStyleClass().add("bubbles");
                 bubbles.setMinHeight(120);
 
 
@@ -435,7 +438,7 @@ public class Main extends Application {
                 HBox textbox = new HBox(textfield);
                 textfield.setPrefWidth(800);
                 textfield.setPrefHeight(50);
-                textbox.setMargin(textfield, new Insets(10, 10, 10, 10));
+
 
                 for (final File file : listOfFiles)
                 {
@@ -445,10 +448,10 @@ public class Main extends Application {
 
                 }
 
-                addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/2);
-                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/1.5);
+                addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.5);
+                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/1.2);
 
-                bubbleGallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
+                bubbleGallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizontal
                 bubbleGallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 bubbleGallery.setFitToWidth(true);
                 bubbleGallery.setContent(bubbles);
@@ -458,24 +461,29 @@ public class Main extends Application {
 
 
 
-                GridPane stackPane = new GridPane();
-                stackPane.setStyle("-fx-background-color: #E6B9FF; -fx-border-color: black; -fx-border-width: 1px");
-              /*  stackPane.setMargin(bubbleGallery, new Insets(10, 10, 10, 10));
-                stackPane.setMargin(submit, new Insets(10,10,10,10));
-                stackPane.setMargin(cancel, new Insets(10, 10, 10, 10));
-                stackPane.setMargin(bubbleDisplay, new Insets(10, 10, 10, 10)); */
+                GridPane bubbleGrid = new GridPane();
+                bubbleGrid.setPadding(new Insets(10, 10, 10, 10));
+                bubbleGrid.setVgap(5);
+                bubbleGrid.setHgap(5);
+                bubbleGrid.getStyleClass().add("bubbleGrid");
 
+                // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
+                bubbleGrid.add(escape, 4, 1, 1, 1);
+                bubbleGrid.add(bubbleGallery, 0, 2, 3, 3);
+                bubbleGrid.setMargin(bubbleGallery, new Insets (10, 10, 10, 30));//its 30 to balance out the x buttons margins and get the otherside right
+                bubbleGrid.add(bubbleDisplay, 0, 5, 3, 3);
+                bubbleGrid.setMargin(bubbleDisplay, new Insets (10, 10, 10, 30));
+                bubbleGrid.add(italic, 0,8, 1, 1 );
+                bubbleGrid.setMargin(italic, new Insets (5, 2, 2, 30));
+                bubbleGrid.add(bold, 1, 8, 1, 1);
+                bubbleGrid.setMargin(bold, new Insets (5, 2, 2, 0));
+                bubbleGrid.add(textbox, 0, 9, 3, 1);
+                bubbleGrid.setMargin(textbox, new Insets (10, 10, 10, 30));
+                bubbleGrid.add(submit, 0, 11, 1, 1);
+                bubbleGrid.setMargin(submit, new Insets (2, 2, 2, 30));
+                bubbleGrid.add(cancel,1, 11, 1, 1);
+                bubbleGrid.setMargin(cancel, new Insets (2, 2, 2, 2));
 
-                stackPane.addRow(1, cancel);
-                stackPane.add(bubbleGallery, 1, 2);
-                stackPane.add(bubbleDisplay, 1, 3);
-                stackPane.add(textbox, 1, 4);
-                stackPane.add(characterCounter[0], 2, 5);
-                stackPane.add(submit, 1, 6);
-                stackPane.add(italic, 1, 7);
-                stackPane.add(bold, 1, 8);
-                stackPane.add(fonts, 1, 9);
-                stackPane.add(fontbox, 1, 10);
 
                 bold.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -518,6 +526,15 @@ public class Main extends Application {
                     }
                 });
 
+                escape.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                        bubbleDisplay.getChildren().remove(bubbleImageView);
+                        addBubble.close();
+                    }
+                });
+
                 submit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -547,7 +564,7 @@ public class Main extends Application {
                     }
                 });
 
-                Scene scene = new Scene(stackPane);
+                Scene scene = new Scene(bubbleGrid);
                 addBubble.setScene(scene);
 
                 scene.getStylesheets().add("sample/style.css");

@@ -1,25 +1,50 @@
-.fonts, .bold, .italic{
-    -fx-background-color: #BABCC1;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
+.bold {
+    -fx-background-color: #E5A6FF;
+    -fx-font-weight: bold;
 }
 
-.fonts:hover, .bold:hover, .italic:hover {
-    -fx-background-color: #7E7F81;
+.italic {
+    -fx-background-color: #E5A6FF;
+    -fx-font-style: italic;
 }
 
-.cancel {
+ .bold:hover, .italic:hover {
+    -fx-background-color: #C089D7;
+}
+
+.escape {
     -fx-background-color: #E6B9FF;
 }
 
-.cancel:hover {
-    -fx-background-color: #FFB198;
+.escape:hover {
+    -fx-background-color: #FF3D3D;
 }
 
 .submit {
-    -fx-background-color: #72FC53;
+    -fx-background-color: #98FF81;
 }
 
 .submit:hover {
-    -fx-background-color: #58C63F;
+    -fx-background-color: #3FFF13; /*#58C63F;*/
+}
+
+.cancel {
+    -fx-background-color: #FF6060;
+}
+
+.cancel:hover {
+    -fx-background-color: #FF3D3D;
+}
+
+.bubbles {
+    -fx-background-color: #B9EBFF; /*BLUE CLOUD BACKGROUNDS*/
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+}
+
+
+.bubbleGrid {
+    -fx-background-color: #E6B9FF; /*PURPLE BORDER STAGE*/
+    -fx-border-color: black;
+    -fx-border-width: 1px;
 }
