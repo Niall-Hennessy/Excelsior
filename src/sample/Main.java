@@ -394,18 +394,15 @@ public class Main extends Application {
 //                HBox fontbox = new HBox(fontDrop);
 
                 bubbleDisplay.getChildren().add(bubbleImageView);
+                bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
 
                 if(addBubble.isShowing()) {
                     addBubble.initModality(Modality.APPLICATION_MODAL);
                     addBubble.initOwner(primaryStage);
                 }
 
-                ScrollPane bubbleGallery = new ScrollPane();
-                bubbleGallery.getStyleClass().add("bubbleGallery");
-                TilePane bubbles = new TilePane();
-                bubbles.getStyleClass().add("bubbles");
-                bubbles.setMinHeight(120);
-
+                HBox bubbleGallery = new HBox();
+                bubbleGallery.getStyleClass().add("bubbles");
 
                 File folder = new File("src/images/bubbles");
                 File[] listOfFiles = folder.listFiles();
@@ -465,22 +462,9 @@ public class Main extends Application {
                 {
                     ImageView imageView;
                     imageView = createImageView(file);
-                    bubbles.getChildren().addAll(imageView);
+                    bubbleGallery.getChildren().add(imageView);
 
                 }
-
-                addBubble.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.5);
-                addBubble.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/1.2);
-
-                bubbleGallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizontal
-                bubbleGallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                bubbleGallery.setFitToWidth(true);
-                bubbleGallery.setContent(bubbles);
-
-                bubbleGallery.setPrefWidth(addBubble.getWidth());
-                textbox.setPrefWidth(addBubble.getWidth());
-
-
 
                 GridPane bubbleGrid = new GridPane();
                 bubbleGrid.setPadding(new Insets(10, 10, 10, 10));
