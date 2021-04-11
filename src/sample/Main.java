@@ -482,13 +482,13 @@ public class Main extends Application {
                 bubbleGrid.setMargin(italic, new Insets (5, 2, 2, 30));
                 bubbleGrid.add(bold, 1, 8, 1, 1);
                 bubbleGrid.setMargin(bold, new Insets (5, 2, 2, 0));
-                bubbleGrid.add(characterCounter[0],2, 11, 1, 1);
-                bubbleGrid.setMargin(characterCounter[0], new Insets (2, 2, 2, 2));
+                bubbleGrid.add(characterCounter[0],0, 11, 1, 1);
+                bubbleGrid.setMargin(characterCounter[0], new Insets (2, 2, 2, 30));
                 bubbleGrid.add(textbox, 0, 9, 3, 1);
-                bubbleGrid.setMargin(textbox, new Insets (10, 10, 10, 30));
-                bubbleGrid.add(submit, 0, 11, 1, 1);
+                bubbleGrid.setMargin(textbox, new Insets (10, 10, 1, 30));
+                bubbleGrid.add(submit, 0, 12, 1, 1);
                 bubbleGrid.setMargin(submit, new Insets (2, 2, 2, 30));
-                bubbleGrid.add(cancel,1, 11, 1, 1);
+                bubbleGrid.add(cancel,1, 12, 1, 1);
                 bubbleGrid.setMargin(cancel, new Insets (2, 2, 2, 2));
 
                 bold.setOnAction(new EventHandler<ActionEvent>() {
