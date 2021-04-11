@@ -106,8 +106,16 @@ public class ComicPanel extends Pane {
             leftCharacterWrapper.setStyle("-fx-border-color: cyan");
             this.getChildren().add(leftCharacterWrapper);
 
-            if(leftTextBubble != null)
-                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText(), leftTextBubble.getText().getFont());
+            if(leftTextBubble != null) {
+                double x = leftTextBubble.getTranslateX(); double y = leftTextBubble.getTranslateY();
+                setLeftBubble(((ImageView) leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText(), leftTextBubble.getText().getFont());
+                leftTextBubble.setTranslateX(x);leftTextBubble.setTranslateY(y);
+            }
+            if(rightTextBubble != null) {
+                double x = rightTextBubble.getTranslateX(); double y = rightTextBubble.getTranslateY();
+                setRightBubble(((ImageView) rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText(), rightTextBubble.getText().getFont());
+                rightTextBubble.setTranslateX(x);rightTextBubble.setTranslateY(y);
+            }
         }
         else {
             rightCharacterWrapper = new BorderPane(flipCharacter);
@@ -116,8 +124,16 @@ public class ComicPanel extends Pane {
             rightCharacterWrapper.setStyle("-fx-border-color: cyan");
             this.getChildren().add(rightCharacterWrapper);
 
-            if(rightTextBubble != null)
-                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText(), rightTextBubble.getText().getFont());
+            if(leftTextBubble != null) {
+                double x = leftTextBubble.getTranslateX(); double y = leftTextBubble.getTranslateY();
+                setLeftBubble(((ImageView) leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText(), leftTextBubble.getText().getFont());
+                leftTextBubble.setTranslateX(x);leftTextBubble.setTranslateY(y);
+            }
+            if(rightTextBubble != null) {
+                double x = rightTextBubble.getTranslateX(); double y = rightTextBubble.getTranslateY();
+                setRightBubble(((ImageView) rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText(), rightTextBubble.getText().getFont());
+                rightTextBubble.setTranslateX(x);rightTextBubble.setTranslateY(y);
+            }
         }
 
     }
@@ -237,8 +253,16 @@ public class ComicPanel extends Pane {
             this.getChildren().add(leftCharacterWrapper);
 
 
-            if(leftTextBubble != null)
-                setLeftBubble(((ImageView)leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText(), leftTextBubble.getText().getFont());
+            if(rightTextBubble != null) {
+                double x = rightTextBubble.getTranslateX(); double y = rightTextBubble.getTranslateY();
+                setRightBubble(((ImageView) rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText(), rightTextBubble.getText().getFont());
+                rightTextBubble.setTranslateX(x);rightTextBubble.setTranslateY(y);
+            }
+            if(leftTextBubble != null) {
+                double x = leftTextBubble.getTranslateX(); double y = leftTextBubble.getTranslateY();
+                setLeftBubble(((ImageView) leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText(), leftTextBubble.getText().getFont());
+                leftTextBubble.setTranslateX(x);leftTextBubble.setTranslateY(y);
+            }
         }
         else if(character.matches("right")){
             Image image = rightCharacterView.getImage();
@@ -319,12 +343,31 @@ public class ComicPanel extends Pane {
             leftCharacterWrapper.setStyle("-fx-border-color: white");
             this.getChildren().add(rightCharacterWrapper);
 
-            if(rightTextBubble != null)
-                setRightBubble(((ImageView)rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText(), rightTextBubble.getText().getFont());
+            if(rightTextBubble != null) {
+                double x = rightTextBubble.getTranslateX(); double y = rightTextBubble.getTranslateY();
+                setRightBubble(((ImageView) rightTextBubble.getChildren().get(0)).getImage(), rightTextBubble.getText().getText(), rightTextBubble.getText().getFont());
+                rightTextBubble.setTranslateX(x);rightTextBubble.setTranslateY(y);
+            }
+            if(leftTextBubble != null) {
+                double x = leftTextBubble.getTranslateX(); double y = leftTextBubble.getTranslateY();
+                setLeftBubble(((ImageView) leftTextBubble.getChildren().get(0)).getImage(), leftTextBubble.getText().getText(), leftTextBubble.getText().getFont());
+                leftTextBubble.setTranslateX(x);leftTextBubble.setTranslateY(y);
+            }
         }
 
     }
 
+    public void removeBubble(String character){
+
+        if(character.matches("left")) {
+            this.getChildren().remove(leftTextBubble);
+            leftTextBubble = null;
+        }
+        else {
+            this.getChildren().remove(rightTextBubble);
+            rightTextBubble = null;
+        }
+    }
 
     public Color getLeftCharacterHair() {
         return leftCharacterHair;

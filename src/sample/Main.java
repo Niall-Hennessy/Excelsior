@@ -58,14 +58,14 @@ public class Main extends Application {
         menuBar.setStyle("-fx-background-color: #B9EBFF");
 
         Menu file = new Menu("File");
-        MenuItem menuItem1 = new MenuItem("Save XML");
-        MenuItem menuItem2 = new MenuItem("Save HTMl");
-        MenuItem menuItem3 = new MenuItem("Load XML");
-        MenuItem menuItem4 = new MenuItem("Load HTML");
-        file.getItems().add(menuItem1);
-        file.getItems().add(menuItem2);
-        file.getItems().add(menuItem3);
-        file.getItems().add(menuItem4);
+        MenuItem save_xml = new MenuItem("Save XML");
+        MenuItem save_htMl = new MenuItem("Save HTMl");
+        MenuItem load_xml = new MenuItem("Load XML");
+        MenuItem load_html = new MenuItem("Load HTML");
+        file.getItems().add(save_xml);
+        file.getItems().add(save_htMl);
+        file.getItems().add(load_xml);
+        file.getItems().add(load_html);
 
         menuBar.getMenus().add(file);
 
@@ -73,6 +73,10 @@ public class Main extends Application {
         menuBar.getMenus().add(edit);
         Menu view = new Menu("View");
         menuBar.getMenus().add(view);
+        Menu help = new Menu("Help");
+        MenuItem helpItem = new MenuItem("Help");
+        help.getItems().add(helpItem);
+        menuBar.getMenus().add(help);
 
         HBox menuBox = new HBox(menuBar);
 
@@ -180,6 +184,32 @@ public class Main extends Application {
                 hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
             }
         });
+
+//        help.setOnAction(new EventHandler<ActionEvent>() {
+//            final Stage helpStage = new Stage();
+//
+//            @Override
+//            public void handle(ActionEvent event) {
+//
+//                TabPane helpPane = new TabPane();
+//
+//                Tab character = new Tab("Character", new Label("Help on how to add characters"));
+//                Tab speechBubble = new Tab("Speech Bubbles", new Label("Help on how to add Speech Bubbles"));
+//                Tab colour = new Tab();
+//
+//                helpPane.getTabs().add(character);
+//                helpPane.getTabs().add(speechBubble);
+//                helpPane.getTabs().add(colour);
+//
+//                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/5);
+//                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
+//
+//
+//                Scene scene = new Scene(helpPane);
+//                helpStage.setScene(scene);
+//                helpStage.show();
+//            }
+//        });
 
         rightCharacter.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -378,6 +408,8 @@ public class Main extends Application {
                 escape.getStyleClass().add("escape");
                 Button cancel = new Button("Cancel");
                 cancel.getStyleClass().add("cancel");
+                Button delete = new Button("Delete");
+                delete.getStyleClass().add("cancel");
                 Button italic = new Button("Italic");
                 italic.getStyleClass().add("italic");
                 Button bold = new Button("Bold");
@@ -393,7 +425,8 @@ public class Main extends Application {
 //
 //                HBox fontbox = new HBox(fontDrop);
 
-                bubbleDisplay.getChildren().add(bubbleImageView);
+                if(bubbleDisplay.getChildren().size() == 0)
+                    bubbleDisplay.getChildren().add(bubbleImageView);
                 bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
 
                 if(addBubble.isShowing()) {
@@ -490,6 +523,8 @@ public class Main extends Application {
                 bubbleGrid.setMargin(submit, new Insets (2, 2, 2, 30));
                 bubbleGrid.add(cancel,1, 12, 1, 1);
                 bubbleGrid.setMargin(cancel, new Insets (2, 2, 2, 2));
+                bubbleGrid.add(delete,2, 12, 1, 1);
+                bubbleGrid.setMargin(delete, new Insets (2, 11, 2, 2));
 
                 bold.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -528,6 +563,14 @@ public class Main extends Application {
                     public void handle(ActionEvent actionEvent) {
 
                         bubbleDisplay.getChildren().remove(bubbleImageView);
+                        addBubble.close();
+                    }
+                });
+
+                delete.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        comicPanel.removeBubble(character[0]);
                         addBubble.close();
                     }
                 });
@@ -692,8 +735,8 @@ public class Main extends Application {
                 double x = mouseEvent.getX();
                 double y = mouseEvent.getY();
 
-                System.out.println("X: " + x);
-                System.out.println("Y: " + y);
+
+
 
                 if(x <= 110 && x >= 10 && y >= 100 && y <= 200) {
                     skinColorPicker[0].setValue(comicPanel.getLeftCharacterSkin());
@@ -714,11 +757,6 @@ public class Main extends Application {
                 comicPanel.selectCharacter(character[0]);
             }
         });
-
-
-
-
-
 
 
         primaryStage.setScene(scene);
