@@ -415,8 +415,29 @@ public class Main extends Application {
                 final boolean[] isBold = {false};
                 final boolean[] isItalic = {false};
 
+                if(comicPanel.leftTextBubble != null) {
+                    if(comicPanel.leftTextBubble.getText().getFont().toString().substring(17,21).matches("Bold")){
+                        isBold[0] = true;
+                    }
+                    if(comicPanel.leftTextBubble.getText().getFont().toString().substring(22,28).matches("Italic")){
+                        isItalic[0] = true;
+                    }
+                    else if(comicPanel.leftTextBubble.getText().getFont().toString().substring(17,23).matches("Italic")){
+                        isItalic[0] = true;
+                    }
+                }
+
                 if(character[0].matches("left") && comicPanel.leftTextBubble != null) {
                     textfield.setText(comicPanel.leftTextBubble.getText().getText().replaceAll("\n", " "));
+
+                    if(isBold[0] && isItalic[0])
+                        textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+                    else if(!isBold[0] && isItalic[0])
+                        textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+                    else if(isBold[0] && !isItalic[0])
+                        textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+                    else
+                        textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
                 }
                 else if(character[0].matches("right") && comicPanel.rightTextBubble != null)
                     textfield.setText(comicPanel.rightTextBubble.getText().getText());
