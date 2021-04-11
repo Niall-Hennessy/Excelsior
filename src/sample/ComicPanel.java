@@ -1,9 +1,7 @@
 package sample;
 
-import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -14,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ComicPanel extends Pane {
 
@@ -464,62 +462,45 @@ public class ComicPanel extends Pane {
             }
         }
 
-        leftTextBubble.getChildren().get(1).setOnMouseEntered(mouseEvent -> {
+        AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
+
+        leftTextBubble.setOnMouseEntered(mouseEvent -> {
             leftTextBubble.getScene().setCursor(Cursor.MOVE);
         });
 
-        leftTextBubble.getChildren().get(0).setOnMouseEntered(mouseEvent -> {
-            leftTextBubble.getScene().setCursor(Cursor.MOVE);
-            leftTextBubble.setOnMousePressed(pressEvent -> {
-                leftTextBubble.setOnMouseDragged(dragEvent -> {
-
-                    double offsetX = dragEvent.getScreenX() - pressEvent.getSceneX() + 50;
-                    double offsetY = dragEvent.getScreenY() - pressEvent.getSceneY() + 30;
-
-                    if(offsetX > this.getTranslateX() + 350 - leftTextBubble.getWidth())
-                        offsetX = this.getTranslateX() + 350 - leftTextBubble.getWidth();
-
-                    if(offsetX < this.getTranslateX())
-                        offsetX = this.getTranslateX();
-
-                    if(offsetY > this.getTranslateY() + 260 - leftTextBubble.getHeight())
-                        offsetY = this.getTranslateY() + 260 - leftTextBubble.getHeight();
-
-                    if(offsetY < this.getTranslateY() + 5)
-                        offsetY = this.getTranslateY() + 5;
-
-                    leftTextBubble.setTranslateX(offsetX);
-                    leftTextBubble.setTranslateY(offsetY);
-                });
-            });
-
-            leftTextBubble.getChildren().get(1).setOnMousePressed(pressEvent -> {
-                leftTextBubble.setOnMouseDragged(dragEvent -> {
-
-                    double offsetX = dragEvent.getScreenX() - pressEvent.getSceneX() + 50;
-                    double offsetY = dragEvent.getScreenY() - pressEvent.getSceneY() + 30;
-
-                    if(offsetX > this.getTranslateX() + 350 - leftTextBubble.getWidth())
-                        offsetX = this.getTranslateX() + 350 - leftTextBubble.getWidth();
-
-                    if(offsetX < this.getTranslateX())
-                        offsetX = this.getTranslateX();
-
-                    if(offsetY > this.getTranslateY() + 260 - leftTextBubble.getHeight())
-                        offsetY = this.getTranslateY() + 260 - leftTextBubble.getHeight();
-
-                    if(offsetY < this.getTranslateY() + 5)
-                        offsetY = this.getTranslateY() + 5;
-
-                    leftTextBubble.setTranslateX(offsetX);
-                    leftTextBubble.setTranslateY(offsetY);
-                });
-            });
-        });
-
-        leftTextBubble.getChildren().get(0).setOnMouseExited(mouseEvent -> {
+        leftTextBubble.setOnMouseExited(mouseEvent -> {
             leftTextBubble.getScene().setCursor(Cursor.DEFAULT);
         });
+
+        leftTextBubble.setOnMousePressed(pressEvent -> {
+            dragX.set(0.0);
+            dragY.set(0.0);
+            leftTextBubble.setOnMouseDragged(dragEvent -> {
+
+                double offsetX = leftTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                double offsetY = leftTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+
+                if(offsetX < 3)
+                    offsetX = 3;
+                else if(offsetX > 347 - leftTextBubble.getWidth())
+                    offsetX = 347 - leftTextBubble.getWidth();
+
+                if(offsetY < 3)
+                    offsetY = 3;
+                else if(offsetY > 263 - leftTextBubble.getHeight())
+                    offsetY = 263 - leftTextBubble.getHeight();
+
+
+                leftTextBubble.setTranslateX(offsetX);
+                leftTextBubble.setTranslateY(offsetY);
+                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+            });
+        });
+
+        leftTextBubble.setTranslateX(leftTextBubble.getTranslateX() + dragX.get());
+        leftTextBubble.setTranslateY(leftTextBubble.getTranslateY() + dragY.get());
 
         leftTextBubble.setTranslateX(this.getTranslateX() + 50);
         this.getChildren().add(leftTextBubble);
@@ -583,64 +564,47 @@ public class ComicPanel extends Pane {
             }
         }
 
-        rightTextBubble.getChildren().get(1).setOnMouseEntered(mouseEvent -> {
+        AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
+
+        rightTextBubble.setOnMouseEntered(mouseEvent -> {
             rightTextBubble.getScene().setCursor(Cursor.MOVE);
         });
 
-        rightTextBubble.getChildren().get(0).setOnMouseEntered(mouseEvent -> {
-            rightTextBubble.getScene().setCursor(Cursor.MOVE);
-            rightTextBubble.setOnMousePressed(pressEvent -> {
-                rightTextBubble.setOnMouseDragged(dragEvent -> {
-
-                    double offsetX = dragEvent.getScreenX() - pressEvent.getSceneX() + 150;
-                    double offsetY = dragEvent.getScreenY() - pressEvent.getSceneY() + 30;
-
-                    if(offsetX > this.getTranslateX() + 350 - rightTextBubble.getWidth())
-                        offsetX = this.getTranslateX() + 350 - rightTextBubble.getWidth();
-
-                    if(offsetX < this.getTranslateX())
-                        offsetX = this.getTranslateX();
-
-                    if(offsetY > this.getTranslateY() + 260 - rightTextBubble.getHeight())
-                        offsetY = this.getTranslateY() + 260 - rightTextBubble.getHeight();
-
-                    if(offsetY < this.getTranslateY() + 5)
-                        offsetY = this.getTranslateY() + 5;
-
-                    rightTextBubble.setTranslateX(offsetX);
-                    rightTextBubble.setTranslateY(offsetY);
-                });
-            });
-
-            rightTextBubble.getChildren().get(1).setOnMousePressed(pressEvent -> {
-                rightTextBubble.setOnMouseDragged(dragEvent -> {
-
-                    double offsetX = dragEvent.getScreenX() - pressEvent.getSceneX() + 150;
-                    double offsetY = dragEvent.getScreenY() - pressEvent.getSceneY() + 30;
-
-                    if(offsetX > this.getTranslateX() + 350 - rightTextBubble.getWidth())
-                        offsetX = this.getTranslateX() + 350 - rightTextBubble.getWidth();
-
-                    if(offsetX < this.getTranslateX())
-                        offsetX = this.getTranslateX();
-
-                    if(offsetY > this.getTranslateY() + 260 - rightTextBubble.getHeight())
-                        offsetY = this.getTranslateY() + 260 - rightTextBubble.getHeight();
-
-                    if(offsetY < this.getTranslateY() + 5)
-                        offsetY = this.getTranslateY() + 5;
-
-                    rightTextBubble.setTranslateX(offsetX);
-                    rightTextBubble.setTranslateY(offsetY);
-                });
-            });
-        });
-
-        rightTextBubble.getChildren().get(0).setOnMouseExited(mouseEvent -> {
+        rightTextBubble.setOnMouseExited(mouseEvent -> {
             rightTextBubble.getScene().setCursor(Cursor.DEFAULT);
         });
 
-        rightTextBubble.setTranslateX(this.getTranslateX() + 150);
+        rightTextBubble.setOnMousePressed(pressEvent -> {
+            dragX.set(0.0);
+            dragY.set(0.0);
+            rightTextBubble.setOnMouseDragged(dragEvent -> {
+
+                double offsetX = rightTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                double offsetY = rightTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+
+                if(offsetX < 3)
+                    offsetX = 3;
+                else if(offsetX > 347 - rightTextBubble.getWidth())
+                    offsetX = 347 - rightTextBubble.getWidth();
+
+                if(offsetY < 3)
+                    offsetY = 3;
+                else if(offsetY > 263 - rightTextBubble.getHeight())
+                    offsetY = 263 - rightTextBubble.getHeight();
+
+
+                rightTextBubble.setTranslateX(offsetX);
+                rightTextBubble.setTranslateY(offsetY);
+                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+            });
+        });
+
+        rightTextBubble.setTranslateX(rightTextBubble.getTranslateX() + dragX.get());
+        rightTextBubble.setTranslateY(rightTextBubble.getTranslateY() + dragY.get());
+
+        rightTextBubble.setTranslateX(this.getTranslateX() + 200);
         this.getChildren().add(rightTextBubble);
     }
 }
