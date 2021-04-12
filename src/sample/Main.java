@@ -194,34 +194,50 @@ public class Main extends Application {
                 helpStage.setTitle("Help");
 
                 TabPane helpPane = new TabPane();
+                helpPane.setStyle("-fx-background-color: pink; -fx-font-family: arial; -fx-font-size: 15 ");
                 //helpPane.getStyleClass().add("helpPane");
 
-                Tab character = new Tab("Character");
-                //character tab should talk about: Choosing a character, setting it, diff of left right, flipping it, M/F
-                Tab speechBubble = new Tab("Speech Bubbles", new Label("Help on how to add Speech Bubbles"));
-                //talks about if you want your character to talk how you do that
-                Tab colour = new Tab("Skin/Hair", new Label("How to set Skin and Hair Colour"));
-                //talks about how you change colours and customer colours and change left vs change right
-                Tab caption = new Tab("Caption");
-                //talks about captioning and top or bottom or both
+                Tab characterTab = new Tab("Character");
+                characterTab.setStyle("-fx-background-color: white; -fx-font-family: arial; -fx-font-size: 15; ");
+                characterTab.setContent(new Text("Let's add a character to your comic!\n \nClick on the character icon to choose a left or right character.\nDouble click a character pose from the gallery.\nUse the Flip Button to change which way they are facing.\nUse the M/F button to change their gender."));
 
-                character.closableProperty().setValue(false);
-                speechBubble.closableProperty().setValue(false);
-                colour.closableProperty().setValue(false);
-                caption.closableProperty().setValue(false);
+                Tab speechBubbleTab = new Tab("Speech Bubbles");
+                speechBubbleTab.setStyle("-fx-background-color: white; -fx-font-size: 15");
+                speechBubbleTab.setContent(new Text("Let's get your characters talking!\n \nNote: You have to have a character in your panel before you can make them talk.\n \nClick on the speech bubble icon.\nChoose what bubble you want.\nWrite in the textbox what you want them to say - Careful, there is a character limit.\nChoose if you want the text in italic or bold or Both.\nHit Submit and voila!\nHit Cancel if you change your mind.\nHit Delete if you want to get rid of the bubble."));
 
-                helpPane.getTabs().add(character);
-                helpPane.getTabs().add(speechBubble);
-                helpPane.getTabs().add(colour);
-                helpPane.getTabs().add(caption);
+                Tab colourTab = new Tab("Skin/Hair");
+                colourTab.setStyle("-fx-background-color: white; -fx-font-size: 15");
+                colourTab.setContent(new Text("Let's add some colour!\n \nClick on the character in the comic panel who you want to style.\nClick on the boxes labelled Skin/Hair to decide what colour best suits your character's Skin/Hair colour."));
 
-                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
-                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
+                Tab captionTab = new Tab("Caption");
+                captionTab.setStyle("-fx-background-color: white; -fx-font-size: 15");
+                captionTab.setContent(new Text("Let's caption your panel!\n \nIDK yet we'll find out later."));
 
-                ScrollPane instruction = new ScrollPane();
+                characterTab.closableProperty().setValue(false);
+                speechBubbleTab.closableProperty().setValue(false);
+                colourTab.closableProperty().setValue(false);
+                captionTab.closableProperty().setValue(false);
+
+                helpPane.getTabs().add(characterTab);
+                //helpPane.setMargin(characterTab, new Insets(10,10,10,10));
+                helpPane.getTabs().add(speechBubbleTab);
+                helpPane.getTabs().add(colourTab);
+                helpPane.getTabs().add(captionTab);
+
+
+                //helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.8);
+                //helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
+
+                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+
+              //  ScrollPane instruction = new ScrollPane();
                // instruction.getStyleClass().add("instructionScroll");
-                instruction.setContent(new Text("Cats in the craddel and silver spoon"));
-                character.setContent(instruction);
+                //instruction.setContent(new Text("Cats in the craddel and silver spoon"));
+                /*characterTab.setContent(instruction);
+                speechBubbleTab.setContent(instruction);
+                colourTab.setContent(instruction);
+                captionTab.setContent(instruction);*/
 
                 Scene scene = new Scene(helpPane);
                 helpStage.setScene(scene);
@@ -435,13 +451,6 @@ public class Main extends Application {
                 Button fonts = new Button("Font");
                 fonts.getStyleClass().add("fonts");
 
-
-//                ComboBox fontDrop = new ComboBox();
-//
-//                fontDrop.getItems().add("Choice 1");
-//                fontDrop.getItems().add("Choice 2");
-//
-//                HBox fontbox = new HBox(fontDrop);
 
                 if(bubbleDisplay.getChildren().size() == 0)
                     bubbleDisplay.getChildren().add(bubbleImageView);
