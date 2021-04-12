@@ -667,7 +667,7 @@ public class ComicPanel extends Pane {
     public void setBottomText(String text){
         this.getChildren().remove(bottomText);
         bottomText = new TextCaption(text);
-        bottomText.setTranslateY(286);
+        bottomText.setTranslateY(287);
         this.getChildren().add(bottomText);
     }
 
