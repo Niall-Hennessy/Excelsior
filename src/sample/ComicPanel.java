@@ -6,6 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
 import java.io.FileInputStream;
@@ -30,6 +31,9 @@ public class ComicPanel extends Pane {
 
     TextBubble leftTextBubble = null;
     TextBubble rightTextBubble = null;
+
+    Text topText;
+    Text bottomText;
 
     boolean leftFemale = true;
     boolean rightFemale = true;
@@ -186,7 +190,7 @@ public class ComicPanel extends Pane {
                     Color color = pixelReader.getColor(x, y);
 
                     if(color.equals(Color.WHITE)){
-                        pixelWriter.setColor(x, y, color);
+                        pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
                     }else if(color.equals(Color.BLACK)){
                         pixelWriter.setColor(x, y, color);
                     }
@@ -280,7 +284,7 @@ public class ComicPanel extends Pane {
                     Color color = pixelReader.getColor(x, y);
 
                     if(color.equals(Color.WHITE)){
-                        pixelWriter.setColor(x, y, color);
+                        pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
                     }else if(color.equals(Color.BLACK)){
                         pixelWriter.setColor(x, y, color);
                     }

@@ -185,31 +185,40 @@ public class Main extends Application {
             }
         });
 
-//        help.setOnAction(new EventHandler<ActionEvent>() {
-//            final Stage helpStage = new Stage();
-//
-//            @Override
-//            public void handle(ActionEvent event) {
-//
-//                TabPane helpPane = new TabPane();
-//
-//                Tab character = new Tab("Character", new Label("Help on how to add characters"));
-//                Tab speechBubble = new Tab("Speech Bubbles", new Label("Help on how to add Speech Bubbles"));
-//                Tab colour = new Tab();
-//
-//                helpPane.getTabs().add(character);
-//                helpPane.getTabs().add(speechBubble);
-//                helpPane.getTabs().add(colour);
-//
-//                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/5);
-//                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
-//
-//
-//                Scene scene = new Scene(helpPane);
-//                helpStage.setScene(scene);
-//                helpStage.show();
-//            }
-//        });
+        help.setOnAction(new EventHandler<ActionEvent>() {
+            final Stage helpStage = new Stage();
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                helpStage.setTitle("Help");
+
+                TabPane helpPane = new TabPane();
+
+                Tab character = new Tab("Character");
+                Tab speechBubble = new Tab("Speech Bubbles", new Label("Help on how to add Speech Bubbles"));
+                Tab colour = new Tab("Skin/Hair", new Label("How to set Skin and Hair Colour"));
+
+                character.closableProperty().setValue(false);
+                speechBubble.closableProperty().setValue(false);
+                colour.closableProperty().setValue(false);
+
+                helpPane.getTabs().add(character);
+                helpPane.getTabs().add(speechBubble);
+                helpPane.getTabs().add(colour);
+
+                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/5);
+                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
+
+                ScrollPane instruction = new ScrollPane();
+                instruction.setContent(new Text("Cats in the craddel and silver spoon"));
+                character.setContent(instruction);
+
+                Scene scene = new Scene(helpPane);
+                helpStage.setScene(scene);
+                helpStage.show();
+            }
+        });
 
         rightCharacter.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -657,6 +666,39 @@ public class Main extends Application {
             }
         });
 
+        textButton.setOnAction(new EventHandler<ActionEvent>() {
+            final Stage addText = new Stage(StageStyle.UNDECORATED);
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(addText.isShowing()) {
+                    addText.initModality(Modality.APPLICATION_MODAL);
+                    addText.initOwner(primaryStage);
+                }
+
+                GridPane layoutGrid = new GridPane();
+
+
+                addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/4);
+                addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/4);
+
+                layoutGrid.setStyle("-fx-background-color: #E6B9FF");
+                layoutGrid.setPrefWidth(addText.getWidth());
+                layoutGrid.setPrefHeight(addText.getHeight());
+
+                Scene scene = new Scene(layoutGrid);
+                addText.setScene(scene);
+                addText.show();
+
+                scene.setOnMousePressed(pressEvent -> {
+                    scene.setOnMouseDragged(dragEvent -> {
+                        addText.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+                        addText.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+                    });
+                });
+            }
+        });
 
         skinColorPicker[0].setOnAction(new EventHandler() {
             public void handle(Event t) {
