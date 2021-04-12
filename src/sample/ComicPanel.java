@@ -34,10 +34,10 @@ public class ComicPanel extends Pane {
         this.setPrefWidth(350);
 
         this.leftCharacter.setTranslateX(10);
-        this.leftCharacter.setTranslateY(50);
+        this.leftCharacter.setTranslateY(130);
 
         this.rightCharacter.setTranslateX(200);
-        this.rightCharacter.setTranslateY(50);
+        this.rightCharacter.setTranslateY(130);
 
         this.getChildren().add(leftCharacter);
         this.getChildren().add(rightCharacter);
