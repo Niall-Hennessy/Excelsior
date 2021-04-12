@@ -194,23 +194,32 @@ public class Main extends Application {
                 helpStage.setTitle("Help");
 
                 TabPane helpPane = new TabPane();
+                //helpPane.getStyleClass().add("helpPane");
 
                 Tab character = new Tab("Character");
+                //character tab should talk about: Choosing a character, setting it, diff of left right, flipping it, M/F
                 Tab speechBubble = new Tab("Speech Bubbles", new Label("Help on how to add Speech Bubbles"));
+                //talks about if you want your character to talk how you do that
                 Tab colour = new Tab("Skin/Hair", new Label("How to set Skin and Hair Colour"));
+                //talks about how you change colours and customer colours and change left vs change right
+                Tab caption = new Tab("Caption");
+                //talks about captioning and top or bottom or both
 
                 character.closableProperty().setValue(false);
                 speechBubble.closableProperty().setValue(false);
                 colour.closableProperty().setValue(false);
+                caption.closableProperty().setValue(false);
 
                 helpPane.getTabs().add(character);
                 helpPane.getTabs().add(speechBubble);
                 helpPane.getTabs().add(colour);
+                helpPane.getTabs().add(caption);
 
-                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/5);
-                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
+                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
+                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
 
                 ScrollPane instruction = new ScrollPane();
+               // instruction.getStyleClass().add("instructionScroll");
                 instruction.setContent(new Text("Cats in the craddel and silver spoon"));
                 character.setContent(instruction);
 

@@ -48,3 +48,15 @@
     -fx-border-color: black;
     -fx-border-width: 1px;
 }
+
+/*DOES THIS WORK?
+.instructionScroll {
+    -fx-background-color: #E6B9FF; /*PURPLE BORDER STAGE
+
+}
+*/
+/*AAAAAARGH
+.character {
+    -fx-background-color: red;
+}
+*/
