@@ -16,6 +16,8 @@ public class ComicCharacter extends Pane {
 
     ImageView characterImageView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
 
+    Image characterImage;
+
     String imageName;
 
     boolean isFemale = true;
@@ -28,22 +30,19 @@ public class ComicCharacter extends Pane {
     }
 
     public void updateImage(){
-
         this.getChildren().remove(characterImageView);
+        Image image = characterImage;
 
-            Image image = characterImageView.getImage();
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
 
-            int width = (int) image.getWidth();
-            int height = (int) image.getHeight();
+        WritableImage writableImage = new WritableImage(width, height);
 
-            WritableImage writableImage = new WritableImage(width, height);
+        PixelReader pixelReader = image.getPixelReader();
+        PixelWriter pixelWriter = writableImage.getPixelWriter();
 
-            PixelReader pixelReader = image.getPixelReader();
-            PixelReader wPixelReader = writableImage.getPixelReader();
-            PixelWriter pixelWriter = writableImage.getPixelWriter();
-
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                     Color color = pixelReader.getColor(x, y);
 
                     if(color.equals(Color.WHITE)){
@@ -181,15 +180,17 @@ public class ComicCharacter extends Pane {
 
     public void setCharacterImageView(String characterImagePath) throws FileNotFoundException {
         this.getChildren().remove(characterImageView);
-        Image image = new Image(new FileInputStream(characterImagePath));
-        ImageView imageView = new ImageView(image);
 
-        imageView.setFitWidth(100);
-        imageView.setFitHeight(100);
+        this.characterImage = new Image(new FileInputStream(characterImagePath));
+        this.characterImageView = new ImageView(characterImage);
+
+        this.characterImageView.setFitWidth(100);
+        this.characterImageView.setFitHeight(100);
         imageName = characterImagePath.substring(22,characterImagePath.length()-4);
 
-        this.characterImageView = imageView;
         this.getChildren().add(characterImageView);
+
+        updateImage();
     }
 
     public boolean isFemale() {

@@ -383,8 +383,6 @@ public class Main extends Application {
         genderButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(character[0] == null || character[0].matches("none"))
-                    return;
 
                 if(comicPanel.getSelectedCharacter() != null)
                     comicPanel.getSelectedCharacter().genderSwap();
