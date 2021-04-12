@@ -17,6 +17,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ComicPanel extends Pane {
 
+    ComicCharacter leftCharacter;
+    ComicCharacter rightCharacter;
+
 
     ImageView leftCharacterView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
     ImageView rightCharacterView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
