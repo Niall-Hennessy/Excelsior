@@ -677,7 +677,34 @@ public class Main extends Application {
                     addText.initOwner(primaryStage);
                 }
 
+                Button submit = new Button("Submit");
+                submit.getStyleClass().add("submit");
+                Button escape = new Button("X");
+                escape.getStyleClass().add("escape");
+                Button cancel = new Button("Cancel");
+                cancel.getStyleClass().add("cancel");
+                Button delete = new Button("Delete");
+                delete.getStyleClass().add("cancel");
+                Button topText = new Button("TopText");
+                Button bottomText = new Button("bottomText");
+                HBox topOrBot = new HBox();
+                topOrBot.getChildren().addAll(topText, bottomText);
+
+                TextField textfield = new TextField();
+
                 GridPane layoutGrid = new GridPane();
+                // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
+                layoutGrid.add(escape, 4, 1, 1, 1);
+                layoutGrid.add(topOrBot, 0, 2, 3, 3);
+                layoutGrid.setMargin(topOrBot, new Insets (10, 10, 10, 30));//its 30 to balance out the x buttons margins and get the otherside right
+                layoutGrid.add(textfield, 0, 5, 3, 1);
+                layoutGrid.setMargin(textfield, new Insets (10, 10, 1, 30));
+                layoutGrid.add(submit, 0, 8, 1, 1);
+                layoutGrid.setMargin(submit, new Insets (2, 2, 2, 30));
+                layoutGrid.add(cancel,1, 8, 1, 1);
+                layoutGrid.setMargin(cancel, new Insets (2, 2, 2, 2));
+                layoutGrid.add(delete,2, 8, 1, 1);
+                layoutGrid.setMargin(delete, new Insets (2, 11, 2, 2));
 
 
                 addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/4);
@@ -686,6 +713,38 @@ public class Main extends Application {
                 layoutGrid.setStyle("-fx-background-color: #E6B9FF");
                 layoutGrid.setPrefWidth(addText.getWidth());
                 layoutGrid.setPrefHeight(addText.getHeight());
+
+                boolean top = false;
+                boolean bottom =false;
+
+                escape.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                        addText.close();
+                    }
+                });
+
+                cancel.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                        addText.close();
+                    }
+                });
+
+                submit.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        if(top){
+                            comicPanel.setTopText(textfield.getText());
+                        }
+                        else if(bottom){
+                            comicPanel.setBottomText(textfield.getText());
+                        }
+                        addText.close();
+                    }
+                });
 
                 Scene scene = new Scene(layoutGrid);
                 addText.setScene(scene);

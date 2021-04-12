@@ -32,8 +32,8 @@ public class ComicPanel extends Pane {
     TextBubble leftTextBubble = null;
     TextBubble rightTextBubble = null;
 
-    Text topText;
-    Text bottomText;
+    String topText;
+    String bottomText;
 
     boolean leftFemale = true;
     boolean rightFemale = true;
@@ -653,5 +653,13 @@ public class ComicPanel extends Pane {
 
         rightTextBubble.setTranslateX(this.getTranslateX() + 200);
         this.getChildren().add(rightTextBubble);
+    }
+
+    public void setTopText(String text){
+        topText = text;
+    }
+
+    public void setBottomText(String text){
+        bottomText = text;
     }
 }
