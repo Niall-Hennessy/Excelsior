@@ -669,9 +669,10 @@ public class Main extends Application {
         textButton.setOnAction(new EventHandler<ActionEvent>() {
             final Stage addText = new Stage(StageStyle.UNDECORATED);
 
+            GridPane layoutGrid = new GridPane();
+
             @Override
             public void handle(ActionEvent event) {
-
                 if(addText.isShowing()) {
                     addText.initModality(Modality.APPLICATION_MODAL);
                     addText.initOwner(primaryStage);
@@ -685,14 +686,15 @@ public class Main extends Application {
                 cancel.getStyleClass().add("cancel");
                 Button delete = new Button("Delete");
                 delete.getStyleClass().add("cancel");
-                Button topText = new Button("TopText");
-                Button bottomText = new Button("bottomText");
+                Button topText = new Button("Top Text");
+                Button bottomText = new Button("Bottom Text");
                 HBox topOrBot = new HBox();
                 topOrBot.getChildren().addAll(topText, bottomText);
 
                 TextField textfield = new TextField();
 
                 GridPane layoutGrid = new GridPane();
+                layoutGrid.getStyleClass().add("layoutGrid");
                 // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
                 layoutGrid.add(escape, 4, 1, 1, 1);
                 layoutGrid.add(topOrBot, 0, 2, 3, 3);
@@ -707,10 +709,10 @@ public class Main extends Application {
                 layoutGrid.setMargin(delete, new Insets (2, 11, 2, 2));
 
 
-                addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/4);
-                addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/4);
+                addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
+                addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
 
-                layoutGrid.setStyle("-fx-background-color: #E6B9FF");
+               // layoutGrid.setStyle("-fx-background-color: #E6B9FF");
                 layoutGrid.setPrefWidth(addText.getWidth());
                 layoutGrid.setPrefHeight(addText.getHeight());
 
@@ -785,6 +787,7 @@ public class Main extends Application {
                 });
 
                 Scene scene = new Scene(layoutGrid);
+                scene.getStylesheets().add("sample/style.css");
                 addText.setScene(scene);
                 addText.show();
 
@@ -867,6 +870,7 @@ public class Main extends Application {
         mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
 
         Scene scene = new Scene(mainPane, width, height, false);
+
 
         comicPanel.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
