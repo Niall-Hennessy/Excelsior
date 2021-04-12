@@ -6,19 +6,26 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 
 public class ComicCharacter extends Pane {
 
-    ImageView characterImageView;
+    ImageView characterImageView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
+
+    String imageName;
 
     boolean isFemale = true;
 
     Color skin = Color.rgb(255,232,216,1);
     Color hair =  Color.rgb(240,255,0,1);
 
+    public ComicCharacter() throws FileNotFoundException {
+        this.getChildren().add(characterImageView);
+    }
 
     public void updateImage(){
 
@@ -97,6 +104,12 @@ public class ComicCharacter extends Pane {
         imageView.setRotate(characterImageView.getRotate());
     }
 
+    public void genderSwap(){
+
+        isFemale = !isFemale;
+
+        updateImage();
+    }
 
     public void flipOrientation(){
 
@@ -156,8 +169,15 @@ public class ComicCharacter extends Pane {
         return characterImageView;
     }
 
-    public void setCharacterImageView(ImageView characterImageView) {
-        this.characterImageView = characterImageView;
+    public void setCharacterImageView(String characterImagePath) throws FileNotFoundException {
+        this.getChildren().remove(characterImageView);
+        Image image = new Image(new FileInputStream(characterImagePath));
+        ImageView imageView = new ImageView(image);
+
+        imageName = characterImagePath.substring(22,characterImagePath.length()-4);
+
+        this.characterImageView = imageView;
+        this.getChildren().add(characterImageView);
     }
 
     public boolean isFemale() {

@@ -277,9 +277,9 @@ public class Main extends Application {
                                     try {
                                         comicPanel.setRightCharacter(imageFile.getPath());
                                         addCharacter.close();
-                                        character[0] = "right";
-                                        skinColorPicker[0].setValue(comicPanel.getRightCharacterSkin());
-                                        hairColorPicker[0].setValue(comicPanel.getRightCharacterHair());
+                                        comicPanel.setSelectedCharacter(comicPanel.getRightCharacter());
+                                        skinColorPicker[0].setValue(comicPanel.selectedCharacter.getSkin());
+                                        hairColorPicker[0].setValue(comicPanel.selectedCharacter.getHair());
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -352,9 +352,9 @@ public class Main extends Application {
                                     try {
                                         comicPanel.setLeftCharacter(imageFile.getPath());
                                         addCharacter.close();
-                                        character[0] = "left";
-                                        skinColorPicker[0].setValue(comicPanel.getLeftCharacterSkin());
-                                        hairColorPicker[0].setValue(comicPanel.getLeftCharacterHair());
+                                        comicPanel.setSelectedCharacter(comicPanel.getLeftCharacter());
+                                        skinColorPicker[0].setValue(comicPanel.selectedCharacter.getSkin());
+                                        hairColorPicker[0].setValue(comicPanel.selectedCharacter.getHair());
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -373,13 +373,7 @@ public class Main extends Application {
         flipButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(character[0] == null || character[0].matches("none"))
-                    return;
-
-                System.out.println("Charater 0 is: " + character[0]);
-
-                comicPanel.flipOrientation(character[0]);
-
+                comicPanel.selectedCharacter.flipOrientation();
             }
         });
 
@@ -389,7 +383,8 @@ public class Main extends Application {
                 if(character[0] == null || character[0].matches("none"))
                     return;
 
-                comicPanel.genderSwap(character[0]);
+                if(comicPanel.getSelectedCharacter() != null)
+                    comicPanel.getSelectedCharacter().genderSwap();
             }
         });
 
@@ -702,19 +697,13 @@ public class Main extends Application {
 
         skinColorPicker[0].setOnAction(new EventHandler() {
             public void handle(Event t) {
-                if(character[0].matches("left"))
-                    comicPanel.setLeftCharacterSkin(skinColorPicker[0].getValue());
-                else if(character[0].matches("right"))
-                    comicPanel.setRightCharacterSkin(skinColorPicker[0].getValue());
+                comicPanel.getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
             }
         });
 
         hairColorPicker[0].setOnAction(new EventHandler() {
             public void handle(Event t) {
-                if(character[0].matches("left"))
-                    comicPanel.setLeftCharacterHair(hairColorPicker[0].getValue());
-                else if(character[0].matches("right"))
-                    comicPanel.setRightCharacterHair(hairColorPicker[0].getValue());
+                comicPanel.getSelectedCharacter().setSkin(hairColorPicker[0].getValue());
             }
         });
 
@@ -770,36 +759,6 @@ public class Main extends Application {
         mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
 
         Scene scene = new Scene(mainPane, width, height, false);
-
-        comicPanel.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                double x = mouseEvent.getX();
-                double y = mouseEvent.getY();
-
-
-
-
-                if(x <= 110 && x >= 10 && y >= 100 && y <= 200) {
-                    skinColorPicker[0].setValue(comicPanel.getLeftCharacterSkin());
-                    hairColorPicker[0].setValue(comicPanel.getLeftCharacterHair());
-                    character[0] = "left";
-                }
-                else if(x <= 340 && x >= 240 && y >= 100 && y <= 200) {
-                    skinColorPicker[0].setValue(comicPanel.getRightCharacterSkin());
-                    hairColorPicker[0].setValue(comicPanel.getRightCharacterHair());
-                    character[0] = "right";
-                }
-                else {
-                    skinColorPicker[0].setValue(new Color(1,1,1,1));
-                    hairColorPicker[0].setValue(new Color(1,1,1,1));
-                    character[0] = "none";
-                }
-
-                comicPanel.selectCharacter(character[0]);
-            }
-        });
-
 
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
