@@ -76,7 +76,16 @@ public class ComicPanel extends Pane {
             rightCharacter.setStyle("-fx-border-width: 0");
     }
 
-    public void removeBubble(String character){
+    public void removeBubble(){
+        if(selectedCharacter.equals(leftCharacter)){
+            this.getChildren().remove(leftTextBubble);
+            leftTextBubble = null;
+        }
+        else if(selectedCharacter.equals(rightCharacter)){
+            this.getChildren().remove(rightTextBubble);
+            rightTextBubble = null;
+        }
+
     }
 
     public void setLeftBubble(Image image, String text, Font font) {

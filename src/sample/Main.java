@@ -403,10 +403,6 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(character[0] == null || character[0].matches("none")) {
-                    return;
-                }
-
                 Button submit = new Button("Submit");
                 submit.getStyleClass().add("submit");
                 Button escape = new Button("X");
@@ -462,7 +458,7 @@ public class Main extends Application {
                     }
                 }
 
-                if(character[0].matches("left") && comicPanel.leftTextBubble != null) {
+                if(comicPanel.getSelectedCharacter().equals(comicPanel.getLeftCharacter()) && comicPanel.leftTextBubble != null) {
                     textfield.setText(comicPanel.leftTextBubble.getText().getText().replaceAll("\n", " "));
 
                     if(isBold[0] && isItalic[0])
@@ -474,7 +470,7 @@ public class Main extends Application {
                     else
                         textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
                 }
-                else if(character[0].matches("right") && comicPanel.rightTextBubble != null)
+                else if(comicPanel.getSelectedCharacter().equals(comicPanel.getRightCharacter()) && comicPanel.rightTextBubble != null)
                     textfield.setText(comicPanel.rightTextBubble.getText().getText());
 
 
@@ -575,7 +571,7 @@ public class Main extends Application {
                 delete.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        comicPanel.removeBubble(character[0]);
+                        comicPanel.removeBubble();
                         addBubble.close();
                     }
                 });
@@ -607,9 +603,9 @@ public class Main extends Application {
                         else
                             textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
 
-                        if(character[0].matches("left"))
+                        if(comicPanel.getSelectedCharacter().equals(comicPanel.getLeftCharacter()))
                             comicPanel.setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
-                        else if(character[0].matches("right"))
+                        else if(comicPanel.getSelectedCharacter().equals(comicPanel.getRightCharacter()))
                             comicPanel.setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
 
 
