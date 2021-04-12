@@ -57,6 +57,7 @@ public class ComicPanel extends Pane {
 
     public void setRightCharacter(String imagePath) throws FileNotFoundException {
         rightCharacter.setCharacterImageView(imagePath);
+        rightCharacter.flipOrientation();
     }
 
     public ComicCharacter getSelectedCharacter() {

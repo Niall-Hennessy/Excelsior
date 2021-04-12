@@ -767,10 +767,14 @@ public class Main extends Application {
 
         comicPanel.leftCharacter.setOnMouseClicked(mouseEvent -> {
             comicPanel.setSelectedCharacter(comicPanel.getLeftCharacter());
+            hairColorPicker[0].setValue(comicPanel.getSelectedCharacter().getHair());
+            skinColorPicker[0].setValue(comicPanel.getSelectedCharacter().getSkin());
         });
 
         comicPanel.rightCharacter.setOnMouseClicked(mouseEvent -> {
             comicPanel.setSelectedCharacter(comicPanel.getRightCharacter());
+            hairColorPicker[0].setValue(comicPanel.getSelectedCharacter().getHair());
+            skinColorPicker[0].setValue(comicPanel.getSelectedCharacter().getSkin());
         });
 
         Scene scene = new Scene(mainPane, width, height, false);
