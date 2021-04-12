@@ -174,6 +174,8 @@ public class ComicCharacter extends Pane {
         Image image = new Image(new FileInputStream(characterImagePath));
         ImageView imageView = new ImageView(image);
 
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
         imageName = characterImagePath.substring(22,characterImagePath.length()-4);
 
         this.characterImageView = imageView;

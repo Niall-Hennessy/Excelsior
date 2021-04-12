@@ -373,7 +373,10 @@ public class Main extends Application {
         flipButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                comicPanel.selectedCharacter.flipOrientation();
+
+                if(comicPanel.getSelectedCharacter() != null) {
+                    comicPanel.getSelectedCharacter().flipOrientation();
+                }
             }
         });
 
@@ -697,13 +700,17 @@ public class Main extends Application {
 
         skinColorPicker[0].setOnAction(new EventHandler() {
             public void handle(Event t) {
-                comicPanel.getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
+
+                if(comicPanel.getSelectedCharacter() != null)
+                    comicPanel.getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
             }
         });
 
         hairColorPicker[0].setOnAction(new EventHandler() {
             public void handle(Event t) {
-                comicPanel.getSelectedCharacter().setSkin(hairColorPicker[0].getValue());
+
+                if(comicPanel.getSelectedCharacter() != null)
+                    comicPanel.getSelectedCharacter().setSkin(hairColorPicker[0].getValue());
             }
         });
 
@@ -757,6 +764,18 @@ public class Main extends Application {
         mainPane.addRow(2, optionBox);
         mainPane.setStyle("-fx-background-color: #B9EBFF");
         mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
+
+        comicPanel.leftCharacter.setOnMouseClicked(mouseEvent -> {
+            comicPanel.setSelectedCharacter(comicPanel.getLeftCharacter());
+        });
+
+        comicPanel.rightCharacter.setOnMouseClicked(mouseEvent -> {
+            comicPanel.setSelectedCharacter(comicPanel.rightCharacter);
+        });
+
+        comicPanel.setOnMouseClicked(mouseEvent -> {
+            comicPanel.selectedCharacter = null;
+        });
 
         Scene scene = new Scene(mainPane, width, height, false);
 

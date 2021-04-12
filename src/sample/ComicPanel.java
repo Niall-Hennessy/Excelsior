@@ -33,13 +33,14 @@ public class ComicPanel extends Pane {
         this.setPrefHeight(280);
         this.setPrefWidth(350);
 
-        leftCharacter.setOnMouseClicked(mouseEvent -> {
-            selectedCharacter = leftCharacter;
-        });
+        this.leftCharacter.setTranslateX(10);
+        this.leftCharacter.setTranslateY(50);
 
-        rightCharacter.setOnMouseClicked(mouseEvent -> {
-            selectedCharacter = rightCharacter;
-        });
+        this.rightCharacter.setTranslateX(200);
+        this.rightCharacter.setTranslateY(50);
+
+        this.getChildren().add(leftCharacter);
+        this.getChildren().add(rightCharacter);
     }
 
     public ComicCharacter getLeftCharacter() {
@@ -64,18 +65,26 @@ public class ComicPanel extends Pane {
 
     public void setSelectedCharacter(ComicCharacter selectedCharacter) {
         this.selectedCharacter = selectedCharacter;
+
+        this.selectedCharacter.setStyle("-fx-border-width: 1; -fx-border-color: cyan");
+
+        if(leftCharacter != selectedCharacter)
+            leftCharacter.setStyle("-fx-border-width: 0");
+
+        if(rightCharacter != selectedCharacter)
+            rightCharacter.setStyle("-fx-border-width: 0");
+
+        if(rightCharacter != null)
+            System.out.println("Right Is null");
+
+        if(leftCharacter != null)
+            System.out.println("left Is null");
+
+        if(selectedCharacter != null)
+            System.out.println("selected Is null");
     }
 
     public void removeBubble(String character){
-
-        if(character.matches("left")) {
-            this.getChildren().remove(leftTextBubble);
-            leftTextBubble = null;
-        }
-        else {
-            this.getChildren().remove(rightTextBubble);
-            rightTextBubble = null;
-        }
     }
 
     public void setLeftBubble(Image image, String text, Font font) {
