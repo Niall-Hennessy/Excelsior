@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.Cursor;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -9,6 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -32,8 +34,8 @@ public class ComicPanel extends Pane {
     TextBubble leftTextBubble = null;
     TextBubble rightTextBubble = null;
 
-    String topText;
-    String bottomText;
+    TextCaption topText;
+    TextCaption bottomText;
 
     boolean leftFemale = true;
     boolean rightFemale = true;
@@ -656,10 +658,27 @@ public class ComicPanel extends Pane {
     }
 
     public void setTopText(String text){
-        topText = text;
+        this.getChildren().remove(topText);
+        topText = new TextCaption(text);
+        this.getChildren().add(topText);
     }
 
     public void setBottomText(String text){
-        bottomText = text;
+        this.getChildren().remove(bottomText);
+        bottomText = new TextCaption(text);
+        bottomText.setTranslateY(262);
+        this.getChildren().add(bottomText);
+    }
+
+    public void removeText(boolean[] top, boolean[] bottom){
+        if (top[0]){
+            this.getChildren().remove(topText);
+            topText = null;
+        }
+        else if(bottom[0]){
+            this.getChildren().remove(bottomText);
+            bottomText = null;
+        }
+
     }
 }

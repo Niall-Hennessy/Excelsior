@@ -714,13 +714,37 @@ public class Main extends Application {
                 layoutGrid.setPrefWidth(addText.getWidth());
                 layoutGrid.setPrefHeight(addText.getHeight());
 
-                boolean top = false;
-                boolean bottom =false;
+                final boolean[] top = {false};
+                final boolean[] bottom = {false};
+
+                topText.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        textfield.setText("");
+                        bottom[0] = false;
+                        top[0] = true;
+                        if(comicPanel.topText != null)
+                        textfield.setText(comicPanel.topText.getText());
+                    }
+                });
+
+                bottomText.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        textfield.setText("");
+                        bottom[0] = true;
+                        top[0] = false;
+                        if(comicPanel.bottomText != null)
+                            textfield.setText(comicPanel.bottomText.getText());
+                    }
+                });
 
                 escape.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
 
+                        bottom[0] = false;
+                        top[0] = false;
                         addText.close();
                     }
                 });
@@ -729,6 +753,8 @@ public class Main extends Application {
                     @Override
                     public void handle(ActionEvent actionEvent) {
 
+                        bottom[0] = false;
+                        top[0] = false;
                         addText.close();
                     }
                 });
@@ -736,12 +762,24 @@ public class Main extends Application {
                 submit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        if(top){
+                        if(top[0]){
                             comicPanel.setTopText(textfield.getText());
                         }
-                        else if(bottom){
+                        else if(bottom[0]){
                             comicPanel.setBottomText(textfield.getText());
                         }
+                        bottom[0] = false;
+                        top[0] = false;
+                        addText.close();
+                    }
+                });
+
+                delete.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        comicPanel.removeText(top, bottom);
+                        bottom[0] = false;
+                        top[0] = false;
                         addText.close();
                     }
                 });
