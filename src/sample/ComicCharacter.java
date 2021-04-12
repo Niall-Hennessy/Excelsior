@@ -29,7 +29,9 @@ public class ComicCharacter extends Pane {
 
     public void updateImage(){
 
-            Image image = this.characterImageView.getImage();
+        this.getChildren().remove(characterImageView);
+
+            Image image = characterImageView.getImage();
 
             int width = (int) image.getWidth();
             int height = (int) image.getHeight();
@@ -102,6 +104,10 @@ public class ComicCharacter extends Pane {
         imageView.setSmooth(false);
         imageView.setRotationAxis(Rotate.Y_AXIS);
         imageView.setRotate(characterImageView.getRotate());
+
+        characterImageView = imageView;
+
+        this.getChildren().add(characterImageView);
     }
 
     public void genderSwap(){
@@ -113,11 +119,15 @@ public class ComicCharacter extends Pane {
 
     public void flipOrientation(){
 
-        characterImageView.setRotationAxis(Rotate.Y_AXIS);
-        if(characterImageView.getRotate() == 180)
-            characterImageView.setRotate(0);
+        ImageView flipCharacter = characterImageView;
+
+        flipCharacter.setRotationAxis(Rotate.Y_AXIS);
+        if(flipCharacter.getRotate() == 180)
+            flipCharacter.setRotate(0);
         else
-            characterImageView.setRotate(180);
+            flipCharacter.setRotate(180);
+
+        characterImageView = flipCharacter;
     }
 
     public boolean isOnLine(Color p1, Color p2, Color p3)
@@ -195,7 +205,10 @@ public class ComicCharacter extends Pane {
     }
 
     public void setSkin(Color skin) {
+
         this.skin = skin;
+
+        updateImage();
     }
 
     public Color getHair() {
@@ -203,6 +216,9 @@ public class ComicCharacter extends Pane {
     }
 
     public void setHair(Color hair) {
+
         this.hair = hair;
+
+        updateImage();
     }
 }

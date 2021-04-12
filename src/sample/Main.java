@@ -710,7 +710,7 @@ public class Main extends Application {
             public void handle(Event t) {
 
                 if(comicPanel.getSelectedCharacter() != null)
-                    comicPanel.getSelectedCharacter().setSkin(hairColorPicker[0].getValue());
+                    comicPanel.getSelectedCharacter().setHair(hairColorPicker[0].getValue());
             }
         });
 
@@ -770,11 +770,7 @@ public class Main extends Application {
         });
 
         comicPanel.rightCharacter.setOnMouseClicked(mouseEvent -> {
-            comicPanel.setSelectedCharacter(comicPanel.rightCharacter);
-        });
-
-        comicPanel.setOnMouseClicked(mouseEvent -> {
-            comicPanel.selectedCharacter = null;
+            comicPanel.setSelectedCharacter(comicPanel.getRightCharacter());
         });
 
         Scene scene = new Scene(mainPane, width, height, false);

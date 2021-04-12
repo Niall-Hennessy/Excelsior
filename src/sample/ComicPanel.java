@@ -73,15 +73,6 @@ public class ComicPanel extends Pane {
 
         if(rightCharacter != selectedCharacter)
             rightCharacter.setStyle("-fx-border-width: 0");
-
-        if(rightCharacter != null)
-            System.out.println("Right Is null");
-
-        if(leftCharacter != null)
-            System.out.println("left Is null");
-
-        if(selectedCharacter != null)
-            System.out.println("selected Is null");
     }
 
     public void removeBubble(String character){
