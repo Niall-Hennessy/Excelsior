@@ -865,7 +865,9 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 comicStrip.getChildren().remove(comicPanel[0]);
-                 comicPanel[0] = null;
+
+                hairColorPicker[0].setValue(Color.WHITE);
+                skinColorPicker[0].setValue(Color.WHITE);
             }
         });
 
@@ -886,17 +888,17 @@ public class Main extends Application {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
 
-                            if(character[0] != null){
-                                if(!comicPanel[0].equals(newComicPanel)) {
 
+                            if(!comicPanel[0].equals(newComicPanel)) {
 
+                                if (comicPanel[0] != null) {
                                     comicPanel[0].setSelectedCharacter(null);
                                     comicPanel[0].unselect();
-
-                                    newComicPanel.select();
-                                    comicPanel[0] = newComicPanel;
-
                                 }
+
+                                newComicPanel.select();
+                                comicPanel[0] = newComicPanel;
+
                             }
 
                             if(comicPanel[0].getSelectedCharacter() != null) {
