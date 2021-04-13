@@ -50,6 +50,22 @@ public class ComicPanel extends Pane {
     public void setLeftCharacter(String imagePath) throws FileNotFoundException {
         leftCharacter.setCharacterImageView(imagePath);
 
+        if(leftCharacter.imageName.matches("blank")){
+            leftCharacter.setOnMouseEntered(mouseEvent -> {
+            });
+
+            leftCharacter.setOnMouseExited(mouseEvent -> {
+            });
+
+            leftCharacter.setOnMousePressed(pressEvent -> {
+                leftCharacter.setOnMouseDragged(dragEvent -> {
+                });
+            });
+
+            leftCharacter.setStyle("-fx-border-width: 0");
+            return;
+        }
+
         AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
         AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
 
@@ -76,8 +92,8 @@ public class ComicPanel extends Pane {
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 263 - leftCharacter.getHeight())
-                    offsetY = 263 - leftCharacter.getHeight();
+                else if(offsetY > 250 - leftCharacter.getHeight())
+                    offsetY = 250 - leftCharacter.getHeight();
 
 
                 leftCharacter.setTranslateX(offsetX);
@@ -98,6 +114,22 @@ public class ComicPanel extends Pane {
     public void setRightCharacter(String imagePath) throws FileNotFoundException {
         rightCharacter.setCharacterImageView(imagePath);
         rightCharacter.flipOrientation();
+
+        if(rightCharacter.imageName.matches("blank")){
+            rightCharacter.setOnMouseEntered(mouseEvent -> {
+            });
+
+            rightCharacter.setOnMouseExited(mouseEvent -> {
+            });
+
+            rightCharacter.setOnMousePressed(pressEvent -> {
+                rightCharacter.setOnMouseDragged(dragEvent -> {
+                });
+            });
+
+            rightCharacter.setStyle("-fx-border-width: 0");
+            return;
+        }
 
         AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
         AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
@@ -125,8 +157,8 @@ public class ComicPanel extends Pane {
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 263 - rightCharacter.getHeight())
-                    offsetY = 263 - rightCharacter.getHeight();
+                else if(offsetY > 250 - rightCharacter.getHeight())
+                    offsetY = 250 - rightCharacter.getHeight();
 
 
                 rightCharacter.setTranslateX(offsetX);
@@ -145,6 +177,11 @@ public class ComicPanel extends Pane {
     }
 
     public void setSelectedCharacter(ComicCharacter selectedCharacter) {
+
+        if(selectedCharacter != null)
+            if(selectedCharacter.imageName.matches("blank"))
+                return;
+
         this.selectedCharacter = selectedCharacter;
 
         this.selectedCharacter.setStyle("-fx-border-width: 1; -fx-border-color: cyan");

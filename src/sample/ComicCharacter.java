@@ -27,6 +27,10 @@ public class ComicCharacter extends Pane {
 
     public ComicCharacter() throws FileNotFoundException {
         this.getChildren().add(characterImageView);
+
+        characterImage = characterImageView.getImage();
+
+        updateImage();
     }
 
     public void updateImage(){
