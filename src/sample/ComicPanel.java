@@ -94,8 +94,8 @@ public class ComicPanel extends Pane {
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 250 - leftCharacter.getHeight())
-                    offsetY = 250 - leftCharacter.getHeight();
+                else if(offsetY > 270 - leftCharacter.getHeight())
+                    offsetY = 270 - leftCharacter.getHeight();
 
 
                 leftCharacter.setTranslateX(offsetX);
@@ -159,8 +159,8 @@ public class ComicPanel extends Pane {
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 250 - rightCharacter.getHeight())
-                    offsetY = 250 - rightCharacter.getHeight();
+                else if(offsetY > 270 - rightCharacter.getHeight())
+                    offsetY = 270 - rightCharacter.getHeight();
 
 
                 rightCharacter.setTranslateX(offsetX);
