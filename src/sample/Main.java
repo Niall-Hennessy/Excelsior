@@ -191,43 +191,42 @@ public class Main extends Application {
                 helpStage.setTitle("Help");
 
                 TabPane helpPane = new TabPane();
-                helpPane.setStyle("-fx-background-color: pink; -fx-font-family: arial; -fx-font-size: 15 ");
-                //helpPane.getStyleClass().add("helpPane");
+                helpPane.getStyleClass().add("helpPane");
 
                 Tab characterTab = new Tab("Character");
-                characterTab.setStyle("-fx-background-color: white; -fx-font-family: arial; -fx-font-size: 15");
+                characterTab.getStyleClass().add("charTab");
                 characterTab.setContent(new Text("\tLet's add a character to your comic!\n \nClick on the character icon to choose a left or right character.\nDouble click a character pose from the gallery.\nUse the Flip Button to change which way they are facing.\nUse the M/F button to change their gender."));
 
                 Tab speechBubbleTab = new Tab("Speech Bubbles");
-                speechBubbleTab.setStyle("-fx-background-color: white; -fx-font-size: 15");
+                speechBubbleTab.getStyleClass().add("speechTab");
                 speechBubbleTab.setContent(new Text("Let's get your characters talking!\n \nNote: You have to have a character in your panel before you can make them talk.\n \nClick on the speech bubble icon.\nChoose what bubble you want.\nWrite in the textbox what you want them to say - Careful, there is a character limit.\nChoose if you want the text in italic or bold or Both.\nHit Submit and voila!\nHit Cancel if you change your mind.\nHit Delete if you want to get rid of the bubble."));
 
                 Tab colourTab = new Tab("Skin/Hair");
-                colourTab.setStyle("-fx-background-color: white; -fx-font-size: 15;");
-                //colourTab.setContent(new Text("Let's add some colour!\n \nClick on the character in the comic panel who you want to style.\nClick on the boxes labelled Skin/Hair to decide what colour best suits your character's Skin/Hair colour."));
+                colourTab.getStyleClass().add("colourTab");
+                colourTab.setContent(new Text("Let's add some colour!\n \nClick on the character in the comic panel who you want to style.\nClick on the boxes labelled Skin/Hair to decide what colour best suits your character's Skin/Hair colour."));
                 //Text test2 = new Text();
-                TextFlow textFlow = new TextFlow();
-                textFlow.setLayoutX(50);
-                textFlow.setLayoutY(50);
-                Text test = new Text("ARgh");
-                Text test3 = new Text("aaaaaaaa");
+               // TextFlow textFlow = new TextFlow();
+                //textFlow.setLayoutX(50);
+                //textFlow.setLayoutY(50);
+                //Text test = new Text("ARgh");
+                //Text test3 = new Text("aaaaaaaa");
                 //test2.setText("Let's add some colour!");
                // test.setText("Click on the character in the comic panel who you want to style.\nClick on the boxes labelled Skin/Hair to decide what colour best suits your character's Skin/Hair colour.");
-                test.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20 ));
-                test.setFill(Color.RED);
-                test.setStrokeWidth(1);
-                test.setStroke(Color.BLUE);
+                //test.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20 ));
+                //test.setFill(Color.RED);
+                //test.setStrokeWidth(1);
+                //test.setStroke(Color.BLUE);
 
-                test.setUnderline(true);
+                //test.setUnderline(true);
 
                 //test2.setTextAlignment(TextAlignment.CENTER);
                 //test.setTextAlignment(TextAlignment.CENTER);
-                textFlow.getChildren().addAll(test, test3);
-                colourTab.setContent(textFlow); //how to add more arguments?
+               // textFlow.getChildren().addAll(test, test3);
+                //colourTab.setContent(textFlow); //how to add more arguments?
 
 
                 Tab captionTab = new Tab("Caption");
-                captionTab.setStyle("-fx-background-color: white; -fx-font-size: 15");
+                captionTab.getStyleClass().add("captionTab");
                 captionTab.setContent(new Text("Let's caption your panel!\n \nIDK yet we'll find out later."));
 
                 characterTab.closableProperty().setValue(false);
@@ -242,11 +241,11 @@ public class Main extends Application {
                 helpPane.getTabs().add(captionTab);
 
 
-                //helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.8);
-                //helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
+                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.8);
+                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
 
-                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+                //helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+                //helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
 
                 //ScrollPane instruction = new ScrollPane();
                // instruction.getStyleClass().add("instructionScroll");
@@ -256,8 +255,10 @@ public class Main extends Application {
                 colourTab.setContent(instruction);
                 captionTab.setContent(instruction);*/
 
+
                 Scene scene = new Scene(helpPane);
                 helpStage.setScene(scene);
+                scene.getStylesheets().add("sample/style.css");
                 helpStage.show();
             }
         });

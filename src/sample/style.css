@@ -60,3 +60,41 @@
     -fx-background-color: red;
 }
 */
+
+.helpPane {
+    -fx-background-color: white;
+    -fx-font-family: helvetica;
+    -fx-font-size: 18;
+}
+
+.charTab, .speechTab, .captionTab, .colourTab{
+    -fx-alignment: CENTER;
+    /*-fx-text-fill: -fx-text-base-color;*/
+    -fx-background-color: #F9F9F9;
+    -fx-font-family: georgia;
+    -fx-font-size: 15;
+
+}
+
+.charTab: selected, .speechTab: selected, .captionTab:selected, .colourTab:selected {
+    -fx-background-color: white;
+}
+
+/*makes background of the tabs black*/
+.tab-pane>*.tab-header-area>*.tab-header-background {
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, #FFF7F7;
+    -fx-border-color: #FFF7F7;
+}
+
+/* When Tab is selected, select its border and modify the style */
+/*KEEP EVERYTHING 0 SO DONT HAVE THE BLUE SQUARE OR ANY OTHER SQUARE AND JUST CHANGE COLOR WHEN SELECTED*/
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-radius: 0px;
+    -fx-border-width: 0px 0px 0px 0px;
+}
+
+/*border colour around the tabs*/
+.tab-pane>*.tab-header-area>*.headers-region {
+    -fx-background-color: #FFF7F7;
+
+}
