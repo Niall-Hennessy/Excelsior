@@ -204,18 +204,6 @@ public class Main extends Application {
                 Tab colourTab = new Tab("Skin/Hair");
                 colourTab.getStyleClass().add("colourTab");
                 colourTab.setContent(new Text("Let's add some colour!\n \nClick on the character in the comic panel who you want to style.\nClick on the boxes labelled Skin/Hair to decide what colour best suits your character's Skin/Hair colour."));
-                //Text test2 = new Text();
-               // TextFlow textFlow = new TextFlow();
-                //textFlow.setLayoutX(50);
-                //textFlow.setLayoutY(50);
-                //Text test = new Text("ARgh");
-                //Text test3 = new Text("aaaaaaaa");
-                //test2.setText("Let's add some colour!");
-               // test.setText("Click on the character in the comic panel who you want to style.\nClick on the boxes labelled Skin/Hair to decide what colour best suits your character's Skin/Hair colour.");
-                //test.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20 ));
-                //test.setFill(Color.RED);
-                //test.setStrokeWidth(1);
-                //test.setStroke(Color.BLUE);
 
                 //test.setUnderline(true);
 
@@ -227,7 +215,7 @@ public class Main extends Application {
 
                 Tab captionTab = new Tab("Caption");
                 captionTab.getStyleClass().add("captionTab");
-                captionTab.setContent(new Text("Let's caption your panel!\n \nIDK yet we'll find out later."));
+                captionTab.setContent(new Text("Let's caption your panel!\n \nIDK yet we'll find out later.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
 
                 characterTab.closableProperty().setValue(false);
                 speechBubbleTab.closableProperty().setValue(false);
@@ -235,28 +223,22 @@ public class Main extends Application {
                 captionTab.closableProperty().setValue(false);
 
                 helpPane.getTabs().add(characterTab);
-                //helpPane.setMargin(characterTab, new Insets(10,10,10,10));
                 helpPane.getTabs().add(speechBubbleTab);
                 helpPane.getTabs().add(colourTab);
                 helpPane.getTabs().add(captionTab);
 
 
-                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.8);
+                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.6);
                 helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
 
-                //helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-                //helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
 
-                //ScrollPane instruction = new ScrollPane();
-               // instruction.getStyleClass().add("instructionScroll");
-               // instruction.setContent(new Text("TEST"));
-                /*characterTab.setContent(instruction);
-                speechBubbleTab.setContent(instruction);
-                colourTab.setContent(instruction);
-                captionTab.setContent(instruction);*/
+                ScrollPane instruction = new ScrollPane();
+                instruction.getStyleClass().add("instructionScroll");
+                instruction.setContent(helpPane);
+                instruction.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
+                instruction.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
-
-                Scene scene = new Scene(helpPane);
+                Scene scene = new Scene(instruction);
                 helpStage.setScene(scene);
                 scene.getStylesheets().add("sample/style.css");
                 helpStage.show();

@@ -69,7 +69,6 @@
 
 .charTab, .speechTab, .captionTab, .colourTab{
     -fx-alignment: CENTER;
-    /*-fx-text-fill: -fx-text-base-color;*/
     -fx-background-color: #F9F9F9;
     -fx-font-family: georgia;
     -fx-font-size: 15;
@@ -80,7 +79,7 @@
     -fx-background-color: white;
 }
 
-/*makes background of the tabs black*/
+/*makes background of the tabs light pink*/
 .tab-pane>*.tab-header-area>*.tab-header-background {
     -fx-background-color: -fx-outer-border, -fx-text-box-border, #FFF7F7;
     -fx-border-color: #FFF7F7;
@@ -93,8 +92,15 @@
     -fx-border-width: 0px 0px 0px 0px;
 }
 
-/*border colour around the tabs*/
+/*border colour around the tabs, its light pink so it seperates the tabs but blends into the whole content*/
 .tab-pane>*.tab-header-area>*.headers-region {
     -fx-background-color: #FFF7F7;
+
+}
+
+.instructionScroll {
+    -fx-border-width: 0px 0px 0px 0px;
+
+
 
 }
