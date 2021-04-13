@@ -713,8 +713,8 @@ public class Main extends Application {
                 layoutGrid.setMargin(delete, new Insets (2, 11, 2, 2));
 
 
-                addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
-                addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
+                addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/4);
+                addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/4);
 
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
