@@ -228,7 +228,7 @@ public class Main extends Application {
                 helpPane.getTabs().add(captionTab);
 
 
-                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.6);
+                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.7);
                 helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
 
 
@@ -237,6 +237,7 @@ public class Main extends Application {
                 instruction.setContent(helpPane);
                 instruction.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
                 instruction.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instruction.fitToWidthProperty().setValue(true);
 
                 Scene scene = new Scene(instruction);
                 helpStage.setScene(scene);
