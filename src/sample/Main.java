@@ -678,11 +678,11 @@ public class Main extends Application {
                     addText.initOwner(primaryStage);
                 }
 
-                Button submit = new Button("Submit");
+                Button submit = new Button("Apply");
                 submit.getStyleClass().add("submit");
                 Button escape = new Button("X");
                 escape.getStyleClass().add("escape");
-                Button cancel = new Button("Cancel");
+                Button cancel = new Button("Close");
                 cancel.getStyleClass().add("cancel");
                 Button delete = new Button("Delete");
                 delete.getStyleClass().add("cancel");
@@ -773,9 +773,6 @@ public class Main extends Application {
                         else if(bottom[0]){
                             comicPanel.setBottomText(textfield.getText());
                         }
-                        bottom[0] = false;
-                        top[0] = false;
-                        addText.close();
                     }
                 });
 
@@ -792,6 +789,10 @@ public class Main extends Application {
                 Scene scene = new Scene(layoutGrid);
                 scene.getStylesheets().add("sample/style.css");
                 addText.setScene(scene);
+
+                addText.setX(width/2 - 200);
+                addText.setY(height/2 - 200);
+
                 addText.show();
 
                 scene.setOnMousePressed(pressEvent -> {
