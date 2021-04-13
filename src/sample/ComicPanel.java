@@ -35,6 +35,9 @@ public class ComicPanel extends Pane {
         this.setPrefHeight(280);
         this.setPrefWidth(350);
 
+        this.setMaxHeight(280);
+        this.setMaxWidth(350);
+
         this.leftCharacter.setTranslateX(10);
         this.leftCharacter.setTranslateY(130);
 
@@ -43,6 +46,14 @@ public class ComicPanel extends Pane {
 
         this.getChildren().add(leftCharacter);
         this.getChildren().add(rightCharacter);
+    }
+
+    public void select(){
+        this.setStyle("-fx-border-color: hotpink; -fx-border-width: 5");
+    }
+
+    public void unselect(){
+        this.setStyle("-fx-border-color: black; -fx-border-width: 3");
     }
 
     public ComicCharacter getLeftCharacter() {
@@ -80,6 +91,9 @@ public class ComicPanel extends Pane {
         });
 
         leftCharacter.setOnMousePressed(pressEvent -> {
+
+            setSelectedCharacter(leftCharacter);
+
             dragX.set(0.0);
             dragY.set(0.0);
             leftCharacter.setOnMouseDragged(dragEvent -> {
@@ -145,6 +159,9 @@ public class ComicPanel extends Pane {
         });
 
         rightCharacter.setOnMousePressed(pressEvent -> {
+
+            setSelectedCharacter(rightCharacter);
+
             dragX.set(0.0);
             dragY.set(0.0);
             rightCharacter.setOnMouseDragged(dragEvent -> {
@@ -180,13 +197,14 @@ public class ComicPanel extends Pane {
 
     public void setSelectedCharacter(ComicCharacter selectedCharacter) {
 
-        if(selectedCharacter != null)
-            if(selectedCharacter.imageName.matches("blank"))
+        if(selectedCharacter != null) {
+            if (selectedCharacter.imageName.matches("blank"))
                 return;
 
-        this.selectedCharacter = selectedCharacter;
+            this.selectedCharacter = selectedCharacter;
 
-        this.selectedCharacter.setStyle("-fx-border-width: 1; -fx-border-color: cyan");
+            this.selectedCharacter.setStyle("-fx-border-width: 1; -fx-border-color: cyan");
+        }
 
         if(leftCharacter != selectedCharacter)
             leftCharacter.setStyle("-fx-border-width: 0");

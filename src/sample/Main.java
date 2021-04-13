@@ -50,7 +50,7 @@ public class Main extends Application {
 
         GridPane mainPane = new GridPane();
 
-        ComicPanel comicPanel = new ComicPanel();
+        final ComicPanel[] comicPanel = {new ComicPanel()};
 
         final String[] character = new String[1];
 
@@ -275,11 +275,11 @@ public class Main extends Application {
 
                                 if (mouseEvent.getClickCount() == 2) {
                                     try {
-                                        comicPanel.setRightCharacter(imageFile.getPath());
+                                        comicPanel[0].setRightCharacter(imageFile.getPath());
                                         addCharacter.close();
-                                        comicPanel.setSelectedCharacter(comicPanel.getRightCharacter());
-                                        skinColorPicker[0].setValue(comicPanel.selectedCharacter.getSkin());
-                                        hairColorPicker[0].setValue(comicPanel.selectedCharacter.getHair());
+                                        comicPanel[0].setSelectedCharacter(comicPanel[0].getRightCharacter());
+                                        skinColorPicker[0].setValue(comicPanel[0].selectedCharacter.getSkin());
+                                        hairColorPicker[0].setValue(comicPanel[0].selectedCharacter.getHair());
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -350,11 +350,11 @@ public class Main extends Application {
 
                                 if (mouseEvent.getClickCount() == 2) {
                                     try {
-                                        comicPanel.setLeftCharacter(imageFile.getPath());
+                                        comicPanel[0].setLeftCharacter(imageFile.getPath());
                                         addCharacter.close();
-                                        comicPanel.setSelectedCharacter(comicPanel.getLeftCharacter());
-                                        skinColorPicker[0].setValue(comicPanel.selectedCharacter.getSkin());
-                                        hairColorPicker[0].setValue(comicPanel.selectedCharacter.getHair());
+                                        comicPanel[0].setSelectedCharacter(comicPanel[0].getLeftCharacter());
+                                        skinColorPicker[0].setValue(comicPanel[0].selectedCharacter.getSkin());
+                                        hairColorPicker[0].setValue(comicPanel[0].selectedCharacter.getHair());
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -374,8 +374,8 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(comicPanel.getSelectedCharacter() != null) {
-                    comicPanel.getSelectedCharacter().flipOrientation();
+                if(comicPanel[0].getSelectedCharacter() != null) {
+                    comicPanel[0].getSelectedCharacter().flipOrientation();
                 }
             }
         });
@@ -384,8 +384,8 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(comicPanel.getSelectedCharacter() != null)
-                    comicPanel.getSelectedCharacter().genderSwap();
+                if(comicPanel[0].getSelectedCharacter() != null)
+                    comicPanel[0].getSelectedCharacter().genderSwap();
             }
         });
 
@@ -446,20 +446,20 @@ public class Main extends Application {
                 final boolean[] isBold = {false};
                 final boolean[] isItalic = {false};
 
-                if(comicPanel.leftTextBubble != null) {
-                    if(comicPanel.leftTextBubble.getText().getFont().toString().substring(17,21).matches("Bold")){
+                if(comicPanel[0].leftTextBubble != null) {
+                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().substring(17,21).matches("Bold")){
                         isBold[0] = true;
                     }
-                    if(comicPanel.leftTextBubble.getText().getFont().toString().substring(22,28).matches("Italic")){
+                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().substring(22,28).matches("Italic")){
                         isItalic[0] = true;
                     }
-                    else if(comicPanel.leftTextBubble.getText().getFont().toString().substring(17,23).matches("Italic")){
+                    else if(comicPanel[0].leftTextBubble.getText().getFont().toString().substring(17,23).matches("Italic")){
                         isItalic[0] = true;
                     }
                 }
 
-                if(comicPanel.getSelectedCharacter().equals(comicPanel.getLeftCharacter()) && comicPanel.leftTextBubble != null) {
-                    textfield.setText(comicPanel.leftTextBubble.getText().getText().replaceAll("\n", " "));
+                if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()) && comicPanel[0].leftTextBubble != null) {
+                    textfield.setText(comicPanel[0].leftTextBubble.getText().getText().replaceAll("\n", " "));
 
                     if(isBold[0] && isItalic[0])
                         textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
@@ -470,8 +470,8 @@ public class Main extends Application {
                     else
                         textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
                 }
-                else if(comicPanel.getSelectedCharacter().equals(comicPanel.getRightCharacter()) && comicPanel.rightTextBubble != null)
-                    textfield.setText(comicPanel.rightTextBubble.getText().getText());
+                else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].rightTextBubble != null)
+                    textfield.setText(comicPanel[0].rightTextBubble.getText().getText());
 
 
                 final Text[] characterCounter = {new Text(textfield.getText().length() + "/50")};
@@ -571,7 +571,7 @@ public class Main extends Application {
                 delete.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        comicPanel.removeBubble();
+                        comicPanel[0].removeBubble();
                         addBubble.close();
                     }
                 });
@@ -603,10 +603,10 @@ public class Main extends Application {
                         else
                             textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
 
-                        if(comicPanel.getSelectedCharacter().equals(comicPanel.getLeftCharacter()))
-                            comicPanel.setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
-                        else if(comicPanel.getSelectedCharacter().equals(comicPanel.getRightCharacter()))
-                            comicPanel.setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
+                        if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()))
+                            comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
+                        else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()))
+                            comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
 
 
                         bubbleDisplay.getChildren().remove(bubbleImageView);
@@ -666,7 +666,6 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
                 if(addText.isShowing()) {
-                    addText.initModality(Modality.APPLICATION_MODAL);
                     addText.initOwner(primaryStage);
                 }
 
@@ -711,8 +710,8 @@ public class Main extends Application {
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
 
-                if(comicPanel.topText != null)
-                    textfield.setText(comicPanel.topText.getText());
+                if(comicPanel[0].topText != null)
+                    textfield.setText(comicPanel[0].topText.getText());
 
                 topText.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -720,8 +719,8 @@ public class Main extends Application {
                         textfield.setText("");
                         bottom[0] = false;
                         top[0] = true;
-                        if(comicPanel.topText != null)
-                        textfield.setText(comicPanel.topText.getText());
+                        if(comicPanel[0].topText != null)
+                        textfield.setText(comicPanel[0].topText.getText());
                     }
                 });
 
@@ -731,8 +730,8 @@ public class Main extends Application {
                         textfield.setText("");
                         bottom[0] = true;
                         top[0] = false;
-                        if(comicPanel.bottomText != null)
-                            textfield.setText(comicPanel.bottomText.getText());
+                        if(comicPanel[0].bottomText != null)
+                            textfield.setText(comicPanel[0].bottomText.getText());
                     }
                 });
 
@@ -760,10 +759,10 @@ public class Main extends Application {
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         if(top[0]){
-                            comicPanel.setTopText(textfield.getText());
+                            comicPanel[0].setTopText(textfield.getText());
                         }
                         else if(bottom[0]){
-                            comicPanel.setBottomText(textfield.getText());
+                            comicPanel[0].setBottomText(textfield.getText());
                         }
                     }
                 });
@@ -771,7 +770,7 @@ public class Main extends Application {
                 delete.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        comicPanel.removeText(top, bottom);
+                        comicPanel[0].removeText(top, bottom);
                         bottom[0] = false;
                         top[0] = false;
                         addText.close();
@@ -799,16 +798,16 @@ public class Main extends Application {
         skinColorPicker[0].setOnAction(new EventHandler() {
             public void handle(Event t) {
 
-                if(comicPanel.getSelectedCharacter() != null)
-                    comicPanel.getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
+                if(comicPanel[0].getSelectedCharacter() != null)
+                    comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
             }
         });
 
         hairColorPicker[0].setOnAction(new EventHandler() {
             public void handle(Event t) {
 
-                if(comicPanel.getSelectedCharacter() != null)
-                    comicPanel.getSelectedCharacter().setHair(hairColorPicker[0].getValue());
+                if(comicPanel[0].getSelectedCharacter() != null)
+                    comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
             }
         });
 
@@ -844,17 +843,16 @@ public class Main extends Application {
 
         HBox comicStrip = new HBox();
         comicStrip.getChildren().add(newPanelLeft);
-        comicStrip.getChildren().add(comicPanel);
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.setAlignment(Pos.CENTER);
-        comicStrip.setMargin(comicPanel, new Insets(20,10,20,10));
         comicStrip.setPrefHeight(320);
-        comicStrip.setPrefWidth(width - 10);
+        comicStrip.setMinWidth(width - 10);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPrefHeight(340);
 
         mainPane.addRow(0, menuBox);
@@ -863,16 +861,58 @@ public class Main extends Application {
         mainPane.setStyle("-fx-background-color: #B9EBFF");
         mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
 
-        comicPanel.leftCharacter.setOnMouseClicked(mouseEvent -> {
-            comicPanel.setSelectedCharacter(comicPanel.getLeftCharacter());
-            hairColorPicker[0].setValue(comicPanel.getSelectedCharacter().getHair());
-            skinColorPicker[0].setValue(comicPanel.getSelectedCharacter().getSkin());
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                comicStrip.getChildren().remove(comicPanel[0]);
+                 comicPanel[0] = null;
+            }
         });
 
-        comicPanel.rightCharacter.setOnMouseClicked(mouseEvent -> {
-            comicPanel.setSelectedCharacter(comicPanel.getRightCharacter());
-            hairColorPicker[0].setValue(comicPanel.getSelectedCharacter().getHair());
-            skinColorPicker[0].setValue(comicPanel.getSelectedCharacter().getSkin());
+        newPanelRight.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+
+                    comicStrip.getChildren().remove(newPanelRight);
+
+                    ComicPanel newComicPanel = new ComicPanel();
+                    comicStrip.getChildren().add(newComicPanel);
+                    comicStrip.setMargin(newComicPanel, new Insets(20,10,20,10));
+
+                    comicStrip.getChildren().add(newPanelRight);
+
+                    newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+
+                            if(character[0] != null){
+                                if(!comicPanel[0].equals(newComicPanel)) {
+
+
+                                    comicPanel[0].setSelectedCharacter(null);
+                                    comicPanel[0].unselect();
+
+                                    newComicPanel.select();
+                                    comicPanel[0] = newComicPanel;
+
+                                }
+                            }
+
+                            if(comicPanel[0].getSelectedCharacter() != null) {
+                                hairColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getHair());
+                                skinColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getSkin());
+                            }
+                            else {
+                                hairColorPicker[0].setValue(Color.WHITE);
+                                skinColorPicker[0].setValue(Color.WHITE);
+                            }
+                        }
+                    });
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
         Scene scene = new Scene(mainPane, width, height, false);
