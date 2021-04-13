@@ -49,6 +49,46 @@ public class ComicPanel extends Pane {
 
     public void setLeftCharacter(String imagePath) throws FileNotFoundException {
         leftCharacter.setCharacterImageView(imagePath);
+
+        AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
+
+        leftCharacter.setOnMouseEntered(mouseEvent -> {
+            leftCharacter.getScene().setCursor(Cursor.MOVE);
+        });
+
+        leftCharacter.setOnMouseExited(mouseEvent -> {
+            leftCharacter.getScene().setCursor(Cursor.DEFAULT);
+        });
+
+        leftCharacter.setOnMousePressed(pressEvent -> {
+            dragX.set(0.0);
+            dragY.set(0.0);
+            leftCharacter.setOnMouseDragged(dragEvent -> {
+
+                double offsetX = leftCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                double offsetY = leftCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+
+                if(offsetX < 3)
+                    offsetX = 3;
+                else if(offsetX > 347 - leftCharacter.getWidth())
+                    offsetX = 347 - leftCharacter.getWidth();
+
+                if(offsetY < 3)
+                    offsetY = 3;
+                else if(offsetY > 263 - leftCharacter.getHeight())
+                    offsetY = 263 - leftCharacter.getHeight();
+
+
+                leftCharacter.setTranslateX(offsetX);
+                leftCharacter.setTranslateY(offsetY);
+                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+            });
+        });
+
+        leftCharacter.setTranslateX(leftCharacter.getTranslateX() + dragX.get());
+        leftCharacter.setTranslateY(leftCharacter.getTranslateY() + dragY.get());
     }
 
     public ComicCharacter getRightCharacter() {
@@ -58,6 +98,46 @@ public class ComicPanel extends Pane {
     public void setRightCharacter(String imagePath) throws FileNotFoundException {
         rightCharacter.setCharacterImageView(imagePath);
         rightCharacter.flipOrientation();
+
+        AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
+
+        rightCharacter.setOnMouseEntered(mouseEvent -> {
+            rightCharacter.getScene().setCursor(Cursor.MOVE);
+        });
+
+        rightCharacter.setOnMouseExited(mouseEvent -> {
+            rightCharacter.getScene().setCursor(Cursor.DEFAULT);
+        });
+
+        rightCharacter.setOnMousePressed(pressEvent -> {
+            dragX.set(0.0);
+            dragY.set(0.0);
+            rightCharacter.setOnMouseDragged(dragEvent -> {
+
+                double offsetX = rightCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                double offsetY = rightCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+
+                if(offsetX < 3)
+                    offsetX = 3;
+                else if(offsetX > 347 - rightCharacter.getWidth())
+                    offsetX = 347 - rightCharacter.getWidth();
+
+                if(offsetY < 3)
+                    offsetY = 3;
+                else if(offsetY > 263 - rightCharacter.getHeight())
+                    offsetY = 263 - rightCharacter.getHeight();
+
+
+                rightCharacter.setTranslateX(offsetX);
+                rightCharacter.setTranslateY(offsetY);
+                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+            });
+        });
+
+        rightCharacter.setTranslateX(rightCharacter.getTranslateX() + dragX.get());
+        rightCharacter.setTranslateY(rightCharacter.getTranslateY() + dragY.get());
     }
 
     public ComicCharacter getSelectedCharacter() {
