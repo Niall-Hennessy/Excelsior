@@ -695,11 +695,15 @@ public class Main extends Application {
 
                 GridPane layoutGrid = new GridPane();
                 layoutGrid.getStyleClass().add("layoutGrid");
+                layoutGrid.setPadding(new Insets(10, 10, 10, 10));
+                layoutGrid.setVgap(5);
+                layoutGrid.setHgap(5);
+
                 // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
                 layoutGrid.add(escape, 4, 1, 1, 1);
                 layoutGrid.add(topOrBot, 0, 2, 3, 3);
                 layoutGrid.setMargin(topOrBot, new Insets (10, 10, 10, 30));//its 30 to balance out the x buttons margins and get the otherside right
-                layoutGrid.add(textfield, 0, 5, 3, 1);
+                layoutGrid.add(textfield, 0, 5, 20, 1);
                 layoutGrid.setMargin(textfield, new Insets (10, 10, 1, 30));
                 layoutGrid.add(submit, 0, 8, 1, 1);
                 layoutGrid.setMargin(submit, new Insets (2, 2, 2, 30));
@@ -712,12 +716,11 @@ public class Main extends Application {
                 addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
                 addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
 
-               // layoutGrid.setStyle("-fx-background-color: #E6B9FF");
-                layoutGrid.setPrefWidth(addText.getWidth());
-                layoutGrid.setPrefHeight(addText.getHeight());
-
-                final boolean[] top = {false};
+                final boolean[] top = {true};
                 final boolean[] bottom = {false};
+
+                if(comicPanel.topText != null)
+                    textfield.setText(comicPanel.topText.getText());
 
                 topText.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
