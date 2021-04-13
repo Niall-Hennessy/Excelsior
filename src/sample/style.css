@@ -48,3 +48,9 @@
     -fx-border-color: black;
     -fx-border-width: 1px;
 }
+
+.layoutGrid{
+    -fx-background-color: #E6B9FF; /*PURPLE BORDER STAGE*/
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+}

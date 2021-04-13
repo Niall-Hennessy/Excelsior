@@ -661,26 +661,130 @@ public class Main extends Application {
         textButton.setOnAction(new EventHandler<ActionEvent>() {
             final Stage addText = new Stage(StageStyle.UNDECORATED);
 
+            GridPane layoutGrid = new GridPane();
+
             @Override
             public void handle(ActionEvent event) {
-
                 if(addText.isShowing()) {
                     addText.initModality(Modality.APPLICATION_MODAL);
                     addText.initOwner(primaryStage);
                 }
 
+                Button submit = new Button("Apply");
+                submit.getStyleClass().add("submit");
+                Button escape = new Button("X");
+                escape.getStyleClass().add("escape");
+                Button cancel = new Button("Close");
+                cancel.getStyleClass().add("cancel");
+                Button delete = new Button("Delete");
+                delete.getStyleClass().add("cancel");
+                Button topText = new Button("Top Text");
+                Button bottomText = new Button("Bottom Text");
+                HBox topOrBot = new HBox();
+                topOrBot.getChildren().addAll(topText, bottomText);
+
+                TextField textfield = new TextField();
+
                 GridPane layoutGrid = new GridPane();
+                layoutGrid.getStyleClass().add("layoutGrid");
+                layoutGrid.setPadding(new Insets(10, 10, 10, 10));
+                layoutGrid.setVgap(5);
+                layoutGrid.setHgap(5);
+
+                // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
+                layoutGrid.add(escape, 4, 1, 1, 1);
+                layoutGrid.add(topOrBot, 0, 2, 3, 3);
+                layoutGrid.setMargin(topOrBot, new Insets (10, 10, 10, 30));//its 30 to balance out the x buttons margins and get the otherside right
+                layoutGrid.add(textfield, 0, 5, 20, 1);
+                layoutGrid.setMargin(textfield, new Insets (10, 10, 1, 30));
+                layoutGrid.add(submit, 0, 8, 1, 1);
+                layoutGrid.setMargin(submit, new Insets (2, 2, 2, 30));
+                layoutGrid.add(cancel,1, 8, 1, 1);
+                layoutGrid.setMargin(cancel, new Insets (2, 2, 2, 2));
+                layoutGrid.add(delete,2, 8, 1, 1);
+                layoutGrid.setMargin(delete, new Insets (2, 11, 2, 2));
 
 
                 addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/4);
                 addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/4);
 
-                layoutGrid.setStyle("-fx-background-color: #E6B9FF");
-                layoutGrid.setPrefWidth(addText.getWidth());
-                layoutGrid.setPrefHeight(addText.getHeight());
+                final boolean[] top = {true};
+                final boolean[] bottom = {false};
+
+                if(comicPanel.topText != null)
+                    textfield.setText(comicPanel.topText.getText());
+
+                topText.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        textfield.setText("");
+                        bottom[0] = false;
+                        top[0] = true;
+                        if(comicPanel.topText != null)
+                        textfield.setText(comicPanel.topText.getText());
+                    }
+                });
+
+                bottomText.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        textfield.setText("");
+                        bottom[0] = true;
+                        top[0] = false;
+                        if(comicPanel.bottomText != null)
+                            textfield.setText(comicPanel.bottomText.getText());
+                    }
+                });
+
+                escape.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                        bottom[0] = false;
+                        top[0] = false;
+                        addText.close();
+                    }
+                });
+
+                cancel.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+
+                        bottom[0] = false;
+                        top[0] = false;
+                        addText.close();
+                    }
+                });
+
+                submit.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        if(top[0]){
+                            comicPanel.setTopText(textfield.getText());
+                        }
+                        else if(bottom[0]){
+                            comicPanel.setBottomText(textfield.getText());
+                        }
+                    }
+                });
+
+                delete.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        comicPanel.removeText(top, bottom);
+                        bottom[0] = false;
+                        top[0] = false;
+                        addText.close();
+                    }
+                });
 
                 Scene scene = new Scene(layoutGrid);
+                scene.getStylesheets().add("sample/style.css");
                 addText.setScene(scene);
+
+                addText.setX(width/2 - 200);
+                addText.setY(height/2 - 200);
+
                 addText.show();
 
                 scene.setOnMousePressed(pressEvent -> {
@@ -743,15 +847,15 @@ public class Main extends Application {
         comicStrip.getChildren().add(comicPanel);
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.setAlignment(Pos.CENTER);
-        comicStrip.setMargin(comicPanel, new Insets(10,10,10,10));
-        comicStrip.setPrefHeight(280);
+        comicStrip.setMargin(comicPanel, new Insets(20,10,20,10));
+        comicStrip.setPrefHeight(320);
         comicStrip.setPrefWidth(width - 10);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setPrefHeight(300);
+        scrollPane.setPrefHeight(340);
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
