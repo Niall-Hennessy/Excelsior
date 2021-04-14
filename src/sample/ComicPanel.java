@@ -35,10 +35,10 @@ public class ComicPanel extends Pane {
         this.setPrefHeight(280);
         this.setPrefWidth(350);
 
-        this.leftCharacter.setTranslateX(10);
+        this.leftCharacter.setTranslateX(20);
         this.leftCharacter.setTranslateY(130);
 
-        this.rightCharacter.setTranslateX(200);
+        this.rightCharacter.setTranslateX(230);
         this.rightCharacter.setTranslateY(130);
 
         this.getChildren().add(leftCharacter);
@@ -94,8 +94,8 @@ public class ComicPanel extends Pane {
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 270 - leftCharacter.getHeight())
-                    offsetY = 270 - leftCharacter.getHeight();
+                else if(offsetY > 271 - leftCharacter.getHeight())
+                    offsetY = 271 - leftCharacter.getHeight();
 
 
                 leftCharacter.setTranslateX(offsetX);
@@ -159,8 +159,8 @@ public class ComicPanel extends Pane {
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 270 - rightCharacter.getHeight())
-                    offsetY = 270 - rightCharacter.getHeight();
+                else if(offsetY > 271 - rightCharacter.getHeight())
+                    offsetY = 271 - rightCharacter.getHeight();
 
 
                 rightCharacter.setTranslateX(offsetX);
