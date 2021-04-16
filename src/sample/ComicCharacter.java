@@ -102,8 +102,8 @@ public class ComicCharacter extends Pane {
             }
 
         ImageView imageView = new ImageView(writableImage);
-        imageView.setFitHeight(100);
-        imageView.setFitWidth(100);
+        imageView.setFitHeight(writableImage.getHeight()/4);
+        imageView.setFitWidth(writableImage.getWidth()/4);
         imageView.setSmooth(false);
         imageView.setRotationAxis(Rotate.Y_AXIS);
         imageView.setRotate(characterImageView.getRotate());

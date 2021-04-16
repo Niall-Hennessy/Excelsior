@@ -81,6 +81,8 @@ public class Main extends Application {
 
         HBox menuBox = new HBox(menuBar);
 
+        HBox comicStrip = new HBox();
+
         final ColorPicker[] skinColorPicker = {new ColorPicker()};
         final ColorPicker[] hairColorPicker = {new ColorPicker()};
         skinColorPicker[0] = ButtonIcon.colorPickerStyling(skinColorPicker[0]);
@@ -336,6 +338,9 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                    return;
+
                 if(addCharacter.isShowing()) {
                     addCharacter.initModality(Modality.APPLICATION_MODAL);
                     addCharacter.initOwner(primaryStage);
@@ -410,6 +415,9 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                    return;
 
                 if(addCharacter.isShowing()) {
                     addCharacter.initModality(Modality.APPLICATION_MODAL);
@@ -950,7 +958,6 @@ public class Main extends Application {
         newPanelRight.setScaleY(0.5);
         newPanelLeft.setStyle("-fx-border-color: black");
 
-        HBox comicStrip = new HBox();
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.setAlignment(Pos.CENTER);
