@@ -3,6 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -22,15 +23,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 
+import javax.imageio.ImageIO;
 import java.awt.event.MouseAdapter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.*;
 
 public class Main extends Application {
 
@@ -62,10 +61,12 @@ public class Main extends Application {
         MenuItem save_htMl = new MenuItem("Save HTMl");
         MenuItem load_xml = new MenuItem("Load XML");
         MenuItem load_html = new MenuItem("Load HTML");
+        MenuItem add_character = new MenuItem("Add Character");
         file.getItems().add(save_xml);
         file.getItems().add(save_htMl);
         file.getItems().add(load_xml);
         file.getItems().add(load_html);
+        file.getItems().add(add_character);
 
         menuBar.getMenus().add(file);
 
@@ -182,6 +183,114 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+            }
+        });
+
+        save_xml.setOnAction(new EventHandler<ActionEvent>() {
+            final Stage saveXML = new Stage();
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(saveXML.isShowing()) {
+                    saveXML.initModality(Modality.APPLICATION_MODAL);
+                    saveXML.initOwner(primaryStage);
+                }
+
+                GridPane savePane = new GridPane();
+
+                Button save = new Button("Save");
+
+                TextField textField = new TextField();
+
+                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
+                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
+
+                savePane.add(textField, 0, 0, 1, 1);
+                savePane.add(save, 0, 1, 1, 1);
+
+                Scene scene = new Scene(savePane);
+                saveXML.setScene(scene);
+                saveXML.show();
+
+
+                save.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        if(textField.getText().trim().matches(""))
+                            return;
+
+
+                        try {
+                            File myObj = new File("src/files/" + textField.getText() + ".xml");
+                            if (myObj.createNewFile()) {
+                                System.out.println("File created: " + myObj.getName());
+                            } else {
+                                System.out.println("File already exists.");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("An error occurred.");
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+
+        load_xml.setOnAction(new EventHandler<ActionEvent>() {
+            final Stage saveXML = new Stage();
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(saveXML.isShowing()) {
+                    saveXML.initOwner(primaryStage);
+                }
+
+                FileChooser fileChooser = new FileChooser();
+
+                File selectedFile = fileChooser.showOpenDialog(saveXML);
+
+
+
+                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
+                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
+
+                VBox vBox = new VBox();
+
+                Scene scene = new Scene(vBox);
+                saveXML.setScene(scene);
+                saveXML.show();
+            }
+        });
+
+        add_character.setOnAction(new EventHandler<ActionEvent>() {
+            final Stage saveXML = new Stage();
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(saveXML.isShowing()) {
+                    saveXML.initOwner(primaryStage);
+                }
+
+                FileChooser fileChooser = new FileChooser();
+
+                File selectedFile = fileChooser.showOpenDialog(saveXML);
+
+                File newFile = new File("src/images/characters/" + selectedFile.getName());
+
+                selectedFile.renameTo(newFile);
+
+                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
+                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
+
+                VBox vBox = new VBox();
+
+                Scene scene = new Scene(vBox);
+                saveXML.setScene(scene);
+                saveXML.show();
             }
         });
 
@@ -888,6 +997,8 @@ public class Main extends Application {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
 
+                            if(!comicStrip.getChildren().contains(newComicPanel))
+                                comicStrip.getChildren().add(newComicPanel);
 
                             if(!comicPanel[0].equals(newComicPanel)) {
 

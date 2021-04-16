@@ -103,8 +103,8 @@ public class ComicPanel extends Pane {
 
                 if(offsetX < 3)
                     offsetX = 3;
-                else if(offsetX > 347 - leftCharacter.getWidth())
-                    offsetX = 347 - leftCharacter.getWidth();
+                else if(offsetX > 347/2 - leftCharacter.getWidth())
+                    offsetX = 347/2 - leftCharacter.getWidth();
 
                 if(offsetY < 3)
                     offsetY = 3;
@@ -169,8 +169,8 @@ public class ComicPanel extends Pane {
                 double offsetX = rightCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                 double offsetY = rightCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
 
-                if(offsetX < 3)
-                    offsetX = 3;
+                if(offsetX < 347/2)
+                    offsetX = 347/2;
                 else if(offsetX > 347 - rightCharacter.getWidth())
                     offsetX = 347 - rightCharacter.getWidth();
 
