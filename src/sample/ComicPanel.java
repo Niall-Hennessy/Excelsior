@@ -300,13 +300,13 @@ public class ComicPanel extends Pane {
 
                 if(offsetX < 3)
                     offsetX = 3;
-                else if(offsetX > 347 - leftTextBubble.getWidth())
-                    offsetX = 347 - leftTextBubble.getWidth();
+                else if(offsetX > this.getWidth()-4 - leftTextBubble.getWidth())
+                    offsetX = this.getWidth()-4 - leftTextBubble.getWidth();
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 263 - leftTextBubble.getHeight())
-                    offsetY = 263 - leftTextBubble.getHeight();
+                else if(offsetY > this.getHeight()-4 - leftTextBubble.getHeight())
+                    offsetY = this.getHeight()-4 - leftTextBubble.getHeight();
 
 
                 leftTextBubble.setTranslateX(offsetX);
@@ -401,13 +401,13 @@ public class ComicPanel extends Pane {
 
                 if(offsetX < 3)
                     offsetX = 3;
-                else if(offsetX > 347 - rightTextBubble.getWidth())
-                    offsetX = 347 - rightTextBubble.getWidth();
+                else if(offsetX > this.getWidth()-4 - rightTextBubble.getWidth())
+                    offsetX = this.getWidth()-4 - rightTextBubble.getWidth();
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 263 - rightTextBubble.getHeight())
-                    offsetY = 263 - rightTextBubble.getHeight();
+                else if(offsetY > this.getHeight()-4 - rightTextBubble.getHeight())
+                    offsetY = this.getHeight()-4 - rightTextBubble.getHeight();
 
 
                 rightTextBubble.setTranslateX(offsetX);
@@ -427,14 +427,14 @@ public class ComicPanel extends Pane {
     public void setTopText(String text){
         this.getChildren().remove(topText);
         topText = new TextCaption(text);
-        topText.setTranslateY(-4);
+        topText.setTranslateY(-5);
         this.getChildren().add(topText);
     }
 
     public void setBottomText(String text){
         this.getChildren().remove(bottomText);
         bottomText = new TextCaption(text);
-        bottomText.setTranslateY(this.getHeight()+12);
+        bottomText.setTranslateY(this.getHeight()+14);
         this.getChildren().add(bottomText);
     }
 
