@@ -32,11 +32,11 @@ public class ComicPanel extends Pane {
 
     public ComicPanel() throws FileNotFoundException {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
-        this.setPrefHeight(280);
-        this.setPrefWidth(350);
+        this.setPrefHeight(400);
+        this.setPrefWidth(500);
 
-        this.setMaxHeight(280);
-        this.setMaxWidth(350);
+        this.setMaxHeight(400);
+        this.setMaxWidth(500);
 
         this.leftCharacter.setTranslateX(20);
         this.leftCharacter.setTranslateY(130);
@@ -427,14 +427,14 @@ public class ComicPanel extends Pane {
     public void setTopText(String text){
         this.getChildren().remove(topText);
         topText = new TextCaption(text);
-        topText.setTranslateY(-2);
+        topText.setTranslateY(-4);
         this.getChildren().add(topText);
     }
 
     public void setBottomText(String text){
         this.getChildren().remove(bottomText);
         bottomText = new TextCaption(text);
-        bottomText.setTranslateY(287);
+        bottomText.setTranslateY(this.getHeight()+12);
         this.getChildren().add(bottomText);
     }
 

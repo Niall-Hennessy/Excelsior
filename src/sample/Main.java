@@ -988,7 +988,7 @@ public class Main extends Application {
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.setAlignment(Pos.CENTER);
-        comicStrip.setPrefHeight(320);
+        comicStrip.setPrefHeight(height/2 -20);
         comicStrip.setMinWidth(width - 10);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
@@ -996,7 +996,7 @@ public class Main extends Application {
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setPrefHeight(340);
+        scrollPane.setPrefHeight(height/2);
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
