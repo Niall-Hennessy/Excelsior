@@ -75,7 +75,7 @@
 
 }
 
-.charTab: selected, .speechTab: selected, .captionTab:selected, .colourTab:selected {
+.charTab:selected, .speechTab:selected, .captionTab:selected, .colourTab:selected {
     -fx-background-color: white;
 }
 
