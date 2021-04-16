@@ -528,13 +528,6 @@ public class Main extends Application {
                 fonts.getStyleClass().add("fonts");
 
 
-//                ComboBox fontDrop = new ComboBox();
-//
-//                fontDrop.getItems().add("Choice 1");
-//                fontDrop.getItems().add("Choice 2");
-//
-//                HBox fontbox = new HBox(fontDrop);
-
                 if(bubbleDisplay.getChildren().size() == 0)
                     bubbleDisplay.getChildren().add(bubbleImageView);
                 bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
@@ -770,8 +763,6 @@ public class Main extends Application {
         textButton.setOnAction(new EventHandler<ActionEvent>() {
             final Stage addText = new Stage(StageStyle.UNDECORATED);
 
-            GridPane layoutGrid = new GridPane();
-
             @Override
             public void handle(ActionEvent event) {
                 if(addText.isShowing()) {
@@ -782,16 +773,19 @@ public class Main extends Application {
                 submit.getStyleClass().add("submit");
                 Button escape = new Button("X");
                 escape.getStyleClass().add("escape");
-                Button cancel = new Button("Close");
+                Button cancel = new Button("Cancel");
                 cancel.getStyleClass().add("cancel");
                 Button delete = new Button("Delete");
                 delete.getStyleClass().add("cancel");
                 Button topText = new Button("Top Text");
                 Button bottomText = new Button("Bottom Text");
-                HBox topOrBot = new HBox();
-                topOrBot.getChildren().addAll(topText, bottomText);
 
-                TextField textfield = new TextField();
+
+                TextField captionTextfield = new TextField();
+                captionTextfield.getStyleClass().add("capTextField");
+                HBox topOrBot = new HBox(captionTextfield);
+                captionTextfield.setPrefWidth(400);
+                captionTextfield.setPrefHeight(25);
 
                 GridPane layoutGrid = new GridPane();
                 layoutGrid.getStyleClass().add("layoutGrid");
@@ -800,47 +794,50 @@ public class Main extends Application {
                 layoutGrid.setHgap(5);
 
                 // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
-                layoutGrid.add(escape, 4, 1, 1, 1);
-                layoutGrid.add(topOrBot, 0, 2, 3, 3);
-                layoutGrid.setMargin(topOrBot, new Insets (10, 10, 10, 30));//its 30 to balance out the x buttons margins and get the otherside right
-                layoutGrid.add(textfield, 0, 5, 20, 1);
-                layoutGrid.setMargin(textfield, new Insets (10, 10, 1, 30));
-                layoutGrid.add(submit, 0, 8, 1, 1);
-                layoutGrid.setMargin(submit, new Insets (2, 2, 2, 30));
-                layoutGrid.add(cancel,1, 8, 1, 1);
-                layoutGrid.setMargin(cancel, new Insets (2, 2, 2, 2));
-                layoutGrid.add(delete,2, 8, 1, 1);
-                layoutGrid.setMargin(delete, new Insets (2, 11, 2, 2));
+                layoutGrid.add(escape, 21, 0, 1, 1);
+                layoutGrid.setMargin(escape, new Insets(5,0,5,0));
+                layoutGrid.add(topText, 0, 1, 1, 1);
+                layoutGrid.setMargin(topText, new Insets (5, 0, 5, 25));//its 30 to balance out the x buttons margins and get the otherside right
+                layoutGrid.add(bottomText, 3, 1, 1, 1);
+                layoutGrid.setMargin(bottomText, new Insets (5, 0, 5, 0));//its 30 to balance out the x buttons margins and get the otherside right
+                layoutGrid.add(topOrBot, 0, 2, 20, 1);
+                layoutGrid.setMargin(topOrBot, new Insets (5, 0, 5, 25));
+                layoutGrid.add(submit, 0, 3, 1, 1);
+                layoutGrid.setMargin(submit, new Insets (5, 0, 5, 25));
+                layoutGrid.add(delete,3, 3, 1, 1);
+                layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
+                layoutGrid.add(cancel,0, 4, 1, 1);
+                layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 25));//70
 
 
-                addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/4);
-                addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/4);
+                addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
+                addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
 
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
 
                 if(comicPanel[0].topText != null)
-                    textfield.setText(comicPanel[0].topText.getText());
+                    captionTextfield.setText(comicPanel[0].topText.getText());
 
                 topText.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        textfield.setText("");
+                        captionTextfield.setText("");
                         bottom[0] = false;
                         top[0] = true;
                         if(comicPanel[0].topText != null)
-                        textfield.setText(comicPanel[0].topText.getText());
+                        captionTextfield.setText(comicPanel[0].topText.getText());
                     }
                 });
 
                 bottomText.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        textfield.setText("");
+                        captionTextfield.setText("");
                         bottom[0] = true;
                         top[0] = false;
                         if(comicPanel[0].bottomText != null)
-                            textfield.setText(comicPanel[0].bottomText.getText());
+                            captionTextfield.setText(comicPanel[0].bottomText.getText());
                     }
                 });
 
@@ -868,10 +865,10 @@ public class Main extends Application {
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         if(top[0]){
-                            comicPanel[0].setTopText(textfield.getText());
+                            comicPanel[0].setTopText(captionTextfield.getText());
                         }
                         else if(bottom[0]){
-                            comicPanel[0].setBottomText(textfield.getText());
+                            comicPanel[0].setBottomText(captionTextfield.getText());
                         }
                     }
                 });
