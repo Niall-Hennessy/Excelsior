@@ -32,11 +32,11 @@ public class ComicPanel extends Pane {
 
     public ComicPanel() throws FileNotFoundException {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
-        this.setPrefHeight(280);
-        this.setPrefWidth(350);
+        this.setPrefHeight(400);
+        this.setPrefWidth(500);
 
-        this.setMaxHeight(280);
-        this.setMaxWidth(350);
+        this.setMaxHeight(400);
+        this.setMaxWidth(500);
 
         this.leftCharacter.setTranslateX(20);
         this.leftCharacter.setTranslateY(130);
@@ -103,13 +103,13 @@ public class ComicPanel extends Pane {
 
                 if(offsetX < 3)
                     offsetX = 3;
-                else if(offsetX > 347/2 - leftCharacter.getWidth())
-                    offsetX = 347/2 - leftCharacter.getWidth();
+                else if(offsetX > (this.getWidth()-3)/2 - leftCharacter.getWidth())
+                    offsetX = (this.getWidth()-3)/2 - leftCharacter.getWidth();
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 270 - leftCharacter.getHeight())
-                    offsetY = 270 - leftCharacter.getHeight();
+                else if(offsetY > this.getHeight()-3 - leftCharacter.getHeight())
+                    offsetY = this.getHeight()-3 - leftCharacter.getHeight();
 
 
                 leftCharacter.setTranslateX(offsetX);
@@ -169,15 +169,15 @@ public class ComicPanel extends Pane {
                 double offsetX = rightCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                 double offsetY = rightCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
 
-                if(offsetX < 347/2)
-                    offsetX = 347/2;
-                else if(offsetX > 347 - rightCharacter.getWidth())
-                    offsetX = 347 - rightCharacter.getWidth();
+                if(offsetX < (this.getWidth()-3)/2)
+                    offsetX = (this.getWidth()-3)/2;
+                else if(offsetX > this.getWidth()-3 - rightCharacter.getWidth())
+                    offsetX = this.getWidth()-3 - rightCharacter.getWidth();
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 270 - rightCharacter.getHeight())
-                    offsetY = 270 - rightCharacter.getHeight();
+                else if(offsetY > this.getHeight()-3 - rightCharacter.getHeight())
+                    offsetY = this.getHeight()-3 - rightCharacter.getHeight();
 
 
                 rightCharacter.setTranslateX(offsetX);
@@ -300,13 +300,13 @@ public class ComicPanel extends Pane {
 
                 if(offsetX < 3)
                     offsetX = 3;
-                else if(offsetX > 347 - leftTextBubble.getWidth())
-                    offsetX = 347 - leftTextBubble.getWidth();
+                else if(offsetX > this.getWidth()-4 - leftTextBubble.getWidth())
+                    offsetX = this.getWidth()-4 - leftTextBubble.getWidth();
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 263 - leftTextBubble.getHeight())
-                    offsetY = 263 - leftTextBubble.getHeight();
+                else if(offsetY > this.getHeight()-4 - leftTextBubble.getHeight())
+                    offsetY = this.getHeight()-4 - leftTextBubble.getHeight();
 
 
                 leftTextBubble.setTranslateX(offsetX);
@@ -401,13 +401,13 @@ public class ComicPanel extends Pane {
 
                 if(offsetX < 3)
                     offsetX = 3;
-                else if(offsetX > 347 - rightTextBubble.getWidth())
-                    offsetX = 347 - rightTextBubble.getWidth();
+                else if(offsetX > this.getWidth()-4 - rightTextBubble.getWidth())
+                    offsetX = this.getWidth()-4 - rightTextBubble.getWidth();
 
                 if(offsetY < 3)
                     offsetY = 3;
-                else if(offsetY > 263 - rightTextBubble.getHeight())
-                    offsetY = 263 - rightTextBubble.getHeight();
+                else if(offsetY > this.getHeight()-4 - rightTextBubble.getHeight())
+                    offsetY = this.getHeight()-4 - rightTextBubble.getHeight();
 
 
                 rightTextBubble.setTranslateX(offsetX);
@@ -427,14 +427,14 @@ public class ComicPanel extends Pane {
     public void setTopText(String text){
         this.getChildren().remove(topText);
         topText = new TextCaption(text);
-        topText.setTranslateY(-2);
+        topText.setTranslateY(-12);
         this.getChildren().add(topText);
     }
 
     public void setBottomText(String text){
         this.getChildren().remove(bottomText);
         bottomText = new TextCaption(text);
-        bottomText.setTranslateY(287);
+        bottomText.setTranslateY(this.getHeight()+22);
         this.getChildren().add(bottomText);
     }
 

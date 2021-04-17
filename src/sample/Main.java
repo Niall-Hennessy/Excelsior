@@ -24,6 +24,11 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.*;
+import javafx.scene.text.*;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import javax.imageio.ImageIO;
 import java.awt.event.MouseAdapter;
@@ -80,6 +85,8 @@ public class Main extends Application {
         menuBar.getMenus().add(help);
 
         HBox menuBox = new HBox(menuBar);
+
+        HBox comicStrip = new HBox();
 
         final ColorPicker[] skinColorPicker = {new ColorPicker()};
         final ColorPicker[] hairColorPicker = {new ColorPicker()};
@@ -303,28 +310,57 @@ public class Main extends Application {
                 helpStage.setTitle("Help");
 
                 TabPane helpPane = new TabPane();
+                helpPane.getStyleClass().add("helpPane");
 
-                Tab character = new Tab("Character");
-                Tab speechBubble = new Tab("Speech Bubbles", new Label("Help on how to add Speech Bubbles"));
-                Tab colour = new Tab("Skin/Hair", new Label("How to set Skin and Hair Colour"));
+                Tab characterTab = new Tab("Character");
+                characterTab.getStyleClass().add("charTab");
+                characterTab.setContent(new Text("\tLet's add a character to your comic!\n \nClick on the character icon to choose a left or right character.\nDouble click a character pose from the gallery.\nUse the Flip Button to change which way they are facing.\nUse the M/F button to change their gender."));
 
-                character.closableProperty().setValue(false);
-                speechBubble.closableProperty().setValue(false);
-                colour.closableProperty().setValue(false);
+                Tab speechBubbleTab = new Tab("Speech Bubbles");
+                speechBubbleTab.getStyleClass().add("speechTab");
+                speechBubbleTab.setContent(new Text("Let's get your characters talking!\n \nNote: You have to have a character in your panel before you can make them talk.\n \nClick on the speech bubble icon.\nChoose what bubble you want.\nWrite in the textbox what you want them to say - Careful, there is a character limit.\nChoose if you want the text in italic or bold or Both.\nHit Submit and voila!\nHit Cancel if you change your mind.\nHit Delete if you want to get rid of the bubble."));
 
-                helpPane.getTabs().add(character);
-                helpPane.getTabs().add(speechBubble);
-                helpPane.getTabs().add(colour);
+                Tab colourTab = new Tab("Skin/Hair");
+                colourTab.getStyleClass().add("colourTab");
+                colourTab.setContent(new Text("Let's add some colour!\n \nClick on the character in the comic panel who you want to style.\nClick on the boxes labelled Skin/Hair to decide what colour best suits your character's Skin/Hair colour."));
 
-                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/5);
-                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
+                //test.setUnderline(true);
+
+                //test2.setTextAlignment(TextAlignment.CENTER);
+                //test.setTextAlignment(TextAlignment.CENTER);
+               // textFlow.getChildren().addAll(test, test3);
+                //colourTab.setContent(textFlow); //how to add more arguments?
+
+
+                Tab captionTab = new Tab("Caption");
+                captionTab.getStyleClass().add("captionTab");
+                captionTab.setContent(new Text("Let's caption your panel!\n \nIDK yet we'll find out later.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
+
+                characterTab.closableProperty().setValue(false);
+                speechBubbleTab.closableProperty().setValue(false);
+                colourTab.closableProperty().setValue(false);
+                captionTab.closableProperty().setValue(false);
+
+                helpPane.getTabs().add(characterTab);
+                helpPane.getTabs().add(speechBubbleTab);
+                helpPane.getTabs().add(colourTab);
+                helpPane.getTabs().add(captionTab);
+
+
+                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.7);
+                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
+
 
                 ScrollPane instruction = new ScrollPane();
-                instruction.setContent(new Text("Cats in the craddel and silver spoon"));
-                character.setContent(instruction);
+                instruction.getStyleClass().add("instructionScroll");
+                instruction.setContent(helpPane);
+                instruction.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
+                instruction.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instruction.fitToWidthProperty().setValue(true);
 
-                Scene scene = new Scene(helpPane);
+                Scene scene = new Scene(instruction);
                 helpStage.setScene(scene);
+                scene.getStylesheets().add("sample/style.css");
                 helpStage.show();
             }
         });
@@ -335,6 +371,9 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                    return;
 
                 if(addCharacter.isShowing()) {
                     addCharacter.initModality(Modality.APPLICATION_MODAL);
@@ -410,6 +449,9 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                    return;
 
                 if(addCharacter.isShowing()) {
                     addCharacter.initModality(Modality.APPLICATION_MODAL);
@@ -947,11 +989,10 @@ public class Main extends Application {
         newPanelRight.setScaleY(0.5);
         newPanelLeft.setStyle("-fx-border-color: black");
 
-        HBox comicStrip = new HBox();
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.setAlignment(Pos.CENTER);
-        comicStrip.setPrefHeight(320);
+        comicStrip.setPrefHeight(height/2 -20);
         comicStrip.setMinWidth(width - 10);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
@@ -959,7 +1000,7 @@ public class Main extends Application {
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setPrefHeight(340);
+        scrollPane.setPrefHeight(height/2);
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
