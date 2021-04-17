@@ -49,17 +49,7 @@
     -fx-border-width: 1px;
 }
 
-/*DOES THIS WORK?
-.instructionScroll {
-    -fx-background-color: #E6B9FF; /*PURPLE BORDER STAGE
 
-}
-*/
-/*AAAAAARGH
-.character {
-    -fx-background-color: red;
-}
-*/
 
 .helpPane {
     -fx-background-color: white;
@@ -100,8 +90,6 @@
 
 .instructionScroll {
     -fx-border-width: 0px 0px 0px 0px;
-
-
 
 }
 

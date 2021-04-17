@@ -314,27 +314,46 @@ public class Main extends Application {
 
                 Tab characterTab = new Tab("Character");
                 characterTab.getStyleClass().add("charTab");
-                characterTab.setContent(new Text("\tLet's add a character to your comic!\n \nClick on the character icon to choose a left or right character.\nDouble click a character pose from the gallery.\nUse the Flip Button to change which way they are facing.\nUse the M/F button to change their gender."));
+                characterTab.setContent(new Text
+                        ("\n Let's add a character to your comic!\n " +
+                                "\n First press the plus icon in the white panel." +
+                                "\n Now that a black comic panel has appeared, select it so that it is highlighted." +
+                                "\n Click on the character icon to choose a left or right character." +
+                                "\n Double click a character pose from the gallery." +
+                                "\n Use the Flip Button to change which way they are facing." +
+                                "\n Use the M/F button to change their gender."));
 
                 Tab speechBubbleTab = new Tab("Speech Bubbles");
                 speechBubbleTab.getStyleClass().add("speechTab");
-                speechBubbleTab.setContent(new Text("Let's get your characters talking!\n \nNote: You have to have a character in your panel before you can make them talk.\n \nClick on the speech bubble icon.\nChoose what bubble you want.\nWrite in the textbox what you want them to say - Careful, there is a character limit.\nChoose if you want the text in italic or bold or Both.\nHit Submit and voila!\nHit Cancel if you change your mind.\nHit Delete if you want to get rid of the bubble."));
+                speechBubbleTab.setContent
+                        (new Text("\n Let's get your characters talking!\n " +
+                                "\n Note: You have to have a character in your panel before you can make them talk.\n " +
+                                "\n Click on the speech bubble icon." +
+                                "\n Choose what bubble you want." +
+                                "\n Write in the text-box what you want them to say - Careful, there is a character limit." +
+                                "\n Choose if you want the text in italic, or bold, or both." +
+                                "\n Hit Submit and voila!" +
+                                "\n Hit Cancel if you change your mind." +
+                                "\n Hit Delete if you want to get rid of the bubble."));
 
                 Tab colourTab = new Tab("Skin/Hair");
                 colourTab.getStyleClass().add("colourTab");
-                colourTab.setContent(new Text("Let's add some colour!\n \nClick on the character in the comic panel who you want to style.\nClick on the boxes labelled Skin/Hair to decide what colour best suits your character's Skin/Hair colour."));
-
-                //test.setUnderline(true);
-
-                //test2.setTextAlignment(TextAlignment.CENTER);
-                //test.setTextAlignment(TextAlignment.CENTER);
-               // textFlow.getChildren().addAll(test, test3);
-                //colourTab.setContent(textFlow); //how to add more arguments?
+                colourTab.setContent
+                        (new Text("\n Let's add some colour!\n " +
+                                "\n Select the character who's Skin/Hair you wish to change." +
+                                "\n Select the Skin/Hair colour picker to select a new colour."));
 
 
                 Tab captionTab = new Tab("Caption");
                 captionTab.getStyleClass().add("captionTab");
-                captionTab.setContent(new Text("Let's caption your panel!\n \nIDK yet we'll find out later.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"));
+                captionTab.setContent
+                        (new Text("\n Let's caption your panel!\n " +
+                                "\n Hit the caption button." +
+                                "\n Select either 'Top Text' or 'Bottom Text' before you start writing." +
+                                "\n Write what you want the caption to be." +
+                                "\n Hit 'Apply' and see it appear." +
+                                "\n Hit 'Cancel' if you change your mind." +
+                                "\n Hit 'Delete' after selecting either the 'Top Text' or 'Bottom Text' to remove the caption."));
 
                 characterTab.closableProperty().setValue(false);
                 speechBubbleTab.closableProperty().setValue(false);
