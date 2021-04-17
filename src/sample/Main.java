@@ -412,7 +412,7 @@ public class Main extends Application {
 
                 }
 
-                gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
+                gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizontal
                 gallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 gallery.setFitToWidth(true);
                 gallery.setContent(poses);
