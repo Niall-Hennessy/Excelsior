@@ -820,7 +820,9 @@ public class Main extends Application {
                 Button delete = new Button("Delete");
                 delete.getStyleClass().add("cancel");
                 Button topText = new Button("Top Text");
+                topText.getStyleClass().add("bold");
                 Button bottomText = new Button("Bottom Text");
+                bottomText.getStyleClass().add("bold");
 
 
                 TextField captionTextfield = new TextField();
@@ -839,17 +841,17 @@ public class Main extends Application {
                 layoutGrid.add(escape, 21, 0, 1, 1);
                 layoutGrid.setMargin(escape, new Insets(5,0,5,0));
                 layoutGrid.add(topText, 0, 1, 1, 1);
-                layoutGrid.setMargin(topText, new Insets (5, 0, 5, 25));//its 30 to balance out the x buttons margins and get the otherside right
+                layoutGrid.setMargin(topText, new Insets (5, 0, 5, 25));
                 layoutGrid.add(bottomText, 3, 1, 1, 1);
-                layoutGrid.setMargin(bottomText, new Insets (5, 0, 5, 0));//its 30 to balance out the x buttons margins and get the otherside right
+                layoutGrid.setMargin(bottomText, new Insets (5, 0, 5, 0));
                 layoutGrid.add(topOrBot, 0, 2, 20, 1);
                 layoutGrid.setMargin(topOrBot, new Insets (5, 0, 5, 25));
                 layoutGrid.add(submit, 0, 3, 1, 1);
                 layoutGrid.setMargin(submit, new Insets (5, 0, 5, 25));
-                layoutGrid.add(delete,3, 3, 1, 1);
+                layoutGrid.add(cancel,3, 3, 1, 1);
+                layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 0));
+                layoutGrid.add(delete,4, 3, 1, 1);
                 layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
-                layoutGrid.add(cancel,0, 4, 1, 1);
-                layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 25));//70
 
 
                 addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
