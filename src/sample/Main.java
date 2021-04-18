@@ -1037,10 +1037,12 @@ public class Main extends Application {
 
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
+        Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         newPanelRight.setScaleX(0.5);
         newPanelRight.setScaleY(0.5);
 
         comicStrip.getChildren().add(newPanelRight);
+        comicStrip.getChildren().add(newPanelLeft);
         comicStrip.setAlignment(Pos.CENTER);
         comicStrip.setPrefHeight(height/2 -20);
         comicStrip.setMinWidth(width - 10);
@@ -1057,6 +1059,23 @@ public class Main extends Application {
         mainPane.addRow(2, optionBox);
         mainPane.setStyle("-fx-background-color: #B9EBFF");
         mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
+
+        newPanelRight.setVisible(false);
+        newPanelLeft.setVisible(false);
+
+        comicStrip.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                newPanelRight.setVisible(true);
+            }
+        });
+
+        comicStrip.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                newPanelRight.setVisible(false);
+            }
+        });
 
         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
