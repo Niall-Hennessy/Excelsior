@@ -826,6 +826,11 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                    return;
+
+
                 if(addText.isShowing()) {
                     addText.initOwner(primaryStage);
                 }
@@ -842,9 +847,15 @@ public class Main extends Application {
                 topText.getStyleClass().add("bold");
                 Button bottomText = new Button("Bottom Text");
                 bottomText.getStyleClass().add("bold");
+                Label label = new Label("Fonts: ");
+                ComboBox combo_box = new ComboBox();
+                combo_box.getStyleClass().add("bold");
+                combo_box.getItems().addAll("Segoe UI", "Verdana", "Times New Roman", "Arial");
+                combo_box.getSelectionModel().selectFirst();
 
 
                 TextField captionTextfield = new TextField();
+                captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
                 captionTextfield.getStyleClass().add("capTextField");
                 HBox topOrBot = new HBox(captionTextfield);
                 captionTextfield.setPrefWidth(400);
@@ -861,16 +872,21 @@ public class Main extends Application {
                 layoutGrid.setMargin(escape, new Insets(5,0,5,0));
                 layoutGrid.add(topText, 0, 1, 1, 1);
                 layoutGrid.setMargin(topText, new Insets (5, 0, 5, 25));
-                layoutGrid.add(bottomText, 3, 1, 1, 1);
+                layoutGrid.add(bottomText, 1, 1, 1, 1);
                 layoutGrid.setMargin(bottomText, new Insets (5, 0, 5, 0));
                 layoutGrid.add(topOrBot, 0, 2, 20, 1);
                 layoutGrid.setMargin(topOrBot, new Insets (5, 0, 5, 25));
-                layoutGrid.add(submit, 0, 3, 1, 1);
+                layoutGrid.add(label,0, 3, 1, 1);
+                layoutGrid.setMargin(label, new Insets (5, 0, 5, 25));
+                layoutGrid.add(combo_box,1, 3, 1, 1);
+                layoutGrid.setMargin(combo_box, new Insets (5, 0, 5, 0));
+                layoutGrid.add(submit, 0, 4, 1, 1);
                 layoutGrid.setMargin(submit, new Insets (5, 0, 5, 25));
-                layoutGrid.add(cancel,3, 3, 1, 1);
+                layoutGrid.add(cancel,1, 4, 1, 1);
                 layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 0));
-                layoutGrid.add(delete,4, 3, 1, 1);
+                layoutGrid.add(delete,2, 4, 1, 1);
                 layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
+
 
 
                 addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
@@ -927,11 +943,15 @@ public class Main extends Application {
                 submit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
+
+                        Font font = Font.font((String)combo_box.getSelectionModel().getSelectedItem(), FontWeight.NORMAL, 20);
+                        captionTextfield.setFont(Font.font((String)combo_box.getSelectionModel().getSelectedItem(), FontWeight.NORMAL, 20));
+
                         if(top[0]){
-                            comicPanel[0].setTopText(captionTextfield.getText());
+                            comicPanel[0].setTopText(captionTextfield.getText(), font);
                         }
                         else if(bottom[0]){
-                            comicPanel[0].setBottomText(captionTextfield.getText());
+                            comicPanel[0].setBottomText(captionTextfield.getText(), font);
                         }
                     }
                 });
@@ -950,8 +970,10 @@ public class Main extends Application {
                 scene.getStylesheets().add("sample/style.css");
                 addText.setScene(scene);
 
-                addText.setX(width/2 - 200);
-                addText.setY(height/2 - 200);
+                addText.setX(width/2 -200);
+                addText.setY(height/2);
+
+
 
                 addText.show();
 
@@ -1002,15 +1024,11 @@ public class Main extends Application {
         optionBox.setStyle("-fx-background-color: #B9EBFF");
         optionBox.setPrefHeight(400);
 
-        Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
+
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
-        newPanelLeft.setScaleX(0.5);
-        newPanelLeft.setScaleY(0.5);
         newPanelRight.setScaleX(0.5);
         newPanelRight.setScaleY(0.5);
-        newPanelLeft.setStyle("-fx-border-color: black");
 
-        comicStrip.getChildren().add(newPanelLeft);
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.setAlignment(Pos.CENTER);
         comicStrip.setPrefHeight(height/2 -20);

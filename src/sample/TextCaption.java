@@ -11,11 +11,10 @@ public class TextCaption extends Pane {
 
     Text text = new Text();
 
-    public TextCaption(String text){
+    public TextCaption(String text, Font font){
         this.text.setText(text);
+        this.text.setFont(font);
         this.text.setTranslateX((400 - this.text.getLayoutBounds().getWidth()) / 2);
-        this.text.setTextAlignment(TextAlignment.CENTER);
-        this.text.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
         this.getChildren().add(this.text);
 
     }

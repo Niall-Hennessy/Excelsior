@@ -424,16 +424,16 @@ public class ComicPanel extends Pane {
         this.getChildren().add(rightTextBubble);
     }
 
-    public void setTopText(String text){
+    public void setTopText(String text, Font font){
         this.getChildren().remove(topText);
-        topText = new TextCaption(text);
+        topText = new TextCaption(text, font);
         topText.setTranslateY(-12);
         this.getChildren().add(topText);
     }
 
-    public void setBottomText(String text){
+    public void setBottomText(String text, Font font){
         this.getChildren().remove(bottomText);
-        bottomText = new TextCaption(text);
+        bottomText = new TextCaption(text, font);
         bottomText.setTranslateY(this.getHeight()+22);
         this.getChildren().add(bottomText);
     }
@@ -449,4 +449,6 @@ public class ComicPanel extends Pane {
         }
 
     }
+
+
 }
