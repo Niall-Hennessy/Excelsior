@@ -895,6 +895,9 @@ public class Main extends Application {
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
 
+                topText.setStyle("-fx-background-color: #C089D7");
+                bottomText.setStyle("-fx-background-color: #E5A6FF");
+
                 if(comicPanel[0].topText != null)
                     captionTextfield.setText(comicPanel[0].topText.getText());
 
@@ -904,6 +907,10 @@ public class Main extends Application {
                         captionTextfield.setText("");
                         bottom[0] = false;
                         top[0] = true;
+
+                        topText.setStyle("-fx-background-color: #C089D7");
+                        bottomText.setStyle("-fx-background-color: #E5A6FF");
+
                         if(comicPanel[0].topText != null)
                         captionTextfield.setText(comicPanel[0].topText.getText());
                     }
@@ -915,6 +922,10 @@ public class Main extends Application {
                         captionTextfield.setText("");
                         bottom[0] = true;
                         top[0] = false;
+
+                        bottomText.setStyle("-fx-background-color: #C089D7");
+                        topText.setStyle("-fx-background-color: #E5A6FF");
+
                         if(comicPanel[0].bottomText != null)
                             captionTextfield.setText(comicPanel[0].bottomText.getText());
                     }
