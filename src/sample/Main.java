@@ -1178,9 +1178,14 @@ public class Main extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.F5) {
+                    comicStrip.getChildren().remove(newPanelRight);
                     if(deletedPanels.size() > 0) {
-                        comicStrip.getChildren().add(deletedPanels.get(deletedPanels.size() - 1).index, deletedPanels.get(deletedPanels.size() - 1));
+                        int i = deletedPanels.get(deletedPanels.size() - 1).index;
+                        if(i > comicStrip.getChildren().size())
+                            i = comicStrip.getChildren().size();
+                        comicStrip.getChildren().add(i, deletedPanels.get(deletedPanels.size() - 1));
                         deletedPanels.remove(deletedPanels.size() - 1);
+                        comicStrip.getChildren().add(newPanelRight);
                     }
                     keyEvent.consume();
                 }
