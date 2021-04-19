@@ -30,6 +30,8 @@ public class ComicPanel extends Pane {
     TextCaption topText;
     TextCaption bottomText;
 
+    int index;
+
     public ComicPanel() throws FileNotFoundException {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
         this.setPrefHeight(400);

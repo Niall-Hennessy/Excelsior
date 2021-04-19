@@ -57,15 +57,14 @@
     -fx-font-size: 18;
 }
 
-.charTab, .speechTab, .captionTab, .colourTab{
+.helpTab{
     -fx-alignment: CENTER;
     -fx-background-color: #F9F9F9;
     -fx-font-family: georgia;
     -fx-font-size: 15;
-
 }
 
-.charTab:selected, .speechTab:selected, .captionTab:selected, .colourTab:selected {
+.helpTab:selected {
     -fx-background-color: white;
 }
 
@@ -90,7 +89,7 @@
 
 .instructionScroll {
     -fx-border-width: 0px 0px 0px 0px;
-
+    -fx-background-color: HOTPINK;
 }
 
 .layoutGrid{

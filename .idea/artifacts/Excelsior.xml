@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Excelsior">
+    <output-path>$PROJECT_DIR$/out/artifacts/Excelsior</output-path>
+    <root id="root">
+      <element id="archive" name="Excelsior.jar">
+        <element id="module-output" name="Excelsior" />
+      </element>
+    </root>
+  </artifact>
+</component>

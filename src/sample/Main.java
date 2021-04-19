@@ -15,6 +15,8 @@ import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -35,6 +37,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class Main extends Application {
 
@@ -56,17 +61,21 @@ public class Main extends Application {
 
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
+        List<ComicPanel> deletedPanels = new Stack<>();
+
         final String[] character = new String[1];
 
         MenuBar menuBar = new MenuBar();
         menuBar.setStyle("-fx-background-color: #B9EBFF");
 
         Menu file = new Menu("File");
+        MenuItem new_project = new MenuItem("New Project");
         MenuItem save_xml = new MenuItem("Save XML");
         MenuItem save_htMl = new MenuItem("Save HTMl");
         MenuItem load_xml = new MenuItem("Load XML");
         MenuItem load_html = new MenuItem("Load HTML");
         MenuItem add_character = new MenuItem("Add Character");
+        file.getItems().add(new_project);
         file.getItems().add(save_xml);
         file.getItems().add(save_htMl);
         file.getItems().add(load_xml);
@@ -313,47 +322,14 @@ public class Main extends Application {
                 helpPane.getStyleClass().add("helpPane");
 
                 Tab characterTab = new Tab("Character");
-                characterTab.getStyleClass().add("charTab");
-                characterTab.setContent(new Text
-                        ("\n Let's add a character to your comic!\n " +
-                                "\n First press the plus icon in the white panel." +
-                                "\n Now that a black comic panel has appeared, select it so that it is highlighted." +
-                                "\n Click on the character icon to choose a left or right character." +
-                                "\n Double click a character pose from the gallery." +
-                                "\n Use the Flip Button to change which way they are facing." +
-                                "\n Use the M/F button to change their gender."));
-
                 Tab speechBubbleTab = new Tab("Speech Bubbles");
-                speechBubbleTab.getStyleClass().add("speechTab");
-                speechBubbleTab.setContent
-                        (new Text("\n Let's get your characters talking!\n " +
-                                "\n Note: You have to have a character in your panel before you can make them talk.\n " +
-                                "\n Click on the speech bubble icon." +
-                                "\n Choose what bubble you want." +
-                                "\n Write in the text-box what you want them to say - Careful, there is a character limit." +
-                                "\n Choose if you want the text in italic, or bold, or both." +
-                                "\n Hit Submit and voila!" +
-                                "\n Hit Cancel if you change your mind." +
-                                "\n Hit Delete if you want to get rid of the bubble."));
-
                 Tab colourTab = new Tab("Skin/Hair");
-                colourTab.getStyleClass().add("colourTab");
-                colourTab.setContent
-                        (new Text("\n Let's add some colour!\n " +
-                                "\n Select the character who's Skin/Hair you wish to change." +
-                                "\n Select the Skin/Hair colour picker to select a new colour."));
-
-
                 Tab captionTab = new Tab("Caption");
-                captionTab.getStyleClass().add("captionTab");
-                captionTab.setContent
-                        (new Text("\n Let's caption your panel!\n " +
-                                "\n Hit the caption button." +
-                                "\n Select either 'Top Text' or 'Bottom Text' before you start writing." +
-                                "\n Write what you want the caption to be." +
-                                "\n Hit 'Apply' and see it appear." +
-                                "\n Hit 'Cancel' if you change your mind." +
-                                "\n Hit 'Delete' after selecting either the 'Top Text' or 'Bottom Text' to remove the caption."));
+
+                characterTab.getStyleClass().add("helpTab");
+                speechBubbleTab.getStyleClass().add("helpTab");
+                colourTab.getStyleClass().add("helpTab");
+                captionTab.getStyleClass().add("helpTab");
 
                 characterTab.closableProperty().setValue(false);
                 speechBubbleTab.closableProperty().setValue(false);
@@ -365,19 +341,82 @@ public class Main extends Application {
                 helpPane.getTabs().add(colourTab);
                 helpPane.getTabs().add(captionTab);
 
-
                 helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.7);
                 helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
 
+                Label label = new Label();
 
-                ScrollPane instruction = new ScrollPane();
-                instruction.getStyleClass().add("instructionScroll");
-                instruction.setContent(helpPane);
-                instruction.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizonral
-                instruction.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instruction.fitToWidthProperty().setValue(true);
+                label = new Label(
+                        "\n Let's add a character to your comic!\n " +
+                                "\n First press the plus icon in the white panel." +
+                                "\n Now that a black comic panel has appeared, select it so that it is highlighted." +
+                                "\n Click on the character icon to choose a left or right character." +
+                                "\n Double click a character pose from the gallery." +
+                                "\n Use the Flip Button to change which way they are facing." +
+                                "\n Use the M/F button to change their gender."
+                );
 
-                Scene scene = new Scene(instruction);
+                label.setStyle("-fx-background-color: white");
+                ScrollPane instructionCharacter =  new ScrollPane(label);
+
+                label = new Label(
+                        "\n Let's get your characters talking!\n " +
+                                "\n Note: You have to have a character in your panel before you can make them talk.\n " +
+                                "\n Click on the speech bubble icon." +
+                                "\n Choose what bubble you want." +
+                                "\n Write in the text-box what you want them to say - Careful, there is a character limit." +
+                                "\n Choose if you want the text in italic, or bold, or both." +
+                                "\n Hit Submit and voila!" +
+                                "\n Hit Cancel if you change your mind." +
+                                "\n Hit Delete if you want to get rid of the bubble."
+                );
+
+                label.setStyle("-fx-background-color: white");
+                ScrollPane instructionSpeechBubble =  new ScrollPane(label);
+
+                label = new Label(
+                        "\n Let's add some colour!\n " +
+                                "\n Select the character who's Skin/Hair you wish to change." +
+                                "\n Select the Skin/Hair colour picker to select a new colour."
+                );
+
+                label.setStyle("-fx-background-color: white");
+                ScrollPane instructionColour =  new ScrollPane(label);
+
+                label = new Label(
+                        "\n Let's caption your panel!\n " +
+                                "\n Hit the caption button." +
+                                "\n Select either 'Top Text' or 'Bottom Text' before you start writing." +
+                                "\n Write what you want the caption to be." +
+                                "\n Hit 'Apply' and see it appear." +
+                                "\n Hit 'Cancel' if you change your mind." +
+                                "\n Hit 'Delete' after selecting either the 'Top Text' or 'Bottom Text' to remove the caption."
+                );
+
+                ScrollPane instructionCaption =  new ScrollPane(label);
+
+                instructionCharacter.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionCharacter.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionCharacter.fitToWidthProperty().setValue(true);
+
+                instructionSpeechBubble.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionSpeechBubble.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionSpeechBubble.fitToWidthProperty().setValue(true);
+
+                instructionColour.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionColour.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionColour.fitToWidthProperty().setValue(true);
+
+                instructionCaption.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionCaption.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionCaption.fitToWidthProperty().setValue(true);
+
+                characterTab.setContent(instructionCharacter);
+                speechBubbleTab.setContent(instructionSpeechBubble);
+                colourTab.setContent(instructionColour);
+                captionTab.setContent(instructionCaption);
+
+                Scene scene = new Scene(helpPane);
                 helpStage.setScene(scene);
                 scene.getStylesheets().add("sample/style.css");
                 helpStage.show();
@@ -830,11 +869,6 @@ public class Main extends Application {
                 if(!comicStrip.getChildren().contains(comicPanel[0]))
                     return;
 
-
-                if(addText.isShowing()) {
-                    addText.initOwner(primaryStage);
-                }
-
                 Button submit = new Button("Apply");
                 submit.getStyleClass().add("submit");
                 Button escape = new Button("X");
@@ -1082,6 +1116,8 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 comicStrip.getChildren().remove(comicPanel[0]);
 
+                deletedPanels.add(comicPanel[0]);
+
                 hairColorPicker[0].setValue(Color.WHITE);
                 skinColorPicker[0].setValue(Color.WHITE);
             }
@@ -1099,6 +1135,8 @@ public class Main extends Application {
                     comicStrip.setMargin(newComicPanel, new Insets(20,10,20,10));
 
                     comicStrip.getChildren().add(newPanelRight);
+                    newComicPanel.index = comicStrip.getChildren().indexOf(newComicPanel);
+                    System.out.println(newComicPanel.index);
 
                     newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
@@ -1136,6 +1174,18 @@ public class Main extends Application {
         });
 
         Scene scene = new Scene(mainPane, width, height, false);
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(final KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.F5) {
+                    if(deletedPanels.size() > 0) {
+                        comicStrip.getChildren().add(deletedPanels.get(deletedPanels.size() - 1).index, deletedPanels.get(deletedPanels.size() - 1));
+                        deletedPanels.remove(deletedPanels.size() - 1);
+                    }
+                    keyEvent.consume();
+                }
+            }
+        });
 
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
