@@ -1180,6 +1180,12 @@ public class Main extends Application {
                                 hairColorPicker[0].setValue(Color.WHITE);
                                 skinColorPicker[0].setValue(Color.WHITE);
                             }
+
+                            double x = comicStrip.getChildren().size();
+
+                            x = comicStrip.getChildren().indexOf(newComicPanel) / x;
+
+                            scrollPane.setHvalue(x);
                         }
                     });
                 } catch (FileNotFoundException e) {
