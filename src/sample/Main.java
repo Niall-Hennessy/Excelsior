@@ -423,6 +423,18 @@ public class Main extends Application {
             }
         });
 
+        GalleryStuff galleryView = new GalleryStuff();
+
+        rightCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                String path = "src/images/characters";
+                galleryView.setRightCharacter(path, mouseEvent);
+                skinColorPicker[0].setValue(comicPanel[0].selectedCharacter.getSkin());
+                hairColorPicker[0].setValue(comicPanel[0].selectedCharacter.getHair());
+            }
+        });
+/*
         rightCharacter.setOnAction(new EventHandler<ActionEvent>() {
 
             final Stage addCharacter = new Stage();
@@ -459,9 +471,9 @@ public class Main extends Application {
                 addCharacter.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
                 addCharacter.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
 
-                Scene scene = new Scene(gallery);
-                addCharacter.setScene(scene);
-                addCharacter.show();
+                //Scene scene = new Scene(gallery);
+               //addCharacter.setScene(scene);
+                //addCharacter.show();
             }
 
             private ImageView createImageView(final File imageFile) {
@@ -500,7 +512,7 @@ public class Main extends Application {
                 return imageView;
             }
         });
-
+*/
         leftCharacter.setOnAction(new EventHandler<ActionEvent>() {
 
             final Stage addCharacter = new Stage();
