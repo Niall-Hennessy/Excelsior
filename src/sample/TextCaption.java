@@ -14,7 +14,11 @@ public class TextCaption extends Pane {
     public TextCaption(String text, Font font){
         this.text.setText(text);
         this.text.setFont(font);
-        this.text.setTranslateX((400 - this.text.getLayoutBounds().getWidth()) / 2);
+        while(this.text.getLayoutBounds().getWidth() > 500)
+        {
+            this.text.setText(this.text.getText().substring(0, this.text.getText().length()-1));
+        }
+        this.text.setTranslateX((500 - this.text.getLayoutBounds().getWidth()) / 2);
         this.getChildren().add(this.text);
 
     }
