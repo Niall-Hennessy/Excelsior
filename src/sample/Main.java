@@ -431,9 +431,9 @@ public class Main extends Application {
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setRightCharacter(path);
-                //skinColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getSkin());
-                //hairColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getHair());
-                System.out.println("right hair color: " + comicPanel[0].getSelectedCharacter().getHair());
+                skinColorPicker[0].setValue(comicPanel[0].getRightCharacter().getSkin());
+                hairColorPicker[0].setValue(comicPanel[0].getRightCharacter().getHair());
+                System.out.println("right hair color: " + comicPanel[0].getRightCharacter().getHair());
             }
         });
 
@@ -443,9 +443,9 @@ public class Main extends Application {
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setLeftCharacter(path);
-                //skinColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getSkin());
-                //hairColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getHair());
-                System.out.println("left hair color: " + comicPanel[0].getSelectedCharacter().getHair());
+                skinColorPicker[0].setValue(comicPanel[0].getLeftCharacter().getSkin());
+                hairColorPicker[0].setValue(comicPanel[0].getLeftCharacter().getHair());
+                System.out.println("left hair color: " + comicPanel[0].getLeftCharacter().getHair());
             }
         });
 
