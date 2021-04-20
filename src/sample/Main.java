@@ -757,7 +757,12 @@ public class Main extends Application {
 
 
                 TextField captionTextfield = new TextField();
-                captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+
+                if(comicPanel[0].topText != null)
+                    captionTextfield.setFont(comicPanel[0].topText.text.getFont());
+                else
+                    captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+
                 captionTextfield.getStyleClass().add("capTextField");
                 HBox topOrBot = new HBox(captionTextfield);
                 captionTextfield.setPrefWidth(400);
@@ -828,8 +833,13 @@ public class Main extends Application {
                         topText.setStyle("-fx-background-color: #C089D7");
                         bottomText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].topText != null)
-                        captionTextfield.setText(comicPanel[0].topText.getText());
+                        if(comicPanel[0].topText != null) {
+                            captionTextfield.setText(comicPanel[0].topText.getText());
+                            captionTextfield.setFont(comicPanel[0].topText.text.getFont());
+                            combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                        }
+                        else
+                            combo_box.setValue("Segoe UI");
                     }
                 });
 
@@ -843,8 +853,13 @@ public class Main extends Application {
                         bottomText.setStyle("-fx-background-color: #C089D7");
                         topText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].bottomText != null)
+                        if(comicPanel[0].bottomText != null) {
                             captionTextfield.setText(comicPanel[0].bottomText.getText());
+                            captionTextfield.setFont(comicPanel[0].bottomText.text.getFont());
+                            combo_box.setValue(comicPanel[0].bottomText.text.getFont().getName());
+                        }
+                        else
+                            combo_box.setValue("Segoe UI");
                     }
                 });
 
