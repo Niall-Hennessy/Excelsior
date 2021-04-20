@@ -800,8 +800,10 @@ public class Main extends Application {
 
                 TextField captionTextfield = new TextField();
 
-                if(comicPanel[0].topText != null)
+                if(comicPanel[0].topText != null) {
                     captionTextfield.setFont(comicPanel[0].topText.text.getFont());
+                    combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                }
                 else
                     captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
 
@@ -880,8 +882,10 @@ public class Main extends Application {
                             captionTextfield.setFont(comicPanel[0].topText.text.getFont());
                             combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
                         }
-                        else
+                        else {
+                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
                             combo_box.setValue("Segoe UI");
+                        }
                     }
                 });
 
@@ -900,8 +904,10 @@ public class Main extends Application {
                             captionTextfield.setFont(comicPanel[0].bottomText.text.getFont());
                             combo_box.setValue(comicPanel[0].bottomText.text.getFont().getName());
                         }
-                        else
+                        else {
+                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
                             combo_box.setValue("Segoe UI");
+                        }
                     }
                 });
 
