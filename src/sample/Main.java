@@ -541,7 +541,6 @@ public class Main extends Application {
                 bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
 
                 if(addBubble.isShowing()) {
-                    addBubble.initModality(Modality.APPLICATION_MODAL);
                     addBubble.initOwner(primaryStage);
                 }
 
