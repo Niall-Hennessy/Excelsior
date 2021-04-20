@@ -428,6 +428,10 @@ public class Main extends Application {
         rightCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                    return;
+
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setRightCharacter(path);
@@ -439,6 +443,10 @@ public class Main extends Application {
         leftCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                    return;
+
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setLeftCharacter(path);
@@ -479,6 +487,9 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                    return;
 
                 Button submit = new Button("Submit");
                 submit.getStyleClass().add("submit");
@@ -1054,7 +1065,9 @@ public class Main extends Application {
 
                             double x = comicStrip.getChildren().size();
 
-                            x = comicStrip.getChildren().indexOf(newComicPanel) / x;
+                            x = (comicStrip.getChildren().indexOf(newComicPanel) - 1) / x;
+
+                            System.out.println(x);
 
                             scrollPane.setHvalue(x);
                         }
