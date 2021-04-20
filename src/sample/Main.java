@@ -515,6 +515,11 @@ public class Main extends Application {
                     return;
                 }
 
+                if(comicPanel[0].getSelectedCharacter() == null) {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, bubbleButton);
+                    return;
+                }
+
                 Button submit = new Button("Submit");
                 submit.getStyleClass().add("submit");
                 Button escape = new Button("X");
@@ -1041,6 +1046,8 @@ public class Main extends Application {
         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+
                 comicStrip.getChildren().remove(comicPanel[0]);
 
                 deletedPanels.add(comicPanel[0]);
