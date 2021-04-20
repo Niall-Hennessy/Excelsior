@@ -799,7 +799,12 @@ public class Main extends Application {
 
 
                 TextField captionTextfield = new TextField();
-                captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+
+                if(comicPanel[0].topText != null)
+                    captionTextfield.setFont(comicPanel[0].topText.text.getFont());
+                else
+                    captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+
                 captionTextfield.getStyleClass().add("capTextField");
                 HBox topOrBot = new HBox(captionTextfield);
                 captionTextfield.setPrefWidth(400);
@@ -870,8 +875,13 @@ public class Main extends Application {
                         topText.setStyle("-fx-background-color: #C089D7");
                         bottomText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].topText != null)
-                        captionTextfield.setText(comicPanel[0].topText.getText());
+                        if(comicPanel[0].topText != null) {
+                            captionTextfield.setText(comicPanel[0].topText.getText());
+                            captionTextfield.setFont(comicPanel[0].topText.text.getFont());
+                            combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                        }
+                        else
+                            combo_box.setValue("Segoe UI");
                     }
                 });
 
@@ -885,8 +895,13 @@ public class Main extends Application {
                         bottomText.setStyle("-fx-background-color: #C089D7");
                         topText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].bottomText != null)
+                        if(comicPanel[0].bottomText != null) {
                             captionTextfield.setText(comicPanel[0].bottomText.getText());
+                            captionTextfield.setFont(comicPanel[0].bottomText.text.getFont());
+                            combo_box.setValue(comicPanel[0].bottomText.text.getFont().getName());
+                        }
+                        else
+                            combo_box.setValue("Segoe UI");
                     }
                 });
 
@@ -1102,13 +1117,11 @@ public class Main extends Application {
                                 skinColorPicker[0].setValue(Color.WHITE);
                             }
 
-                            double x = comicStrip.getChildren().size();
-
-                            x = (comicStrip.getChildren().indexOf(newComicPanel) - 1) / x;
-
-                            System.out.println(x);
-
-                            scrollPane.setHvalue(x);
+                            double w = scrollPane.getContent().getBoundsInLocal().getWidth();
+                            double x = (newComicPanel.getBoundsInParent().getMaxX() +
+                                    newComicPanel.getBoundsInParent().getMinX()) / 2.0;
+                            double v = scrollPane.getViewportBounds().getWidth();
+                            scrollPane.setHvalue(scrollPane.getHmax() * ((x - 0.5 * v) / (w - v)));
                         }
                     });
                 } catch (FileNotFoundException e) {
