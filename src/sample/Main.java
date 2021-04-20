@@ -1077,8 +1077,8 @@ public class Main extends Application {
                             i = comicStrip.getChildren().size();
                         comicStrip.getChildren().add(i, deletedPanels.get(deletedPanels.size() - 1));
                         deletedPanels.remove(deletedPanels.size() - 1);
-                        comicStrip.getChildren().add(newPanelRight);
                     }
+                    comicStrip.getChildren().add(newPanelRight);
                     keyEvent.consume();
                 }
             }
@@ -1086,6 +1086,9 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
+
+        newPanelRight.fire();
+
         primaryStage.show();
 
     }
