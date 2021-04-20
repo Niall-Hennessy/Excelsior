@@ -429,9 +429,23 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 String path = "src/images/characters";
-                galleryView.setRightCharacter(path, mouseEvent);
-                skinColorPicker[0].setValue(comicPanel[0].selectedCharacter.getSkin());
-                hairColorPicker[0].setValue(comicPanel[0].selectedCharacter.getHair());
+                galleryView.setComicPanel(comicPanel);
+                galleryView.setRightCharacter(path);
+                //skinColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getSkin());
+                //hairColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getHair());
+                System.out.println("right hair color: " + comicPanel[0].getSelectedCharacter().getHair());
+            }
+        });
+
+        leftCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                String path = "src/images/characters";
+                galleryView.setComicPanel(comicPanel);
+                galleryView.setLeftCharacter(path);
+                //skinColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getSkin());
+                //hairColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getHair());
+                System.out.println("left hair color: " + comicPanel[0].getSelectedCharacter().getHair());
             }
         });
 /*
@@ -512,7 +526,7 @@ public class Main extends Application {
                 return imageView;
             }
         });
-*/
+
         leftCharacter.setOnAction(new EventHandler<ActionEvent>() {
 
             final Stage addCharacter = new Stage();
@@ -590,7 +604,7 @@ public class Main extends Application {
                 return imageView;
             }
         });
-
+*/
         flipButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
