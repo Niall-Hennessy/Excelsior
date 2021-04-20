@@ -207,6 +207,9 @@ public class ComicPanel extends Pane {
 
             this.selectedCharacter.setStyle("-fx-border-width: 1; -fx-border-color: cyan");
         }
+        else {
+            this.selectedCharacter = selectedCharacter;
+        }
 
         if(leftCharacter != selectedCharacter)
             leftCharacter.setStyle("-fx-border-width: 0");

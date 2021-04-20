@@ -1025,6 +1025,7 @@ public class Main extends Application {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
 
+
                             if(!comicStrip.getChildren().contains(newComicPanel))
                                 comicStrip.getChildren().add(newComicPanel);
 
@@ -1035,6 +1036,8 @@ public class Main extends Application {
                                     comicPanel[0].unselect();
                                 }
 
+
+                                newComicPanel.setSelectedCharacter(null);
                                 newComicPanel.select();
                                 comicPanel[0] = newComicPanel;
 
