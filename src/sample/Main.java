@@ -1052,11 +1052,11 @@ public class Main extends Application {
                                 skinColorPicker[0].setValue(Color.WHITE);
                             }
 
-                            double x = comicStrip.getChildren().size();
-
-                            x = comicStrip.getChildren().indexOf(newComicPanel) / x;
-
-                            scrollPane.setHvalue(x);
+                            double w = scrollPane.getContent().getBoundsInLocal().getWidth();
+                            double x = (newComicPanel.getBoundsInParent().getMaxX() +
+                                    newComicPanel.getBoundsInParent().getMinX()) / 2.0;
+                            double v = scrollPane.getViewportBounds().getWidth();
+                            scrollPane.setHvalue(scrollPane.getHmax() * ((x - 0.5 * v) / (w - v)));
                         }
                     });
                 } catch (FileNotFoundException e) {
