@@ -138,6 +138,8 @@ public class Main extends Application {
         String tipDeleteButton      = "Delete Selected Object";
         String tipskinColorPicker   = "Choose Skin Colour";
         String tiphairColorPicker   = "Choose Hair Colour";
+        String tipNoCharacterSelected = "No character has been selected";
+        String tipNoPanelSelected = "A comic panel must be selected first";
 
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -191,14 +193,24 @@ public class Main extends Application {
         skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+                if(comicPanel[0].getSelectedCharacter() != null) {
+                    hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+                }
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                }
             }
         });
 
         hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+                if(comicPanel[0].getSelectedCharacter() != null) {
+                    hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+                }
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
+                }
             }
         });
 
@@ -429,8 +441,10 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
 
-                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, rightCharacter);
                     return;
+                }
 
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
@@ -444,8 +458,10 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
 
-                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, leftCharacter);
                     return;
+                }
 
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
@@ -462,6 +478,9 @@ public class Main extends Application {
                 if(comicPanel[0].getSelectedCharacter() != null) {
                     comicPanel[0].getSelectedCharacter().flipOrientation();
                 }
+                else {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, flipButton);
+                }
             }
         });
 
@@ -471,6 +490,9 @@ public class Main extends Application {
 
                 if(comicPanel[0].getSelectedCharacter() != null)
                     comicPanel[0].getSelectedCharacter().genderSwap();
+                else {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, genderButton);
+                }
             }
         });
 
@@ -488,8 +510,10 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, bubbleButton);
                     return;
+                }
 
                 Button submit = new Button("Submit");
                 submit.getStyleClass().add("submit");
@@ -745,8 +769,11 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, textButton);
                     return;
+                }
+
 
                 Button submit = new Button("Apply");
                 submit.getStyleClass().add("submit");
@@ -930,6 +957,9 @@ public class Main extends Application {
 
                 if(comicPanel[0].getSelectedCharacter() != null)
                     comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                }
             }
         });
 
@@ -938,6 +968,9 @@ public class Main extends Application {
 
                 if(comicPanel[0].getSelectedCharacter() != null)
                     comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected,  hairColorPicker[0]);
+                }
             }
         });
 

@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -47,6 +49,54 @@ public class HoverTips {
         BorderPane borderPane = new BorderPane(testText);
         toolTip.setX(mouseEvent.getScreenX() + 5);
         toolTip.setY(mouseEvent.getScreenY() - 15);
+        Scene scene = new Scene(borderPane);
+        toolTip.setScene(scene);
+        toolTip.show();
+
+        local.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                toolTip.setX(mouseEvent.getScreenX() + 5);
+                toolTip.setY(mouseEvent.getScreenY() - 15);
+            }
+        });
+
+        local.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                toolTip.close();
+            }
+        });
+    }
+
+    public void NoPanelSelectedTip(String text, Button local){
+        Text testText = new Text(text);
+        testText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 20));
+        BorderPane borderPane = new BorderPane(testText);
+        Scene scene = new Scene(borderPane);
+        toolTip.setScene(scene);
+        toolTip.show();
+
+        local.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                toolTip.setX(mouseEvent.getScreenX() + 5);
+                toolTip.setY(mouseEvent.getScreenY() - 15);
+            }
+        });
+
+        local.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                toolTip.close();
+            }
+        });
+    }
+
+    public void NoCharacterSelectedTip(String text, ColorPicker local){
+        Text testText = new Text(text);
+        testText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 20));
+        BorderPane borderPane = new BorderPane(testText);
         Scene scene = new Scene(borderPane);
         toolTip.setScene(scene);
         toolTip.show();
