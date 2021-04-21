@@ -48,6 +48,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         primaryStage.setTitle("Excelsior");
+        primaryStage.setResizable(true);
 
         int width = (int) Screen.getPrimary().getBounds().getWidth();
         int height = (int) Screen.getPrimary().getBounds().getHeight();
@@ -1032,7 +1033,7 @@ public class Main extends Application {
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.setAlignment(Pos.CENTER);
         comicStrip.setPrefHeight(height/2 -20);
-        comicStrip.setMinWidth(width - 10);
+        //comicStrip.setMinWidth(width - 10);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
 
@@ -1041,15 +1042,20 @@ public class Main extends Application {
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPrefHeight(height/2);
-
+        scrollPane.setPrefWidth(widthPrcnt/2);
+/*
         //TEST//
         Scale scale = new Scale(1, 1);
         scale.xProperty().bind(comicStrip.widthProperty().divide(width-20));
         scale.yProperty().bind(comicStrip.heightProperty().divide(height-20));
         comicStrip.getTransforms().add(scale);
-        primaryStage.setResizable(true);
-        //TEST//
 
+        scale.xProperty().bind(scrollPane.widthProperty().divide(width));
+        scale.yProperty().bind(scrollPane.heightProperty().divide(height));
+        scrollPane.getTransforms().add(scale);
+
+        //TEST//
+*/
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
         mainPane.addRow(2, optionBox);
