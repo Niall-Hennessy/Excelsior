@@ -101,3 +101,10 @@
 .capTextField {
     -fx-padding: 10;
 }
+
+.tester {
+    -fx-background-image: url("../images/backgrounds/basic_Background.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 500 400;
+    -fx-background-position: center center;
+}

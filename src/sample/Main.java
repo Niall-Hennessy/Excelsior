@@ -119,7 +119,9 @@ public class Main extends Application {
         Button genderButton = buttonIcon.getButtonIcon("src/images/buttons/MFButton.png");
         Button textButton = buttonIcon.getButtonIcon("src/images/buttons/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/buttons/speech_bubble.png");
+        Button backgroundButton = buttonIcon.getButtonIcon("src/images/buttons/background_button.png");
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
+        Button undoButton = buttonIcon.getButtonIcon("src/images/buttons/undo_button.png");
 
 
 
@@ -135,7 +137,9 @@ public class Main extends Application {
         String tipGenderButton      = "Change Selected Character's Gender";
         String tipTextButton        = "Set Caption Text for Bottom or Top of Panel";
         String tipBubbleButton      = "Insert Text Bubble for Selected Character";
+        String tipBackgroundButton      = "Add a Background to the Panel";
         String tipDeleteButton      = "Delete Selected Object";
+        String tipUndoButton   = "Undo Last Action";
         String tipskinColorPicker   = "Choose Skin Colour";
         String tiphairColorPicker   = "Choose Hair Colour";
         String tipNoCharacterSelected = "No character has been selected";
@@ -183,10 +187,24 @@ public class Main extends Application {
             }
         });
 
+        backgroundButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip(tipBackgroundButton, mouseEvent, backgroundButton);
+            }
+        });
+
         deleteButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 hoverTips.buttonToolTip(tipDeleteButton, mouseEvent, deleteButton);
+            }
+        });
+
+        undoButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip(tipUndoButton, mouseEvent, undoButton);
             }
         });
 
@@ -767,6 +785,19 @@ public class Main extends Application {
             }
         });
 
+        backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                comicPanel[0].background = Main.class.getResource("../images/backgrounds/basic_Background.jpg").toExternalForm();
+                comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].background + "'); " +
+                        "-fx-background-position: center center; " +
+                        "-fx-background-repeat: stretch; " +
+                        "-fx-background-size: 500 400; " +
+                        "-fx-border-color: HOTPINK; " +
+                        "-fx-border-width: 5");
+            }
+        });
+
         textButton.setOnAction(new EventHandler<ActionEvent>() {
             final Stage addText = new Stage(StageStyle.UNDECORATED);
 
@@ -1011,9 +1042,10 @@ public class Main extends Application {
         buttonLayout.addColumn(5, leftCharacter, rightCharacter);
         buttonLayout.addColumn(6, flipButton, genderButton);
         buttonLayout.addColumn(7, textButton, bubbleButton);
+        buttonLayout.addColumn(8, backgroundButton);
         buttonLayout.addColumn(18, skin, hair);
         buttonLayout.addColumn(19, skinColorPicker[0], hairColorPicker[0]);
-        buttonLayout.addColumn(25, deleteButton);
+        buttonLayout.addColumn(25, deleteButton, undoButton);
 
         HBox optionBox = new HBox(buttonLayout);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
@@ -1077,6 +1109,20 @@ public class Main extends Application {
             }
         });
 
+        undoButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(final ActionEvent event) {
+                comicStrip.getChildren().remove(newPanelRight);
+                if(deletedPanels.size() > 0) {
+                    int i = deletedPanels.get(deletedPanels.size() - 1).index;
+                    if(i > comicStrip.getChildren().size())
+                        i = comicStrip.getChildren().size();
+                    comicStrip.getChildren().add(i, deletedPanels.get(deletedPanels.size() - 1));
+                    deletedPanels.remove(deletedPanels.size() - 1);
+                }
+                comicStrip.getChildren().add(newPanelRight);
+            }
+        });
+
         newPanelRight.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -1137,23 +1183,7 @@ public class Main extends Application {
         });
 
         Scene scene = new Scene(mainPane, width, height, false);
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.F5) {
-                    comicStrip.getChildren().remove(newPanelRight);
-                    if(deletedPanels.size() > 0) {
-                        int i = deletedPanels.get(deletedPanels.size() - 1).index;
-                        if(i > comicStrip.getChildren().size())
-                            i = comicStrip.getChildren().size();
-                        comicStrip.getChildren().add(i, deletedPanels.get(deletedPanels.size() - 1));
-                        deletedPanels.remove(deletedPanels.size() - 1);
-                    }
-                    comicStrip.getChildren().add(newPanelRight);
-                    keyEvent.consume();
-                }
-            }
-        });
+        scene.getStylesheets().add("sample/style.css");
 
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
