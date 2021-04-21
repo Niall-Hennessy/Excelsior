@@ -48,7 +48,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         primaryStage.setTitle("Excelsior");
-        primaryStage.setResizable(true);
 
         int width = (int) Screen.getPrimary().getBounds().getWidth();
         int height = (int) Screen.getPrimary().getBounds().getHeight();
@@ -58,6 +57,8 @@ public class Main extends Application {
 
         primaryStage.setHeight(heightPrcnt);
         primaryStage.setWidth(widthPrcnt);
+        primaryStage.setResizable(true);
+
 
         GridPane mainPane = new GridPane();
 
@@ -1041,8 +1042,10 @@ public class Main extends Application {
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setPrefHeight(height/2);
-        scrollPane.setPrefWidth(widthPrcnt/2);
+        scrollPane.setMinHeight(height/2);
+        scrollPane.setMinWidth(width/2);
+       // scrollPane.setPrefHeight(height/2);
+        //scrollPane.setPrefWidth(widthPrcnt/2);
 /*
         //TEST//
         Scale scale = new Scale(1, 1);
@@ -1153,6 +1156,17 @@ public class Main extends Application {
         });
 
         Scene scene = new Scene(mainPane, width, height, false);
+
+        scene.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+                System.out.println("Width: " + newSceneWidth);
+            }
+        });
+        scene.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+                System.out.println("Height: " + newSceneHeight);
+            }
+        });
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent keyEvent) {
