@@ -965,6 +965,9 @@ public class Main extends Application {
         comicStrip.setMinWidth(width - 10);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
+      //  double currWidth = primaryStage.getWidth();
+        //double currHeight = primaryStage.getHeight();
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
