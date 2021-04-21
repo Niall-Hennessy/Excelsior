@@ -25,6 +25,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
 import javafx.stage.*;
 import javafx.scene.text.*;
 import javafx.stage.Modality;
@@ -1040,6 +1041,14 @@ public class Main extends Application {
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPrefHeight(height/2);
+
+        //TEST//
+        Scale scale = new Scale(1, 1);
+        scale.xProperty().bind(comicStrip.widthProperty().divide(width-20));
+        scale.yProperty().bind(comicStrip.heightProperty().divide(height-20));
+        comicStrip.getTransforms().add(scale);
+        primaryStage.setResizable(true);
+        //TEST//
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
