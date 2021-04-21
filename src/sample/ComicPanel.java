@@ -43,7 +43,7 @@ public class ComicPanel extends Pane {
         this.leftCharacter.setTranslateX(20);
         this.leftCharacter.setTranslateY(130);
 
-        this.rightCharacter.setTranslateX(230);
+        this.rightCharacter.setTranslateX(320);
         this.rightCharacter.setTranslateY(130);
 
         this.getChildren().add(leftCharacter);
@@ -239,6 +239,7 @@ public class ComicPanel extends Pane {
         if (checkS == 295.0) {       // regular shaped bubbles
             leftTextBubble = new TextBubble(imageView, text, font);
 
+
             if (text.length() < 21) {
                 int len = text.length() * 7 + 45;
                 imageView.setFitHeight(40);
@@ -247,15 +248,12 @@ public class ComicPanel extends Pane {
                 } else {
                     imageView.setFitWidth(len);
                 }
-                leftTextBubble.setTranslateY(this.getTranslateY() + 60);
             } else if (text.length() < 41) {
                 imageView.setFitHeight(60);
                 imageView.setFitWidth(165);
-                leftTextBubble.setTranslateY(this.getTranslateY() + 40);
             } else {
                 imageView.setFitHeight(85);
                 imageView.setFitWidth(165);
-                leftTextBubble.setTranslateY(this.getTranslateY() + 25);
             }
         } else {    // irregular bubbles
             leftTextBubble = new TextBubble(imageView, text, font);
@@ -269,20 +267,20 @@ public class ComicPanel extends Pane {
                 } else {
                     imageView.setFitWidth(len);
                 }
-                leftTextBubble.setTranslateY(this.getTranslateY() + 50);
                 leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 33);
             } else if (text.length() <= 40) {
                 imageView.setFitHeight(105);
                 imageView.setFitWidth(165);
-                leftTextBubble.setTranslateY(this.getTranslateY() + 40);
                 leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 38);
             } else {
                 imageView.setFitHeight(130);
                 imageView.setFitWidth(165);
-                leftTextBubble.setTranslateY(this.getTranslateY() + 25);
                 leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 42);
             }
         }
+
+        leftTextBubble.setTranslateX(selectedCharacter.getTranslateX() + 70);
+        leftTextBubble.setTranslateY(selectedCharacter.getTranslateY() - 50);
 
         AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
         AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
@@ -323,8 +321,6 @@ public class ComicPanel extends Pane {
 
         leftTextBubble.setTranslateX(leftTextBubble.getTranslateX() + dragX.get());
         leftTextBubble.setTranslateY(leftTextBubble.getTranslateY() + dragY.get());
-
-        leftTextBubble.setTranslateX(this.getTranslateX() + 50);
         this.getChildren().add(leftTextBubble);
     }
 
@@ -348,15 +344,12 @@ public class ComicPanel extends Pane {
                 } else {
                     imageView.setFitWidth(len);
                 }
-                rightTextBubble.setTranslateY(this.getTranslateY() + 60);
             } else if (text.length() < 41) {
                 imageView.setFitHeight(60);
                 imageView.setFitWidth(165);
-                rightTextBubble.setTranslateY(this.getTranslateY() + 40);
             } else {
                 imageView.setFitHeight(85);
                 imageView.setFitWidth(165);
-                rightTextBubble.setTranslateY(this.getTranslateY() + 25);
             }
         } else {    // irregular bubbles
             rightTextBubble = new TextBubble(imageView, text, font);
@@ -370,20 +363,20 @@ public class ComicPanel extends Pane {
                 } else {
                     imageView.setFitWidth(len);
                 }
-                rightTextBubble.setTranslateY(this.getTranslateY() + 50);
                 rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 33);
             } else if (text.length() < 41) {
                 imageView.setFitHeight(105);
                 imageView.setFitWidth(165);
-                rightTextBubble.setTranslateY(this.getTranslateY() + 40);
                 rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 38);
             } else {
                 imageView.setFitHeight(130);
                 imageView.setFitWidth(165);
-                rightTextBubble.setTranslateY(this.getTranslateY() + 25);
                 rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 42);
             }
         }
+
+        rightTextBubble.setTranslateX(selectedCharacter.getTranslateX() - 20);
+        rightTextBubble.setTranslateY(selectedCharacter.getTranslateY() - 50);
 
         AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
         AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
@@ -425,7 +418,6 @@ public class ComicPanel extends Pane {
         rightTextBubble.setTranslateX(rightTextBubble.getTranslateX() + dragX.get());
         rightTextBubble.setTranslateY(rightTextBubble.getTranslateY() + dragY.get());
 
-        rightTextBubble.setTranslateX(this.getTranslateX() + 200);
         this.getChildren().add(rightTextBubble);
     }
 

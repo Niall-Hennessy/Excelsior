@@ -138,6 +138,8 @@ public class Main extends Application {
         String tipDeleteButton      = "Delete Selected Object";
         String tipskinColorPicker   = "Choose Skin Colour";
         String tiphairColorPicker   = "Choose Hair Colour";
+        String tipNoCharacterSelected = "No character has been selected";
+        String tipNoPanelSelected = "A comic panel must be selected first";
 
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -191,14 +193,24 @@ public class Main extends Application {
         skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+                if(comicPanel[0].getSelectedCharacter() != null) {
+                    hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+                }
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                }
             }
         });
 
         hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+                if(comicPanel[0].getSelectedCharacter() != null) {
+                    hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+                }
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
+                }
             }
         });
 
@@ -428,6 +440,12 @@ public class Main extends Application {
         rightCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, rightCharacter);
+                    return;
+                }
+
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setRightCharacter(path);
@@ -439,6 +457,12 @@ public class Main extends Application {
         leftCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, leftCharacter);
+                    return;
+                }
+
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setLeftCharacter(path);
@@ -454,6 +478,9 @@ public class Main extends Application {
                 if(comicPanel[0].getSelectedCharacter() != null) {
                     comicPanel[0].getSelectedCharacter().flipOrientation();
                 }
+                else {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, flipButton);
+                }
             }
         });
 
@@ -463,6 +490,9 @@ public class Main extends Application {
 
                 if(comicPanel[0].getSelectedCharacter() != null)
                     comicPanel[0].getSelectedCharacter().genderSwap();
+                else {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, genderButton);
+                }
             }
         });
 
@@ -479,6 +509,16 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, bubbleButton);
+                    return;
+                }
+
+                if(comicPanel[0].getSelectedCharacter() == null) {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, bubbleButton);
+                    return;
+                }
 
                 Button submit = new Button("Submit");
                 submit.getStyleClass().add("submit");
@@ -501,7 +541,6 @@ public class Main extends Application {
                 bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
 
                 if(addBubble.isShowing()) {
-                    addBubble.initModality(Modality.APPLICATION_MODAL);
                     addBubble.initOwner(primaryStage);
                 }
 
@@ -734,8 +773,11 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, textButton);
                     return;
+                }
+
 
                 Button submit = new Button("Apply");
                 submit.getStyleClass().add("submit");
@@ -757,7 +799,14 @@ public class Main extends Application {
 
 
                 TextField captionTextfield = new TextField();
-                captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+
+                if(comicPanel[0].topText != null) {
+                    captionTextfield.setFont(comicPanel[0].topText.text.getFont());
+                    combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                }
+                else
+                    captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+
                 captionTextfield.getStyleClass().add("capTextField");
                 HBox topOrBot = new HBox(captionTextfield);
                 captionTextfield.setPrefWidth(400);
@@ -828,8 +877,15 @@ public class Main extends Application {
                         topText.setStyle("-fx-background-color: #C089D7");
                         bottomText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].topText != null)
-                        captionTextfield.setText(comicPanel[0].topText.getText());
+                        if(comicPanel[0].topText != null) {
+                            captionTextfield.setText(comicPanel[0].topText.getText());
+                            captionTextfield.setFont(comicPanel[0].topText.text.getFont());
+                            combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                        }
+                        else {
+                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+                            combo_box.setValue("Segoe UI");
+                        }
                     }
                 });
 
@@ -843,8 +899,15 @@ public class Main extends Application {
                         bottomText.setStyle("-fx-background-color: #C089D7");
                         topText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].bottomText != null)
+                        if(comicPanel[0].bottomText != null) {
                             captionTextfield.setText(comicPanel[0].bottomText.getText());
+                            captionTextfield.setFont(comicPanel[0].bottomText.text.getFont());
+                            combo_box.setValue(comicPanel[0].bottomText.text.getFont().getName());
+                        }
+                        else {
+                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+                            combo_box.setValue("Segoe UI");
+                        }
                     }
                 });
 
@@ -919,6 +982,9 @@ public class Main extends Application {
 
                 if(comicPanel[0].getSelectedCharacter() != null)
                     comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                }
             }
         });
 
@@ -927,6 +993,9 @@ public class Main extends Application {
 
                 if(comicPanel[0].getSelectedCharacter() != null)
                     comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected,  hairColorPicker[0]);
+                }
             }
         });
 
@@ -998,6 +1067,8 @@ public class Main extends Application {
         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+
                 comicStrip.getChildren().remove(comicPanel[0]);
 
                 deletedPanels.add(comicPanel[0]);
@@ -1053,11 +1124,11 @@ public class Main extends Application {
                                 skinColorPicker[0].setValue(Color.WHITE);
                             }
 
-                            double x = comicStrip.getChildren().size();
-
-                            x = comicStrip.getChildren().indexOf(newComicPanel) / x;
-
-                            scrollPane.setHvalue(x);
+                            double w = scrollPane.getContent().getBoundsInLocal().getWidth();
+                            double x = (newComicPanel.getBoundsInParent().getMaxX() +
+                                    newComicPanel.getBoundsInParent().getMinX()) / 2.0;
+                            double v = scrollPane.getViewportBounds().getWidth();
+                            scrollPane.setHvalue(scrollPane.getHmax() * ((x - 0.5 * v) / (w - v)));
                         }
                     });
                 } catch (FileNotFoundException e) {
@@ -1078,8 +1149,8 @@ public class Main extends Application {
                             i = comicStrip.getChildren().size();
                         comicStrip.getChildren().add(i, deletedPanels.get(deletedPanels.size() - 1));
                         deletedPanels.remove(deletedPanels.size() - 1);
-                        comicStrip.getChildren().add(newPanelRight);
                     }
+                    comicStrip.getChildren().add(newPanelRight);
                     keyEvent.consume();
                 }
             }
@@ -1087,6 +1158,9 @@ public class Main extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
+
+        newPanelRight.fire();
+
         primaryStage.show();
 
     }
