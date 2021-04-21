@@ -61,7 +61,7 @@ public class ComicCharacter extends Pane {
                         pixelWriter.setColor(x, y, skin);
                     } else if (color.equals(Color.web("#F0FF00"))) {//Female Hair Colour
                         if(!isFemale) {
-                            pixelWriter.setColor(x, y, Color.WHITE);
+                            pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
                         }
                         else
                             pixelWriter.setColor(x, y, hair);
@@ -77,13 +77,13 @@ public class ComicCharacter extends Pane {
                     else if (color.equals(Color.web("#ECB4B5")) && !isFemale){
 
                         if(x < 400 && x > 360 && y > 160 && y < 250)
-                            pixelWriter.setColor(x, y, Color.WHITE);
+                            pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
                         else if(x < 385 && x > 250 && y > 155 && y < 300)
                             pixelWriter.setColor(x, y, color);
                         else if(x < 423 && x > 255 && y > 290 && y < 350)
                             pixelWriter.setColor(x, y, color);
                         else
-                            pixelWriter.setColor(x, y, Color.WHITE);
+                            pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
                     }
                     else if(isOnLine(Color.web("#FF0000"), Color.web("#FFA1A1"), color) && !isFemale){
                         pixelWriter.setColor(x, y, skin);
