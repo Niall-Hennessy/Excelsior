@@ -62,6 +62,7 @@ public class Main extends Application {
         primaryStage.setHeight(heightPrcnt);
         primaryStage.setWidth(widthPrcnt);
 
+
         GridPane mainPane = new GridPane();
 
         final ComicPanel[] comicPanel = {new ComicPanel()};
@@ -107,14 +108,8 @@ public class Main extends Application {
         skinColorPicker[0] = ButtonIcon.colorPickerStyling(skinColorPicker[0]);
         hairColorPicker[0] = ButtonIcon.colorPickerStyling(hairColorPicker[0]);
 
-        GridPane buttonLayout = new GridPane();
-        buttonLayout.setStyle("-fx-border-color: black; -fx-background-color: #FEF7D3; -fx-border-width: 3px");
-        buttonLayout.setPrefHeight(300);
-        buttonLayout.setPrefWidth(width);
-
-//        buttonLayout.setHgap(50);
-        buttonLayout.setVgap(50);
-//        buttonLayout.setPadding(new Insets(50,50,50,50));
+        FlowPane buttonLayout = new FlowPane();
+        buttonLayout.setPrefWidth(width - 20);
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
@@ -125,7 +120,6 @@ public class Main extends Application {
         Button textButton = buttonIcon.getButtonIcon("src/images/buttons/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/buttons/speech_bubble.png");
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
-
 
 
         final Stage toolTip = new Stage();
@@ -1013,26 +1007,16 @@ public class Main extends Application {
         hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
 
 
-        buttonLayout.addColumn(0, leftCharacter, rightCharacter);
-        buttonLayout.addColumn(1, flipButton, genderButton);
-        buttonLayout.addColumn(2, textButton, bubbleButton);
-        buttonLayout.addColumn(3, skin, hair);
-        buttonLayout.addColumn(4, skinColorPicker[0], hairColorPicker[0]);
-        buttonLayout.addColumn(5, deleteButton);
+        buttonLayout.getChildren().add(leftCharacter);
+        buttonLayout.getChildren().add(rightCharacter);
+        buttonLayout.getChildren().add(flipButton);
+        buttonLayout.getChildren().add(genderButton);
+        buttonLayout.getChildren().add(textButton);
+        buttonLayout.getChildren().add(bubbleButton);
+        buttonLayout.getChildren().add(skinColorPicker[0]);
+        buttonLayout.getChildren().add(hairColorPicker[0]);
+        buttonLayout.getChildren().add(deleteButton);
 
-        buttonLayout.getColumnConstraints().add(0, new ColumnConstraints(primaryStage.getWidth()/6));
-        buttonLayout.getColumnConstraints().add(1, new ColumnConstraints(primaryStage.getWidth()/6));
-        buttonLayout.getColumnConstraints().add(2, new ColumnConstraints(primaryStage.getWidth()/6));
-        buttonLayout.getColumnConstraints().add(3, new ColumnConstraints(primaryStage.getWidth()/6));
-        buttonLayout.getColumnConstraints().add(4, new ColumnConstraints(primaryStage.getWidth()/6));
-
-
-        HBox optionBox = new HBox(buttonLayout);
-        optionBox.setAlignment(Pos.BOTTOM_LEFT);
-        optionBox.setMargin(buttonLayout, new Insets(50, 10, 10, 10));
-
-        optionBox.setStyle("-fx-background-color: #B9EBFF;");
-        optionBox.setPrefHeight(400);
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
@@ -1056,8 +1040,8 @@ public class Main extends Application {
 
 
         mainPane.addRow(0, menuBox);
-        mainPane.addRow(1, scrollPane);
-        mainPane.addRow(2, optionBox);
+        mainPane.addRow(1, buttonLayout);
+        mainPane.addRow(2, scrollPane);
         mainPane.setStyle("-fx-background-color: #B9EBFF");
 
         newPanelRight.setVisible(false);
@@ -1158,12 +1142,6 @@ public class Main extends Application {
 
             scrollPane.setPrefWidth(primaryStage.getWidth() - 20);
             comicStrip.setPrefWidth(primaryStage.getWidth() - 20);
-
-            optionBox.setPrefWidth(primaryStage.getWidth() - 20);
-
-            buttonLayout.getColumnConstraints().remove(0);
-
-            buttonLayout.getColumnConstraints().addAll(new ColumnConstraints(primaryStage.getWidth()/6));
         });
 
         primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
