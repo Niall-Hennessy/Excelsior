@@ -112,9 +112,9 @@ public class Main extends Application {
         buttonLayout.setPrefHeight(300);
         buttonLayout.setPrefWidth(width);
 
-        buttonLayout.setHgap(50);
+//        buttonLayout.setHgap(50);
         buttonLayout.setVgap(50);
-        buttonLayout.setPadding(new Insets(50,50,50,50));
+//        buttonLayout.setPadding(new Insets(50,50,50,50));
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
@@ -1024,8 +1024,7 @@ public class Main extends Application {
         buttonLayout.getColumnConstraints().add(1, new ColumnConstraints(primaryStage.getWidth()/6));
         buttonLayout.getColumnConstraints().add(2, new ColumnConstraints(primaryStage.getWidth()/6));
         buttonLayout.getColumnConstraints().add(3, new ColumnConstraints(primaryStage.getWidth()/6));
-
-        System.out.println(buttonLayout.getColumnCount());
+        buttonLayout.getColumnConstraints().add(4, new ColumnConstraints(primaryStage.getWidth()/6));
 
 
         HBox optionBox = new HBox(buttonLayout);
