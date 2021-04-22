@@ -50,11 +50,14 @@ public class Main extends Application {
         primaryStage.setTitle("Excelsior");
         primaryStage.setResizable(true);
 
-        int width = (int) Screen.getPrimary().getBounds().getWidth();
-        int height = (int) Screen.getPrimary().getBounds().getHeight();
+        primaryStage.setHeight(Screen.getPrimary().getBounds().getHeight());
+        primaryStage.setWidth(Screen.getPrimary().getBounds().getWidth());
 
-        int widthPrcnt = (width / 100) * 95;
-        int heightPrcnt = (height / 100) * 95;
+        double width = primaryStage.getWidth();
+        double height = primaryStage.getHeight();
+
+        double widthPrcnt = (width / 100) * 95;
+        double heightPrcnt = (height / 100) * 95;
 
         primaryStage.setHeight(heightPrcnt);
         primaryStage.setWidth(widthPrcnt);
@@ -1017,6 +1020,9 @@ public class Main extends Application {
         buttonLayout.addColumn(19, skinColorPicker[0], hairColorPicker[0]);
         buttonLayout.addColumn(25, deleteButton);
 
+        buttonLayout.setStyle("-fx-grid-lines-visible: true");
+
+
         HBox optionBox = new HBox(buttonLayout);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
         optionBox.setMargin(buttonLayout, new Insets(50, 10, 10, 10));
@@ -1033,7 +1039,7 @@ public class Main extends Application {
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.setAlignment(Pos.CENTER);
         comicStrip.setPrefHeight(height/2 -20);
-        //comicStrip.setMinWidth(width - 10);
+        comicStrip.setMinWidth(width - 20);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
 
@@ -1042,8 +1048,9 @@ public class Main extends Application {
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPrefHeight(height/2);
-        scrollPane.setPrefWidth(widthPrcnt/2);
-/*
+        scrollPane.setPrefWidth(width - 20);
+
+        /*
         //TEST//
         Scale scale = new Scale(1, 1);
         scale.xProperty().bind(comicStrip.widthProperty().divide(width-20));
@@ -1056,11 +1063,11 @@ public class Main extends Application {
 
         //TEST//
 */
+
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, scrollPane);
         mainPane.addRow(2, optionBox);
         mainPane.setStyle("-fx-background-color: #B9EBFF");
-        mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
 
         newPanelRight.setVisible(false);
         newPanelLeft.setVisible(false);
@@ -1150,6 +1157,25 @@ public class Main extends Application {
                     e.printStackTrace();
                 }
             }
+        });
+
+        primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
+            mainPane.setPrefWidth(primaryStage.getWidth());
+
+            menuBar.setPrefWidth(primaryStage.getWidth() - 20);
+            menuBox.setPrefWidth(primaryStage.getWidth() - 20);
+
+            scrollPane.setPrefWidth(primaryStage.getWidth() - 20);
+            comicStrip.setPrefWidth(primaryStage.getWidth() - 20);
+
+            optionBox.setPrefWidth(primaryStage.getWidth() - 20);
+            buttonLayout.setPrefWidth(primaryStage.getWidth() - 20);
+        });
+
+        primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
+            mainPane.setPrefHeight(primaryStage.getHeight());
+            scrollPane.setPrefHeight(primaryStage.getHeight()/2);
+            comicStrip.setPrefHeight(primaryStage.getHeight()/2);
         });
 
         Scene scene = new Scene(mainPane, width, height, false);
