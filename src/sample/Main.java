@@ -65,6 +65,8 @@ public class Main extends Application {
 
         GridPane mainPane = new GridPane();
 
+
+
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
         List<ComicPanel> deletedPanels = new Stack<>();
@@ -110,6 +112,7 @@ public class Main extends Application {
 
         FlowPane buttonLayout = new FlowPane();
         buttonLayout.setPrefWidth(width - 20);
+        buttonLayout.setStyle("-fx-background-color: #5cd0ff");
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
@@ -120,7 +123,6 @@ public class Main extends Application {
         Button textButton = buttonIcon.getButtonIcon("src/images/buttons/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/buttons/speech_bubble.png");
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
-
 
         final Stage toolTip = new Stage();
         toolTip.initStyle(StageStyle.UNDECORATED);
@@ -1017,6 +1019,15 @@ public class Main extends Application {
         buttonLayout.getChildren().add(hairColorPicker[0]);
         buttonLayout.getChildren().add(deleteButton);
 
+        buttonLayout.setMargin(leftCharacter, new Insets(10,10,10,10));
+        buttonLayout.setMargin(rightCharacter, new Insets(10,10,10,10));
+        buttonLayout.setMargin(flipButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(genderButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(textButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(bubbleButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(skinColorPicker[0], new Insets(10,10,10,10));
+        buttonLayout.setMargin(hairColorPicker[0], new Insets(10,10,10,10));
+        buttonLayout.setMargin(deleteButton, new Insets(10,10,10,10));
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
@@ -1026,7 +1037,7 @@ public class Main extends Application {
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.setAlignment(Pos.CENTER);
-        comicStrip.setPrefHeight(height/2 -20);
+        comicStrip.setPrefHeight(height - height*0.1);
         comicStrip.setMinWidth(width - 20);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
@@ -1043,6 +1054,8 @@ public class Main extends Application {
         mainPane.addRow(1, buttonLayout);
         mainPane.addRow(2, scrollPane);
         mainPane.setStyle("-fx-background-color: #B9EBFF");
+
+        mainPane.setMargin(scrollPane, new Insets(width * 0.05, 0,0,0));
 
         newPanelRight.setVisible(false);
         newPanelLeft.setVisible(false);
@@ -1139,6 +1152,8 @@ public class Main extends Application {
 
             menuBar.setPrefWidth(primaryStage.getWidth() - 20);
             menuBox.setPrefWidth(primaryStage.getWidth() - 20);
+
+            buttonLayout.setPrefWidth(primaryStage.getWidth() - 20);
 
             scrollPane.setPrefWidth(primaryStage.getWidth() - 20);
             comicStrip.setPrefWidth(primaryStage.getWidth() - 20);
