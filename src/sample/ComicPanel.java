@@ -39,11 +39,11 @@ public class ComicPanel extends Pane {
         int width = (int) Screen.getPrimary().getBounds().getWidth();
         int height = (int) Screen.getPrimary().getBounds().getHeight();
 
-        this.setMinHeight(height/4);//something still affecting come back
-        this.setMinWidth(width/4);
+        this.setMinHeight(height/2.4);
+        this.setMinWidth(height/2.4 + height/9.6);
 
-        this.setMaxHeight(400);
-        this.setMaxWidth(500);
+        this.setMaxHeight(height/2.4);
+        this.setMaxWidth(height/2.4 + height/9.6);
 
         this.leftCharacter.setTranslateX(20);
         this.leftCharacter.setTranslateY(130);
