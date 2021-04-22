@@ -760,7 +760,7 @@ public class Main extends Application {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 1) {
-                                        ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
+                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
                                 }
                             }
                         }
