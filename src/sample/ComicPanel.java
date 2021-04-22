@@ -42,8 +42,8 @@ public class ComicPanel extends Pane {
         this.setMinHeight(height/4);//something still affecting come back
         this.setMinWidth(width/4);
 
-       // this.setMaxHeight(400);
-        //this.setMaxWidth(500);
+        this.setMaxHeight(400);
+        this.setMaxWidth(500);
 
         this.leftCharacter.setTranslateX(20);
         this.leftCharacter.setTranslateY(130);

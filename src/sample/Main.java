@@ -64,8 +64,6 @@ public class Main extends Application {
 
         GridPane mainPane = new GridPane();
 
-        mainPane.gridLinesVisibleProperty().setValue(true);
-
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
         List<ComicPanel> deletedPanels = new Stack<>();
@@ -112,11 +110,11 @@ public class Main extends Application {
         GridPane buttonLayout = new GridPane();
         buttonLayout.setStyle("-fx-border-color: black; -fx-background-color: #FEF7D3; -fx-border-width: 3px");
         buttonLayout.setPrefHeight(300);
-//        buttonLayout.setPrefWidth(width);
+        buttonLayout.setPrefWidth(width);
 
-//        buttonLayout.setHgap(50);
-//        buttonLayout.setVgap(50);
-//        buttonLayout.setPadding(new Insets(50,50,50,50));
+        buttonLayout.setHgap(50);
+        buttonLayout.setVgap(50);
+        buttonLayout.setPadding(new Insets(50,50,50,50));
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
@@ -1029,14 +1027,12 @@ public class Main extends Application {
 
         System.out.println(buttonLayout.getColumnCount());
 
-        buttonLayout.setStyle("-fx-grid-lines-visible: true");
-
 
         HBox optionBox = new HBox(buttonLayout);
         optionBox.setAlignment(Pos.BOTTOM_LEFT);
-//        optionBox.setMargin(buttonLayout, new Insets(50, 10, 10, 10));
+        optionBox.setMargin(buttonLayout, new Insets(50, 10, 10, 10));
 
-        optionBox.setStyle("-fx-background-color: #B9EBFF; -fx-border-width: 3; -fx-border-color: BEIGE");
+        optionBox.setStyle("-fx-background-color: #B9EBFF;");
         optionBox.setPrefHeight(400);
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
