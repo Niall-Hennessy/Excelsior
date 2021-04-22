@@ -31,6 +31,8 @@ public class ComicPanel extends Pane {
     TextCaption topText;
     TextCaption bottomText;
 
+    String background;
+
     int index;
 
     public ComicPanel() throws FileNotFoundException {
@@ -56,11 +58,21 @@ public class ComicPanel extends Pane {
     }
 
     public void select(){
-        this.setStyle("-fx-border-color: hotpink; -fx-border-width: 5");
+        this.setStyle("-fx-background-image: url('" + background + "'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-repeat: stretch; " +
+                "-fx-background-size: 500 400; " +
+                "-fx-border-color: HOTPINK; " +
+                "-fx-border-width: 5");
     }
 
     public void unselect(){
-        this.setStyle("-fx-border-color: black; -fx-border-width: 3");
+        this.setStyle("-fx-background-image: url('" + background + "'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-repeat: stretch; " +
+                "-fx-background-size: 500 400; " +
+                "-fx-border-color: BLACK; " +
+                "-fx-border-width: 3");
     }
 
     public ComicCharacter getLeftCharacter() {
