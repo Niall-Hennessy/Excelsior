@@ -1038,7 +1038,6 @@ public class Main extends Application {
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.setAlignment(Pos.CENTER);
         comicStrip.setPrefHeight(height - height*0.1);
-        comicStrip.setMinWidth(width - 20);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
 
@@ -1055,7 +1054,7 @@ public class Main extends Application {
         mainPane.addRow(2, scrollPane);
         mainPane.setStyle("-fx-background-color: #B9EBFF");
 
-        mainPane.setMargin(scrollPane, new Insets(width * 0.05, 0,0,0));
+        mainPane.setMargin(scrollPane, new Insets(width * 0.05, width * 0.01,0,width * 0.01));
 
         newPanelRight.setVisible(false);
         newPanelLeft.setVisible(false);
