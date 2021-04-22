@@ -790,10 +790,11 @@ public class Main extends Application {
                 comicPanel[0].background = Main.class.getResource("../images/backgrounds/basic_Background.jpg").toExternalForm();
                 comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].background + "'); " +
                         "-fx-background-position: center center; " +
-                        "-fx-background-repeat: stretch; " +
-                        "-fx-background-size: 500 400; " +
+                        "-fx-background-repeat: stretch; "  +
+                        "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
                         "-fx-border-color: HOTPINK; " +
                         "-fx-border-width: 5");
+
             }
         });
 

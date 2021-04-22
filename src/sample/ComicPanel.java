@@ -61,7 +61,7 @@ public class ComicPanel extends Pane {
         this.setStyle("-fx-background-image: url('" + background + "'); " +
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: stretch; " +
-                "-fx-background-size: 500 400; " +
+                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
                 "-fx-border-color: HOTPINK; " +
                 "-fx-border-width: 5");
     }
@@ -70,7 +70,7 @@ public class ComicPanel extends Pane {
         this.setStyle("-fx-background-image: url('" + background + "'); " +
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: stretch; " +
-                "-fx-background-size: 500 400; " +
+                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
                 "-fx-border-color: BLACK; " +
                 "-fx-border-width: 3");
     }
