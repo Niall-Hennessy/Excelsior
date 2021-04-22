@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Screen;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -34,11 +35,15 @@ public class ComicPanel extends Pane {
 
     public ComicPanel() throws FileNotFoundException {
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
-        this.setPrefHeight(400);
-        this.setPrefWidth(500);
 
-        this.setMaxHeight(400);
-        this.setMaxWidth(500);
+        int width = (int) Screen.getPrimary().getBounds().getWidth();
+        int height = (int) Screen.getPrimary().getBounds().getHeight();
+
+        this.setMinHeight(height/4);//something still affecting come back
+        this.setMinWidth(width/4);
+
+       // this.setMaxHeight(400);
+        //this.setMaxWidth(500);
 
         this.leftCharacter.setTranslateX(20);
         this.leftCharacter.setTranslateY(130);
