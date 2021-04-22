@@ -336,7 +336,6 @@ public class Main extends Application {
 
                 Scene scene = new Scene(vBox);
                 saveXML.setScene(scene);
-                saveXML.show();
             }
         });
 
@@ -1039,22 +1038,26 @@ public class Main extends Application {
         hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
 
 
+        buttonLayout.getChildren().add(undoButton);
         buttonLayout.getChildren().add(leftCharacter);
         buttonLayout.getChildren().add(rightCharacter);
         buttonLayout.getChildren().add(flipButton);
         buttonLayout.getChildren().add(genderButton);
         buttonLayout.getChildren().add(textButton);
         buttonLayout.getChildren().add(bubbleButton);
+        buttonLayout.getChildren().add(backgroundButton);
         buttonLayout.getChildren().add(skinColorPicker[0]);
         buttonLayout.getChildren().add(hairColorPicker[0]);
         buttonLayout.getChildren().add(deleteButton);
 
+        buttonLayout.setMargin(undoButton, new Insets(10,10,10,10));
         buttonLayout.setMargin(leftCharacter, new Insets(10,10,10,10));
         buttonLayout.setMargin(rightCharacter, new Insets(10,10,10,10));
         buttonLayout.setMargin(flipButton, new Insets(10,10,10,10));
         buttonLayout.setMargin(genderButton, new Insets(10,10,10,10));
         buttonLayout.setMargin(textButton, new Insets(10,10,10,10));
         buttonLayout.setMargin(bubbleButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(backgroundButton, new Insets(10,10,10,10));
         buttonLayout.setMargin(skinColorPicker[0], new Insets(10,10,10,10));
         buttonLayout.setMargin(hairColorPicker[0], new Insets(10,10,10,10));
         buttonLayout.setMargin(deleteButton, new Insets(10,10,10,10));
