@@ -66,7 +66,6 @@ public class Main extends Application {
         GridPane mainPane = new GridPane();
 
 
-
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
         List<ComicPanel> deletedPanels = new Stack<>();
@@ -1037,7 +1036,8 @@ public class Main extends Application {
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.setAlignment(Pos.CENTER);
-        comicStrip.setPrefHeight(height - height*0.1);
+        comicStrip.setPrefHeight(height * 0.6 - 20);
+        comicStrip.setPrefWidth(width - 45);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
 
@@ -1045,7 +1045,7 @@ public class Main extends Application {
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setPrefHeight(height/2);
+        scrollPane.setPrefHeight(height * 0.6);
         scrollPane.setPrefWidth(width - 20);
 
 
@@ -1144,24 +1144,6 @@ public class Main extends Application {
                     e.printStackTrace();
                 }
             }
-        });
-
-        primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
-            mainPane.setPrefWidth(primaryStage.getWidth());
-
-            menuBar.setPrefWidth(primaryStage.getWidth() - 20);
-            menuBox.setPrefWidth(primaryStage.getWidth() - 20);
-
-            buttonLayout.setPrefWidth(primaryStage.getWidth() - 20);
-
-            scrollPane.setPrefWidth(primaryStage.getWidth() - 20);
-            comicStrip.setPrefWidth(primaryStage.getWidth() - 20);
-        });
-
-        primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> {
-            mainPane.setPrefHeight(primaryStage.getHeight());
-            scrollPane.setPrefHeight(primaryStage.getHeight()/2);
-            comicStrip.setPrefHeight(primaryStage.getHeight()/2);
         });
 
         Scene scene = new Scene(mainPane, width, height, false);
