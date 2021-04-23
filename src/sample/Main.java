@@ -813,24 +813,9 @@ public class Main extends Application {
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setHeight(height);
                 galleryView.setBackground(path);
-                //comicPanel[0].printBackgroundString();
             }
         });
-/*
-        backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                comicPanel[0].background = Main.class.getResource("../images/backgrounds/basic_Background.jpg").toExternalForm();
-                comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].background + "'); " +
-                        "-fx-background-position: center center; " +
-                        "-fx-background-repeat: stretch; "  +
-                        "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
-                        "-fx-border-color: HOTPINK; " +
-                        "-fx-border-width: 5");
 
-            }
-        });
-*/
         textButton.setOnAction(new EventHandler<ActionEvent>() {
             final Stage addText = new Stage(StageStyle.UNDECORATED);
 

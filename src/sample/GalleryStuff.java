@@ -115,14 +115,9 @@ public class GalleryStuff {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 2) {
-                                    comicPanel[0].setBackgroundString("../images/backgrounds/basic_Background.jpg");
+                                    comicPanel[0].setBackgroundString(Main.class.getResource("../" + imageFile.getPath().substring(4)).toExternalForm());
 
-                                    System.out.println("background image: " + imageFile.getPath());
-                                    System.out.println("comic Background: " + comicPanel[0].getBackgroundString());
-
-                                    String tester = Main.class.getResource("../images/backgrounds/basic_Background.jpg").toExternalForm();
-
-                                    comicPanel[0].setStyle("-fx-background-image: url('" + Main.class.getResource("../" + imageFile.getPath().substring(4)).toExternalForm() + "'); " +
+                                    comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].getBackgroundString() + "'); " +
                                             "-fx-background-position: center center; " +
                                             "-fx-background-repeat: stretch; "  +
                                             "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
