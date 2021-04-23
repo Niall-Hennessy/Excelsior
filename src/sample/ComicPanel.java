@@ -214,6 +214,17 @@ public class ComicPanel extends Pane {
         return selectedCharacter;
     }
 
+    public String getLeftRight() {
+        if(selectedCharacter != null){
+            if(selectedCharacter.equals(leftCharacter))
+                return "left";
+            else
+                return "right";
+        }
+
+        return "";
+    }
+
     public void setSelectedCharacter(ComicCharacter selectedCharacter) {
 
         if(selectedCharacter != null) {
