@@ -784,23 +784,6 @@ public class Main extends Application {
             }
         });
 
-        rightCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-
-                if(!comicStrip.getChildren().contains(comicPanel[0])){
-                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, rightCharacter);
-                    return;
-                }
-
-                String path = "src/images/characters";
-                galleryView.setComicPanel(comicPanel);
-                galleryView.setRightCharacter(path);
-                skinColorPicker[0].setValue(comicPanel[0].getRightCharacter().getSkin());
-                hairColorPicker[0].setValue(comicPanel[0].getRightCharacter().getHair());
-            }
-        });
-
         backgroundButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
