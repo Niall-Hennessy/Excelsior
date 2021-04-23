@@ -50,7 +50,7 @@ public class ComicPanel extends Pane {
         this.leftCharacter.setTranslateX(20);
         this.leftCharacter.setTranslateY(130);
 
-        this.rightCharacter.setTranslateX(320);
+        this.rightCharacter.setTranslateX((height/2.4 + height/9.6) - 180);
         this.rightCharacter.setTranslateY(130);
 
         this.getChildren().add(leftCharacter);
