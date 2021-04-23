@@ -120,11 +120,13 @@ public class GalleryStuff {
                                     System.out.println("background image: " + imageFile.getPath());
                                     System.out.println("comic Background: " + comicPanel[0].getBackgroundString());
 
-                                    comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].background + "'); " +
+                                    String tester = Main.class.getResource("../images/backgrounds/basic_Background.jpg").toExternalForm();
+
+                                    comicPanel[0].setStyle("-fx-background-image: url('" + Main.class.getResource("../" + imageFile.getPath().substring(4)).toExternalForm() + "'); " +
                                             "-fx-background-position: center center; " +
                                             "-fx-background-repeat: stretch; "  +
-                                            "-fx-background-size: " + (300/2.4 + 300/9.6) + " " + 300/2.4 + ";" +
-                                            "-fx-border-color: Orange; " +
+                                            "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
+                                            "-fx-border-color: HOTPINK; " +
                                             "-fx-border-width: 5");
                                     addCharacter.close();
                                 }
