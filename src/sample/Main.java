@@ -25,6 +25,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
 import javafx.stage.*;
 import javafx.scene.text.*;
 import javafx.stage.Modality;
@@ -47,17 +48,23 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         primaryStage.setTitle("Excelsior");
+        primaryStage.setResizable(true);
 
-        int width = (int) Screen.getPrimary().getBounds().getWidth();
-        int height = (int) Screen.getPrimary().getBounds().getHeight();
+        primaryStage.setHeight(Screen.getPrimary().getBounds().getHeight());
+        primaryStage.setWidth(Screen.getPrimary().getBounds().getWidth());
 
-        int widthPrcnt = (width / 100) * 95;
-        int heightPrcnt = (height / 100) * 95;
+        double width = primaryStage.getWidth();
+        double height = primaryStage.getHeight();
+
+        double widthPrcnt = (width / 100) * 95;
+        double heightPrcnt = (height / 100) * 95;
 
         primaryStage.setHeight(heightPrcnt);
         primaryStage.setWidth(widthPrcnt);
 
+
         GridPane mainPane = new GridPane();
+
 
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
@@ -102,14 +109,9 @@ public class Main extends Application {
         skinColorPicker[0] = ButtonIcon.colorPickerStyling(skinColorPicker[0]);
         hairColorPicker[0] = ButtonIcon.colorPickerStyling(hairColorPicker[0]);
 
-        GridPane buttonLayout = new GridPane();
-        buttonLayout.setStyle("-fx-border-color: black; -fx-background-color: #FEF7D3; -fx-border-width: 3px");
-        buttonLayout.setPrefHeight(300);
-        buttonLayout.setPrefWidth(width);
-
-        buttonLayout.setHgap(50);
-        buttonLayout.setVgap(50);
-        buttonLayout.setPadding(new Insets(50,50,50,50));
+        FlowPane buttonLayout = new FlowPane();
+        buttonLayout.setPrefWidth(width - 20);
+        buttonLayout.setStyle("-fx-background-color: #5cd0ff");
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
@@ -119,9 +121,9 @@ public class Main extends Application {
         Button genderButton = buttonIcon.getButtonIcon("src/images/buttons/MFButton.png");
         Button textButton = buttonIcon.getButtonIcon("src/images/buttons/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/buttons/speech_bubble.png");
+        Button backgroundButton = buttonIcon.getButtonIcon("src/images/buttons/background_button.png");
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
-
-
+        Button undoButton = buttonIcon.getButtonIcon("src/images/buttons/undo_button.png");
 
         final Stage toolTip = new Stage();
         toolTip.initStyle(StageStyle.UNDECORATED);
@@ -135,9 +137,13 @@ public class Main extends Application {
         String tipGenderButton      = "Change Selected Character's Gender";
         String tipTextButton        = "Set Caption Text for Bottom or Top of Panel";
         String tipBubbleButton      = "Insert Text Bubble for Selected Character";
+        String tipBackgroundButton      = "Add a Background to the Panel";
         String tipDeleteButton      = "Delete Selected Object";
+        String tipUndoButton   = "Undo Last Action";
         String tipskinColorPicker   = "Choose Skin Colour";
         String tiphairColorPicker   = "Choose Hair Colour";
+        String tipNoCharacterSelected = "No character has been selected";
+        String tipNoPanelSelected = "A comic panel must be selected first";
 
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -181,6 +187,13 @@ public class Main extends Application {
             }
         });
 
+        backgroundButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip(tipBackgroundButton, mouseEvent, backgroundButton);
+            }
+        });
+
         deleteButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -188,17 +201,34 @@ public class Main extends Application {
             }
         });
 
+        undoButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hoverTips.buttonToolTip(tipUndoButton, mouseEvent, undoButton);
+            }
+        });
+
         skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+                if(comicPanel[0].getSelectedCharacter() != null) {
+                    hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+                }
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                }
             }
         });
 
         hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+                if(comicPanel[0].getSelectedCharacter() != null) {
+                    hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+                }
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
+                }
             }
         });
 
@@ -306,7 +336,6 @@ public class Main extends Application {
 
                 Scene scene = new Scene(vBox);
                 saveXML.setScene(scene);
-                saveXML.show();
             }
         });
 
@@ -428,6 +457,12 @@ public class Main extends Application {
         rightCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, rightCharacter);
+                    return;
+                }
+
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setRightCharacter(path);
@@ -439,6 +474,12 @@ public class Main extends Application {
         leftCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, leftCharacter);
+                    return;
+                }
+
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setLeftCharacter(path);
@@ -454,6 +495,9 @@ public class Main extends Application {
                 if(comicPanel[0].getSelectedCharacter() != null) {
                     comicPanel[0].getSelectedCharacter().flipOrientation();
                 }
+                else {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, flipButton);
+                }
             }
         });
 
@@ -463,6 +507,9 @@ public class Main extends Application {
 
                 if(comicPanel[0].getSelectedCharacter() != null)
                     comicPanel[0].getSelectedCharacter().genderSwap();
+                else {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, genderButton);
+                }
             }
         });
 
@@ -479,6 +526,16 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
+
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, bubbleButton);
+                    return;
+                }
+
+                if(comicPanel[0].getSelectedCharacter() == null) {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, bubbleButton);
+                    return;
+                }
 
                 Button submit = new Button("Submit");
                 submit.getStyleClass().add("submit");
@@ -501,7 +558,6 @@ public class Main extends Application {
                 bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
 
                 if(addBubble.isShowing()) {
-                    addBubble.initModality(Modality.APPLICATION_MODAL);
                     addBubble.initOwner(primaryStage);
                 }
 
@@ -716,7 +772,7 @@ public class Main extends Application {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 1) {
-                                        ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
+                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
                                 }
                             }
                         }
@@ -728,14 +784,31 @@ public class Main extends Application {
             }
         });
 
+        backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                comicPanel[0].background = Main.class.getResource("../images/backgrounds/basic_Background.jpg").toExternalForm();
+                comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].background + "'); " +
+                        "-fx-background-position: center center; " +
+                        "-fx-background-repeat: stretch; "  +
+                        "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
+                        "-fx-border-color: HOTPINK; " +
+                        "-fx-border-width: 5");
+
+            }
+        });
+
         textButton.setOnAction(new EventHandler<ActionEvent>() {
             final Stage addText = new Stage(StageStyle.UNDECORATED);
 
             @Override
             public void handle(ActionEvent event) {
 
-                if(!comicStrip.getChildren().contains(comicPanel[0]))
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, textButton);
                     return;
+                }
+
 
                 Button submit = new Button("Apply");
                 submit.getStyleClass().add("submit");
@@ -757,7 +830,14 @@ public class Main extends Application {
 
 
                 TextField captionTextfield = new TextField();
-                captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+
+                if(comicPanel[0].topText != null) {
+                    captionTextfield.setFont(comicPanel[0].topText.text.getFont());
+                    combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                }
+                else
+                    captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+
                 captionTextfield.getStyleClass().add("capTextField");
                 HBox topOrBot = new HBox(captionTextfield);
                 captionTextfield.setPrefWidth(400);
@@ -828,8 +908,15 @@ public class Main extends Application {
                         topText.setStyle("-fx-background-color: #C089D7");
                         bottomText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].topText != null)
-                        captionTextfield.setText(comicPanel[0].topText.getText());
+                        if(comicPanel[0].topText != null) {
+                            captionTextfield.setText(comicPanel[0].topText.getText());
+                            captionTextfield.setFont(comicPanel[0].topText.text.getFont());
+                            combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                        }
+                        else {
+                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+                            combo_box.setValue("Segoe UI");
+                        }
                     }
                 });
 
@@ -843,8 +930,15 @@ public class Main extends Application {
                         bottomText.setStyle("-fx-background-color: #C089D7");
                         topText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].bottomText != null)
+                        if(comicPanel[0].bottomText != null) {
                             captionTextfield.setText(comicPanel[0].bottomText.getText());
+                            captionTextfield.setFont(comicPanel[0].bottomText.text.getFont());
+                            combo_box.setValue(comicPanel[0].bottomText.text.getFont().getName());
+                        }
+                        else {
+                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+                            combo_box.setValue("Segoe UI");
+                        }
                     }
                 });
 
@@ -919,6 +1013,9 @@ public class Main extends Application {
 
                 if(comicPanel[0].getSelectedCharacter() != null)
                     comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                }
             }
         });
 
@@ -927,6 +1024,9 @@ public class Main extends Application {
 
                 if(comicPanel[0].getSelectedCharacter() != null)
                     comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
+                else {
+                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected,  hairColorPicker[0]);
+                }
             }
         });
 
@@ -938,20 +1038,29 @@ public class Main extends Application {
         hair.setText("Hair:");
         hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
 
+        buttonLayout.getChildren().add(leftCharacter);
+        buttonLayout.getChildren().add(rightCharacter);
+        buttonLayout.getChildren().add(flipButton);
+        buttonLayout.getChildren().add(genderButton);
+        buttonLayout.getChildren().add(textButton);
+        buttonLayout.getChildren().add(bubbleButton);
+        buttonLayout.getChildren().add(backgroundButton);
+        buttonLayout.getChildren().add(skinColorPicker[0]);
+        buttonLayout.getChildren().add(hairColorPicker[0]);
+        buttonLayout.getChildren().add(undoButton);
+        buttonLayout.getChildren().add(deleteButton);
 
-        buttonLayout.addColumn(5, leftCharacter, rightCharacter);
-        buttonLayout.addColumn(6, flipButton, genderButton);
-        buttonLayout.addColumn(7, textButton, bubbleButton);
-        buttonLayout.addColumn(18, skin, hair);
-        buttonLayout.addColumn(19, skinColorPicker[0], hairColorPicker[0]);
-        buttonLayout.addColumn(25, deleteButton);
-
-        HBox optionBox = new HBox(buttonLayout);
-        optionBox.setAlignment(Pos.BOTTOM_LEFT);
-        optionBox.setMargin(buttonLayout, new Insets(50, 10, 10, 10));
-        optionBox.setStyle("-fx-background-color: #B9EBFF");
-        optionBox.setPrefHeight(400);
-
+        buttonLayout.setMargin(undoButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(leftCharacter, new Insets(10,10,10,10));
+        buttonLayout.setMargin(rightCharacter, new Insets(10,10,10,10));
+        buttonLayout.setMargin(flipButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(genderButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(textButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(bubbleButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(backgroundButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(skinColorPicker[0], new Insets(10,10,10,10));
+        buttonLayout.setMargin(hairColorPicker[0], new Insets(10,10,10,10));
+        buttonLayout.setMargin(deleteButton, new Insets(10,10,10,10));
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
@@ -961,24 +1070,25 @@ public class Main extends Application {
         comicStrip.getChildren().add(newPanelRight);
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.setAlignment(Pos.CENTER);
-        comicStrip.setPrefHeight(height/2 -20);
-        comicStrip.setMinWidth(width - 10);
+        comicStrip.setPrefHeight(height * 0.6 - 20);
+        comicStrip.setPrefWidth(width - 45);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
-      //  double currWidth = primaryStage.getWidth();
-        //double currHeight = primaryStage.getHeight();
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setPrefHeight(height/2);
+        scrollPane.setPrefHeight(height * 0.6);
+        scrollPane.setPrefWidth(width - 20);
+
 
         mainPane.addRow(0, menuBox);
-        mainPane.addRow(1, scrollPane);
-        mainPane.addRow(2, optionBox);
+        mainPane.addRow(1, buttonLayout);
+        mainPane.addRow(2, scrollPane);
         mainPane.setStyle("-fx-background-color: #B9EBFF");
-        mainPane.setMargin(scrollPane, new Insets(5,5,5,5));
+
+        mainPane.setMargin(scrollPane, new Insets(width * 0.05, width * 0.01,0,width * 0.01));
 
         newPanelRight.setVisible(false);
         newPanelLeft.setVisible(false);
@@ -1000,12 +1110,28 @@ public class Main extends Application {
         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+
                 comicStrip.getChildren().remove(comicPanel[0]);
 
                 deletedPanels.add(comicPanel[0]);
 
                 hairColorPicker[0].setValue(Color.WHITE);
                 skinColorPicker[0].setValue(Color.WHITE);
+            }
+        });
+
+        undoButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(final ActionEvent event) {
+                comicStrip.getChildren().remove(newPanelRight);
+                if(deletedPanels.size() > 0) {
+                    int i = deletedPanels.get(deletedPanels.size() - 1).index;
+                    if(i > comicStrip.getChildren().size())
+                        i = comicStrip.getChildren().size();
+                    comicStrip.getChildren().add(i, deletedPanels.get(deletedPanels.size() - 1));
+                    deletedPanels.remove(deletedPanels.size() - 1);
+                }
+                comicStrip.getChildren().add(newPanelRight);
             }
         });
 
@@ -1022,7 +1148,6 @@ public class Main extends Application {
 
                     comicStrip.getChildren().add(newPanelRight);
                     newComicPanel.index = comicStrip.getChildren().indexOf(newComicPanel);
-                    System.out.println(newComicPanel.index);
 
                     newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
@@ -1055,11 +1180,11 @@ public class Main extends Application {
                                 skinColorPicker[0].setValue(Color.WHITE);
                             }
 
-                            double x = comicStrip.getChildren().size();
-
-                            x = comicStrip.getChildren().indexOf(newComicPanel) / x;
-
-                            scrollPane.setHvalue(x);
+                            double w = scrollPane.getContent().getBoundsInLocal().getWidth();
+                            double x = (newComicPanel.getBoundsInParent().getMaxX() +
+                                    newComicPanel.getBoundsInParent().getMinX()) / 2.0;
+                            double v = scrollPane.getViewportBounds().getWidth();
+                            scrollPane.setHvalue(scrollPane.getHmax() * ((x - 0.5 * v) / (w - v)));
                         }
                     });
                 } catch (FileNotFoundException e) {
@@ -1069,26 +1194,13 @@ public class Main extends Application {
         });
 
         Scene scene = new Scene(mainPane, width, height, false);
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.F5) {
-                    comicStrip.getChildren().remove(newPanelRight);
-                    if(deletedPanels.size() > 0) {
-                        int i = deletedPanels.get(deletedPanels.size() - 1).index;
-                        if(i > comicStrip.getChildren().size())
-                            i = comicStrip.getChildren().size();
-                        comicStrip.getChildren().add(i, deletedPanels.get(deletedPanels.size() - 1));
-                        deletedPanels.remove(deletedPanels.size() - 1);
-                        comicStrip.getChildren().add(newPanelRight);
-                    }
-                    keyEvent.consume();
-                }
-            }
-        });
+        scene.getStylesheets().add("sample/style.css");
 
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
+
+        newPanelRight.fire();
+
         primaryStage.show();
 
     }
