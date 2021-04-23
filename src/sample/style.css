@@ -50,16 +50,17 @@
 }
 
 
-
+/*THIS IS THE PANEL FOR THE CONTENTS NOT THE TABS*/
 .helpPane {
-    -fx-background-color: white;
+    -fx-background-color: blue;
     -fx-font-family: helvetica;
     -fx-font-size: 18;
 }
 
 .helpTab{
     -fx-alignment: CENTER;
-    -fx-background-color: #F9F9F9;
+    /*-fx-background-color: #F9F9F9;*/
+    -fx-background-color: red;
     -fx-font-family: georgia;
     -fx-font-size: 15;
 }

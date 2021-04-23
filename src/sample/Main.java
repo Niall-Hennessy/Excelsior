@@ -375,7 +375,7 @@ public class Main extends Application {
 
                 Label label = new Label();
 
-                label = new Label(
+                Text test = new Text(
                         "\n Let's add a character to your comic!\n " +
                                 "\n First press the plus icon in the white panel." +
                                 "\n Now that a black comic panel has appeared, select it so that it is highlighted." +
@@ -385,7 +385,7 @@ public class Main extends Application {
                                 "\n Use the M/F button to change their gender."
                 );
 
-                label.setStyle("-fx-background-color: white");
+                label.setStyle("-fx-background-color: blue");
                 ScrollPane instructionCharacter =  new ScrollPane(label);
 
                 label = new Label(
