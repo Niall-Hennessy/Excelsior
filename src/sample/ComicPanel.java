@@ -33,6 +33,12 @@ public class ComicPanel extends Pane {
 
     String background;
 
+    public String getBackgroundString() { return background; }
+
+    public void setBackgroundString(String path) {
+        this.background = path;
+    }
+
     int index;
 
     public ComicPanel() throws FileNotFoundException {

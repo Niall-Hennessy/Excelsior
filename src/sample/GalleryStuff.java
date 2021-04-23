@@ -17,13 +17,19 @@ import java.io.FileNotFoundException;
 
 enum Entity{
     rightCharacter,
-    leftCharacter
+    leftCharacter,
+    background
 }
 
 public class GalleryStuff {
 
     ComicPanel[] comicPanel = null;
     final Stage addCharacter = new Stage();
+    private double height;
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
 
     public void setComicPanel(ComicPanel[] comicPanel) {
         this.comicPanel = comicPanel;
@@ -102,6 +108,30 @@ public class GalleryStuff {
                         }
                     });
                     break;
+                case background:
+                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+
+                                if (mouseEvent.getClickCount() == 2) {
+                                    comicPanel[0].setBackgroundString("../images/backgrounds/basic_Background.jpg");
+
+                                    System.out.println("background image: " + imageFile.getPath());
+                                    System.out.println("comic Background: " + comicPanel[0].getBackgroundString());
+
+                                    comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].background + "'); " +
+                                            "-fx-background-position: center center; " +
+                                            "-fx-background-repeat: stretch; "  +
+                                            "-fx-background-size: " + (300/2.4 + 300/9.6) + " " + 300/2.4 + ";" +
+                                            "-fx-border-color: Orange; " +
+                                            "-fx-border-width: 5");
+                                    addCharacter.close();
+                                }
+                            }
+                        }
+                    });
+                    break;
             }
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -116,6 +146,11 @@ public class GalleryStuff {
 
     public void setLeftCharacter(String path) {
         Entity entity = Entity.leftCharacter;
+        openGallery(path, entity);
+    }
+
+    public void setBackground(String path) {
+        Entity entity = Entity.background;
         openGallery(path, entity);
     }
 }
