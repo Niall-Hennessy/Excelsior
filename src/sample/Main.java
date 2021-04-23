@@ -129,17 +129,17 @@ public class Main extends Application {
         HoverTips hoverTips = new HoverTips();
         hoverTips.setToolTip(toolTip);
 
-        String tipRightCharacter    = "Set Right Character";
-        String tipLeftCharacter     = "Set Left Character";
-        String tipFlipButton        = "Flip Direction of the Selected Character";
-        String tipGenderButton      = "Change Selected Character's Gender";
-        String tipTextButton        = "Set Caption Text for Bottom or Top of Panel";
-        String tipBubbleButton      = "Insert Text Bubble for Selected Character";
-        String tipDeleteButton      = "Delete Selected Object";
-        String tipskinColorPicker   = "Choose Skin Colour";
-        String tiphairColorPicker   = "Choose Hair Colour";
-        String tipNoCharacterSelected = "No character has been selected";
-        String tipNoPanelSelected = "A comic panel must be selected first";
+        String tipRightCharacter        = "Set Right Character";
+        String tipLeftCharacter         = "Set Left Character";
+        String tipFlipButton            = "Flip Direction of the Selected Character";
+        String tipGenderButton          = "Change Selected Character's Gender";
+        String tipTextButton            = "Set Caption Text for Bottom or Top of Panel";
+        String tipBubbleButton          = "Insert Text Bubble for Selected Character";
+        String tipDeleteButton          = "Delete selected comic pane";
+        String tipskinColorPicker       = "Choose Skin Colour";
+        String tiphairColorPicker       = "Choose Hair Colour";
+        String tipNoCharacterSelected   = "No character has been selected";
+        String tipNoPanelSelected       = "A comic panel must be selected first";
 
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override

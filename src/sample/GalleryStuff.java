@@ -17,9 +17,11 @@ import java.io.FileNotFoundException;
 
 enum Entity{
     rightCharacter,
-    leftCharacter
+    leftCharacter,
+    background
 }
 
+//  Presenting a gallery of images to select from, ie: Character Poses, potentially Background selection
 public class GalleryStuff {
 
     ComicPanel[] comicPanel = null;
@@ -101,6 +103,9 @@ public class GalleryStuff {
                             }
                         }
                     });
+                    break;
+                case background:
+                    System.out.println("Background Gallery Selected");
                     break;
             }
         } catch (FileNotFoundException ex) {
