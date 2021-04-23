@@ -1071,7 +1071,7 @@ public class Main extends Application {
         comicStrip.getChildren().add(newPanelLeft);
         comicStrip.setAlignment(Pos.CENTER);
         comicStrip.setPrefHeight(height * 0.6 - 20);
-        comicStrip.setPrefWidth(width - 45);
+        comicStrip.setPrefWidth(width - 40);
         comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
 
 
