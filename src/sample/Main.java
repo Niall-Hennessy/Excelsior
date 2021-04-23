@@ -1038,8 +1038,6 @@ public class Main extends Application {
         hair.setText("Hair:");
         hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
 
-
-        buttonLayout.getChildren().add(undoButton);
         buttonLayout.getChildren().add(leftCharacter);
         buttonLayout.getChildren().add(rightCharacter);
         buttonLayout.getChildren().add(flipButton);
@@ -1049,6 +1047,7 @@ public class Main extends Application {
         buttonLayout.getChildren().add(backgroundButton);
         buttonLayout.getChildren().add(skinColorPicker[0]);
         buttonLayout.getChildren().add(hairColorPicker[0]);
+        buttonLayout.getChildren().add(undoButton);
         buttonLayout.getChildren().add(deleteButton);
 
         buttonLayout.setMargin(undoButton, new Insets(10,10,10,10));
