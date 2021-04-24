@@ -474,6 +474,11 @@ public class Main extends Application {
                     return;
                 }
 
+                if(comicPanel[0].getRightCharacter().imageName == null)
+                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|right|blank|");
+                else
+                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|right|" + comicPanel[0].getRightCharacter().imageName.toString() + "|");
+
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setRightCharacter(path);
@@ -490,6 +495,11 @@ public class Main extends Application {
                     hoverTips.NoPanelSelectedTip(tipNoPanelSelected, leftCharacter);
                     return;
                 }
+
+                if(comicPanel[0].getRightCharacter().imageName == null)
+                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|left|blank|");
+                else
+                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|left|" + comicPanel[0].getRightCharacter().imageName + "|");
 
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
@@ -1164,7 +1174,6 @@ public class Main extends Application {
                 /*
                 Actions that can be undone
 
-                Changing Character Image: Panel, L/R, Previous Image
                 Moving Character: Panel, L/R, Previous Location
                 Adding Speech Bubble: Panel, L/R
                 Moving Speech Bubble: Panel, L/R, Previous Location
@@ -1177,6 +1186,7 @@ public class Main extends Application {
                 Actually Implemented
 
                 Delete Panel: Panel
+                Changing Character Image: Panel, L/R, Previous Image
                 Flipping Character: Panel, L/R
                 Gender Character: Panel, L/R
                 Skin Character: Panel, L/R, Previous Colour
@@ -1260,6 +1270,23 @@ public class Main extends Application {
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().setHair(Color.web(value));
                         else
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().setHair(Color.web(value));
+                    }else if (operation.matches("character")){
+
+                        if (leftRight.matches("left")) {
+                            try {
+                                ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().setCharacterImageView("src/images/characters/" + value + ".png");
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else{
+                            try {
+                                ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().setCharacterImageView("src/images/characters/" + value + ".png");
+                                ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().flipOrientation();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                 }
@@ -1326,6 +1353,12 @@ public class Main extends Application {
 
         Scene scene = new Scene(mainPane, width, height, false);
         scene.getStylesheets().add("sample/style.css");
+
+        scene.setOnKeyPressed(event -> {
+            String codeString = event.getCode().toString();
+            if(codeString.matches("Z"))
+                undoButton.fire();
+        });
 
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
