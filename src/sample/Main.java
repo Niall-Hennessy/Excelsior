@@ -1178,7 +1178,6 @@ public class Main extends Application {
                 Adding Speech Bubble: Panel, L/R
                 Moving Speech Bubble: Panel, L/R, Previous Location
                 Adding Text: Panel, T/B
-                Add Panel: Panel
                 Add Background: Panel, Previous Image
                  */
 
@@ -1191,6 +1190,7 @@ public class Main extends Application {
                 Gender Character: Panel, L/R
                 Skin Character: Panel, L/R, Previous Colour
                 Hair Character: Panel, L/R, Previous Colour
+                Add Panel: Panel
                  */
 
                 if(undoList.size() > 0) {
@@ -1270,6 +1270,9 @@ public class Main extends Application {
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().setHair(Color.web(value));
                         else
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().setHair(Color.web(value));
+                    }else if (operation.matches("panel")){
+
+                        comicStrip.getChildren().remove(Integer.parseInt(panel));
                     }else if (operation.matches("character")){
 
                         if (leftRight.matches("left")) {
@@ -1305,6 +1308,9 @@ public class Main extends Application {
                     comicStrip.setMargin(newComicPanel, new Insets(20,10,20,10));
 
                     comicStrip.getChildren().add(newPanelRight);
+
+                    undoList.add("panel|" + comicStrip.getChildren().indexOf(newComicPanel) + "|||");
+
                     newComicPanel.index = comicStrip.getChildren().indexOf(newComicPanel);
 
                     newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
