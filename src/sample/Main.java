@@ -110,8 +110,8 @@ public class Main extends Application {
 
         final ColorPicker[] skinColorPicker = {new ColorPicker()};
         final ColorPicker[] hairColorPicker = {new ColorPicker()};
-        skinColorPicker[0] = ButtonIcon.colorPickerStyling(skinColorPicker[0]);
-        hairColorPicker[0] = ButtonIcon.colorPickerStyling(hairColorPicker[0]);
+        skinColorPicker[0] = ButtonIcon.colorPickerStyling(skinColorPicker[0], height);
+        hairColorPicker[0] = ButtonIcon.colorPickerStyling(hairColorPicker[0], primaryStage.getHeight());
 
         FlowPane buttonLayout = new FlowPane();
         buttonLayout.setPrefWidth(width - 20);
@@ -121,6 +121,9 @@ public class Main extends Application {
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
+
+        buttonIcon.setHeight(primaryStage.getHeight());
+
         Button rightCharacter = buttonIcon.getButtonIcon("src/images/buttons/lookLeft.png");
         Button leftCharacter = buttonIcon.getButtonIcon("src/images/buttons/lookRight.png");
         Button flipButton = buttonIcon.getButtonIcon("src/images/buttons/swapLR.png");
@@ -883,8 +886,8 @@ public class Main extends Application {
                     if(comicPanel[0].getLocked()) {
                         try {
                             ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
-                            imageView.setFitWidth(100);
-                            imageView.setFitHeight(100);
+                            imageView.setFitWidth(height*0.09);
+                            imageView.setFitHeight(height*0.09);
                             lockButton[0].setGraphic(imageView);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -892,8 +895,8 @@ public class Main extends Application {
                     } else {
                         try {
                             ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
-                            imageView.setFitWidth(100);
-                            imageView.setFitHeight(100);
+                            imageView.setFitWidth(height*0.09);
+                            imageView.setFitHeight(height*0.09);
                             lockButton[0].setGraphic(imageView);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -1464,8 +1467,8 @@ public class Main extends Application {
                             if(comicPanel[0].getLocked()) {
                                 try {
                                     ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
-                                    imageView.setFitWidth(100);
-                                    imageView.setFitHeight(100);
+                                    imageView.setFitWidth(height*0.09);
+                                    imageView.setFitHeight(height*0.09);
                                     lockButton[0].setGraphic(imageView);
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
@@ -1473,8 +1476,8 @@ public class Main extends Application {
                             } else {
                                 try {
                                     ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
-                                    imageView.setFitWidth(100);
-                                    imageView.setFitHeight(100);
+                                    imageView.setFitWidth(height*0.09);
+                                    imageView.setFitHeight(height*0.09);
                                     lockButton[0].setGraphic(imageView);
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
