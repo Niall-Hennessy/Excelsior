@@ -122,6 +122,7 @@ public class Main extends Application {
         Button textButton = buttonIcon.getButtonIcon("src/images/buttons/T_Button.png");
         Button bubbleButton = buttonIcon.getButtonIcon("src/images/buttons/speech_bubble.png");
         Button backgroundButton = buttonIcon.getButtonIcon("src/images/buttons/background_button.png");
+        final Button[] lockButton = {buttonIcon.getButtonIcon("src/images/buttons/unlock.png")};
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
         Button undoButton = buttonIcon.getButtonIcon("src/images/buttons/undo_button.png");
 
@@ -138,6 +139,9 @@ public class Main extends Application {
         String tipTextButton        = "Set Caption Text for Bottom or Top of Panel";
         String tipBubbleButton      = "Insert Text Bubble for Selected Character";
         String tipBackgroundButton      = "Add a Background to the Panel";
+        String tipLockButton      = "Click to Lock this Panel to disable further editing";
+        String tipUnlockButton      = "Click to Unlock this Panel to enable further editing";
+        String tipLocked      = "This Panel is Locked Unlock to Allow Further Editing";
         String tipDeleteButton      = "Delete Selected Object";
         String tipUndoButton   = "Undo Last Action";
         String tipskinColorPicker   = "Choose Skin Colour";
@@ -201,6 +205,18 @@ public class Main extends Application {
             }
         });
 
+        lockButton[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(comicPanel[0] != null) {
+                    if (comicPanel[0].getLocked())
+                        hoverTips.buttonToolTip(tipUnlockButton, mouseEvent, lockButton[0]);
+                    else
+                        hoverTips.buttonToolTip(tipLockButton, mouseEvent, lockButton[0]);
+                }
+            }
+        });
+
         undoButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -231,6 +247,8 @@ public class Main extends Application {
                 }
             }
         });
+
+
 
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
             final Stage saveXML = new Stage();
@@ -463,6 +481,11 @@ public class Main extends Application {
                     return;
                 }
 
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, rightCharacter);
+                    return;
+                }
+
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setRightCharacter(path);
@@ -480,6 +503,11 @@ public class Main extends Application {
                     return;
                 }
 
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, leftCharacter);
+                    return;
+                }
+
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setLeftCharacter(path);
@@ -492,8 +520,11 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(comicPanel[0].getSelectedCharacter() != null) {
+                if(comicPanel[0].getSelectedCharacter() != null && !comicPanel[0].getLocked()) {
                     comicPanel[0].getSelectedCharacter().flipOrientation();
+                } else if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, flipButton);
+                    return;
                 }
                 else {
                     hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, flipButton);
@@ -505,8 +536,12 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(comicPanel[0].getSelectedCharacter() != null)
+                if(comicPanel[0].getSelectedCharacter() != null && !comicPanel[0].getLocked()) {
                     comicPanel[0].getSelectedCharacter().genderSwap();
+                }else if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, genderButton);
+                    return;
+                }
                 else {
                     hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, genderButton);
                 }
@@ -529,6 +564,11 @@ public class Main extends Application {
 
                 if(!comicStrip.getChildren().contains(comicPanel[0])){
                     hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, bubbleButton);
+                    return;
+                }
+
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, bubbleButton);
                     return;
                 }
 
@@ -798,6 +838,41 @@ public class Main extends Application {
             }
         });
 
+        lockButton[0].setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(comicStrip.getChildren().contains(comicPanel[0])) {
+                    comicPanel[0].setLocked(!comicPanel[0].getLocked());
+
+
+                    if(comicPanel[0].getLocked()) {
+                        try {
+                            ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
+                            imageView.setFitWidth(100);
+                            imageView.setFitHeight(100);
+                            lockButton[0].setGraphic(imageView);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
+                            imageView.setFitWidth(100);
+                            imageView.setFitHeight(100);
+                            lockButton[0].setGraphic(imageView);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                else {
+                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, lockButton[0]);
+                }
+            }
+        });
+
         textButton.setOnAction(new EventHandler<ActionEvent>() {
             final Stage addText = new Stage(StageStyle.UNDECORATED);
 
@@ -809,6 +884,10 @@ public class Main extends Application {
                     return;
                 }
 
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, textButton);
+                    return;
+                }
 
                 Button submit = new Button("Apply");
                 submit.getStyleClass().add("submit");
@@ -1008,24 +1087,61 @@ public class Main extends Application {
             }
         });
 
-        skinColorPicker[0].setOnAction(new EventHandler() {
-            public void handle(Event t) {
+        skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
 
-                if(comicPanel[0].getSelectedCharacter() != null)
-                    comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, skinColorPicker[0]);
+
+                    Color color = skinColorPicker[0].getValue();
+
+                    skinColorPicker[0].setOnAction(new EventHandler() {
+                        public void handle(Event t) {
+                            skinColorPicker[0].setValue(color);
+                        }
+                    });
+                }
                 else {
-                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                    skinColorPicker[0].setOnAction(new EventHandler() {
+                        public void handle(Event t) {
+
+                            if(comicPanel[0].getSelectedCharacter() != null)
+                                comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
+                            else {
+                                hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                            }
+                        }
+                    });
                 }
             }
         });
 
-        hairColorPicker[0].setOnAction(new EventHandler() {
+        hairColorPicker[0].setOnMouseEntered(new EventHandler() {
             public void handle(Event t) {
 
-                if(comicPanel[0].getSelectedCharacter() != null)
-                    comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, hairColorPicker[0]);
+
+                    Color color = hairColorPicker[0].getValue();
+
+                    hairColorPicker[0].setOnAction(new EventHandler() {
+                        public void handle(Event t) {
+                            hairColorPicker[0].setValue(color);
+                        }
+                    });
+                }
                 else {
-                    hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected,  hairColorPicker[0]);
+                    hairColorPicker[0].setOnAction(new EventHandler() {
+                        public void handle(Event t) {
+
+                            if(comicPanel[0].getSelectedCharacter() != null)
+                                comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
+                            else {
+                                hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -1049,6 +1165,7 @@ public class Main extends Application {
         buttonLayout.getChildren().add(hairColorPicker[0]);
         buttonLayout.getChildren().add(undoButton);
         buttonLayout.getChildren().add(deleteButton);
+        buttonLayout.getChildren().add(lockButton[0]);
 
         buttonLayout.setMargin(undoButton, new Insets(10,10,10,10));
         buttonLayout.setMargin(leftCharacter, new Insets(10,10,10,10));
@@ -1061,6 +1178,7 @@ public class Main extends Application {
         buttonLayout.setMargin(skinColorPicker[0], new Insets(10,10,10,10));
         buttonLayout.setMargin(hairColorPicker[0], new Insets(10,10,10,10));
         buttonLayout.setMargin(deleteButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(lockButton[0], new Insets(10,10,10,10));
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
@@ -1111,6 +1229,10 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, leftCharacter);
+                    return;
+                }
 
                 comicStrip.getChildren().remove(comicPanel[0]);
 
@@ -1178,6 +1300,26 @@ public class Main extends Application {
                             else {
                                 hairColorPicker[0].setValue(Color.WHITE);
                                 skinColorPicker[0].setValue(Color.WHITE);
+                            }
+
+                            if(comicPanel[0].getLocked()) {
+                                try {
+                                    ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
+                                    imageView.setFitWidth(100);
+                                    imageView.setFitHeight(100);
+                                    lockButton[0].setGraphic(imageView);
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                try {
+                                    ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
+                                    imageView.setFitWidth(100);
+                                    imageView.setFitHeight(100);
+                                    lockButton[0].setGraphic(imageView);
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
                             double w = scrollPane.getContent().getBoundsInLocal().getWidth();
