@@ -106,8 +106,6 @@ public class Main extends Application {
 
         HBox menuBox = new HBox(menuBar);
 
-        menuBox.setMinHeight(20);
-
         HBox comicStrip = new HBox();
 
         final ColorPicker[] skinColorPicker = {new ColorPicker()};
@@ -118,6 +116,8 @@ public class Main extends Application {
         FlowPane buttonLayout = new FlowPane();
         buttonLayout.setPrefWidth(width - 20);
         buttonLayout.setStyle("-fx-background-color: #5cd0ff");
+
+        menuBox.setMinHeight(buttonLayout.getHeight()/10);
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
