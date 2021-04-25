@@ -18,7 +18,7 @@ public class ComicCharacter extends Pane {
 
     Image characterImage;
 
-    String imageName;
+    static String imageName;
 
     boolean isFemale = true;
 
@@ -190,7 +190,7 @@ public class ComicCharacter extends Pane {
 
         this.characterImageView.setFitWidth(100);
         this.characterImageView.setFitHeight(100);
-        imageName = characterImagePath.substring(22,characterImagePath.length()-4);
+        this.imageName = characterImagePath.substring(22,characterImagePath.length()-4);
 
         this.getChildren().add(characterImageView);
 
