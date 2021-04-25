@@ -7,6 +7,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -41,6 +42,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+
+import static java.awt.Color.WHITE;
 
 public class Main extends Application {
 
@@ -406,8 +409,9 @@ public class Main extends Application {
                                 "\n Use the M/F button to change their gender."
                 );
 
-                label.setStyle("-fx-background-color: white");
                 ScrollPane instructionCharacter =  new ScrollPane(label);
+                instructionCharacter.getStyleClass().add("contentPane");
+
 
                 label = new Label(
                         "\n Let's get your characters talking!\n " +
@@ -421,17 +425,18 @@ public class Main extends Application {
                                 "\n Hit Delete if you want to get rid of the bubble."
                 );
 
-                label.setStyle("-fx-background-color: white");
                 ScrollPane instructionSpeechBubble =  new ScrollPane(label);
+                instructionSpeechBubble.getStyleClass().add("contentPane");
 
                 label = new Label(
                         "\n Let's add some colour!\n " +
                                 "\n Select the character who's Skin/Hair you wish to change." +
                                 "\n Select the Skin/Hair colour picker to select a new colour."
                 );
-
-                label.setStyle("-fx-background-color: white");
                 ScrollPane instructionColour =  new ScrollPane(label);
+                instructionColour.getStyleClass().add("contentPane");
+
+
 
                 label = new Label(
                         "\n Let's caption your panel!\n " +
@@ -444,6 +449,8 @@ public class Main extends Application {
                 );
 
                 ScrollPane instructionCaption =  new ScrollPane(label);
+                instructionCaption.getStyleClass().add("contentPane");
+
 
                 instructionCharacter.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 instructionCharacter.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
