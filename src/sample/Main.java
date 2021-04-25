@@ -843,17 +843,18 @@ public class Main extends Application {
             }
         });
 
-        backgroundButton.setOnAction(new EventHandler<ActionEvent>() {
+        backgroundButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                comicPanel[0].background = Main.class.getResource("../images/backgrounds/basic_Background.jpg").toExternalForm();
-                comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].background + "'); " +
-                        "-fx-background-position: center center; " +
-                        "-fx-background-repeat: stretch; "  +
-                        "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
-                        "-fx-border-color: HOTPINK; " +
-                        "-fx-border-width: 5");
+            public void handle(MouseEvent mouseEvent) {
+                if(!comicStrip.getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, backgroundButton);
+                    return;
+                }
 
+                String path = "src/images/backgrounds";
+                galleryView.setComicPanel(comicPanel);
+                galleryView.setHeight(height);
+                galleryView.setBackground(path);
             }
         });
 
