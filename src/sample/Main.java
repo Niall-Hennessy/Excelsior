@@ -117,7 +117,7 @@ public class Main extends Application {
         buttonLayout.setPrefWidth(width - 20);
         buttonLayout.setStyle("-fx-background-color: #5cd0ff");
 
-        menuBox.setMinHeight(buttonLayout.getHeight()/5);
+        menuBox.setMaxHeight(buttonLayout.getHeight()/2);
 
 //      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
