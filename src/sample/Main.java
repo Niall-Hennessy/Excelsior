@@ -851,6 +851,11 @@ public class Main extends Application {
                     return;
                 }
 
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, backgroundButton);
+                    return;
+                }
+
                 String path = "src/images/backgrounds";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setHeight(height);

@@ -35,12 +35,6 @@ public class ComicPanel extends Pane {
 
     Boolean isLocked;
 
-    public String getBackgroundString() { return background; }
-
-    public void setBackgroundString(String path) {
-        this.background = path;
-    }
-
     int index;
 
     public ComicPanel() throws FileNotFoundException {
@@ -491,5 +485,11 @@ public class ComicPanel extends Pane {
 
     public void setLocked(Boolean locked) {
         isLocked = locked;
+    }
+
+    public String getBackgroundString() { return background; }
+
+    public void setBackgroundString(String path) {
+        this.background = path;
     }
 }
