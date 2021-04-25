@@ -106,6 +106,8 @@ public class Main extends Application {
 
         HBox menuBox = new HBox(menuBar);
 
+        menuBox.setMinHeight(20);
+
         HBox comicStrip = new HBox();
 
         final ColorPicker[] skinColorPicker = {new ColorPicker()};
