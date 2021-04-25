@@ -1123,6 +1123,7 @@ public class Main extends Application {
                 }
                 else {
                     skinColorPicker[0].setOnAction(new EventHandler() {
+                        Color current = skinColorPicker[0].getValue();
                         public void handle(Event t) {
 
                             if(comicPanel[0].getSelectedCharacter() != null) {
