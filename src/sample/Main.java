@@ -1217,6 +1217,7 @@ public class Main extends Application {
         buttonLayout.setMargin(skinColorPicker[0], new Insets(10,10,10,10));
         buttonLayout.setMargin(hairColorPicker[0], new Insets(10,10,10,10));
         buttonLayout.setMargin(deleteButton, new Insets(10,10,10,10));
+        buttonLayout.setMargin(lockButton[0], new Insets(10,10,10,10));
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
