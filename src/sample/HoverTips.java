@@ -121,4 +121,54 @@ public class HoverTips {
             }
         });
     }
+
+    public void lockedTip(String text, Button local){
+        Text testText = new Text(text);
+        testText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 20));
+        testText.setFill(Color.RED);
+        BorderPane borderPane = new BorderPane(testText);
+        Scene scene = new Scene(borderPane);
+        toolTip.setScene(scene);
+        toolTip.show();
+
+        local.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                toolTip.setX(mouseEvent.getScreenX() + 5);
+                toolTip.setY(mouseEvent.getScreenY() - 15);
+            }
+        });
+
+        local.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                toolTip.close();
+            }
+        });
+    }
+
+    public void lockedTip(String text, ColorPicker local){
+        Text testText = new Text(text);
+        testText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 20));
+        testText.setFill(Color.RED);
+        BorderPane borderPane = new BorderPane(testText);
+        Scene scene = new Scene(borderPane);
+        toolTip.setScene(scene);
+        toolTip.show();
+
+        local.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                toolTip.setX(mouseEvent.getScreenX() + 5);
+                toolTip.setY(mouseEvent.getScreenY() - 15);
+            }
+        });
+
+        local.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                toolTip.close();
+            }
+        });
+    }
 }

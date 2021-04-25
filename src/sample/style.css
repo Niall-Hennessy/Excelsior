@@ -50,17 +50,17 @@
 }
 
 
-/*THIS IS THE PANEL FOR THE CONTENTS NOT THE TABS*/
+/*THIS IS THE CONTENT STYLING*/
 .helpPane {
-    -fx-background-color: blue;
+    -fx-background-color: white;
     -fx-font-family: helvetica;
     -fx-font-size: 18;
 }
 
+/*this is the tab styling*/
 .helpTab{
     -fx-alignment: CENTER;
-    /*-fx-background-color: #F9F9F9;*/
-    -fx-background-color: red;
+    -fx-background-color: #F9F9F9;
     -fx-font-family: georgia;
     -fx-font-size: 15;
 }
@@ -68,6 +68,24 @@
 .helpTab:selected {
     -fx-background-color: white;
 }
+
+/*SETS THE SCROLLPANE BACKGROUND FOR THE HELP WINDOW*/
+.contentPane > .viewport {
+   -fx-background-color: white;
+}
+
+.contentPane {
+   -fx-background-color: white;
+}
+
+/*change background colour to blue till 3 panels added and border works*/
+/*.comicScrollPane > .viewport {
+    -fx-background-color: #B9EBFF;
+}
+
+.comicScrollPane {
+    -fx-background-color: #B9EBFF;
+}*/
 
 /*makes background of the tabs light pink*/
 .tab-pane>*.tab-header-area>*.tab-header-background {

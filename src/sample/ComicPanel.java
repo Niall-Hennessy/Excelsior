@@ -33,6 +33,8 @@ public class ComicPanel extends Pane {
 
     String background;
 
+    Boolean isLocked;
+
     int index;
 
     public ComicPanel() throws FileNotFoundException {
@@ -55,6 +57,8 @@ public class ComicPanel extends Pane {
 
         this.getChildren().add(leftCharacter);
         this.getChildren().add(rightCharacter);
+
+        isLocked = false;
     }
 
     public void select(){
@@ -212,6 +216,17 @@ public class ComicPanel extends Pane {
 
     public ComicCharacter getSelectedCharacter() {
         return selectedCharacter;
+    }
+
+    public String getLeftRight() {
+        if(selectedCharacter != null){
+            if(selectedCharacter.equals(leftCharacter))
+                return "left";
+            else
+                return "right";
+        }
+
+        return "";
     }
 
     public void setSelectedCharacter(ComicCharacter selectedCharacter) {
@@ -464,5 +479,17 @@ public class ComicPanel extends Pane {
 
     }
 
+    public Boolean getLocked() {
+        return isLocked;
+    }
 
+    public void setLocked(Boolean locked) {
+        isLocked = locked;
+    }
+
+    public String getBackgroundString() { return background; }
+
+    public void setBackgroundString(String path) {
+        this.background = path;
+    }
 }
