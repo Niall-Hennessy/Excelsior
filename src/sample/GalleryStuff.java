@@ -116,8 +116,6 @@ public class GalleryStuff {
 
                                 if (mouseEvent.getClickCount() == 2) {
                                     comicPanel[0].setBackgroundString(normaliseURL(imageFile.getPath().substring(4)));
-                                    System.out.println(normaliseURL(imageFile.getPath().substring(4)));
-
                                     comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].getBackgroundString() + "'); " +
                                             "-fx-background-position: center center; " +
                                             "-fx-background-repeat: stretch; "  +
