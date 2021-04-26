@@ -66,6 +66,11 @@ public class Main extends Application {
         primaryStage.setWidth(widthPrcnt);
 
 
+        //TEST FOR SPLASHSCREEN
+
+        //TEST FOR SPLASHSCREEN
+
+
         GridPane mainPane = new GridPane();
 
 
