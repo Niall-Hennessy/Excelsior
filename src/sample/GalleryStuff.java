@@ -39,6 +39,14 @@ public class GalleryStuff {
         ScrollPane gallery = new ScrollPane();
         TilePane poses = new TilePane();
 
+        if(entity == Entity.background)
+            poses.setPrefColumns(3);
+        else
+            poses.setPrefColumns(7);
+
+        poses.setHgap(3);
+        poses.setVgap(3);
+
         File folder = new File(path);
         File[] listOfFiles = folder.listFiles();
 
@@ -52,14 +60,16 @@ public class GalleryStuff {
         gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizontal
         gallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         gallery.setFitToWidth(true);
+        gallery.setFitToHeight(true);
         gallery.setContent(poses);
 
-        addCharacter.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-        addCharacter.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-
         Scene scene = new Scene(gallery);
+
         addCharacter.setScene(scene);
         addCharacter.show();
+        addCharacter.setMaxHeight(Screen.getPrimary().getVisualBounds().getHeight()*0.995);
+        addCharacter.setX( (Screen.getPrimary().getVisualBounds().getWidth()/2) - (addCharacter.getWidth()/2) );
+        addCharacter.setY( (Screen.getPrimary().getVisualBounds().getHeight()/2) - (addCharacter.getHeight()/2) );
     }
 
     private ImageView createImageView(final File imageFile, Entity entity) {
@@ -116,7 +126,6 @@ public class GalleryStuff {
 
                                 if (mouseEvent.getClickCount() == 2) {
                                     comicPanel[0].setBackgroundString(normaliseURL(imageFile.getPath().substring(4)));
-                                    System.out.println(normaliseURL(imageFile.getPath().substring(4)));
 
                                     comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].getBackgroundString() + "'); " +
                                             "-fx-background-position: center center; " +
