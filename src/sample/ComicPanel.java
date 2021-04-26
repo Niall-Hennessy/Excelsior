@@ -1,9 +1,11 @@
 package sample;
 
 import javafx.scene.Cursor;
+import javafx.scene.control.TextField;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -268,48 +270,7 @@ public class ComicPanel extends Pane {
 
         ImageView imageView = new ImageView(image);
 
-        if (checkS == 295.0) {       // regular shaped bubbles
-            leftTextBubble = new TextBubble(imageView, text, font);
-
-
-            if (text.length() < 21) {
-                int len = text.length() * 7 + 45;
-                imageView.setFitHeight(40);
-                if (len > 165) {
-                    imageView.setFitWidth(165);
-                } else {
-                    imageView.setFitWidth(len);
-                }
-            } else if (text.length() < 41) {
-                imageView.setFitHeight(60);
-                imageView.setFitWidth(165);
-            } else {
-                imageView.setFitHeight(85);
-                imageView.setFitWidth(165);
-            }
-        } else {    // irregular bubbles
-            leftTextBubble = new TextBubble(imageView, text, font);
-            leftTextBubble.getText().setTranslateY(25);
-
-            if (text.length() <= 20) {
-                int len = text.length() * 7 + 45;
-                imageView.setFitHeight(75);
-                if (len > 165) {
-                    imageView.setFitWidth(165);
-                } else {
-                    imageView.setFitWidth(len);
-                }
-                leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 33);
-            } else if (text.length() <= 40) {
-                imageView.setFitHeight(105);
-                imageView.setFitWidth(165);
-                leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 38);
-            } else {
-                imageView.setFitHeight(130);
-                imageView.setFitWidth(165);
-                leftTextBubble.getText().setTranslateY(imageView.getTranslateY() + 42);
-            }
-        }
+        leftTextBubble = new TextBubble(imageView, text, font);
 
         leftTextBubble.setTranslateX(selectedCharacter.getTranslateX() + 70);
         leftTextBubble.setTranslateY(selectedCharacter.getTranslateY() - 50);
@@ -365,47 +326,8 @@ public class ComicPanel extends Pane {
         imageView.setRotationAxis(Rotate.Y_AXIS);
         imageView.setRotate(180);
 
-        if (checkS == 295.0) {       // regular shaped bubbles
-            rightTextBubble = new TextBubble(imageView, text, font);
+        rightTextBubble = new TextBubble(imageView, text, font);
 
-            if (text.length() < 21) {
-                int len = text.length() * 7 + 45;
-                imageView.setFitHeight(40);
-                if (len > 165) {
-                    imageView.setFitWidth(165);
-                } else {
-                    imageView.setFitWidth(len);
-                }
-            } else if (text.length() < 41) {
-                imageView.setFitHeight(60);
-                imageView.setFitWidth(165);
-            } else {
-                imageView.setFitHeight(85);
-                imageView.setFitWidth(165);
-            }
-        } else {    // irregular bubbles
-            rightTextBubble = new TextBubble(imageView, text, font);
-            rightTextBubble.getText().setTranslateY(25);
-
-            if (text.length() < 21) {
-                int len = text.length() * 7 + 45;
-                imageView.setFitHeight(75);
-                if (len > 165) {
-                    imageView.setFitWidth(165);
-                } else {
-                    imageView.setFitWidth(len);
-                }
-                rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 33);
-            } else if (text.length() < 41) {
-                imageView.setFitHeight(105);
-                imageView.setFitWidth(165);
-                rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 38);
-            } else {
-                imageView.setFitHeight(130);
-                imageView.setFitWidth(165);
-                rightTextBubble.getText().setTranslateY(imageView.getTranslateY() + 42);
-            }
-        }
 
         rightTextBubble.setTranslateX(selectedCharacter.getTranslateX() - 20);
         rightTextBubble.setTranslateY(selectedCharacter.getTranslateY() - 50);

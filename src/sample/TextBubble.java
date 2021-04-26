@@ -7,17 +7,19 @@ import javafx.scene.text.Text;
 
 public class TextBubble extends Pane {
 
-    ImageView bubble;
+    ImageView bubble = new ImageView();
     Text text = new Text();
 
     public TextBubble(ImageView bubble, String text, Font font) {
         text = parseText(text, 20);
         this.text.setText(text);
         this.text.setFont(font);
-        this.text.setTranslateX(bubble.getTranslateX() + 20);
-        this.text.setTranslateY(bubble.getTranslateY() + 20);
-        //bubble.setFitWidth(this.getWidth());
-        this.getChildren().add(bubble);
+        this.bubble.setImage(bubble.getImage());
+        this.bubble.setFitWidth(this.text.getBoundsInLocal().getWidth() + 50);
+        this.bubble.setFitHeight(this.text.getBoundsInLocal().getHeight()+ 65);
+        this.text.setTranslateX(this.bubble.getBoundsInLocal().getCenterX() - (this.text.getBoundsInLocal().getWidth()/2));
+        this.text.setTranslateY(this.bubble.getBoundsInLocal().getCenterY() - (this.text.getBoundsInLocal().getHeight()/2.5));
+        this.getChildren().add(this.bubble);
         this.getChildren().add(this.text);
     }
 
