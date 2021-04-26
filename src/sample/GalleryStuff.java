@@ -70,8 +70,8 @@ public class GalleryStuff {
         addCharacter.setX( (Screen.getPrimary().getVisualBounds().getWidth()/2) - (addCharacter.getWidth()/2) );
         addCharacter.setY( (Screen.getPrimary().getVisualBounds().getHeight()/2) - (addCharacter.getHeight()/2) );
 
-        if(addCharacter.getHeight() > Screen.getPrimary().getVisualBounds().getHeight()*0.999) {
-            addCharacter.setMaxHeight(Screen.getPrimary().getVisualBounds().getHeight()*0.995);
+        if(addCharacter.getHeight() > Screen.getPrimary().getVisualBounds().getHeight()*0.99) {
+            addCharacter.setMaxHeight(Screen.getPrimary().getVisualBounds().getHeight()*0.95);
         }
     }
 
