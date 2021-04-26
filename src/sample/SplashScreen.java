@@ -55,6 +55,7 @@ public class SplashScreen extends Preloader {
     }
 
     //trying to make preloader go while stage sleeps
+    /*
     @Override
     public void init () throws Exception{
         int COUNT_LIMIT = 40000;
@@ -62,7 +63,7 @@ public class SplashScreen extends Preloader {
             double progress = (100 * i) / COUNT_LIMIT;
             LauncherImpl.notifyPreloader(this, new Preloader.ProgressNotification(progress));
         }
-    }
+    }*/
 
     @Override
     public void start(final Stage stage) throws Exception {
@@ -84,8 +85,10 @@ public class SplashScreen extends Preloader {
                     });
                 }
             }
-        });;
+        });
     }
+
+
 }
 
 
