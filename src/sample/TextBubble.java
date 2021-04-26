@@ -17,8 +17,8 @@ public class TextBubble extends Pane {
         this.bubble.setImage(bubble.getImage());
         this.bubble.setFitWidth(this.text.getBoundsInLocal().getWidth() + 50);
         this.bubble.setFitHeight(this.text.getBoundsInLocal().getHeight()+ 65);
-        this.text.setTranslateX(this.bubble.getBoundsInLocal().getCenterX() - (this.text.getBoundsInLocal().getWidth()/2));
-        this.text.setTranslateY(this.bubble.getBoundsInLocal().getCenterY() - (this.text.getBoundsInLocal().getHeight()/2.5));
+        this.text.setTranslateX(this.bubble.getBoundsInParent().getCenterX() - (this.text.getBoundsInParent().getWidth()/2));
+        this.text.setTranslateY(this.bubble.getBoundsInParent().getCenterY() - (this.text.getBoundsInParent().getHeight()/2));
         this.getChildren().add(this.bubble);
         this.getChildren().add(this.text);
     }
