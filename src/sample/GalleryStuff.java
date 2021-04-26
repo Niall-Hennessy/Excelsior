@@ -115,7 +115,8 @@ public class GalleryStuff {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 2) {
-                                    comicPanel[0].setBackgroundString(Main.class.getResource("../" + imageFile.getPath().substring(4)).toExternalForm());
+                                    comicPanel[0].setBackgroundString(normaliseURL(imageFile.getPath().substring(4)));
+                                    System.out.println(normaliseURL(imageFile.getPath().substring(4)));
 
                                     comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].getBackgroundString() + "'); " +
                                             "-fx-background-position: center center; " +
@@ -134,6 +135,10 @@ public class GalleryStuff {
             ex.printStackTrace();
         }
         return imageView;
+    }
+
+    private String normaliseURL(String url) {
+        return url.replace('\\', '/');
     }
 
     public void setRightCharacter(String path) {
