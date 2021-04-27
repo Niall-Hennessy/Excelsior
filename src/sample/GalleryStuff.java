@@ -84,6 +84,7 @@ public class GalleryStuff {
                     true);
             imageView = new ImageView(image);
             imageView.setFitWidth(150);
+            imageView.setFitHeight(150);
 
             switch(entity) {
                 case rightCharacter:
