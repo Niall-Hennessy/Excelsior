@@ -126,8 +126,8 @@ public class ComicPanel extends Pane {
 
                 if(offsetX < 3)
                     offsetX = 3;
-                else if(offsetX > (this.getWidth()-3)/2 - leftCharacter.getWidth())
-                    offsetX = (this.getWidth()-3)/2 - leftCharacter.getWidth();
+                else if(offsetX > (this.getWidth()-3) - leftCharacter.getWidth())
+                    offsetX = (this.getWidth()-3) - leftCharacter.getWidth();
 
                 if(offsetY < 3)
                     offsetY = 3;
