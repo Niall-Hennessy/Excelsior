@@ -17,12 +17,12 @@ public class TextBubble extends Pane {
         this.setBubble(bubble);
         this.bubble.setFitWidth(this.text.getBoundsInParent().getWidth() + 50);
         this.bubble.setFitHeight(this.text.getBoundsInParent().getHeight() + 65);
-        this.text.setTranslateX(this.bubble.getBoundsInParent().getCenterX() - (this.text.getBoundsInParent().getWidth()/2));
-        this.text.setTranslateY(this.bubble.getBoundsInParent().getCenterY() - (this.text.getBoundsInParent().getHeight()/2));
         if(this.text.getBoundsInParent().getHeight() > 63) {
             this.text.setFont(Font.font(11));
-            this.bubble.setFitHeight(this.text.getBoundsInParent().getHeight() + 120);
+            this.bubble.setFitHeight(this.text.getBoundsInParent().getHeight() + 150);
         }
+        this.text.setTranslateX(this.bubble.getBoundsInParent().getCenterX() - (this.text.getBoundsInParent().getWidth()/2));
+        this.text.setTranslateY(this.bubble.getBoundsInParent().getCenterY() - (this.text.getBoundsInParent().getHeight()/2));
         this.getChildren().add(this.bubble);
         this.getChildren().add(this.text);
     }
