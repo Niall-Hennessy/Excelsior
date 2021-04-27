@@ -67,7 +67,31 @@ public class Main extends Application {
 
 
         //TEST FOR SPLASHSCREEN
+/*
+        SplashScreen splash = new SplashScreen();
+        splash.show();
+        primaryStage.setScene(splash.getSplashScene());
+        splash.getSequentialTransition().setOnFinished(e -> {
+            Timeline timeline = new Timeline();
+            KeyFrame key = new KeyFrame(Duration.millis(800),
+                    new KeyValue(splash.getSplashScene().getRoot().opacityProperty(), 0));
+            timeline.getKeyFrames().add(key);
+            timeline.setOnFinished((event) -> {
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+                    //
+                    Scene scene = new Scene(root);
 
+                    stage.setScene(scene);
+                }
+                catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+            timeline.play();
+        });
+
+*/
         //TEST FOR SPLASHSCREEN
 
 
@@ -915,6 +939,7 @@ public class Main extends Application {
             }
         });
 
+        //Caption modal
         textButton.setOnAction(new EventHandler<ActionEvent>() {
             final Stage addText = new Stage(StageStyle.UNDECORATED);
 
@@ -1004,11 +1029,7 @@ public class Main extends Application {
                 layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 0));
                 layoutGrid.add(delete,2, 4, 1, 1);
                 layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
-
-
-
-                addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
-                addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
+                
 
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
