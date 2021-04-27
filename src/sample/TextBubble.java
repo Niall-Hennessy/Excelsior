@@ -2,8 +2,7 @@ package sample;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 
 public class TextBubble extends Pane {
 
@@ -14,11 +13,16 @@ public class TextBubble extends Pane {
         text = parseText(text, 20);
         this.text.setText(text);
         this.text.setFont(font);
+        this.text.setTextAlignment(TextAlignment.CENTER);
         this.setBubble(bubble);
-        this.bubble.setFitWidth(this.text.getBoundsInLocal().getWidth() + 50);
-        this.bubble.setFitHeight(this.text.getBoundsInLocal().getHeight()+ 65);
+        this.bubble.setFitWidth(this.text.getBoundsInParent().getWidth() + 50);
+        this.bubble.setFitHeight(this.text.getBoundsInParent().getHeight() + 65);
         this.text.setTranslateX(this.bubble.getBoundsInParent().getCenterX() - (this.text.getBoundsInParent().getWidth()/2));
         this.text.setTranslateY(this.bubble.getBoundsInParent().getCenterY() - (this.text.getBoundsInParent().getHeight()/2));
+        if(this.text.getBoundsInParent().getHeight() > 63) {
+            this.text.setFont(Font.font(11));
+            this.bubble.setFitHeight(this.text.getBoundsInParent().getHeight() + 120);
+        }
         this.getChildren().add(this.bubble);
         this.getChildren().add(this.text);
     }

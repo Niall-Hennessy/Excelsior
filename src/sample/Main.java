@@ -677,10 +677,10 @@ public class Main extends Application {
                     @Override
                     public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
                         characterCounter[0].setText(Integer.toString(textfield.getText().length()) + "/50");
-                        if (textfield.getText().length() > 50) {
-                            String s = textfield.getText().substring(0, 50);
-                            textfield.setText(s);
-                        }
+//                        if (textfield.getText().length() > 50) {
+//                            String s = textfield.getText().substring(0, 50);
+//                            textfield.setText(s);
+//                        }
                     }
                 });
 
@@ -1002,8 +1002,8 @@ public class Main extends Application {
 
 
 
-                addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
-                addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
+                //addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
+                //addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
 
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
