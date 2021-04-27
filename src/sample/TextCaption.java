@@ -17,10 +17,12 @@ public class TextCaption extends Pane {
 
         this.text.setText(text);
         this.text.setFont(font);
-        while(this.text.getLayoutBounds().getWidth() > (height/2.4 + height/9.6))
-        {
-            this.text.setText(this.text.getText().substring(0, this.text.getText().length()-1));
-        }
+        //if(this.text.getLayoutBounds().getWidth() > (height/2.4 + height/9.6))
+        //{
+            this.text.wrappingWidthProperty().set(400);
+            //set translate for first line to go higher in comic panel
+            //this.text.setText(this.text.getText().substring(0, this.text.getText().length()-1));
+        //}
         this.text.setTranslateX(((height/2.4 + height/9.6) - this.text.getLayoutBounds().getWidth()) / 2);
         this.getChildren().add(this.text);
 

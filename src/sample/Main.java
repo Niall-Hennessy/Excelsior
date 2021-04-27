@@ -989,18 +989,18 @@ public class Main extends Application {
                 captionTextfield.setPrefWidth(400);
                 captionTextfield.setPrefHeight(25);
 
-                final Text[] captionCharacterCounter = {new Text(captionTextfield.getText().length() + "/50")};
+               // final Text[] captionCharacterCounter = {new Text(captionTextfield.getText().length() + "/50")};
 
-                captionTextfield.textProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-                        captionCharacterCounter[0].setText(Integer.toString(captionTextfield.getText().length()) + "/50");
-                        if (captionTextfield.getText().length() > 50) {
-                            String s = captionTextfield.getText().substring(0, 50);
-                            captionTextfield.setText(s);
-                        }
-                    }
-                });
+               // captionTextfield.textProperty().addListener(new ChangeListener<String>() {
+                 //   @Override
+                   // public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                     //   captionCharacterCounter[0].setText(Integer.toString(captionTextfield.getText().length()) + "/50");
+                       // if (captionTextfield.getText().length() > 50) {
+                         //   String s = captionTextfield.getText().substring(0, 50);
+                           // captionTextfield.setText(s);
+                    //    }
+                    //}
+                //});
 
                 GridPane layoutGrid = new GridPane();
                 layoutGrid.getStyleClass().add("layoutGrid");
@@ -1021,15 +1021,15 @@ public class Main extends Application {
                 layoutGrid.setMargin(label, new Insets (5, 0, 5, 25));
                 layoutGrid.add(combo_box,1, 3, 1, 1);
                 layoutGrid.setMargin(combo_box, new Insets (5, 0, 5, 0));
-                layoutGrid.add(captionCharacterCounter[0], 2, 3, 1, 1);
-                layoutGrid.setMargin(captionCharacterCounter[0], new Insets(5, 0, 5, 0));
+                //layoutGrid.add(captionCharacterCounter[0], 2, 3, 1, 1);
+                //layoutGrid.setMargin(captionCharacterCounter[0], new Insets(5, 0, 5, 0));
                 layoutGrid.add(submit, 0, 4, 1, 1);
                 layoutGrid.setMargin(submit, new Insets (5, 0, 5, 25));
                 layoutGrid.add(cancel,1, 4, 1, 1);
                 layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 0));
                 layoutGrid.add(delete,2, 4, 1, 1);
                 layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
-                
+
 
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
