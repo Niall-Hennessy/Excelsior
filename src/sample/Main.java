@@ -301,6 +301,7 @@ public class Main extends Application {
                         Element left = doc.createElement("left");
                         Element right = doc.createElement("right");
                         Element below = doc.createElement("below");
+                        Element background = doc.createElement("background");
 
                         if(toParse.topText != null)
                             above.appendChild(doc.createTextNode(toParse.topText.getText()));
@@ -308,10 +309,14 @@ public class Main extends Application {
                         if(toParse.bottomText != null)
                             below.appendChild(doc.createTextNode(toParse.bottomText.getText()));
 
+                        if(toParse.getBackgroundString() != null);
+                            background.appendChild(doc.createTextNode(toParse.getBackgroundString()));
+
                         panel.appendChild(above);
                         panel.appendChild(left);
                         panel.appendChild(right);
                         panel.appendChild(below);
+                        panel.appendChild(background);
 
                         if(toParse.getLeftCharacter().getImageName() != null && !toParse.getLeftCharacter().getImageName().matches("blank")){
                             Element figure = doc.createElement("figure");
@@ -1429,8 +1434,6 @@ public class Main extends Application {
                     doc.getDocumentElement().normalize();
 
                     NodeList nList = doc.getElementsByTagName("panel");
-//                    Element figures = (Element) doc.getElementsByTagName("figures").item(0);
-//                    NodeList figureList = figures.getElementsByTagName("figure");
 
                     comicStrip.getChildren().clear();
 
