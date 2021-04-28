@@ -48,9 +48,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.Timer;
 
 import static java.awt.Color.WHITE;
 
@@ -1427,6 +1429,8 @@ public class Main extends Application {
                     doc.getDocumentElement().normalize();
 
                     NodeList nList = doc.getElementsByTagName("panel");
+                    Element figures = (Element) doc.getElementsByTagName("figures").item(0);
+                    NodeList figureList = figures.getElementsByTagName("figure");
 
                     comicStrip.getChildren().clear();
 
@@ -1445,233 +1449,126 @@ public class Main extends Application {
 
                             if(eElement.getElementsByTagName("above").getLength() != 0)
                                 panelRef.setTopText(eElement.getElementsByTagName("above").item(0).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
-                            if(eElement.getElementsByTagName("below").item(0) != null)
+                            if(eElement.getElementsByTagName("below").getLength() != 0)
                                 panelRef.setBottomText(eElement.getElementsByTagName("below").item(0).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
 
+                            int i;
 
-                            for(int i=0; i < eElement.getElementsByTagName("pose").getLength(); i++) {
-                                String pose = eElement.getElementsByTagName("pose").item(i).getTextContent();
+                            NodeList poseList = eElement.getElementsByTagName("pose");
+                            NodeList appearanceList = eElement.getElementsByTagName("appearance");
+                            NodeList facingList = eElement.getElementsByTagName("facing");
+                            NodeList skinList = eElement.getElementsByTagName("skin");
+                            NodeList hairList = eElement.getElementsByTagName("hair");
+                            NodeList lipsList = eElement.getElementsByTagName("lips");
+
+                            System.out.println("0: " + java.time.Instant.now().getEpochSecond());
+
+                            for(i=0; i < poseList.getLength(); i++) {
+                                String pose = poseList.item(i).getTextContent();
 
                                 if(pose.matches(""))
                                     continue;
 
                                 panelRef.setCharacter("src/images/characters/" + pose + ".png",
-                                        eElement.getElementsByTagName("pose").item(i).getParentNode().getParentNode().getNodeName());
+                                        poseList.item(i).getParentNode().getParentNode().getNodeName());
                             }
+                            System.out.println("1: " + java.time.Instant.now().getEpochSecond());
 
-                            for(int i=0; i < eElement.getElementsByTagName("appearance").getLength(); i++) {
-                                String appearance = eElement.getElementsByTagName("appearance").item(i).getTextContent();
+                            for(i=0; i < appearanceList.getLength(); i++) {
+                                String appearance = appearanceList.item(i).getTextContent();
 
                                 if(appearance.matches(""))
                                     continue;
 
-                                if(panelRef.getCharacter(eElement.getElementsByTagName("appearance").item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
+                                if(panelRef.getCharacter(appearanceList.item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
                                     panelRef.setCharacter("src/images/characters/neutral.png",
-                                            eElement.getElementsByTagName("appearance").item(i).getParentNode().getParentNode().getNodeName());
+                                            appearanceList.item(i).getParentNode().getParentNode().getNodeName());
                                 }
 
                                 if(appearance.matches("male")) {
-                                    panelRef.getCharacter(eElement.getElementsByTagName("appearance").item(i).getParentNode().getParentNode().getNodeName()).setFemale(false);
+                                    panelRef.getCharacter(appearanceList.item(i).getParentNode().getParentNode().getNodeName()).setFemale(false);
                                 }
                             }
+                            System.out.println("2: " + java.time.Instant.now().getEpochSecond());
 
-                            for(int i=0; i < eElement.getElementsByTagName("facing").getLength(); i++) {
-                                String facing = eElement.getElementsByTagName("facing").item(i).getTextContent();
+                            for(i=0; i < facingList.getLength(); i++) {
+                                String facing = facingList.item(i).getTextContent();
 
                                 if(facing.matches(""))
                                     continue;
 
-                                if(panelRef.getCharacter(eElement.getElementsByTagName("facing").item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
+                                if(panelRef.getCharacter(facingList.item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
                                     panelRef.setCharacter("src/images/characters/neutral.png",
-                                            eElement.getElementsByTagName("facing").item(i).getParentNode().getParentNode().getNodeName());
+                                            facingList.item(i).getParentNode().getParentNode().getNodeName());
                                 }
 
 
-                                if(180 == panelRef.getCharacter(eElement.getElementsByTagName("facing").item(i).getParentNode().getParentNode().getNodeName()).getCharacterImageView().getRotate()){
-                                    if(eElement.getElementsByTagName("facing").item(i).getTextContent().matches("right"))
-                                        panelRef.getCharacter(eElement.getElementsByTagName("facing").item(i).getParentNode().getParentNode().getNodeName()).flipOrientation();
+                                if(180 == panelRef.getCharacter(facingList.item(i).getParentNode().getParentNode().getNodeName()).getCharacterImageView().getRotate()){
+                                    if(facingList.item(i).getTextContent().matches("right"))
+                                        panelRef.getCharacter(facingList.item(i).getParentNode().getParentNode().getNodeName()).flipOrientation();
                                 }
                                 else {
-                                    if(eElement.getElementsByTagName("facing").item(i).getTextContent().matches("left"))
-                                        panelRef.getCharacter(eElement.getElementsByTagName("facing").item(i).getParentNode().getParentNode().getNodeName()).flipOrientation();
+                                    if(facingList.item(i).getTextContent().matches("left"))
+                                        panelRef.getCharacter(facingList.item(i).getParentNode().getParentNode().getNodeName()).flipOrientation();
                                 }
 
                             }
+                            System.out.println("3: " + java.time.Instant.now().getEpochSecond());
 
-                            for(int i=0; i < eElement.getElementsByTagName("skin").getLength(); i++) {
-                                String skin = eElement.getElementsByTagName("skin").item(i).getTextContent();
+                            for(i=0; i < skinList.getLength(); i++) {
+                                String skin = skinList.item(i).getTextContent();
 
                                 if(skin.matches(""))
                                     continue;
 
-                                if(panelRef.getCharacter(eElement.getElementsByTagName("skin").item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
+                                if(panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
                                     panelRef.setCharacter("src/images/characters/neutral.png",
-                                            eElement.getElementsByTagName("skin").item(i).getParentNode().getParentNode().getNodeName());
+                                            skinList.item(i).getParentNode().getParentNode().getNodeName());
                                 }
 
                                 if(skin.matches("default"))
                                     continue;
 
-                                panelRef.getCharacter(eElement.getElementsByTagName("skin").item(i).getParentNode().getParentNode().getNodeName()).setSkin(Color.web(skin));
+                                panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setSkin(Color.web(skin));
                             }
+                            System.out.println("4: " + java.time.Instant.now().getEpochSecond());
 
-                            for(int i=0; i < eElement.getElementsByTagName("hair").getLength(); i++) {
-                                String hair = eElement.getElementsByTagName("hair").item(i).getTextContent();
+                            for(i=0; i < hairList.getLength(); i++) {
+                                String hair = hairList.item(i).getTextContent();
 
                                 if(hair.matches(""))
                                     continue;
 
-                                if(panelRef.getCharacter(eElement.getElementsByTagName("hair").item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
+                                if(panelRef.getCharacter(hairList.item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
                                     panelRef.setCharacter("src/images/characters/neutral.png",
-                                            eElement.getElementsByTagName("hair").item(i).getParentNode().getParentNode().getNodeName());
+                                            hairList.item(i).getParentNode().getParentNode().getNodeName());
                                 }
 
                                 if(hair.matches("default"))
                                     continue;
 
-                                panelRef.getCharacter(eElement.getElementsByTagName("skin").item(i).getParentNode().getParentNode().getNodeName()).setHair(Color.web(hair));
+                                panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setHair(Color.web(hair));
                             }
+                            System.out.println("5: " + java.time.Instant.now().getEpochSecond());
 
+                            for(i=0; i < lipsList.getLength(); i++) {
+                                String lips = lipsList.item(i).getTextContent();
 
-//                            for(int i = 0; i < figures.getLength(); i++) {
-//                                if(figures.item(i).getParentNode().getNodeName().matches("left")){
-//
-//                                    NodeList figureProperties = figures.item(i).getChildNodes();
-//
-//                                    String name = "";
-//
-//                                    for(int j = 0; j < figureProperties.getLength() ; j++){
-//                                        if(figureProperties.item(j).getNodeName().matches("name")){
-//                                            name = figureProperties.item(j).getTextContent();
-//                                        }
-//                                    }
-//
-//                                    String pose = eElement.getElementsByTagName("pose").item(0).getTextContent();
-//
-//                                    if(pose != null)
-//                                        panelRef.setLeftCharacter("src/images/characters/" + pose + ".png");
-//                                    else
-//                                        panelRef.setLeftCharacter("src/images/characters/neutral.png");
-//
-//                                    if(eElement.getElementsByTagName("appearance").item(0).getTextContent().matches("female"))
-//                                        panelRef.getLeftCharacter().setFemale(true);
-//                                    else
-//                                        panelRef.getLeftCharacter().setFemale(false);
-//
-//                                    if(eElement.getElementsByTagName("facing").item(0).getTextContent().matches("left"))
-//                                        panelRef.getLeftCharacter().flipOrientation();
-//
-//                                    String skinColor = eElement.getElementsByTagName("skin").item(0).getTextContent();
-//                                    String hairColor = eElement.getElementsByTagName("hair").item(0).getTextContent();
-//
-//                                    if(!skinColor.matches("default"))
-//                                        panelRef.getLeftCharacter().setSkin(Color.web(skinColor));
-//                                    if(!hairColor.matches("default"))
-//                                        panelRef.getLeftCharacter().setHair(Color.web(hairColor));
-//
-//                                }
-//                                if(figures.item(i).getParentNode().getNodeName().matches("right")){
-//
-//                                    NodeList figureProperties = figures.item(i).getChildNodes();
-//
-//                                    String name = "";
-//
-//                                    for(int j = 0; j < figureProperties.getLength() ; j++){
-//                                        if(figureProperties.item(j).getNodeName().matches("name")){
-//                                            name = figureProperties.item(j).getTextContent();
-//                                        }
-//                                    }
-//
-//                                    String pose = eElement.getElementsByTagName("pose").item(0).getTextContent();
-//
-//                                    if(pose != null)
-//                                        panelRef.setLeftCharacter("src/images/characters/" + pose + ".png");
-//                                    else
-//                                        panelRef.setLeftCharacter("src/images/characters/neutral.png");
-//
-//                                    if(eElement.getElementsByTagName("appearance").item(0).getTextContent().matches("female"))
-//                                        panelRef.getLeftCharacter().setFemale(true);
-//                                    else
-//                                        panelRef.getLeftCharacter().setFemale(false);
-//
-//                                    if(eElement.getElementsByTagName("facing").item(0).getTextContent().matches("left"))
-//                                        panelRef.getLeftCharacter().flipOrientation();
-//
-//                                    String skinColor = eElement.getElementsByTagName("skin").item(0).getTextContent();
-//                                    String hairColor = eElement.getElementsByTagName("hair").item(0).getTextContent();
-//
-//                                    if(!skinColor.matches("default"))
-//                                        panelRef.getLeftCharacter().setSkin(Color.web(skinColor));
-//                                    if(!hairColor.matches("default"))
-//                                        panelRef.getLeftCharacter().setHair(Color.web(hairColor));
-//
-//                                }
-//                            }
+                                if(lips.matches(""))
+                                    continue;
 
-                            //Every Loop Represents a Panel
-                            //Every Panel has a left tag
-                            //Every Left tag has a figure
-                            //Therefore, figure 0 will always be the left figure
+                                if(panelRef.getCharacter(lipsList.item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
+                                    panelRef.setCharacter("src/images/characters/neutral.png",
+                                            lipsList.item(i).getParentNode().getParentNode().getNodeName());
+                                }
 
-//                            System.out.println(eElement.getElementsByTagName("name").item(0).getTextContent());
+                                if(lips.matches("default"))
+                                    continue;
 
-//                            System.out.println("0: " + eElement.getElementsByTagName("name").item(0).getTextContent());
-//                            System.out.println("1: " + eElement.getElementsByTagName("name").item(1).getTextContent());
-
-//                            if(eElement.getElementsByTagName("left").item(0).getFirstChild() != null){
-//
-//                                System.out.println(eElement.getElementsByTagName("name").item(0).getTextContent());
-//
-//                                NodeList figureProperties = eElement.getElementsByTagName("left").item(0).getFirstChild().getChildNodes();
-//
-//
-//                                panelRef.setLeftCharacter("src/images/characters/" + eElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
-//
-//                                if(eElement.getElementsByTagName("appearance").item(characterCount).getTextContent().matches("female"))
-//                                    panelRef.getLeftCharacter().setFemale(true);
-//                                else
-//                                    panelRef.getLeftCharacter().setFemale(false);
-//
-//                                if(eElement.getElementsByTagName("facing").item(characterCount).getTextContent().matches("left"))
-//                                    panelRef.getLeftCharacter().flipOrientation();
-//
-//                                String skinColor = eElement.getElementsByTagName("skin").item(characterCount).getTextContent();
-//                                String hairColor = eElement.getElementsByTagName("hair").item(characterCount).getTextContent();
-//
-//                                if(!skinColor.matches("default"))
-//                                    panelRef.getLeftCharacter().setSkin(Color.web(skinColor));
-//                                if(!hairColor.matches("default"))
-//                                    panelRef.getLeftCharacter().setHair(Color.web(hairColor));
-//
-//                                characterCount++;
-//                            }
-//
-//                            if(eElement.getElementsByTagName("right").item(0).getFirstChild() != null){
-//                                panelRef.setRightCharacter("src/images/characters/" + eElement.getElementsByTagName("pose").item(characterCount).getTextContent() + ".png");
-//
-//                                if(eElement.getElementsByTagName("appearance").item(characterCount).getTextContent().matches("female"))
-//                                    panelRef.getRightCharacter().setFemale(true);
-//                                else
-//                                    panelRef.getRightCharacter().setFemale(false);
-//
-//
-//                                if(eElement.getElementsByTagName("facing").item(characterCount).getTextContent().matches("right")) {
-//                                    panelRef.getRightCharacter().flipOrientation();
-//                                }
-//
-//                                String skinColor = eElement.getElementsByTagName("skin").item(characterCount).getTextContent();
-//                                String hairColor = eElement.getElementsByTagName("hair").item(characterCount).getTextContent();
-//
-//                                if(!skinColor.matches("default"))
-//                                    panelRef.getRightCharacter().setSkin(Color.web(skinColor));
-//                                if(!hairColor.matches("default"))
-//                                    panelRef.getRightCharacter().setHair(Color.web(hairColor));
-//
-//
-//                                panelRef.getRightCharacter().setTranslateX(Double.parseDouble(eElement.getElementsByTagName("xPosition").item(characterCount).getTextContent()));
-//                                panelRef.getRightCharacter().setTranslateY(Double.parseDouble(eElement.getElementsByTagName("yPosition").item(characterCount).getTextContent()));
-//                            }
-
+                                panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setLips(Color.web(lips));
+                            }
+                            System.out.println("6: " + java.time.Instant.now().getEpochSecond());
+                            System.out.println("");
                         }
                     }
 

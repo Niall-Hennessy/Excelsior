@@ -24,6 +24,7 @@ public class ComicCharacter extends Pane {
 
     Color skin = Color.rgb(255,232,216,1);
     Color hair =  Color.rgb(240,255,0,1);
+    Color lips = Color.rgb(255, 200, 200, 1);
 
     public ComicCharacter() throws FileNotFoundException {
         this.getChildren().add(characterImageView);
@@ -85,8 +86,8 @@ public class ComicCharacter extends Pane {
                         else
                             pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
                     }
-                    else if(isOnLine(Color.web("#FF0000"), Color.web("#FFA1A1"), color) && !isFemale){
-                        pixelWriter.setColor(x, y, skin);
+                    else if(color.equals(Color.web("#FF0000")) && !isFemale){
+                        pixelWriter.setColor(x, y, lips);
                     }
                     else if(x < 400 && x > 200 && y > 200 && !isFemale){
                         if(color.toString().substring(2,4).matches("ff")) {
@@ -223,6 +224,17 @@ public class ComicCharacter extends Pane {
     public void setHair(Color hair) {
 
         this.hair = hair;
+
+        updateImage();
+    }
+
+    public Color getLips() {
+        return lips;
+    }
+
+    public void setLips(Color lips) {
+
+        this.lips = lips;
 
         updateImage();
     }
