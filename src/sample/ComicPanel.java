@@ -3,19 +3,12 @@ package sample;
 import javafx.scene.Cursor;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 
-import java.awt.*;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ComicPanel extends Pane {
@@ -217,6 +210,21 @@ public class ComicPanel extends Pane {
 
     public ComicCharacter getSelectedCharacter() {
         return selectedCharacter;
+    }
+
+    public void setCharacter(String imagePath, String side) throws FileNotFoundException {
+        if(side.matches("left"))
+            setLeftCharacter(imagePath);
+        else if(side.matches("right"))
+            setRightCharacter(imagePath);
+    }
+
+    public ComicCharacter getCharacter(String side){
+        if(side.matches("left"))
+            return leftCharacter;
+        else if (side.matches("right"))
+            return rightCharacter;
+        return null;
     }
 
     public String getLeftRight() {
