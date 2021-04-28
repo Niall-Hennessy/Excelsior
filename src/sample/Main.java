@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.*;
@@ -26,6 +25,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.stage.*;
 import javafx.scene.text.*;
@@ -33,8 +33,17 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.w3c.dom.*;
 
 import javax.imageio.ImageIO;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -266,79 +275,228 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-
-                if(saveXML.isShowing()) {
-                    saveXML.initModality(Modality.APPLICATION_MODAL);
-                    saveXML.initOwner(primaryStage);
-                }
-
-                GridPane savePane = new GridPane();
-
-                Button save = new Button("Save");
-
-                TextField textField = new TextField();
-
-                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
-                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
-
-                savePane.add(textField, 0, 0, 1, 1);
-                savePane.add(save, 0, 1, 1, 1);
-
-                Scene scene = new Scene(savePane);
-                saveXML.setScene(scene);
-                saveXML.show();
+                try {
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Document doc = dBuilder.newDocument();
 
 
-                save.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
+                    Element comic = doc.createElement("comic");
+                    doc.appendChild(comic);
 
-                        if(textField.getText().trim().matches(""))
-                            return;
+                    Element panels = doc.createElement("panels");
+                    comic.appendChild(panels);
 
+                    for(int i=1; i < comicStrip.getChildren().size() - 1; i++) {
 
-                        try {
-                            File myObj = new File("src/files/" + textField.getText() + ".xml");
-                            if (myObj.createNewFile()) {
-                                System.out.println("File created: " + myObj.getName());
-                            } else {
-                                System.out.println("File already exists.");
-                            }
-                        } catch (IOException e) {
-                            System.out.println("An error occurred.");
-                            e.printStackTrace();
+                        ComicPanel toParse = ((ComicPanel) comicStrip.getChildren().get(i));
+
+                        Element panel = doc.createElement("panel");
+                        panels.appendChild(panel);
+
+                        Element above = doc.createElement("above");
+                        Element left = doc.createElement("left");
+                        Element right = doc.createElement("right");
+                        Element below = doc.createElement("below");
+
+                        if(toParse.topText != null)
+                            above.appendChild(doc.createTextNode(toParse.topText.getText()));
+
+                        if(toParse.bottomText != null)
+                            below.appendChild(doc.createTextNode(toParse.bottomText.getText()));
+
+                        panel.appendChild(above);
+                        panel.appendChild(left);
+                        panel.appendChild(right);
+                        panel.appendChild(below);
+
+                        if(toParse.getLeftCharacter().getImageName() != null && !toParse.getLeftCharacter().getImageName().matches("blank")){
+                            Element figure = doc.createElement("figure");
+                            left.appendChild(figure);
+
+                            Element name = doc.createElement("name");
+                            Element appearance = doc.createElement("appearance");
+                            Element skin = doc.createElement("skin");
+                            Element hair = doc.createElement("hair");
+                            Element lips = doc.createElement("lips");
+                            Element pose = doc.createElement("pose");
+                            Element facing = doc.createElement("facing");
+                            Element xPosition = doc.createElement("xPosition");
+                            Element yPosition = doc.createElement("yPosition");
+
+                            figure.appendChild(name);
+
+                            if(toParse.getLeftCharacter().isFemale)
+                                appearance.appendChild(doc.createTextNode("female"));
+                            else
+                                appearance.appendChild(doc.createTextNode("male"));
+
+                            figure.appendChild(appearance);
+
+                            skin.appendChild(doc.createTextNode(toParse.getLeftCharacter().skin.toString()));
+                            figure.appendChild(skin);
+
+                            hair.appendChild(doc.createTextNode(toParse.getLeftCharacter().hair.toString()));
+                            figure.appendChild(hair);
+
+                            figure.appendChild(lips);
+
+                            pose.appendChild(doc.createTextNode(toParse.getLeftCharacter().getImageName()));
+                            figure.appendChild(pose);
+
+                            if(toParse.getLeftCharacter().characterImageView.getRotate() == 180)
+                                facing.appendChild(doc.createTextNode("left"));
+                            else
+                                facing.appendChild(doc.createTextNode("right"));
+
+                            figure.appendChild(facing);
+
+                            xPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getLeftCharacter().getTranslateX())));
+                            yPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getLeftCharacter().getTranslateY())));
+
+                            figure.appendChild(xPosition);
+                            figure.appendChild(yPosition);
                         }
+
+                        if(toParse.getRightCharacter().getImageName() != null && !toParse.getRightCharacter().getImageName().matches("blank")){
+                            Element figure = doc.createElement("figure");
+                            right.appendChild(figure);
+
+                            Element name = doc.createElement("name");
+                            Element appearance = doc.createElement("appearance");
+                            Element skin = doc.createElement("skin");
+                            Element hair = doc.createElement("hair");
+                            Element lips = doc.createElement("lips");
+                            Element pose = doc.createElement("pose");
+                            Element facing = doc.createElement("facing");
+                            Element xPosition = doc.createElement("xPosition");
+                            Element yPosition = doc.createElement("yPosition");
+
+                            figure.appendChild(name);
+
+                            if(toParse.getRightCharacter().isFemale)
+                                appearance.appendChild(doc.createTextNode("female"));
+                            else
+                                appearance.appendChild(doc.createTextNode("male"));
+
+                            figure.appendChild(appearance);
+
+                            skin.appendChild(doc.createTextNode(toParse.getRightCharacter().skin.toString()));
+                            figure.appendChild(skin);
+
+                            hair.appendChild(doc.createTextNode(toParse.getRightCharacter().hair.toString()));
+                            figure.appendChild(hair);
+
+                            figure.appendChild(lips);
+
+                            pose.appendChild(doc.createTextNode(toParse.getRightCharacter().getImageName()));
+                            figure.appendChild(pose);
+
+                            if(toParse.getRightCharacter().characterImageView.getRotate() == 180)
+                                facing.appendChild(doc.createTextNode("left"));
+                            else
+                                facing.appendChild(doc.createTextNode("right"));
+
+                            figure.appendChild(facing);
+
+                            xPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getRightCharacter().getTranslateX())));
+                            yPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getRightCharacter().getTranslateY())));
+
+                            figure.appendChild(xPosition);
+                            figure.appendChild(yPosition);
+                        }
+
+                        if(toParse.leftTextBubble != null){
+                            Element balloon = doc.createElement("balloon");
+                            left.appendChild(balloon);
+
+                            Attr attr = doc.createAttribute("status");
+                            attr.setValue("speech");
+                            balloon.setAttributeNode(attr);
+
+                            Element content = doc.createElement("content");
+                            content.appendChild(doc.createTextNode(toParse.leftTextBubble.getText().getText()));
+
+                            balloon.appendChild(content);
+                        }
+
+                        if(toParse.rightTextBubble != null){
+                            Element balloon = doc.createElement("balloon");
+                            right.appendChild(balloon);
+
+                            Attr attr = doc.createAttribute("status");
+                            attr.setValue("speech");
+                            balloon.setAttributeNode(attr);
+
+                            Element content = doc.createElement("content");
+                            content.appendChild(doc.createTextNode(toParse.rightTextBubble.getText().getText()));
+
+                            balloon.appendChild(content);
+                        }
+
                     }
-                });
-            }
-        });
 
-        load_xml.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage saveXML = new Stage();
+                    // write the content into xml file
+                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    Transformer transformer = transformerFactory.newTransformer();
+                    DOMSource source = new DOMSource(doc);
+                    StreamResult result = new StreamResult(new File("C:\\Users\\Ada\\Desktop\\cars.xml"));
+                    transformer.transform(source, result);
 
-            @Override
-            public void handle(ActionEvent event) {
-
-                if(saveXML.isShowing()) {
-                    saveXML.initOwner(primaryStage);
+                    // Output to console for testing
+                    StreamResult consoleResult = new StreamResult(System.out);
+                    transformer.transform(source, consoleResult);
+                } catch (TransformerException | ParserConfigurationException e) {
+                    e.printStackTrace();
                 }
 
-                FileChooser fileChooser = new FileChooser();
 
-                File selectedFile = fileChooser.showOpenDialog(saveXML);
-
+                //KEEP THIS CODE FOR NOW IT ALLOWS THE USER TO NAME A FILE
 
 
-                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
-                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
-
-                VBox vBox = new VBox();
-
-                Scene scene = new Scene(vBox);
-                saveXML.setScene(scene);
-                saveXML.show();
+//                GridPane savePane = new GridPane();
+//
+//                Button save = new Button("Save");
+//
+//                TextField textField = new TextField();
+//
+//                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
+//                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
+//
+//                savePane.add(textField, 0, 0, 1, 1);
+//                savePane.add(save, 0, 1, 1, 1);
+//
+//                Scene scene = new Scene(savePane);
+//                saveXML.setScene(scene);
+//                saveXML.show();
+//
+//
+//                save.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent event) {
+//
+//                        if(textField.getText().trim().matches(""))
+//                            return;
+//
+//
+//                        try {
+//                            File myObj = new File("src/files/" + textField.getText() + ".xml");
+//                            if (myObj.createNewFile()) {
+//                                System.out.println("File created: " + myObj.getName());
+//                            } else {
+//                                System.out.println("File already exists.");
+//                            }
+//                        } catch (IOException e) {
+//                            System.out.println("An error occurred.");
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
             }
         });
+
+
 
         add_character.setOnAction(new EventHandler<ActionEvent>() {
             final Stage saveXML = new Stage();
@@ -1254,6 +1412,174 @@ public class Main extends Application {
 
         newPanelRight.setVisible(false);
         newPanelLeft.setVisible(false);
+
+        load_xml.setOnAction(new EventHandler<ActionEvent>() {
+            final Stage saveXML = new Stage();
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                try {
+                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\new comic.xml");
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Document doc = dBuilder.parse(inputFile);
+                    doc.getDocumentElement().normalize();
+
+                    NodeList nList = doc.getElementsByTagName("panel");
+
+                    comicStrip.getChildren().clear();
+
+                    comicStrip.getChildren().add(newPanelLeft);
+                    comicStrip.getChildren().add(newPanelRight);
+
+                    for (int temp = 0; temp < nList.getLength(); temp++) {
+                        org.w3c.dom.Node nNode = nList.item(temp);
+
+                        if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element eElement = (Element) nNode;
+
+                            newPanelRight.fire();
+
+                            ComicPanel panelRef = ((ComicPanel) comicStrip.getChildren().get(temp+1));
+
+                            if(eElement.getElementsByTagName("above").getLength() != 0)
+                                panelRef.setTopText(eElement.getElementsByTagName("above").item(0).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
+                            if(eElement.getElementsByTagName("below").item(0) != null)
+                                panelRef.setBottomText(eElement.getElementsByTagName("below").item(0).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
+
+                            NodeList figures = eElement.getElementsByTagName("figure");
+
+                            for(int j = 0; j < figures.item(0).getChildNodes().getLength() ; j++){
+                                System.out.println(figures.item(0).getChildNodes().item(j).getNodeName());
+                            }
+
+                            for(int i = 0; i < figures.getLength(); i++) {
+                                if(figures.item(i).getParentNode().getTextContent().matches("left")){
+
+
+
+//                                    System.out.println(eElement.getElementsByTagName("name").item(0).getTextContent());
+//
+//                                    NodeList figureProperties = eElement.getElementsByTagName("left").item(0).getFirstChild().getChildNodes();
+//
+//
+//                                    panelRef.setLeftCharacter("src/images/characters/" + eElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
+//
+//                                    if(eElement.getElementsByTagName("appearance").item(characterCount).getTextContent().matches("female"))
+//                                        panelRef.getLeftCharacter().setFemale(true);
+//                                    else
+//                                        panelRef.getLeftCharacter().setFemale(false);
+//
+//                                    if(eElement.getElementsByTagName("facing").item(characterCount).getTextContent().matches("left"))
+//                                        panelRef.getLeftCharacter().flipOrientation();
+//
+//                                    String skinColor = eElement.getElementsByTagName("skin").item(characterCount).getTextContent();
+//                                    String hairColor = eElement.getElementsByTagName("hair").item(characterCount).getTextContent();
+//
+//                                    if(!skinColor.matches("default"))
+//                                        panelRef.getLeftCharacter().setSkin(Color.web(skinColor));
+//                                    if(!hairColor.matches("default"))
+//                                        panelRef.getLeftCharacter().setHair(Color.web(hairColor));
+//
+//                                    characterCount++;
+                                }
+                            }
+
+                            //Every Loop Represents a Panel
+                            //Every Panel has a left tag
+                            //Every Left tag has a figure
+                            //Therefore, figure 0 will always be the left figure
+
+//                            System.out.println(eElement.getElementsByTagName("name").item(0).getTextContent());
+
+//                            System.out.println("0: " + eElement.getElementsByTagName("name").item(0).getTextContent());
+//                            System.out.println("1: " + eElement.getElementsByTagName("name").item(1).getTextContent());
+
+//                            if(eElement.getElementsByTagName("left").item(0).getFirstChild() != null){
+//
+//                                System.out.println(eElement.getElementsByTagName("name").item(0).getTextContent());
+//
+//                                NodeList figureProperties = eElement.getElementsByTagName("left").item(0).getFirstChild().getChildNodes();
+//
+//
+//                                panelRef.setLeftCharacter("src/images/characters/" + eElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
+//
+//                                if(eElement.getElementsByTagName("appearance").item(characterCount).getTextContent().matches("female"))
+//                                    panelRef.getLeftCharacter().setFemale(true);
+//                                else
+//                                    panelRef.getLeftCharacter().setFemale(false);
+//
+//                                if(eElement.getElementsByTagName("facing").item(characterCount).getTextContent().matches("left"))
+//                                    panelRef.getLeftCharacter().flipOrientation();
+//
+//                                String skinColor = eElement.getElementsByTagName("skin").item(characterCount).getTextContent();
+//                                String hairColor = eElement.getElementsByTagName("hair").item(characterCount).getTextContent();
+//
+//                                if(!skinColor.matches("default"))
+//                                    panelRef.getLeftCharacter().setSkin(Color.web(skinColor));
+//                                if(!hairColor.matches("default"))
+//                                    panelRef.getLeftCharacter().setHair(Color.web(hairColor));
+//
+//                                characterCount++;
+//                            }
+//
+//                            if(eElement.getElementsByTagName("right").item(0).getFirstChild() != null){
+//                                panelRef.setRightCharacter("src/images/characters/" + eElement.getElementsByTagName("pose").item(characterCount).getTextContent() + ".png");
+//
+//                                if(eElement.getElementsByTagName("appearance").item(characterCount).getTextContent().matches("female"))
+//                                    panelRef.getRightCharacter().setFemale(true);
+//                                else
+//                                    panelRef.getRightCharacter().setFemale(false);
+//
+//
+//                                if(eElement.getElementsByTagName("facing").item(characterCount).getTextContent().matches("right")) {
+//                                    panelRef.getRightCharacter().flipOrientation();
+//                                }
+//
+//                                String skinColor = eElement.getElementsByTagName("skin").item(characterCount).getTextContent();
+//                                String hairColor = eElement.getElementsByTagName("hair").item(characterCount).getTextContent();
+//
+//                                if(!skinColor.matches("default"))
+//                                    panelRef.getRightCharacter().setSkin(Color.web(skinColor));
+//                                if(!hairColor.matches("default"))
+//                                    panelRef.getRightCharacter().setHair(Color.web(hairColor));
+//
+//
+//                                panelRef.getRightCharacter().setTranslateX(Double.parseDouble(eElement.getElementsByTagName("xPosition").item(characterCount).getTextContent()));
+//                                panelRef.getRightCharacter().setTranslateY(Double.parseDouble(eElement.getElementsByTagName("yPosition").item(characterCount).getTextContent()));
+//                            }
+
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                //KEEP CODE ALLOWS USER TO NAVIAGE FILE EXPLORER AND FIND THEIR FILE
+
+//                if(saveXML.isShowing()) {
+//                    saveXML.initOwner(primaryStage);
+//                }
+//
+//                FileChooser fileChooser = new FileChooser();
+//
+//                File selectedFile = fileChooser.showOpenDialog(saveXML);
+//
+//
+//
+//                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
+//                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
+//
+//                VBox vBox = new VBox();
+//
+//                Scene scene = new Scene(vBox);
+//                saveXML.setScene(scene);
+//                saveXML.show();
+            }
+        });
 
         comicStrip.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override

@@ -18,7 +18,7 @@ public class ComicCharacter extends Pane {
 
     Image characterImage;
 
-    static String imageName;
+    String imageName;
 
     boolean isFemale = true;
 
@@ -225,5 +225,9 @@ public class ComicCharacter extends Pane {
         this.hair = hair;
 
         updateImage();
+    }
+
+    public String getImageName() {
+        return imageName;
     }
 }

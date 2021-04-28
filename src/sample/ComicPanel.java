@@ -38,6 +38,7 @@ public class ComicPanel extends Pane {
     int index;
 
     public ComicPanel() throws FileNotFoundException {
+
         this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
 
         int width = (int) Screen.getPrimary().getBounds().getWidth();
@@ -461,9 +462,12 @@ public class ComicPanel extends Pane {
     }
 
     public void setBottomText(String text, Font font){
+
+        int height = (int) Screen.getPrimary().getBounds().getHeight();
+
         this.getChildren().remove(bottomText);
         bottomText = new TextCaption(text, font);
-        bottomText.setTranslateY(this.getHeight()+22);
+        bottomText.setTranslateY(height/2.4 + 22);
         this.getChildren().add(bottomText);
     }
 
@@ -492,4 +496,5 @@ public class ComicPanel extends Pane {
     public void setBackgroundString(String path) {
         this.background = path;
     }
+
 }
