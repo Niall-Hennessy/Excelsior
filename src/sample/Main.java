@@ -1422,15 +1422,15 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
 
                 try {
-                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\new comic.xml");
+                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\cars.xml");
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
                     doc.getDocumentElement().normalize();
 
                     NodeList nList = doc.getElementsByTagName("panel");
-                    Element figures = (Element) doc.getElementsByTagName("figures").item(0);
-                    NodeList figureList = figures.getElementsByTagName("figure");
+//                    Element figures = (Element) doc.getElementsByTagName("figures").item(0);
+//                    NodeList figureList = figures.getElementsByTagName("figure");
 
                     comicStrip.getChildren().clear();
 
@@ -1460,8 +1460,9 @@ public class Main extends Application {
                             NodeList skinList = eElement.getElementsByTagName("skin");
                             NodeList hairList = eElement.getElementsByTagName("hair");
                             NodeList lipsList = eElement.getElementsByTagName("lips");
+                            NodeList xPositionList = eElement.getElementsByTagName("xPosition");
+                            NodeList yPositionList = eElement.getElementsByTagName("yPosition");
 
-                            System.out.println("0: " + java.time.Instant.now().getEpochSecond());
 
                             for(i=0; i < poseList.getLength(); i++) {
                                 String pose = poseList.item(i).getTextContent();
@@ -1472,7 +1473,6 @@ public class Main extends Application {
                                 panelRef.setCharacter("src/images/characters/" + pose + ".png",
                                         poseList.item(i).getParentNode().getParentNode().getNodeName());
                             }
-                            System.out.println("1: " + java.time.Instant.now().getEpochSecond());
 
                             for(i=0; i < appearanceList.getLength(); i++) {
                                 String appearance = appearanceList.item(i).getTextContent();
@@ -1489,7 +1489,6 @@ public class Main extends Application {
                                     panelRef.getCharacter(appearanceList.item(i).getParentNode().getParentNode().getNodeName()).setFemale(false);
                                 }
                             }
-                            System.out.println("2: " + java.time.Instant.now().getEpochSecond());
 
                             for(i=0; i < facingList.getLength(); i++) {
                                 String facing = facingList.item(i).getTextContent();
@@ -1513,7 +1512,6 @@ public class Main extends Application {
                                 }
 
                             }
-                            System.out.println("3: " + java.time.Instant.now().getEpochSecond());
 
                             for(i=0; i < skinList.getLength(); i++) {
                                 String skin = skinList.item(i).getTextContent();
@@ -1531,7 +1529,6 @@ public class Main extends Application {
 
                                 panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setSkin(Color.web(skin));
                             }
-                            System.out.println("4: " + java.time.Instant.now().getEpochSecond());
 
                             for(i=0; i < hairList.getLength(); i++) {
                                 String hair = hairList.item(i).getTextContent();
@@ -1549,7 +1546,6 @@ public class Main extends Application {
 
                                 panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setHair(Color.web(hair));
                             }
-                            System.out.println("5: " + java.time.Instant.now().getEpochSecond());
 
                             for(i=0; i < lipsList.getLength(); i++) {
                                 String lips = lipsList.item(i).getTextContent();
@@ -1567,8 +1563,40 @@ public class Main extends Application {
 
                                 panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setLips(Color.web(lips));
                             }
-                            System.out.println("6: " + java.time.Instant.now().getEpochSecond());
-                            System.out.println("");
+
+                            for(i=0; i < xPositionList.getLength(); i++) {
+                                String xPosition = xPositionList.item(i).getTextContent();
+
+                                if(xPosition.matches(""))
+                                    continue;
+
+                                if(panelRef.getCharacter(xPositionList.item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
+                                    panelRef.setCharacter("src/images/characters/neutral.png",
+                                            xPositionList.item(i).getParentNode().getParentNode().getNodeName());
+                                }
+
+                                if(xPosition.matches("default"))
+                                    continue;
+
+                                panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setTranslateX(Double.parseDouble(xPosition));
+                            }
+
+                            for(i=0; i < yPositionList.getLength(); i++) {
+                                String yPosition = yPositionList.item(i).getTextContent();
+
+                                if(yPosition.matches(""))
+                                    continue;
+
+                                if(panelRef.getCharacter(xPositionList.item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
+                                    panelRef.setCharacter("src/images/characters/neutral.png",
+                                            yPositionList.item(i).getParentNode().getParentNode().getNodeName());
+                                }
+
+                                if(yPosition.matches("default"))
+                                    continue;
+
+                                panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setTranslateY(Double.parseDouble(yPosition));
+                            }
                         }
                     }
 
