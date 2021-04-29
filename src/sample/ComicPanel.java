@@ -27,7 +27,7 @@ public class ComicPanel extends Pane {
     TextCaption topText;
     TextCaption bottomText;
 
-    String background;
+    String background = "images/backgrounds/BlankBackground.png";
 
     Boolean isLocked;
 
@@ -73,7 +73,7 @@ public class ComicPanel extends Pane {
                 "-fx-background-repeat: stretch; " +
                 "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
                 "-fx-border-color: BLACK; " +
-                "-fx-border-width: 3");
+                "-fx-border-width: 5");
     }
 
     public ComicCharacter getLeftCharacter() {

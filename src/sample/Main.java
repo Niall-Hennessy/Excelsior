@@ -448,7 +448,7 @@ public class Main extends Application {
                     TransformerFactory transformerFactory = TransformerFactory.newInstance();
                     Transformer transformer = transformerFactory.newTransformer();
                     DOMSource source = new DOMSource(doc);
-                    StreamResult result = new StreamResult(new File("C:\\Users\\Ada\\Desktop\\cars.xml"));
+                    StreamResult result = new StreamResult(new File("C:\\Users\\neilh\\Desktop\\cars.xml"));
                     transformer.transform(source, result);
 
                     // Output to console for testing
@@ -1427,7 +1427,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
 
                 try {
-                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\cars.xml");
+                    File inputFile = new File("C:\\Users\\neilh\\Desktop\\cars.xml");
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
@@ -1455,6 +1455,17 @@ public class Main extends Application {
                             if(eElement.getElementsByTagName("below").getLength() != 0)
                                 panelRef.setBottomText(eElement.getElementsByTagName("below").item(0).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
 
+                            if(eElement.getElementsByTagName("background").item(temp).getTextContent().matches("images/backgrounds/BlankBackground.png")) {
+                                panelRef.setBackgroundString(eElement.getElementsByTagName("background").item(0).getTextContent());
+                                panelRef.setStyle("-fx-background-image: url('" + eElement.getElementsByTagName("background").item(0).getTextContent().replace('\\', '/') + "'); " +
+                                        "-fx-background-position: center center; " +
+                                        "-fx-background-repeat: stretch; "  +
+                                        "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
+                                        "-fx-border-color: black; " +
+                                        "-fx-border-width: 5");
+                            }
+
+
                             int i;
 
                             NodeList poseList = eElement.getElementsByTagName("pose");
@@ -1465,6 +1476,7 @@ public class Main extends Application {
                             NodeList lipsList = eElement.getElementsByTagName("lips");
                             NodeList xPositionList = eElement.getElementsByTagName("xPosition");
                             NodeList yPositionList = eElement.getElementsByTagName("yPosition");
+                            NodeList balloonList = eElement.getElementsByTagName("balloon");
 
 
                             for(i=0; i < poseList.getLength(); i++) {
@@ -1590,7 +1602,7 @@ public class Main extends Application {
                                 if(yPosition.matches(""))
                                     continue;
 
-                                if(panelRef.getCharacter(xPositionList.item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
+                                if(panelRef.getCharacter(yPositionList.item(i).getParentNode().getParentNode().getNodeName()).getImageName() == null) {
                                     panelRef.setCharacter("src/images/characters/neutral.png",
                                             yPositionList.item(i).getParentNode().getParentNode().getNodeName());
                                 }
@@ -1599,6 +1611,24 @@ public class Main extends Application {
                                     continue;
 
                                 panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setTranslateY(Double.parseDouble(yPosition));
+                            }
+
+                            for(i=0; i < balloonList.getLength(); i++) {
+                                String balloon = balloonList.item(i).getTextContent();
+
+                                if(balloon.matches(""))
+                                    continue;
+
+                                if(panelRef.getCharacter(balloonList.item(i).getParentNode().getParentNode().getNodeName()) == null) {
+                                    panelRef.setCharacter("src/images/characters/neutral.png",
+                                            balloonList.item(i).getParentNode().getParentNode().getNodeName());
+                                }
+
+                                if(balloonList.item(i).getParentNode().getParentNode().getNodeName().matches("left")) {
+                                    System.out.println("Left:" + balloonList.item(i).getNodeName());
+                                    Image image = new Image("src/images/bubbles/9-hand-drawn-speech-bubble-2.png");
+                                    panelRef.setLeftBubble(image, balloonList.item(i).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
+                                }
                             }
                         }
                     }
