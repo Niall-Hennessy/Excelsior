@@ -8,9 +8,11 @@ public class TextBubble extends Pane {
 
     ImageView bubble = new ImageView();
     Text text = new Text();
+    String status = "";
 
-    public TextBubble(ImageView bubble, String text, Font font) {
+    public TextBubble(ImageView bubble, String text, Font font, String status) {
         text = parseText(text, 20);
+        this.setStatus(status);
         this.text.setText(text);
         this.text.setFont(font);
         this.text.setTextAlignment(TextAlignment.CENTER);
@@ -70,5 +72,14 @@ public class TextBubble extends Pane {
         }
 
         return text;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

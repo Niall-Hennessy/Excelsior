@@ -284,6 +284,8 @@ public class Main extends Application {
                     Document doc = dBuilder.newDocument();
 
 
+
+
                     Element comic = doc.createElement("comic");
                     doc.appendChild(comic);
 
@@ -298,16 +300,24 @@ public class Main extends Application {
                         panels.appendChild(panel);
 
                         Element above = doc.createElement("above");
+                        Attr fontAbove = doc.createAttribute("font");
                         Element left = doc.createElement("left");
                         Element right = doc.createElement("right");
                         Element below = doc.createElement("below");
+                        Attr fontBelow = doc.createAttribute("font");
                         Element background = doc.createElement("background");
 
-                        if(toParse.topText != null)
+                        if(toParse.topText != null) {
                             above.appendChild(doc.createTextNode(toParse.topText.getText()));
+                            fontAbove.setValue(toParse.topText.getFont());
+                            above.setAttributeNode(fontAbove);
+                        }
 
-                        if(toParse.bottomText != null)
+                        if(toParse.bottomText != null) {
                             below.appendChild(doc.createTextNode(toParse.bottomText.getText()));
+                            fontBelow.setValue(toParse.bottomText.getFont());
+                            below.setAttributeNode(fontBelow);
+                        }
 
                         if(toParse.getBackgroundString() != null);
                             background.appendChild(doc.createTextNode(toParse.getBackgroundString()));
@@ -419,7 +429,7 @@ public class Main extends Application {
                             left.appendChild(balloon);
 
                             Attr attr = doc.createAttribute("status");
-                            attr.setValue("speech");
+                            attr.setValue(toParse.leftTextBubble.getStatus());
                             balloon.setAttributeNode(attr);
 
                             Element content = doc.createElement("content");
@@ -433,7 +443,7 @@ public class Main extends Application {
                             right.appendChild(balloon);
 
                             Attr attr = doc.createAttribute("status");
-                            attr.setValue("speech");
+                            attr.setValue(toParse.rightTextBubble.getStatus());
                             balloon.setAttributeNode(attr);
 
                             Element content = doc.createElement("content");
@@ -862,6 +872,8 @@ public class Main extends Application {
 
                 }
 
+
+
                 GridPane bubbleGrid = new GridPane();
                 bubbleGrid.setPadding(new Insets(10, 10, 10, 10));
                 bubbleGrid.setVgap(5);
@@ -950,6 +962,10 @@ public class Main extends Application {
                 submit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+
+                        //Temp needs to be done properly
+                        String status = "";
+
                         if(textfield.getText().replaceAll("\\s", "").matches(""))
                             return;
 
@@ -966,9 +982,10 @@ public class Main extends Application {
                             textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
 
                         if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()))
-                            comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
+                            //NEEDS to to implemenated Status!!!!!!!!!!!!!!!!
+                            comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), status);
                         else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()))
-                            comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
+                            comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), status);
 
 
                         bubbleDisplay.getChildren().remove(bubbleImageView);
@@ -994,6 +1011,7 @@ public class Main extends Application {
             private ImageView createImageView(final File imageFile) {
 
                 ImageView imageView = null;
+
                 try {
                     final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
                             true);
@@ -1613,23 +1631,23 @@ public class Main extends Application {
                                 panelRef.getCharacter(skinList.item(i).getParentNode().getParentNode().getNodeName()).setTranslateY(Double.parseDouble(yPosition));
                             }
 
-                            for(i=0; i < balloonList.getLength(); i++) {
-                                String balloon = balloonList.item(i).getTextContent();
-
-                                if(balloon.matches(""))
-                                    continue;
-
-                                if(panelRef.getCharacter(balloonList.item(i).getParentNode().getParentNode().getNodeName()) == null) {
-                                    panelRef.setCharacter("src/images/characters/neutral.png",
-                                            balloonList.item(i).getParentNode().getParentNode().getNodeName());
-                                }
-
-                                if(balloonList.item(i).getParentNode().getParentNode().getNodeName().matches("left")) {
-                                    System.out.println("Left:" + balloonList.item(i).getNodeName());
-                                    Image image = new Image("src/images/bubbles/9-hand-drawn-speech-bubble-2.png");
-                                    panelRef.setLeftBubble(image, balloonList.item(i).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
-                                }
-                            }
+//                            for(i=0; i < balloonList.getLength(); i++) {
+//                                String balloon = balloonList.item(i).getTextContent();
+//
+//                                if(balloon.matches(""))
+//                                    continue;
+//
+//                                if(panelRef.getCharacter(balloonList.item(i).getParentNode().getParentNode().getNodeName()) == null) {
+//                                    panelRef.setCharacter("src/images/characters/neutral.png",
+//                                            balloonList.item(i).getParentNode().getParentNode().getNodeName());
+//                                }
+//
+//                                if(balloonList.item(i).getParentNode().getParentNode().getNodeName().matches("left")) {
+//                                    System.out.println("Left:" + balloonList.item(i).getNodeName());
+//                                    Image image = new Image("src/images/bubbles/9-hand-drawn-speech-bubble-2.png");
+//                                    panelRef.setLeftBubble(image, balloonList.item(i).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
+//                                }
+//                            }
                         }
                     }
 
