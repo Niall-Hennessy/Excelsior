@@ -5,6 +5,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Screen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,6 +16,7 @@ import java.math.RoundingMode;
 public class ComicCharacter extends Pane {
 
     ImageView characterImageView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
+    int charBoxLength = (int)((Screen.getPrimary().getBounds().getHeight())/2.45)/3;
 
     Image characterImage;
 
@@ -103,8 +105,10 @@ public class ComicCharacter extends Pane {
             }
 
         ImageView imageView = new ImageView(writableImage);
-        imageView.setFitHeight(writableImage.getHeight()/4);
-        imageView.setFitWidth(writableImage.getWidth()/4);
+        //imageView.setFitHeight(writableImage.getHeight()/4);
+        //imageView.setFitWidth(writableImage.getWidth()/4);
+        imageView.setFitHeight(charBoxLength);
+        imageView.setFitWidth(charBoxLength);
         imageView.setSmooth(false);
         imageView.setRotationAxis(Rotate.Y_AXIS);
         imageView.setRotate(characterImageView.getRotate());
