@@ -121,7 +121,7 @@ public class Main extends Application {
 
         final ColorPicker[] skinColorPicker = {new ColorPicker()};
         final ColorPicker[] hairColorPicker = {new ColorPicker()};
-        skinColorPicker[0] = ButtonIcon.colorPickerStyling(skinColorPicker[0], height);
+        skinColorPicker[0] = ButtonIcon.colorPickerStyling(skinColorPicker[0], primaryStage.getHeight());
         hairColorPicker[0] = ButtonIcon.colorPickerStyling(hairColorPicker[0], primaryStage.getHeight());
 
         FlowPane buttonLayout = new FlowPane();
