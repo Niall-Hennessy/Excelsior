@@ -215,6 +215,73 @@ public class ComicPanel extends Pane {
         return selectedCharacter;
     }
 
+    public void setRightCharacter(ComicCharacter rigthCharacter){
+        this.rightCharacter = rigthCharacter;
+    }
+
+    public void setLeftCharacter(ComicCharacter leftCharacter){
+        this.leftCharacter = leftCharacter;
+
+        if(leftCharacter.imageName.matches("blank")){
+            leftCharacter.setOnMouseEntered(mouseEvent -> {
+            });
+
+            leftCharacter.setOnMouseExited(mouseEvent -> {
+            });
+
+            leftCharacter.setOnMousePressed(pressEvent -> {
+                leftCharacter.setOnMouseDragged(dragEvent -> {
+                });
+            });
+
+            leftCharacter.setStyle("-fx-border-width: 0");
+            return;
+        }
+
+        AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
+
+        leftCharacter.setOnMouseEntered(mouseEvent -> {
+            leftCharacter.getScene().setCursor(Cursor.MOVE);
+        });
+
+        leftCharacter.setOnMouseExited(mouseEvent -> {
+            leftCharacter.getScene().setCursor(Cursor.DEFAULT);
+        });
+
+        leftCharacter.setOnMousePressed(pressEvent -> {
+
+            setSelectedCharacter(leftCharacter);
+
+            dragX.set(0.0);
+            dragY.set(0.0);
+            leftCharacter.setOnMouseDragged(dragEvent -> {
+
+                double offsetX = leftCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                double offsetY = leftCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+
+                if(offsetX < 3)
+                    offsetX = 3;
+                else if(offsetX > (this.getWidth()-3)/2 - leftCharacter.getWidth())
+                    offsetX = (this.getWidth()-3)/2 - leftCharacter.getWidth();
+
+                if(offsetY < 3)
+                    offsetY = 3;
+                else if(offsetY > this.getHeight()-3 - leftCharacter.getHeight())
+                    offsetY = this.getHeight()-3 - leftCharacter.getHeight();
+
+
+                leftCharacter.setTranslateX(offsetX);
+                leftCharacter.setTranslateY(offsetY);
+                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+            });
+        });
+
+        leftCharacter.setTranslateX(leftCharacter.getTranslateX() + dragX.get());
+        leftCharacter.setTranslateY(leftCharacter.getTranslateY() + dragY.get());
+    }
+
     public void setCharacter(String imagePath, String side) throws FileNotFoundException {
         if(side.matches("left"))
             setLeftCharacter(imagePath);
