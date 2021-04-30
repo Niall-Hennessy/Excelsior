@@ -349,8 +349,8 @@ public class ComicPanel extends Pane {
 
         leftTextBubble = new TextBubble(imageView, text, font, status);
 
-        leftTextBubble.setTranslateX(selectedCharacter.getTranslateX() + 70);
-        leftTextBubble.setTranslateY(selectedCharacter.getTranslateY() - 50);
+        leftTextBubble.setTranslateX(leftCharacter.getTranslateX() + 70);
+        leftTextBubble.setTranslateY(leftCharacter.getTranslateY() - 50);
 
         AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
         AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
@@ -406,8 +406,8 @@ public class ComicPanel extends Pane {
         rightTextBubble = new TextBubble(imageView, text, font, status);
 
 
-        rightTextBubble.setTranslateX(selectedCharacter.getTranslateX() - 20);
-        rightTextBubble.setTranslateY(selectedCharacter.getTranslateY() - 50);
+        rightTextBubble.setTranslateX(rightCharacter.getTranslateX() - 20);
+        rightTextBubble.setTranslateY(rightCharacter.getTranslateY() - 50);
 
         AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
         AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
@@ -457,6 +457,10 @@ public class ComicPanel extends Pane {
         topText = new TextCaption(text, font);
         topText.setTranslateY(-12);
         this.getChildren().add(topText);
+    }
+
+    public TextCaption getTopText() {
+        return topText;
     }
 
     public void setBottomText(String text, Font font){

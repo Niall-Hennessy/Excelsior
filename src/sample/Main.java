@@ -308,6 +308,9 @@ public class Main extends Application {
 
                         if(toParse.topText != null) {
                             above.appendChild(doc.createTextNode(toParse.topText.getText()));
+
+                            System.out.println(toParse.topText.getFont());
+
                             fontAbove.setValue(toParse.topText.getFont());
                             above.setAttributeNode(fontAbove);
                         }
@@ -459,7 +462,7 @@ public class Main extends Application {
                     TransformerFactory transformerFactory = TransformerFactory.newInstance();
                     Transformer transformer = transformerFactory.newTransformer();
                     DOMSource source = new DOMSource(doc);
-                    StreamResult result = new StreamResult(new File("C:\\Users\\neilh\\Desktop\\cars.xml"));
+                    StreamResult result = new StreamResult(new File("C:\\Users\\Ada\\Desktop\\cars.xml"));
                     transformer.transform(source, result);
 
                     // Output to console for testing
@@ -1538,10 +1541,30 @@ public class Main extends Application {
 
                             ComicPanel panelRef = ((ComicPanel) comicStrip.getChildren().get(temp+1));
 
-                            if(eElement.getElementsByTagName("above").getLength() != 0)
-                                panelRef.setTopText(eElement.getElementsByTagName("above").item(0).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
+                            Font fontTextCaption = Font.font("ARIAL", FontWeight.NORMAL, 20);
+
+                            if(eElement.getElementsByTagName("above").getLength() != 0) {
+                                Element above = (Element) eElement.getElementsByTagName("above").item(0);
+                                if(above.hasAttribute("font") && !above.getAttribute("font").matches(""))
+                                    fontTextCaption.
+
+                                panelRef.setTopText(eElement.getElementsByTagName("above").item(0).getTextContent(), fontTextCaption);
+                            }
                             if(eElement.getElementsByTagName("below").getLength() != 0)
-                                panelRef.setBottomText(eElement.getElementsByTagName("below").item(0).getTextContent(), Font.font("ARIAL", FontWeight.NORMAL, 20));
+                                panelRef.setBottomText(eElement.getElementsByTagName("below").item(0).getTextContent(), fontTextCaption);
+                            if(eElement.getElementsByTagName("background").getLength() != 0){
+                                panelRef.setBackgroundString(eElement.getElementsByTagName("background").item(0).getTextContent());
+                                panelRef.setStyle("-fx-background-image: url('" + eElement.getElementsByTagName("background").item(0).getTextContent().replace('\\', '/') + "'); " +
+                                "-fx-background-position: center center; " +
+                                        "-fx-background-repeat: stretch; "  +
+                                        "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
+                                        "-fx-border-color: black; " +
+                                        "-fx-border-width: 5");
+                            }
+                            if(eElement.hasAttribute("locked")){
+                                if(eElement.getAttribute("locked").matches("true"))
+                                    panelRef.setLocked(true);
+                            }
 
                             Element leftElement = (Element) eElement.getElementsByTagName("left").item(0);
                             Element rightElement = (Element) eElement.getElementsByTagName("right").item(0);
@@ -1602,8 +1625,38 @@ public class Main extends Application {
                                     panelRef.getLeftCharacter().flipOrientation();
                             }
 
+                            if(!(leftElement.getElementsByTagName("xPosition").item(0) == null ||
+                                    leftElement.getElementsByTagName("xPosition").item(0).getTextContent().matches(""))){
+                                panelRef.getLeftCharacter().setTranslateX(Double.parseDouble(leftElement.getElementsByTagName("xPosition").item(0).getTextContent()));
+                            }
+
+                            if(!(leftElement.getElementsByTagName("yPosition").item(0) == null ||
+                                    leftElement.getElementsByTagName("yPosition").item(0).getTextContent().matches(""))){
+                                panelRef.getLeftCharacter().setTranslateY(Double.parseDouble(leftElement.getElementsByTagName("yPosition").item(0).getTextContent()));
+                            }
+
                             panelRef.getLeftCharacter().updateImage();
 
+                            if(!(leftElement.getElementsByTagName("balloon").item(0) == null ||
+                                    leftElement.getElementsByTagName("balloon").item(0).getTextContent().matches(""))){
+
+                                Image image;
+                                String content;
+                                Font font = new Font("Segoe UI", 20);
+                                String status;
+
+
+                                if(!(leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0) == null ||
+                                        leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent().matches(""))){
+                                        status =  leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent();
+                                }else{
+                                    status = "speechBubble.png";
+                                }
+
+                                image = new Image(new FileInputStream("src/images/bubbles/" + status));
+
+                                panelRef.setLeftBubble(image, leftElement.getElementsByTagName("balloon").item(0).getTextContent(), font, status);
+                            }
 
                             if(!(rightElement.getElementsByTagName("name").item(0) == null ||
                                     rightElement.getElementsByTagName("name").item(0).getTextContent().matches(""))){
@@ -1657,6 +1710,39 @@ public class Main extends Application {
                                     rightElement.getElementsByTagName("facing").item(0).getTextContent().matches(""))){
                                 if(!rightElement.getElementsByTagName("facing").item(0).getTextContent().matches("left"))
                                     panelRef.getRightCharacter().flipOrientation();
+                            }
+
+                            if(!(rightElement.getElementsByTagName("xPosition").item(0) == null ||
+                                    rightElement.getElementsByTagName("xPosition").item(0).getTextContent().matches(""))){
+                                panelRef.getRightCharacter().setTranslateX(Double.parseDouble(rightElement.getElementsByTagName("xPosition").item(0).getTextContent()));
+                            }
+
+                            if(!(rightElement.getElementsByTagName("yPosition").item(0) == null ||
+                                    rightElement.getElementsByTagName("yPosition").item(0).getTextContent().matches(""))){
+                                panelRef.getRightCharacter().setTranslateY(Double.parseDouble(rightElement.getElementsByTagName("yPosition").item(0).getTextContent()));
+                            }
+
+                            panelRef.getRightCharacter().updateImage();
+
+                            if(!(rightElement.getElementsByTagName("balloon").item(0) == null ||
+                                    rightElement.getElementsByTagName("balloon").item(0).getTextContent().matches(""))){
+
+                                Image image;
+                                String content;
+                                Font font = new Font("Segoe UI", 20);
+                                String status;
+
+
+                                if(!(rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0) == null ||
+                                        rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent().matches(""))){
+                                    status =  rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent();
+                                }else{
+                                    status = "speechBubble.png";
+                                }
+
+                                image = new Image(new FileInputStream("src/images/bubbles/" + status));
+
+                                panelRef.setRightBubble(image, rightElement.getElementsByTagName("balloon").item(0).getTextContent(), font, status);
                             }
 
                             System.out.println((temp + 1) + "/" + nList.getLength());
