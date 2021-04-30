@@ -502,6 +502,7 @@ public class Main extends Application {
 
 
 
+
         add_character.setOnAction(new EventHandler<ActionEvent>() {
             final Stage saveXML = new Stage();
 
@@ -1424,7 +1425,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
 
                 try {
-                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\fefe.xml");
+                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\cars.xml");
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
@@ -1432,12 +1433,25 @@ public class Main extends Application {
 
                     NodeList nList = doc.getElementsByTagName("panel");
                     Element figures = (Element) doc.getElementsByTagName("figures").item(0);
-                    NodeList figureList = figures.getElementsByTagName("figure");
+                    NodeList figureList;
 
-                    comicStrip.getChildren().clear();
+                    if(figures != null)
+                        figureList = figures.getElementsByTagName("figure");
+                    else {
+                        figureList = new NodeList() {
+                            @Override
+                            public Node item(int index) {
+                                return null;
+                            }
 
-                    comicStrip.getChildren().add(newPanelLeft);
-                    comicStrip.getChildren().add(newPanelRight);
+                            @Override
+                            public int getLength() {
+                                return 0;
+                            }
+                        };
+                    }
+
+                    new_project.fire();
 
                     int i;
                     HashMap<String, ComicCharacter> characterHashMap = new HashMap<>();
@@ -1525,9 +1539,9 @@ public class Main extends Application {
                             if(!(leftElement.getElementsByTagName("pose").item(0) == null ||
                                     leftElement.getElementsByTagName("pose").item(0).getTextContent().matches(""))){
                                 panelRef.setLeftCharacter("src/images/characters/" + leftElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
-                            } else if(leftCharacter.imageName != null){
+                            } else if(leftCharacter != null && leftCharacter.imageName != null){
                                 panelRef.setLeftCharacter("src/images/characters/" + leftCharacter.imageName + ".png");
-                            } else{
+                            } else if(leftCharacter != null){
                                 panelRef.setLeftCharacter("src/images/characters/neutral.png");
                             }
 
@@ -1535,7 +1549,7 @@ public class Main extends Application {
                                     leftElement.getElementsByTagName("appearance").item(0).getTextContent().matches(""))){
                                 if(leftElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
                                     panelRef.getLeftCharacter().setFemale(false);
-                            } else if(leftCharacter.imageName != null){
+                            } else if(leftCharacter != null){
                                 panelRef.getLeftCharacter().setFemale(leftCharacter.isFemale());
                             }
 
@@ -1543,7 +1557,7 @@ public class Main extends Application {
                                     leftElement.getElementsByTagName("skin").item(0).getTextContent().matches(""))){
                                 if(!leftElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
                                     panelRef.getLeftCharacter().setSkin(Color.web(leftElement.getElementsByTagName("skin").item(0).getTextContent()));
-                            } else if(leftCharacter.getSkin() != null){
+                            } else if(leftCharacter != null && leftCharacter.getSkin() != null){
                                 panelRef.getLeftCharacter().setSkin(leftCharacter.getSkin());
                             }
 
@@ -1551,7 +1565,7 @@ public class Main extends Application {
                                     leftElement.getElementsByTagName("hair").item(0).getTextContent().matches(""))){
                                 if(!leftElement.getElementsByTagName("hair").item(0).getTextContent().matches("default"))
                                     panelRef.getLeftCharacter().setHair(Color.web(leftElement.getElementsByTagName("hair").item(0).getTextContent()));
-                            } else if(leftCharacter.getSkin() != null){
+                            } else if(leftCharacter != null && leftCharacter.getHair() != null){
                                 panelRef.getLeftCharacter().setHair(leftCharacter.getSkin());
                             }
 
@@ -1559,7 +1573,7 @@ public class Main extends Application {
                                     leftElement.getElementsByTagName("lips").item(0).getTextContent().matches(""))){
                                 if(!leftElement.getElementsByTagName("lips").item(0).getTextContent().matches("default"))
                                     panelRef.getLeftCharacter().setLips(Color.web(leftElement.getElementsByTagName("lips").item(0).getTextContent()));
-                            } else if(leftCharacter.getSkin() != null){
+                            } else if(leftCharacter != null && leftCharacter.getLips() != null){
                                 panelRef.getLeftCharacter().setLips(leftCharacter.getSkin());
                             }
 
@@ -1581,9 +1595,9 @@ public class Main extends Application {
                             if(!(rightElement.getElementsByTagName("pose").item(0) == null ||
                                     rightElement.getElementsByTagName("pose").item(0).getTextContent().matches(""))){
                                 panelRef.setRightCharacter("src/images/characters/" + rightElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
-                            } else if(rightCharacter.imageName != null){
+                            } else if(rightCharacter != null && rightCharacter.imageName != null){
                                 panelRef.setRightCharacter("src/images/characters/" + rightCharacter.imageName + ".png");
-                            } else{
+                            } else if(rightCharacter != null) {
                                 panelRef.setRightCharacter("src/images/characters/neutral.png");
                             }
 
@@ -1591,7 +1605,8 @@ public class Main extends Application {
                                     rightElement.getElementsByTagName("appearance").item(0).getTextContent().matches(""))){
                                 if(rightElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
                                     panelRef.getRightCharacter().setFemale(false);
-                            } else if(rightCharacter.imageName != null){
+
+                            } else if(rightCharacter != null){
                                 panelRef.getRightCharacter().setFemale(rightCharacter.isFemale());
                             }
 
@@ -1599,7 +1614,7 @@ public class Main extends Application {
                                     rightElement.getElementsByTagName("skin").item(0).getTextContent().matches(""))){
                                 if(!rightElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
                                     panelRef.getRightCharacter().setSkin(Color.web(rightElement.getElementsByTagName("skin").item(0).getTextContent()));
-                            } else if(rightCharacter.getSkin() != null){
+                            } else if(rightCharacter != null && rightCharacter.getSkin() != null){
                                 panelRef.getRightCharacter().setSkin(rightCharacter.getSkin());
                             }
 
@@ -1607,7 +1622,7 @@ public class Main extends Application {
                                     rightElement.getElementsByTagName("hair").item(0).getTextContent().matches(""))){
                                 if(!rightElement.getElementsByTagName("hair").item(0).getTextContent().matches("default"))
                                     panelRef.getRightCharacter().setHair(Color.web(rightElement.getElementsByTagName("hair").item(0).getTextContent()));
-                            } else if(rightCharacter.getSkin() != null){
+                            } else if(rightCharacter != null && rightCharacter.getHair() != null){
                                 panelRef.getRightCharacter().setHair(rightCharacter.getSkin());
                             }
 
@@ -1615,7 +1630,7 @@ public class Main extends Application {
                                     rightElement.getElementsByTagName("lips").item(0).getTextContent().matches(""))){
                                 if(!rightElement.getElementsByTagName("lips").item(0).getTextContent().matches("default"))
                                     panelRef.getRightCharacter().setLips(Color.web(rightElement.getElementsByTagName("lips").item(0).getTextContent()));
-                            } else if(rightCharacter.getSkin() != null){
+                            } else if(rightCharacter != null && rightCharacter.getLips() != null){
                                 panelRef.getRightCharacter().setLips(rightCharacter.getSkin());
                             }
 
@@ -1655,6 +1670,16 @@ public class Main extends Application {
 //                Scene scene = new Scene(vBox);
 //                saveXML.setScene(scene);
 //                saveXML.show();
+            }
+        });
+
+        new_project.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                comicStrip.getChildren().clear();
+
+                comicStrip.getChildren().add(newPanelLeft);
+                comicStrip.getChildren().add(newPanelRight);
             }
         });
 
