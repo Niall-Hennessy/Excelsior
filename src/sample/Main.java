@@ -306,6 +306,8 @@ public class Main extends Application {
                         Element below = doc.createElement("below");
                         Attr fontBelow = doc.createAttribute("font");
                         Element background = doc.createElement("background");
+                        Attr locked = doc.createAttribute("locked");
+                        locked.setValue(toParse.getLocked().toString());
 
                         if(toParse.topText != null) {
                             above.appendChild(doc.createTextNode(toParse.topText.getText()));
@@ -322,11 +324,13 @@ public class Main extends Application {
                         if(toParse.getBackgroundString() != null);
                             background.appendChild(doc.createTextNode(toParse.getBackgroundString()));
 
+
                         panel.appendChild(above);
                         panel.appendChild(left);
                         panel.appendChild(right);
                         panel.appendChild(below);
                         panel.appendChild(background);
+                        panel.setAttributeNode(locked);
 
                         if(toParse.getLeftCharacter().getImageName() != null && !toParse.getLeftCharacter().getImageName().matches("blank")){
                             Element figure = doc.createElement("figure");
