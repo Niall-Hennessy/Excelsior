@@ -765,6 +765,7 @@ public class Main extends Application {
 
             Pane bubbleDisplay = new Pane();
             ImageView bubbleImageView = new ImageView();
+            String bubbleName;
 
             private double xOffset = 0;
             private double yOffset = 0;
@@ -967,9 +968,6 @@ public class Main extends Application {
                     @Override
                     public void handle(ActionEvent event) {
 
-                        //Temp needs to be done properly
-                        String status = "";
-
                         if(textfield.getText().replaceAll("\\s", "").matches(""))
                             return;
 
@@ -986,11 +984,9 @@ public class Main extends Application {
                             textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
 
                         if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()))
-                            //NEEDS to to implemenated Status!!!!!!!!!!!!!!!!
-                            comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), status);
+                            comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
                         else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()))
-                            comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), status);
-
+                            comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
 
                         bubbleDisplay.getChildren().remove(bubbleImageView);
                         addBubble.close();
@@ -1031,6 +1027,7 @@ public class Main extends Application {
 
                                 if (mouseEvent.getClickCount() == 1) {
                                     ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
+                                    bubbleName = imageFile.getPath().substring(19);
                                 }
                             }
                         }
