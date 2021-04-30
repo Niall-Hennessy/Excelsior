@@ -27,7 +27,7 @@ public class ComicPanel extends Pane {
     TextCaption topText;
     TextCaption bottomText;
 
-    String background;
+    String background = "images/backgrounds/BlankBackground.png";
 
     Boolean isLocked;
 
@@ -73,7 +73,7 @@ public class ComicPanel extends Pane {
                 "-fx-background-repeat: stretch; " +
                 "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
                 "-fx-border-color: BLACK; " +
-                "-fx-border-width: 3");
+                "-fx-border-width: 5");
     }
 
     public ComicCharacter getLeftCharacter() {
@@ -341,13 +341,13 @@ public class ComicPanel extends Pane {
 
     }
 
-    public void setLeftBubble(Image image, String text, Font font) {
+    public void setLeftBubble(Image image, String text, Font font, String status) {
         this.getChildren().remove(leftTextBubble);
         double checkS = image.getWidth() + image.getHeight();
 
         ImageView imageView = new ImageView(image);
 
-        leftTextBubble = new TextBubble(imageView, text, font);
+        leftTextBubble = new TextBubble(imageView, text, font, status);
 
         leftTextBubble.setTranslateX(selectedCharacter.getTranslateX() + 70);
         leftTextBubble.setTranslateY(selectedCharacter.getTranslateY() - 50);
@@ -394,7 +394,7 @@ public class ComicPanel extends Pane {
         this.getChildren().add(leftTextBubble);
     }
 
-    public void setRightBubble(Image image, String text, Font font){
+    public void setRightBubble(Image image, String text, Font font, String status){
         this.getChildren().remove(rightTextBubble);
         double checkS = image.getWidth() + image.getHeight();
 
@@ -403,7 +403,7 @@ public class ComicPanel extends Pane {
         imageView.setRotationAxis(Rotate.Y_AXIS);
         imageView.setRotate(180);
 
-        rightTextBubble = new TextBubble(imageView, text, font);
+        rightTextBubble = new TextBubble(imageView, text, font, status);
 
 
         rightTextBubble.setTranslateX(selectedCharacter.getTranslateX() - 20);

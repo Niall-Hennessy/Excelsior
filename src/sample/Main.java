@@ -281,6 +281,8 @@ public class Main extends Application {
                     Document doc = dBuilder.newDocument();
 
 
+
+
                     Element comic = doc.createElement("comic");
                     doc.appendChild(comic);
 
@@ -295,25 +297,37 @@ public class Main extends Application {
                         panels.appendChild(panel);
 
                         Element above = doc.createElement("above");
+                        Attr fontAbove = doc.createAttribute("font");
                         Element left = doc.createElement("left");
                         Element right = doc.createElement("right");
                         Element below = doc.createElement("below");
+                        Attr fontBelow = doc.createAttribute("font");
                         Element background = doc.createElement("background");
+                        Attr locked = doc.createAttribute("locked");
+                        locked.setValue(toParse.getLocked().toString());
 
-                        if(toParse.topText != null)
+                        if(toParse.topText != null) {
                             above.appendChild(doc.createTextNode(toParse.topText.getText()));
+                            fontAbove.setValue(toParse.topText.getFont());
+                            above.setAttributeNode(fontAbove);
+                        }
 
-                        if(toParse.bottomText != null)
+                        if(toParse.bottomText != null) {
                             below.appendChild(doc.createTextNode(toParse.bottomText.getText()));
+                            fontBelow.setValue(toParse.bottomText.getFont());
+                            below.setAttributeNode(fontBelow);
+                        }
 
                         if(toParse.getBackgroundString() != null);
                             background.appendChild(doc.createTextNode(toParse.getBackgroundString()));
+
 
                         panel.appendChild(above);
                         panel.appendChild(left);
                         panel.appendChild(right);
                         panel.appendChild(below);
                         panel.appendChild(background);
+                        panel.setAttributeNode(locked);
 
                         if(toParse.getLeftCharacter().getImageName() != null && !toParse.getLeftCharacter().getImageName().matches("blank")){
                             Element figure = doc.createElement("figure");
@@ -416,7 +430,7 @@ public class Main extends Application {
                             left.appendChild(balloon);
 
                             Attr attr = doc.createAttribute("status");
-                            attr.setValue("speech");
+                            attr.setValue(toParse.leftTextBubble.getStatus());
                             balloon.setAttributeNode(attr);
 
                             Element content = doc.createElement("content");
@@ -430,7 +444,7 @@ public class Main extends Application {
                             right.appendChild(balloon);
 
                             Attr attr = doc.createAttribute("status");
-                            attr.setValue("speech");
+                            attr.setValue(toParse.rightTextBubble.getStatus());
                             balloon.setAttributeNode(attr);
 
                             Element content = doc.createElement("content");
@@ -445,7 +459,7 @@ public class Main extends Application {
                     TransformerFactory transformerFactory = TransformerFactory.newInstance();
                     Transformer transformer = transformerFactory.newTransformer();
                     DOMSource source = new DOMSource(doc);
-                    StreamResult result = new StreamResult(new File("C:\\Users\\Ada\\Desktop\\cars.xml"));
+                    StreamResult result = new StreamResult(new File("C:\\Users\\neilh\\Desktop\\cars.xml"));
                     transformer.transform(source, result);
 
                     // Output to console for testing
@@ -749,6 +763,7 @@ public class Main extends Application {
 
             Pane bubbleDisplay = new Pane();
             ImageView bubbleImageView = new ImageView();
+            String bubbleName;
 
             private double xOffset = 0;
             private double yOffset = 0;
@@ -860,6 +875,8 @@ public class Main extends Application {
 
                 }
 
+
+
                 GridPane bubbleGrid = new GridPane();
                 bubbleGrid.setPadding(new Insets(10, 10, 10, 10));
                 bubbleGrid.setVgap(5);
@@ -948,6 +965,7 @@ public class Main extends Application {
                 submit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+
                         if(textfield.getText().replaceAll("\\s", "").matches(""))
                             return;
 
@@ -964,10 +982,9 @@ public class Main extends Application {
                             textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
 
                         if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()))
-                            comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
+                            comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
                         else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()))
-                            comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont());
-
+                            comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
 
                         bubbleDisplay.getChildren().remove(bubbleImageView);
                         addBubble.close();
@@ -992,6 +1009,7 @@ public class Main extends Application {
             private ImageView createImageView(final File imageFile) {
 
                 ImageView imageView = null;
+
                 try {
                     final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
                             true);
@@ -1007,6 +1025,7 @@ public class Main extends Application {
 
                                 if (mouseEvent.getClickCount() == 1) {
                                     ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
+                                    bubbleName = imageFile.getPath().substring(19);
                                 }
                             }
                         }
