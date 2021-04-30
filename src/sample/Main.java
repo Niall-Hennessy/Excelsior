@@ -1545,8 +1545,8 @@ public class Main extends Application {
 
                             if(eElement.getElementsByTagName("above").getLength() != 0) {
                                 Element above = (Element) eElement.getElementsByTagName("above").item(0);
-                                if(above.hasAttribute("font") && !above.getAttribute("font").matches(""))
-                                    fontTextCaption.
+                                //if(above.hasAttribute("font") && !above.getAttribute("font").matches(""))
+                                    //fontTextCaption.
 
                                 panelRef.setTopText(eElement.getElementsByTagName("above").item(0).getTextContent(), fontTextCaption);
                             }
