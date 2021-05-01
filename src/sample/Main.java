@@ -428,6 +428,9 @@ public class Main extends Application {
                             figure.appendChild(yPosition);
                         }
 
+                        Element balloonXPosition = doc.createElement("balloonXPosition");
+                        Element balloonYPosition = doc.createElement("balloonYPosition");
+
                         if(toParse.leftTextBubble != null){
                             Element balloon = doc.createElement("balloon");
                             left.appendChild(balloon);
@@ -438,7 +441,15 @@ public class Main extends Application {
 
                             Element content = doc.createElement("content");
                             content.appendChild(doc.createTextNode(toParse.leftTextBubble.getText().getText()));
+                            Attr contentFont = doc.createAttribute("contentFont");
+                            contentFont.setValue(toParse.leftTextBubble.getText().getFont().toString());
+                            content.setAttributeNode(contentFont);
 
+                            balloonXPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getLeftTextBubble().getTranslateX())));
+                            balloonYPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getLeftTextBubble().getTranslateY())));
+
+                            balloon.appendChild(balloonXPosition);
+                            balloon.appendChild(balloonYPosition);
                             balloon.appendChild(content);
                         }
 
@@ -452,7 +463,15 @@ public class Main extends Application {
 
                             Element content = doc.createElement("content");
                             content.appendChild(doc.createTextNode(toParse.rightTextBubble.getText().getText()));
+                            Attr contentFont = doc.createAttribute("contentFont");
+                            contentFont.setValue(toParse.rightTextBubble.getText().getFont().toString());
+                            content.setAttributeNode(contentFont);
 
+                            balloonXPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getLeftTextBubble().getTranslateX())));
+                            balloonYPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getRightTextBubble().getTranslateY())));
+
+                            balloon.appendChild(balloonXPosition);
+                            balloon.appendChild(balloonYPosition);
                             balloon.appendChild(content);
                         }
 

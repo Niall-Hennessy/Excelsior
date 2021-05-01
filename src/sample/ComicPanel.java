@@ -507,4 +507,11 @@ public class ComicPanel extends Pane {
         this.background = path;
     }
 
+    public TextBubble getLeftTextBubble() {
+        return leftTextBubble;
+    }
+
+    public TextBubble getRightTextBubble() {
+        return rightTextBubble;
+    }
 }
