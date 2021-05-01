@@ -32,7 +32,6 @@ public class TextCaption extends Pane {
     }
 
     public String getFont(){
-        String font = text.getFont().toString();
-        return font;
+        return text.getFont().getName();
     }
 }

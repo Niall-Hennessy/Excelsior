@@ -280,9 +280,6 @@ public class Main extends Application {
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.newDocument();
 
-
-
-
                     Element comic = doc.createElement("comic");
                     doc.appendChild(comic);
 
@@ -308,9 +305,6 @@ public class Main extends Application {
 
                         if(toParse.topText != null) {
                             above.appendChild(doc.createTextNode(toParse.topText.getText()));
-
-                            System.out.println(toParse.topText.getFont());
-
                             fontAbove.setValue(toParse.topText.getFont());
                             above.setAttributeNode(fontAbove);
                         }
@@ -428,8 +422,8 @@ public class Main extends Application {
                             figure.appendChild(yPosition);
                         }
 
-                        Element balloonXPosition = doc.createElement("balloonXPosition");
-                        Element balloonYPosition = doc.createElement("balloonYPosition");
+                        Element balloonXPosition = doc.createElement("xPosition");
+                        Element balloonYPosition = doc.createElement("yPosition");
 
                         if(toParse.leftTextBubble != null){
                             Element balloon = doc.createElement("balloon");
@@ -441,16 +435,28 @@ public class Main extends Application {
 
                             Element content = doc.createElement("content");
                             content.appendChild(doc.createTextNode(toParse.leftTextBubble.getText().getText()));
-                            Attr contentFont = doc.createAttribute("contentFont");
-                            contentFont.setValue(toParse.leftTextBubble.getText().getFont().toString());
-                            content.setAttributeNode(contentFont);
+                            Attr bold = doc.createAttribute("bold");
+                            Attr italic = doc.createAttribute("italic");
+
+                            if(toParse.leftTextBubble.getText().getFont().toString().contains("Bold"))
+                                bold.setValue("true");
+                            else
+                                bold.setValue("false");
+
+                            if(toParse.leftTextBubble.getText().getFont().toString().contains("Italic"))
+                                italic.setValue("true");
+                            else
+                                italic.setValue("false");
+
+                            content.setAttributeNode(bold);
+                            content.setAttributeNode(italic);
 
                             balloonXPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getLeftTextBubble().getTranslateX())));
                             balloonYPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getLeftTextBubble().getTranslateY())));
 
+                            balloon.appendChild(content);
                             balloon.appendChild(balloonXPosition);
                             balloon.appendChild(balloonYPosition);
-                            balloon.appendChild(content);
                         }
 
                         if(toParse.rightTextBubble != null){
@@ -463,11 +469,23 @@ public class Main extends Application {
 
                             Element content = doc.createElement("content");
                             content.appendChild(doc.createTextNode(toParse.rightTextBubble.getText().getText()));
-                            Attr contentFont = doc.createAttribute("contentFont");
-                            contentFont.setValue(toParse.rightTextBubble.getText().getFont().toString());
-                            content.setAttributeNode(contentFont);
+                            Attr bold = doc.createAttribute("bold");
+                            Attr italic = doc.createAttribute("italic");
 
-                            balloonXPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getLeftTextBubble().getTranslateX())));
+                            if(toParse.rightTextBubble.getText().getFont().toString().contains("Bold"))
+                                bold.setValue("true");
+                            else
+                                bold.setValue("false");
+
+                            if(toParse.rightTextBubble.getText().getFont().toString().contains("Italic"))
+                                italic.setValue("true");
+                            else
+                                italic.setValue("false");
+
+                            content.setAttributeNode(bold);
+                            content.setAttributeNode(italic);
+
+                            balloonXPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getRightTextBubble().getTranslateX())));
                             balloonYPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getRightTextBubble().getTranslateY())));
 
                             balloon.appendChild(balloonXPosition);
@@ -827,10 +845,6 @@ public class Main extends Application {
                 if(bubbleDisplay.getChildren().size() == 0)
                     bubbleDisplay.getChildren().add(bubbleImageView);
                 bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
-
-                if(addBubble.isShowing()) {
-                    addBubble.initOwner(primaryStage);
-                }
 
                 HBox bubbleGallery = new HBox();
                 bubbleGallery.getStyleClass().add("bubbles");
@@ -1466,7 +1480,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
 
                 try {
-                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\fefe.xml");
+                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\cars.xml");
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
@@ -1559,20 +1573,54 @@ public class Main extends Application {
                         if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                             Element eElement = (Element) nNode;
 
-                            newPanelRight.fire();
-
                             Font fontTextCaption = Font.font("ARIAL", FontWeight.NORMAL, 20);
 
                             ComicPanel panelRef = ((ComicPanel) comicStrip.getChildren().get(temp+1));
 
+                            if(eElement.hasAttribute("locked"))
+                                if(eElement.getAttribute("locked").matches("true"))
+                                    panelRef.setLocked(true);
+
                             Node currentNode = eElement.getFirstChild();
                             while(currentNode != null){
 
-                                if(currentNode.getNodeName().matches("above"))
+                                if(currentNode.getNodeName().matches("background")){
+                                panelRef.setBackgroundString(currentNode.getTextContent());
+                                panelRef.setStyle("-fx-background-image: url('" + currentNode.getTextContent().replace('\\', '/') + "'); " +
+                                "-fx-background-position: center center; " +
+                                        "-fx-background-repeat: stretch; "  +
+                                        "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
+                                        "-fx-border-color: black; " +
+                                        "-fx-border-width: 5");
+                            }
+
+                                if(currentNode.getNodeName().matches("above")) {
+
+                                    Element eCurrent = (Element) currentNode;
+
+                                    if(eCurrent.hasAttribute("font"))
+                                        fontTextCaption = Font.font(eCurrent.getAttribute("font"), FontWeight.NORMAL, 20);
+
                                     panelRef.setTopText(currentNode.getTextContent(), fontTextCaption);
 
-                                if(currentNode.getNodeName().matches("below"))
+                                    fontTextCaption = Font.font("ARIAL", FontWeight.NORMAL, 20);
+                                }
+
+                                if(currentNode.getNodeName().matches("below")) {
+
+                                    Element eCurrent = (Element) currentNode;
+
+                                    if(eCurrent.hasAttribute("font"))
+                                        fontTextCaption = Font.font(eCurrent.getAttribute("font"), FontWeight.NORMAL, 20);
+
                                     panelRef.setBottomText(currentNode.getTextContent(), fontTextCaption);
+
+                                    fontTextCaption = Font.font("ARIAL", FontWeight.NORMAL, 20);
+                                }
+
+                                if(currentNode.getNodeName().matches("locked"))
+                                    if(currentNode.getTextContent().matches("locked"))
+                                        panelRef.setLocked(true);
 
                                 if(currentNode.getNodeName().matches("left")) {
                                     Node leftNode = currentNode.getFirstChild();
@@ -1584,11 +1632,20 @@ public class Main extends Application {
 
                                             while(figureNode != null){
 
+                                                if(figureNode.getTextContent().matches("")){
+                                                    figureNode = figureNode.getNextSibling();
+                                                    continue;
+                                                }
+
                                                 if(figureNode.getNodeName().matches("name"))
                                                     leftCharacter = characterHashMap.get(figureNode.getTextContent());
 
-                                                if(figureNode.getNodeName().matches("pose"))
-                                                    panelRef.setLeftCharacter("src/images/characters/" + figureNode.getTextContent() + ".png");
+                                                if(figureNode.getNodeName().matches("pose")) {
+                                                    if (!figureNode.getTextContent().matches(""))
+                                                        panelRef.setLeftCharacter("src/images/characters/" + figureNode.getTextContent() + ".png");
+                                                    else if (leftCharacter != null && leftCharacter.getImageName() != null)
+                                                        panelRef.setLeftCharacter("src/images/characters/" + leftCharacter.getImageName() + ".png");
+                                                }
 
                                                 if(figureNode.getNodeName().matches("appearance"))
                                                     if(figureNode.getTextContent().matches("male"))
@@ -1625,22 +1682,53 @@ public class Main extends Application {
 
                                             while(balloonNode != null){
 
-                                                if(!balloonNode.getNodeName().matches("content")){
+                                                if(balloonNode.getTextContent().matches("")){
                                                     balloonNode = balloonNode.getNextSibling();
                                                     continue;
                                                 }
 
-                                                String content = balloonNode.getTextContent();
-                                                Font font = Font.font("Segoe UI", 20);
-                                                String status = leftNode.getAttributes().item(0).getTextContent();
-                                                Image image = new Image(new FileInputStream("src/images/bubbles/" + status + ".png"));
+                                                if(balloonNode.getNodeName().matches("content")) {
 
-                                                panelRef.setLeftBubble(image, content, font, status);
+                                                    Element eContent = (Element) balloonNode;
 
-                                                content = null;
-                                                font = null;
-                                                status = null;
-                                                image = null;
+                                                    String content = balloonNode.getTextContent();
+                                                    String status = leftNode.getAttributes().item(0).getTextContent();
+                                                    Image image = new Image(new FileInputStream("src/images/bubbles/" + status));
+                                                    Font font;
+
+                                                    boolean bold = false;
+                                                    boolean italic = false;
+
+                                                    if (eContent.hasAttribute("bold"))
+                                                        if (eContent.getAttribute("bold").matches("true"))
+                                                            bold = true;
+
+                                                    if (eContent.hasAttribute("italic"))
+                                                        if (eContent.getAttribute("italic").matches("true"))
+                                                            italic = true;
+
+                                                    if (bold && italic)
+                                                        font = Font.font("Segoe UI", FontWeight.BOLD, FontPosture.ITALIC, 12);
+                                                    else if (!bold && italic)
+                                                        font = Font.font("Segoe UI", FontWeight.NORMAL, FontPosture.ITALIC, 12);
+                                                    else if (bold && !italic)
+                                                        font = Font.font("Segoe UI", FontWeight.BOLD, FontPosture.REGULAR, 12);
+                                                    else
+                                                        font = Font.font("Segoe UI", FontWeight.NORMAL, FontPosture.REGULAR, 12);
+
+                                                    panelRef.setLeftBubble(image, content, font, status);
+
+                                                    content = null;
+                                                    font = null;
+                                                    status = null;
+                                                    image = null;
+                                                }
+
+                                                if(balloonNode.getNodeName().matches("xPosition"))
+                                                    panelRef.getLeftTextBubble().setTranslateX(Double.parseDouble(balloonNode.getTextContent()));
+
+                                                if(balloonNode.getNodeName().matches("yPosition"))
+                                                    panelRef.getLeftTextBubble().setTranslateY(Double.parseDouble(balloonNode.getTextContent()));
 
                                                 balloonNode = balloonNode.getNextSibling();
                                             }
@@ -1659,6 +1747,11 @@ public class Main extends Application {
                                             Node figureNode = rightNode.getFirstChild();
 
                                             while(figureNode != null){
+
+                                                if(figureNode.getTextContent().matches("")){
+                                                    figureNode = figureNode.getNextSibling();
+                                                    continue;
+                                                }
 
                                                 if(figureNode.getNodeName().matches("name"))
                                                     rightCharacter = characterHashMap.get(figureNode.getTextContent());
@@ -1696,31 +1789,31 @@ public class Main extends Application {
                                             }
                                         }
 
-                                        if(rightNode.getNodeName().matches("balloon")){
-                                            Node balloonNode = rightNode.getFirstChild();
-
-                                            while(balloonNode != null){
-
-                                                if(!balloonNode.getNodeName().matches("content")){
-                                                    balloonNode = balloonNode.getNextSibling();
-                                                    continue;
-                                                }
-
-                                                String content = balloonNode.getTextContent();
-                                                Font font = Font.font("Segoe UI", 20);
-                                                String status = rightNode.getAttributes().item(0).getTextContent();
-                                                Image image = new Image(new FileInputStream("src/images/bubbles/" + status + ".png"));
-
-                                                panelRef.setRightBubble(image, content, font, status);
-
-                                                content = null;
-                                                font = null;
-                                                status = null;
-                                                image = null;
-
-                                                balloonNode = balloonNode.getNextSibling();
-                                            }
-                                        }
+//                                        if(rightNode.getNodeName().matches("balloon")){
+//                                            Node balloonNode = rightNode.getFirstChild();
+//
+//                                            while(balloonNode != null){
+//
+//                                                if(!balloonNode.getNodeName().matches("content")){
+//                                                    balloonNode = balloonNode.getNextSibling();
+//                                                    continue;
+//                                                }
+//
+//                                                String content = balloonNode.getTextContent();
+//                                                Font font = Font.font("Segoe UI", 20);
+//                                                String status = rightNode.getAttributes().item(0).getTextContent();
+//                                                Image image = new Image(new FileInputStream("src/images/bubbles/" + status + ".png"));
+//
+//                                                panelRef.setRightBubble(image, content, font, status);
+//
+//                                                content = null;
+//                                                font = null;
+//                                                status = null;
+//                                                image = null;
+//
+//                                                balloonNode = balloonNode.getNextSibling();
+//                                            }
+//                                        }
 
                                         rightNode = rightNode.getNextSibling();
                                     }
@@ -1972,6 +2065,8 @@ public class Main extends Application {
 
                 comicStrip.getChildren().add(newPanelLeft);
                 comicStrip.getChildren().add(newPanelRight);
+
+                newPanelRight.fire();
             }
         });
 
