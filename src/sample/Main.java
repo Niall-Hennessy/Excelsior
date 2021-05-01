@@ -1625,9 +1625,22 @@ public class Main extends Application {
 
                                             while(balloonNode != null){
 
-                                                if(balloonNode.getNodeName().matches("")){
-
+                                                if(!balloonNode.getNodeName().matches("content")){
+                                                    balloonNode = balloonNode.getNextSibling();
+                                                    continue;
                                                 }
+
+                                                String content = balloonNode.getTextContent();
+                                                Font font = Font.font("Segoe UI", 20);
+                                                String status = leftNode.getAttributes().item(0).getTextContent();
+                                                Image image = new Image(new FileInputStream("src/images/bubbles/" + status + ".png"));
+
+                                                panelRef.setLeftBubble(image, content, font, status);
+
+                                                content = null;
+                                                font = null;
+                                                status = null;
+                                                image = null;
 
                                                 balloonNode = balloonNode.getNextSibling();
                                             }
@@ -1688,9 +1701,22 @@ public class Main extends Application {
 
                                             while(balloonNode != null){
 
-                                                if(balloonNode.getNodeName().matches("")){
-
+                                                if(!balloonNode.getNodeName().matches("content")){
+                                                    balloonNode = balloonNode.getNextSibling();
+                                                    continue;
                                                 }
+
+                                                String content = balloonNode.getTextContent();
+                                                Font font = Font.font("Segoe UI", 20);
+                                                String status = rightNode.getAttributes().item(0).getTextContent();
+                                                Image image = new Image(new FileInputStream("src/images/bubbles/" + status + ".png"));
+
+                                                panelRef.setRightBubble(image, content, font, status);
+
+                                                content = null;
+                                                font = null;
+                                                status = null;
+                                                image = null;
 
                                                 balloonNode = balloonNode.getNextSibling();
                                             }
@@ -1811,7 +1837,7 @@ public class Main extends Application {
 //                                        leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent().matches(""))){
 //                                        status =  leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent();
 //                                }else{
-//                                    status = "speechBubble.png";
+//                                    status = "speech.png";
 //                                }
 //
 //                                image = new Image(new FileInputStream("src/images/bubbles/" + status));
@@ -1898,7 +1924,7 @@ public class Main extends Application {
 //                                        rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent().matches(""))){
 //                                    status =  rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent();
 //                                }else{
-//                                    status = "speechBubble.png";
+//                                    status = "speech.png";
 //                                }
 //
 //                                image = new Image(new FileInputStream("src/images/bubbles/" + status));
