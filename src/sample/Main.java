@@ -1618,6 +1618,69 @@ public class Main extends Application {
                                     }
                                 }
 
+                                if(currentNode.getNodeName().matches("right")) {
+                                    Node rightNode = currentNode.getFirstChild();
+
+                                    while(rightNode != null){
+
+                                        if(rightNode.getNodeName().matches("figure")){
+                                            Node figureNode = rightNode.getFirstChild();
+
+                                            while(figureNode != null){
+
+                                                if(figureNode.getNodeName().matches("name"))
+                                                    rightCharacter = characterHashMap.get(figureNode.getTextContent());
+
+                                                if(figureNode.getNodeName().matches("pose"))
+                                                    panelRef.setRightCharacter("src/images/characters/" + figureNode.getTextContent() + ".png");
+
+                                                if(figureNode.getNodeName().matches("appearance"))
+                                                    if(figureNode.getTextContent().matches("male"))
+                                                        panelRef.getRightCharacter().setFemale(false);
+
+                                                if(figureNode.getNodeName().matches("skin"))
+                                                    if(!figureNode.getTextContent().matches("default"))
+                                                        panelRef.getRightCharacter().setSkin(Color.web(figureNode.getTextContent()));
+
+                                                if(figureNode.getNodeName().matches("hair"))
+                                                    if(!figureNode.getTextContent().matches("default"))
+                                                        panelRef.getRightCharacter().setHair(Color.web(figureNode.getTextContent()));
+
+                                                if(figureNode.getNodeName().matches("lips"))
+                                                    if(!figureNode.getTextContent().matches("default"))
+                                                        panelRef.getRightCharacter().setLips(Color.web(figureNode.getTextContent()));
+
+                                                if(figureNode.getNodeName().matches("facing"))
+                                                    if(figureNode.getTextContent().matches("right"))
+                                                        panelRef.getRightCharacter().flipOrientation();
+
+                                                if(figureNode.getNodeName().matches("xPosition"))
+                                                    panelRef.getRightCharacter().setTranslateX(Double.parseDouble(figureNode.getTextContent()));
+
+                                                if(figureNode.getNodeName().matches("yPosition"))
+                                                    panelRef.getRightCharacter().setTranslateY(Double.parseDouble(figureNode.getTextContent()));
+
+                                                figureNode = figureNode.getNextSibling();
+                                            }
+                                        }
+
+                                        if(rightNode.getNodeName().matches("balloon")){
+                                            Node balloonNode = rightNode.getFirstChild();
+
+                                            while(balloonNode != null){
+
+                                                if(balloonNode.getNodeName().matches("")){
+
+                                                }
+
+                                                balloonNode = balloonNode.getNextSibling();
+                                            }
+                                        }
+
+                                        rightNode = rightNode.getNextSibling();
+                                    }
+                                }
+
                                 currentNode = currentNode.getNextSibling();
                             }
 
