@@ -1693,7 +1693,7 @@ public class Main extends Application {
 
                                                     String content = balloonNode.getTextContent();
                                                     String status = leftNode.getAttributes().item(0).getTextContent();
-                                                    Image image = new Image(new FileInputStream("src/images/bubbles/" + status));
+                                                    Image image = new Image(new FileInputStream("src/images/bubbles/" + status + ".png"));
                                                     Font font;
 
                                                     boolean bold = false;
@@ -1789,31 +1789,62 @@ public class Main extends Application {
                                             }
                                         }
 
-//                                        if(rightNode.getNodeName().matches("balloon")){
-//                                            Node balloonNode = rightNode.getFirstChild();
-//
-//                                            while(balloonNode != null){
-//
-//                                                if(!balloonNode.getNodeName().matches("content")){
-//                                                    balloonNode = balloonNode.getNextSibling();
-//                                                    continue;
-//                                                }
-//
-//                                                String content = balloonNode.getTextContent();
-//                                                Font font = Font.font("Segoe UI", 20);
-//                                                String status = rightNode.getAttributes().item(0).getTextContent();
-//                                                Image image = new Image(new FileInputStream("src/images/bubbles/" + status + ".png"));
-//
-//                                                panelRef.setRightBubble(image, content, font, status);
-//
-//                                                content = null;
-//                                                font = null;
-//                                                status = null;
-//                                                image = null;
-//
-//                                                balloonNode = balloonNode.getNextSibling();
-//                                            }
-//                                        }
+                                        if(rightNode.getNodeName().matches("balloon")){
+                                            Node balloonNode = rightNode.getFirstChild();
+
+                                            while(balloonNode != null){
+
+                                                if(balloonNode.getTextContent().matches("")){
+                                                    balloonNode = balloonNode.getNextSibling();
+                                                    continue;
+                                                }
+
+                                                if(balloonNode.getNodeName().matches("content")) {
+
+                                                    Element eContent = (Element) balloonNode;
+
+                                                    String content = balloonNode.getTextContent();
+                                                    String status = rightNode.getAttributes().item(0).getTextContent();
+                                                    Image image = new Image(new FileInputStream("src/images/bubbles/" + status + ".png"));
+                                                    Font font;
+
+                                                    boolean bold = false;
+                                                    boolean italic = false;
+
+                                                    if (eContent.hasAttribute("bold"))
+                                                        if (eContent.getAttribute("bold").matches("true"))
+                                                            bold = true;
+
+                                                    if (eContent.hasAttribute("italic"))
+                                                        if (eContent.getAttribute("italic").matches("true"))
+                                                            italic = true;
+
+                                                    if (bold && italic)
+                                                        font = Font.font("Segoe UI", FontWeight.BOLD, FontPosture.ITALIC, 12);
+                                                    else if (!bold && italic)
+                                                        font = Font.font("Segoe UI", FontWeight.NORMAL, FontPosture.ITALIC, 12);
+                                                    else if (bold && !italic)
+                                                        font = Font.font("Segoe UI", FontWeight.BOLD, FontPosture.REGULAR, 12);
+                                                    else
+                                                        font = Font.font("Segoe UI", FontWeight.NORMAL, FontPosture.REGULAR, 12);
+
+                                                    panelRef.setRightBubble(image, content, font, status);
+
+                                                    content = null;
+                                                    font = null;
+                                                    status = null;
+                                                    image = null;
+                                                }
+
+                                                if(balloonNode.getNodeName().matches("xPosition"))
+                                                    panelRef.getRightTextBubble().setTranslateX(Double.parseDouble(balloonNode.getTextContent()));
+
+                                                if(balloonNode.getNodeName().matches("yPosition"))
+                                                    panelRef.getRightTextBubble().setTranslateY(Double.parseDouble(balloonNode.getTextContent()));
+
+                                                balloonNode = balloonNode.getNextSibling();
+                                            }
+                                        }
 
                                         rightNode = rightNode.getNextSibling();
                                     }

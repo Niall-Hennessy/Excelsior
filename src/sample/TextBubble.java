@@ -76,6 +76,10 @@ public class TextBubble extends Pane {
 
 
     public String getStatus() {
+
+        if(!status.matches(""))
+            status = status.substring(0, status.length()-4);
+
         return status;
     }
 
