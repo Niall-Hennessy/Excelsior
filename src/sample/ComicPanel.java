@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.TextField;
 import javafx.scene.image.*;
@@ -351,10 +352,6 @@ public class ComicPanel extends Pane {
 
         leftTextBubble.setTranslateX(leftCharacter.getTranslateX() + 70);
         leftTextBubble.setTranslateY(leftCharacter.getTranslateY() - 50);
-        if(leftTextBubble.getTranslateY() < 3) {
-            leftTextBubble.setTranslateY(3);
-            leftTextBubble.setTranslateX(selectedCharacter.getTranslateX() + selectedCharacter.getWidth());
-        }
 
         AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
         AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
@@ -412,10 +409,6 @@ public class ComicPanel extends Pane {
 
         rightTextBubble.setTranslateX(rightCharacter.getTranslateX() - 20);
         rightTextBubble.setTranslateY(rightCharacter.getTranslateY() - 50);
-        if(rightTextBubble.getTranslateY() < 3) {
-            rightTextBubble.setTranslateY(3);
-            rightTextBubble.setTranslateX(selectedCharacter.getTranslateX() - selectedCharacter.getWidth());
-        }
 
         AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
         AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
@@ -463,7 +456,6 @@ public class ComicPanel extends Pane {
     public void setTopText(String text, Font font){
         this.getChildren().remove(topText);
         topText = new TextCaption(text, font);
-        topText.setTranslateY(-12);
         this.getChildren().add(topText);
     }
 
@@ -477,7 +469,8 @@ public class ComicPanel extends Pane {
 
         this.getChildren().remove(bottomText);
         bottomText = new TextCaption(text, font);
-        bottomText.setTranslateY(height/2.4 + 22);
+        bottomText.text.setTextOrigin(VPos.TOP);
+        bottomText.setTranslateY(height/2.4);
         this.getChildren().add(bottomText);
     }
 

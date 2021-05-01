@@ -422,10 +422,9 @@ public class Main extends Application {
                             figure.appendChild(yPosition);
                         }
 
-                        Element balloonXPosition = doc.createElement("xPosition");
-                        Element balloonYPosition = doc.createElement("yPosition");
-
                         if(toParse.leftTextBubble != null){
+                            Element balloonXPosition = doc.createElement("xPosition");
+                            Element balloonYPosition = doc.createElement("yPosition");
                             Element balloon = doc.createElement("balloon");
                             left.appendChild(balloon);
 
@@ -460,6 +459,8 @@ public class Main extends Application {
                         }
 
                         if(toParse.rightTextBubble != null){
+                            Element balloonXPosition = doc.createElement("xPosition");
+                            Element balloonYPosition = doc.createElement("yPosition");
                             Element balloon = doc.createElement("balloon");
                             right.appendChild(balloon);
 
@@ -488,9 +489,9 @@ public class Main extends Application {
                             balloonXPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getRightTextBubble().getTranslateX())));
                             balloonYPosition.appendChild(doc.createTextNode(String.valueOf(toParse.getRightTextBubble().getTranslateY())));
 
+                            balloon.appendChild(content);
                             balloon.appendChild(balloonXPosition);
                             balloon.appendChild(balloonYPosition);
-                            balloon.appendChild(content);
                         }
 
                     }
@@ -841,9 +842,9 @@ public class Main extends Application {
                 Button fonts = new Button("Font");
                 fonts.getStyleClass().add("fonts");
 
-
                 if(bubbleDisplay.getChildren().size() == 0)
                     bubbleDisplay.getChildren().add(bubbleImageView);
+
                 bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
 
                 HBox bubbleGallery = new HBox();
@@ -858,32 +859,43 @@ public class Main extends Application {
                 final boolean[] isItalic = {false};
 
                 if(comicPanel[0].leftTextBubble != null) {
-                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().substring(17,21).matches("Bold")){
+                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Bold"))
                         isBold[0] = true;
-                    }
-                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().substring(22,28).matches("Italic")){
+                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Italic"))
                         isItalic[0] = true;
-                    }
-                    else if(comicPanel[0].leftTextBubble.getText().getFont().toString().substring(17,23).matches("Italic")){
-                        isItalic[0] = true;
-                    }
                 }
 
                 if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()) && comicPanel[0].leftTextBubble != null) {
+
+                    if(comicPanel[0].leftTextBubble != null) {
+                        if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Bold"))
+                            isBold[0] = true;
+                        if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Italic"))
+                            isItalic[0] = true;
+                    }
+
                     textfield.setText(comicPanel[0].leftTextBubble.getText().getText().replaceAll("\n", " "));
-
-                    if(isBold[0] && isItalic[0])
-                        textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
-                    else if(!isBold[0] && isItalic[0])
-                        textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
-                    else if(isBold[0] && !isItalic[0])
-                        textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
-                    else
-                        textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
                 }
-                else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].rightTextBubble != null)
-                    textfield.setText(comicPanel[0].rightTextBubble.getText().getText());
+                else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].rightTextBubble != null) {
 
+                    if(comicPanel[0].rightTextBubble != null) {
+                        if(comicPanel[0].rightTextBubble.getText().getFont().toString().contains("Bold"))
+                            isBold[0] = true;
+                        if(comicPanel[0].rightTextBubble.getText().getFont().toString().contains("Italic"))
+                            isItalic[0] = true;
+                    }
+
+                    textfield.setText(comicPanel[0].rightTextBubble.getText().getText().replaceAll("\n", " "));
+                }
+
+                if(isBold[0] && isItalic[0])
+                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+                else if(!isBold[0] && isItalic[0])
+                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+                else if(isBold[0] && !isItalic[0])
+                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+                else
+                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
 
                 final Text[] characterCounter = {new Text(textfield.getText().length() + "/50")};
 
@@ -1480,7 +1492,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
 
                 try {
-                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\cars.xml");
+                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\fefe.xml");
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
@@ -1569,6 +1581,8 @@ public class Main extends Application {
 
                     for (int temp = 0; temp < nList.getLength(); temp++) {
                         org.w3c.dom.Node nNode = nList.item(temp);
+
+                        newPanelRight.fire();
 
                         if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                             Element eElement = (Element) nNode;

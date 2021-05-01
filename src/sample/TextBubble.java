@@ -77,7 +77,7 @@ public class TextBubble extends Pane {
 
     public String getStatus() {
 
-        if(!status.matches(""))
+        if(status.contains(".png"))
             status = status.substring(0, status.length()-4);
 
         return status;
