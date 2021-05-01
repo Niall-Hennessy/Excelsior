@@ -1447,7 +1447,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
 
                 try {
-                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\cars.xml");
+                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\fefe.xml");
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
@@ -1531,6 +1531,9 @@ public class Main extends Application {
                         System.out.println("Finsihed a loop");
                     }
 
+                    ComicCharacter leftCharacter = null;
+                    ComicCharacter rightCharacter = null;
+
                     for (int temp = 0; temp < nList.getLength(); temp++) {
                         org.w3c.dom.Node nNode = nList.item(temp);
 
@@ -1539,211 +1542,287 @@ public class Main extends Application {
 
                             newPanelRight.fire();
 
-                            ComicPanel panelRef = ((ComicPanel) comicStrip.getChildren().get(temp+1));
-
                             Font fontTextCaption = Font.font("ARIAL", FontWeight.NORMAL, 20);
 
-                            if(eElement.getElementsByTagName("above").getLength() != 0) {
-                                Element above = (Element) eElement.getElementsByTagName("above").item(0);
-                                //if(above.hasAttribute("font") && !above.getAttribute("font").matches(""))
-                                    //fontTextCaption.
+                            ComicPanel panelRef = ((ComicPanel) comicStrip.getChildren().get(temp+1));
 
-                                panelRef.setTopText(eElement.getElementsByTagName("above").item(0).getTextContent(), fontTextCaption);
-                            }
-                            if(eElement.getElementsByTagName("below").getLength() != 0)
-                                panelRef.setBottomText(eElement.getElementsByTagName("below").item(0).getTextContent(), fontTextCaption);
-                            if(eElement.getElementsByTagName("background").getLength() != 0){
-                                panelRef.setBackgroundString(eElement.getElementsByTagName("background").item(0).getTextContent());
-                                panelRef.setStyle("-fx-background-image: url('" + eElement.getElementsByTagName("background").item(0).getTextContent().replace('\\', '/') + "'); " +
-                                "-fx-background-position: center center; " +
-                                        "-fx-background-repeat: stretch; "  +
-                                        "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
-                                        "-fx-border-color: black; " +
-                                        "-fx-border-width: 5");
-                            }
-                            if(eElement.hasAttribute("locked")){
-                                if(eElement.getAttribute("locked").matches("true"))
-                                    panelRef.setLocked(true);
-                            }
+                            Node currentNode = eElement.getFirstChild();
+                            while(currentNode != null){
 
-                            Element leftElement = (Element) eElement.getElementsByTagName("left").item(0);
-                            Element rightElement = (Element) eElement.getElementsByTagName("right").item(0);
+                                if(currentNode.getNodeName().matches("above"))
+                                    panelRef.setTopText(currentNode.getTextContent(), fontTextCaption);
 
-                            ComicCharacter leftCharacter = null;
-                            ComicCharacter rightCharacter = null;
+                                if(currentNode.getNodeName().matches("below"))
+                                    panelRef.setBottomText(currentNode.getTextContent(), fontTextCaption);
 
-                            if(!(leftElement.getElementsByTagName("name").item(0) == null ||
-                                    leftElement.getElementsByTagName("name").item(0).getTextContent().matches(""))){
+                                if(currentNode.getNodeName().matches("left")) {
+                                    Node leftNode = currentNode.getFirstChild();
 
-                                leftCharacter = characterHashMap.get(leftElement.getElementsByTagName("name").item(0).getTextContent());
-                            }
+                                    while(leftNode != null){
 
-                            if(!(leftElement.getElementsByTagName("pose").item(0) == null ||
-                                    leftElement.getElementsByTagName("pose").item(0).getTextContent().matches(""))){
-                                panelRef.setLeftCharacter("src/images/characters/" + leftElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
-                            } else if(leftCharacter != null && leftCharacter.imageName != null){
-                                panelRef.setLeftCharacter("src/images/characters/" + leftCharacter.imageName + ".png");
-                            } else if(leftCharacter != null){
-                                panelRef.setLeftCharacter("src/images/characters/neutral.png");
-                            }
+                                        if(leftNode.getNodeName().matches("figure")){
+                                            Node figureNode = leftNode.getFirstChild();
 
-                            if(!(leftElement.getElementsByTagName("appearance").item(0) == null ||
-                                    leftElement.getElementsByTagName("appearance").item(0).getTextContent().matches(""))){
-                                if(leftElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
-                                    panelRef.getLeftCharacter().setFemale(false);
-                            } else if(leftCharacter != null){
-                                panelRef.getLeftCharacter().setFemale(leftCharacter.isFemale());
-                            }
+                                            while(figureNode != null){
 
-                            if(!(leftElement.getElementsByTagName("skin").item(0) == null ||
-                                    leftElement.getElementsByTagName("skin").item(0).getTextContent().matches(""))){
-                                if(!leftElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
-                                    panelRef.getLeftCharacter().setSkin(Color.web(leftElement.getElementsByTagName("skin").item(0).getTextContent()));
-                            } else if(leftCharacter != null && leftCharacter.getSkin() != null){
-                                panelRef.getLeftCharacter().setSkin(leftCharacter.getSkin());
-                            }
+                                                if(figureNode.getNodeName().matches("name"))
+                                                    leftCharacter = characterHashMap.get(figureNode.getTextContent());
 
-                            if(!(leftElement.getElementsByTagName("hair").item(0) == null ||
-                                    leftElement.getElementsByTagName("hair").item(0).getTextContent().matches(""))){
-                                if(!leftElement.getElementsByTagName("hair").item(0).getTextContent().matches("default"))
-                                    panelRef.getLeftCharacter().setHair(Color.web(leftElement.getElementsByTagName("hair").item(0).getTextContent()));
-                            } else if(leftCharacter != null && leftCharacter.getHair() != null){
-                                panelRef.getLeftCharacter().setHair(leftCharacter.getSkin());
-                            }
+                                                if(figureNode.getNodeName().matches("pose"))
+                                                    panelRef.setLeftCharacter("src/images/characters/" + figureNode.getTextContent() + ".png");
 
-                            if(!(leftElement.getElementsByTagName("lips").item(0) == null ||
-                                    leftElement.getElementsByTagName("lips").item(0).getTextContent().matches(""))){
-                                if(!leftElement.getElementsByTagName("lips").item(0).getTextContent().matches("default"))
-                                    panelRef.getLeftCharacter().setLips(Color.web(leftElement.getElementsByTagName("lips").item(0).getTextContent()));
-                            } else if(leftCharacter != null && leftCharacter.getLips() != null){
-                                panelRef.getLeftCharacter().setLips(leftCharacter.getSkin());
-                            }
+                                                if(figureNode.getNodeName().matches("appearance"))
+                                                    if(figureNode.getTextContent().matches("male"))
+                                                        panelRef.getLeftCharacter().setFemale(false);
 
-                            if(!(leftElement.getElementsByTagName("facing").item(0) == null ||
-                                    leftElement.getElementsByTagName("facing").item(0).getTextContent().matches(""))){
-                                if(!leftElement.getElementsByTagName("facing").item(0).getTextContent().matches("right"))
-                                    panelRef.getLeftCharacter().flipOrientation();
-                            }
+                                                if(figureNode.getNodeName().matches("skin"))
+                                                    if(!figureNode.getTextContent().matches("default"))
+                                                        panelRef.getLeftCharacter().setSkin(Color.web(figureNode.getTextContent()));
 
-                            if(!(leftElement.getElementsByTagName("xPosition").item(0) == null ||
-                                    leftElement.getElementsByTagName("xPosition").item(0).getTextContent().matches(""))){
-                                panelRef.getLeftCharacter().setTranslateX(Double.parseDouble(leftElement.getElementsByTagName("xPosition").item(0).getTextContent()));
-                            }
+                                                if(figureNode.getNodeName().matches("hair"))
+                                                    if(!figureNode.getTextContent().matches("default"))
+                                                        panelRef.getLeftCharacter().setHair(Color.web(figureNode.getTextContent()));
 
-                            if(!(leftElement.getElementsByTagName("yPosition").item(0) == null ||
-                                    leftElement.getElementsByTagName("yPosition").item(0).getTextContent().matches(""))){
-                                panelRef.getLeftCharacter().setTranslateY(Double.parseDouble(leftElement.getElementsByTagName("yPosition").item(0).getTextContent()));
-                            }
+                                                if(figureNode.getNodeName().matches("lips"))
+                                                    if(!figureNode.getTextContent().matches("default"))
+                                                        panelRef.getLeftCharacter().setLips(Color.web(figureNode.getTextContent()));
 
-                            panelRef.getLeftCharacter().updateImage();
+                                                if(figureNode.getNodeName().matches("facing"))
+                                                    if(figureNode.getTextContent().matches("left"))
+                                                        panelRef.getLeftCharacter().flipOrientation();
 
-                            if(!(leftElement.getElementsByTagName("balloon").item(0) == null ||
-                                    leftElement.getElementsByTagName("balloon").item(0).getTextContent().matches(""))){
+                                                if(figureNode.getNodeName().matches("xPosition"))
+                                                    panelRef.getLeftCharacter().setTranslateX(Double.parseDouble(figureNode.getTextContent()));
 
-                                Image image;
-                                String content;
-                                Font font = new Font("Segoe UI", 20);
-                                String status;
+                                                if(figureNode.getNodeName().matches("yPosition"))
+                                                    panelRef.getLeftCharacter().setTranslateY(Double.parseDouble(figureNode.getTextContent()));
 
+                                                figureNode = figureNode.getNextSibling();
+                                            }
+                                        }
 
-                                if(!(leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0) == null ||
-                                        leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent().matches(""))){
-                                        status =  leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent();
-                                }else{
-                                    status = "speechBubble.png";
+                                        if(leftNode.getNodeName().matches("balloon")){
+                                            Node balloonNode = leftNode.getFirstChild();
+
+                                            while(balloonNode != null){
+
+                                                if(balloonNode.getNodeName().matches("")){
+
+                                                }
+
+                                                balloonNode = balloonNode.getNextSibling();
+                                            }
+                                        }
+
+                                        leftNode = leftNode.getNextSibling();
+                                    }
                                 }
 
-                                image = new Image(new FileInputStream("src/images/bubbles/" + status));
-
-                                panelRef.setLeftBubble(image, leftElement.getElementsByTagName("balloon").item(0).getTextContent(), font, status);
+                                currentNode = currentNode.getNextSibling();
                             }
 
-                            if(!(rightElement.getElementsByTagName("name").item(0) == null ||
-                                    rightElement.getElementsByTagName("name").item(0).getTextContent().matches(""))){
-
-                                rightCharacter = characterHashMap.get(rightElement.getElementsByTagName("name").item(0).getTextContent());
-                            }
-
-                            if(!(rightElement.getElementsByTagName("pose").item(0) == null ||
-                                    rightElement.getElementsByTagName("pose").item(0).getTextContent().matches(""))){
-                                panelRef.setRightCharacter("src/images/characters/" + rightElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
-                            } else if(rightCharacter != null && rightCharacter.imageName != null){
-                                panelRef.setRightCharacter("src/images/characters/" + rightCharacter.imageName + ".png");
-                            } else if(rightCharacter != null) {
-                                panelRef.setRightCharacter("src/images/characters/neutral.png");
-                            }
-
-                            if(!(rightElement.getElementsByTagName("appearance").item(0) == null ||
-                                    rightElement.getElementsByTagName("appearance").item(0).getTextContent().matches(""))){
-                                if(rightElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
-                                    panelRef.getRightCharacter().setFemale(false);
-
-                            } else if(rightCharacter != null){
-                                panelRef.getRightCharacter().setFemale(rightCharacter.isFemale());
-                            }
-
-                            if(!(rightElement.getElementsByTagName("skin").item(0) == null ||
-                                    rightElement.getElementsByTagName("skin").item(0).getTextContent().matches(""))){
-                                if(!rightElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
-                                    panelRef.getRightCharacter().setSkin(Color.web(rightElement.getElementsByTagName("skin").item(0).getTextContent()));
-                            } else if(rightCharacter != null && rightCharacter.getSkin() != null){
-                                panelRef.getRightCharacter().setSkin(rightCharacter.getSkin());
-                            }
-
-                            if(!(rightElement.getElementsByTagName("hair").item(0) == null ||
-                                    rightElement.getElementsByTagName("hair").item(0).getTextContent().matches(""))){
-                                if(!rightElement.getElementsByTagName("hair").item(0).getTextContent().matches("default"))
-                                    panelRef.getRightCharacter().setHair(Color.web(rightElement.getElementsByTagName("hair").item(0).getTextContent()));
-                            } else if(rightCharacter != null && rightCharacter.getHair() != null){
-                                panelRef.getRightCharacter().setHair(rightCharacter.getSkin());
-                            }
-
-                            if(!(rightElement.getElementsByTagName("lips").item(0) == null ||
-                                    rightElement.getElementsByTagName("lips").item(0).getTextContent().matches(""))){
-                                if(!rightElement.getElementsByTagName("lips").item(0).getTextContent().matches("default"))
-                                    panelRef.getRightCharacter().setLips(Color.web(rightElement.getElementsByTagName("lips").item(0).getTextContent()));
-                            } else if(rightCharacter != null && rightCharacter.getLips() != null){
-                                panelRef.getRightCharacter().setLips(rightCharacter.getSkin());
-                            }
-
-                            if(!(rightElement.getElementsByTagName("facing").item(0) == null ||
-                                    rightElement.getElementsByTagName("facing").item(0).getTextContent().matches(""))){
-                                if(!rightElement.getElementsByTagName("facing").item(0).getTextContent().matches("left"))
-                                    panelRef.getRightCharacter().flipOrientation();
-                            }
-
-                            if(!(rightElement.getElementsByTagName("xPosition").item(0) == null ||
-                                    rightElement.getElementsByTagName("xPosition").item(0).getTextContent().matches(""))){
-                                panelRef.getRightCharacter().setTranslateX(Double.parseDouble(rightElement.getElementsByTagName("xPosition").item(0).getTextContent()));
-                            }
-
-                            if(!(rightElement.getElementsByTagName("yPosition").item(0) == null ||
-                                    rightElement.getElementsByTagName("yPosition").item(0).getTextContent().matches(""))){
-                                panelRef.getRightCharacter().setTranslateY(Double.parseDouble(rightElement.getElementsByTagName("yPosition").item(0).getTextContent()));
-                            }
-
-                            panelRef.getRightCharacter().updateImage();
-
-                            if(!(rightElement.getElementsByTagName("balloon").item(0) == null ||
-                                    rightElement.getElementsByTagName("balloon").item(0).getTextContent().matches(""))){
-
-                                Image image;
-                                String content;
-                                Font font = new Font("Segoe UI", 20);
-                                String status;
-
-
-                                if(!(rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0) == null ||
-                                        rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent().matches(""))){
-                                    status =  rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent();
-                                }else{
-                                    status = "speechBubble.png";
-                                }
-
-                                image = new Image(new FileInputStream("src/images/bubbles/" + status));
-
-                                panelRef.setRightBubble(image, rightElement.getElementsByTagName("balloon").item(0).getTextContent(), font, status);
-                            }
+//
+//                            if(eElement.getElementsByTagName("above").getLength() != 0) {
+//                                Element above = (Element) eElement.getElementsByTagName("above").item(0);
+//                                //if(above.hasAttribute("font") && !above.getAttribute("font").matches(""))
+//                                    //fontTextCaption.
+//
+//                                panelRef.setTopText(eElement.getElementsByTagName("above").item(0).getTextContent(), fontTextCaption);
+//                            }
+//                            if(eElement.getElementsByTagName("below").getLength() != 0)
+//                                panelRef.setBottomText(eElement.getElementsByTagName("below").item(0).getTextContent(), fontTextCaption);
+//                            if(eElement.getElementsByTagName("background").getLength() != 0){
+//                                panelRef.setBackgroundString(eElement.getElementsByTagName("background").item(0).getTextContent());
+//                                panelRef.setStyle("-fx-background-image: url('" + eElement.getElementsByTagName("background").item(0).getTextContent().replace('\\', '/') + "'); " +
+//                                "-fx-background-position: center center; " +
+//                                        "-fx-background-repeat: stretch; "  +
+//                                        "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
+//                                        "-fx-border-color: black; " +
+//                                        "-fx-border-width: 5");
+//                            }
+//                            if(eElement.hasAttribute("locked")){
+//                                if(eElement.getAttribute("locked").matches("true"))
+//                                    panelRef.setLocked(true);
+//                            }
+//
+//                            Element leftElement = (Element) eElement.getElementsByTagName("left").item(0);
+//                            Element rightElement = (Element) eElement.getElementsByTagName("right").item(0);
+//
+//                            ComicCharacter leftCharacter = null;
+//                            ComicCharacter rightCharacter = null;
+//
+//                            if(!(leftElement.getElementsByTagName("name").item(0) == null ||
+//                                    leftElement.getElementsByTagName("name").item(0).getTextContent().matches(""))){
+//
+//                                leftCharacter = characterHashMap.get(leftElement.getElementsByTagName("name").item(0).getTextContent());
+//                            }
+//
+//                            if(!(leftElement.getElementsByTagName("pose").item(0) == null ||
+//                                    leftElement.getElementsByTagName("pose").item(0).getTextContent().matches(""))){
+//                                panelRef.setLeftCharacter("src/images/characters/" + leftElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
+//                            } else if(leftCharacter != null && leftCharacter.imageName != null){
+//                                panelRef.setLeftCharacter("src/images/characters/" + leftCharacter.imageName + ".png");
+//                            } else if(leftCharacter != null){
+//                                panelRef.setLeftCharacter("src/images/characters/neutral.png");
+//                            }
+//
+//                            if(!(leftElement.getElementsByTagName("appearance").item(0) == null ||
+//                                    leftElement.getElementsByTagName("appearance").item(0).getTextContent().matches(""))){
+//                                if(leftElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
+//                                    panelRef.getLeftCharacter().setFemale(false);
+//                            } else if(leftCharacter != null){
+//                                panelRef.getLeftCharacter().setFemale(leftCharacter.isFemale());
+//                            }
+//
+//                            if(!(leftElement.getElementsByTagName("skin").item(0) == null ||
+//                                    leftElement.getElementsByTagName("skin").item(0).getTextContent().matches(""))){
+//                                if(!leftElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
+//                                    panelRef.getLeftCharacter().setSkin(Color.web(leftElement.getElementsByTagName("skin").item(0).getTextContent()));
+//                            } else if(leftCharacter != null && leftCharacter.getSkin() != null){
+//                                panelRef.getLeftCharacter().setSkin(leftCharacter.getSkin());
+//                            }
+//
+//                            if(!(leftElement.getElementsByTagName("hair").item(0) == null ||
+//                                    leftElement.getElementsByTagName("hair").item(0).getTextContent().matches(""))){
+//                                if(!leftElement.getElementsByTagName("hair").item(0).getTextContent().matches("default"))
+//                                    panelRef.getLeftCharacter().setHair(Color.web(leftElement.getElementsByTagName("hair").item(0).getTextContent()));
+//                            } else if(leftCharacter != null && leftCharacter.getHair() != null){
+//                                panelRef.getLeftCharacter().setHair(leftCharacter.getSkin());
+//                            }
+//
+//                            if(!(leftElement.getElementsByTagName("lips").item(0) == null ||
+//                                    leftElement.getElementsByTagName("lips").item(0).getTextContent().matches(""))){
+//                                if(!leftElement.getElementsByTagName("lips").item(0).getTextContent().matches("default"))
+//                                    panelRef.getLeftCharacter().setLips(Color.web(leftElement.getElementsByTagName("lips").item(0).getTextContent()));
+//                            } else if(leftCharacter != null && leftCharacter.getLips() != null){
+//                                panelRef.getLeftCharacter().setLips(leftCharacter.getSkin());
+//                            }
+//
+//                            if(!(leftElement.getElementsByTagName("facing").item(0) == null ||
+//                                    leftElement.getElementsByTagName("facing").item(0).getTextContent().matches(""))){
+//                                if(!leftElement.getElementsByTagName("facing").item(0).getTextContent().matches("right"))
+//                                    panelRef.getLeftCharacter().flipOrientation();
+//                            }
+//
+//                            if(!(leftElement.getElementsByTagName("xPosition").item(0) == null ||
+//                                    leftElement.getElementsByTagName("xPosition").item(0).getTextContent().matches(""))){
+//                                panelRef.getLeftCharacter().setTranslateX(Double.parseDouble(leftElement.getElementsByTagName("xPosition").item(0).getTextContent()));
+//                            }
+//
+//                            if(!(leftElement.getElementsByTagName("yPosition").item(0) == null ||
+//                                    leftElement.getElementsByTagName("yPosition").item(0).getTextContent().matches(""))){
+//                                panelRef.getLeftCharacter().setTranslateY(Double.parseDouble(leftElement.getElementsByTagName("yPosition").item(0).getTextContent()));
+//                            }
+//
+//                            panelRef.getLeftCharacter().updateImage();
+//
+//                            if(!(leftElement.getElementsByTagName("balloon").item(0) == null ||
+//                                    leftElement.getElementsByTagName("balloon").item(0).getTextContent().matches(""))){
+//
+//                                Image image;
+//                                String content;
+//                                Font font = new Font("Segoe UI", 20);
+//                                String status;
+//
+//
+//                                if(!(leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0) == null ||
+//                                        leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent().matches(""))){
+//                                        status =  leftElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent();
+//                                }else{
+//                                    status = "speechBubble.png";
+//                                }
+//
+//                                image = new Image(new FileInputStream("src/images/bubbles/" + status));
+//
+//                                panelRef.setLeftBubble(image, leftElement.getElementsByTagName("balloon").item(0).getTextContent(), font, status);
+//                            }
+//
+//                            if(!(rightElement.getElementsByTagName("name").item(0) == null ||
+//                                    rightElement.getElementsByTagName("name").item(0).getTextContent().matches(""))){
+//
+//                                rightCharacter = characterHashMap.get(rightElement.getElementsByTagName("name").item(0).getTextContent());
+//                            }
+//
+//                            if(!(rightElement.getElementsByTagName("pose").item(0) == null ||
+//                                    rightElement.getElementsByTagName("pose").item(0).getTextContent().matches(""))){
+//                                panelRef.setRightCharacter("src/images/characters/" + rightElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
+//                            } else if(rightCharacter != null && rightCharacter.imageName != null){
+//                                panelRef.setRightCharacter("src/images/characters/" + rightCharacter.imageName + ".png");
+//                            } else if(rightCharacter != null) {
+//                                panelRef.setRightCharacter("src/images/characters/neutral.png");
+//                            }
+//
+//                            if(!(rightElement.getElementsByTagName("appearance").item(0) == null ||
+//                                    rightElement.getElementsByTagName("appearance").item(0).getTextContent().matches(""))){
+//                                if(rightElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
+//                                    panelRef.getRightCharacter().setFemale(false);
+//
+//                            } else if(rightCharacter != null){
+//                                panelRef.getRightCharacter().setFemale(rightCharacter.isFemale());
+//                            }
+//
+//                            if(!(rightElement.getElementsByTagName("skin").item(0) == null ||
+//                                    rightElement.getElementsByTagName("skin").item(0).getTextContent().matches(""))){
+//                                if(!rightElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
+//                                    panelRef.getRightCharacter().setSkin(Color.web(rightElement.getElementsByTagName("skin").item(0).getTextContent()));
+//                            } else if(rightCharacter != null && rightCharacter.getSkin() != null){
+//                                panelRef.getRightCharacter().setSkin(rightCharacter.getSkin());
+//                            }
+//
+//                            if(!(rightElement.getElementsByTagName("hair").item(0) == null ||
+//                                    rightElement.getElementsByTagName("hair").item(0).getTextContent().matches(""))){
+//                                if(!rightElement.getElementsByTagName("hair").item(0).getTextContent().matches("default"))
+//                                    panelRef.getRightCharacter().setHair(Color.web(rightElement.getElementsByTagName("hair").item(0).getTextContent()));
+//                            } else if(rightCharacter != null && rightCharacter.getHair() != null){
+//                                panelRef.getRightCharacter().setHair(rightCharacter.getSkin());
+//                            }
+//
+//                            if(!(rightElement.getElementsByTagName("lips").item(0) == null ||
+//                                    rightElement.getElementsByTagName("lips").item(0).getTextContent().matches(""))){
+//                                if(!rightElement.getElementsByTagName("lips").item(0).getTextContent().matches("default"))
+//                                    panelRef.getRightCharacter().setLips(Color.web(rightElement.getElementsByTagName("lips").item(0).getTextContent()));
+//                            } else if(rightCharacter != null && rightCharacter.getLips() != null){
+//                                panelRef.getRightCharacter().setLips(rightCharacter.getSkin());
+//                            }
+//
+//                            if(!(rightElement.getElementsByTagName("facing").item(0) == null ||
+//                                    rightElement.getElementsByTagName("facing").item(0).getTextContent().matches(""))){
+//                                if(!rightElement.getElementsByTagName("facing").item(0).getTextContent().matches("left"))
+//                                    panelRef.getRightCharacter().flipOrientation();
+//                            }
+//
+//                            if(!(rightElement.getElementsByTagName("xPosition").item(0) == null ||
+//                                    rightElement.getElementsByTagName("xPosition").item(0).getTextContent().matches(""))){
+//                                panelRef.getRightCharacter().setTranslateX(Double.parseDouble(rightElement.getElementsByTagName("xPosition").item(0).getTextContent()));
+//                            }
+//
+//                            if(!(rightElement.getElementsByTagName("yPosition").item(0) == null ||
+//                                    rightElement.getElementsByTagName("yPosition").item(0).getTextContent().matches(""))){
+//                                panelRef.getRightCharacter().setTranslateY(Double.parseDouble(rightElement.getElementsByTagName("yPosition").item(0).getTextContent()));
+//                            }
+//
+//                            panelRef.getRightCharacter().updateImage();
+//
+//                            if(!(rightElement.getElementsByTagName("balloon").item(0) == null ||
+//                                    rightElement.getElementsByTagName("balloon").item(0).getTextContent().matches(""))){
+//
+//                                Image image;
+//                                String content;
+//                                Font font = new Font("Segoe UI", 20);
+//                                String status;
+//
+//
+//                                if(!(rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0) == null ||
+//                                        rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent().matches(""))){
+//                                    status =  rightElement.getElementsByTagName("balloon").item(0).getAttributes().item(0).getTextContent();
+//                                }else{
+//                                    status = "speechBubble.png";
+//                                }
+//
+//                                image = new Image(new FileInputStream("src/images/bubbles/" + status));
+//
+//                                panelRef.setRightBubble(image, rightElement.getElementsByTagName("balloon").item(0).getTextContent(), font, status);
+//                            }
 
                             System.out.println((temp + 1) + "/" + nList.getLength());
 
@@ -1753,7 +1832,8 @@ public class Main extends Application {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+            }
+        });
 
                 //KEEP CODE ALLOWS USER TO NAVIAGE FILE EXPLORER AND FIND THEIR FILE
 
@@ -1775,8 +1855,7 @@ public class Main extends Application {
 //                Scene scene = new Scene(vBox);
 //                saveXML.setScene(scene);
 //                saveXML.show();
-            }
-        });
+
 
         new_project.setOnAction(new EventHandler<ActionEvent>() {
             @Override
