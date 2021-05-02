@@ -190,7 +190,12 @@ public class ComicCharacter extends Pane {
     public void setCharacterImageView(String characterImagePath) throws FileNotFoundException {
         this.getChildren().remove(characterImageView);
 
-        this.characterImage = new Image(new FileInputStream(characterImagePath));
+        try {
+            this.characterImage = new Image(new FileInputStream(characterImagePath));
+        }catch (Exception e){
+            this.characterImage = new Image(new FileInputStream("src/images/characters/neutral.png"));
+        }
+
         this.characterImageView = new ImageView(characterImage);
 
         this.characterImageView.setFitWidth(100);
