@@ -13,6 +13,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -44,14 +51,17 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
 import java.sql.Time;
 import java.util.*;
+import java.util.List;
 
 import static java.awt.Color.WHITE;
+
 
 public class Main extends Application {
 
@@ -1565,7 +1575,11 @@ public class Main extends Application {
                         };
                     }
 
-                    new_project.fire();
+                    //new_project.fire();
+                    comicStrip.getChildren().clear();
+                    comicStrip.getChildren().add(newPanelLeft);
+                    comicStrip.getChildren().add(newPanelRight);
+
 
                     int i;
                     HashMap<String, ComicCharacter> characterHashMap = new HashMap<>();
@@ -1627,25 +1641,6 @@ public class Main extends Application {
                     ComicCharacter rightCharacter = null;
 
                     for (int temp = 0; temp < nList.getLength(); temp++) {
-
-                        //TEST CODE FOR PROGRESS BAR
-                        JFrame frame;
-
-
-                        frame = new JFrame("ProgressBar");
-                        JPanel panel = new JPanel();
-                        progressBar = new JProgressBar();
-                        progressBar.setValue(0);
-                        progressBar.setStringPainted(true);
-                        panel.add(progressBar);
-                        frame.add(panel);
-
-                        frame.setSize(500, 500);
-                        frame.setVisible(true);
-
-                        fill();
-
-                        //TEST CODE FOR PROGRES BAR
 
                         org.w3c.dom.Node nNode = nList.item(temp);
 
@@ -2138,6 +2133,26 @@ public class Main extends Application {
                             System.out.println((temp + 1) + "/" + nList.getLength());
 
                         }
+
+                        //TEST CODE FOR PROGRESS BAR
+                        JFrame frame;
+
+                        frame = new JFrame("Loading...");
+                        JPanel panel = new JPanel();
+                        progressBar = new JProgressBar();
+                        progressBar.setValue(0);
+                        progressBar.setStringPainted(true);
+                        panel.add(progressBar);
+
+                        frame.add(panel);
+
+
+                        frame.setSize(500, 100);
+                        frame.setVisible(true);
+
+
+                        fill(temp, nList.getLength());
+                        //TEST CODE FOR PROGRES BAR
                     }
 
                 } catch (Exception e) {
@@ -2442,20 +2457,17 @@ public class Main extends Application {
     }
 
     //function to increase progress
-    public void fill()
+    public void fill(int x, int y)
     {
-        int i = 0;
+
         try
         {
-            while ( i<= 100)
-            {
-                //fill the menu bar
-                progressBar.setValue(i + 10);
+              //fill the menu bar
+                progressBar.setValue(x/y*100);
 
                 //delay the thread
                 Thread.sleep(1000);
-                i+=20;
-            }
+
         }
         catch ( Exception e) {}
     }
