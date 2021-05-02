@@ -1682,7 +1682,9 @@ public class Main extends Application {
                                                     if (!figureNode.getTextContent().matches("default"))
                                                         panelRef.getLeftCharacter().setSkin(Color.web(figureNode.getTextContent()));
                                                 }else if(figureNode.getNodeName().matches("hair")) {
-                                                    if (!figureNode.getTextContent().matches("default|blond|bald"))
+                                                    if(figureNode.getTextContent().matches("bald")) {
+                                                        panelRef.getLeftCharacter().setHair(panelRef.getLeftCharacter().getSkin());
+                                                    }else if (!figureNode.getTextContent().matches("default|blond"))
                                                         panelRef.getLeftCharacter().setHair(Color.web(figureNode.getTextContent().toUpperCase()));
                                                 }else if(figureNode.getNodeName().matches("lips")) {
                                                     if (!figureNode.getTextContent().matches("default"))
@@ -1823,7 +1825,9 @@ public class Main extends Application {
                                                     if (!figureNode.getTextContent().matches("default"))
                                                         panelRef.getRightCharacter().setSkin(Color.web(figureNode.getTextContent()));
                                                 }else if(figureNode.getNodeName().matches("hair")) {
-                                                    if (!figureNode.getTextContent().matches("default|blond|bald"))
+                                                    if(figureNode.getTextContent().matches("bald")) {
+                                                        panelRef.getRightCharacter().setHair(panelRef.getRightCharacter().getSkin());
+                                                    } else if (!figureNode.getTextContent().matches("default|blond"))
                                                         panelRef.getRightCharacter().setHair(Color.web(figureNode.getTextContent().toUpperCase()));
                                                 }else if(figureNode.getNodeName().matches("lips")) {
                                                     if (!figureNode.getTextContent().matches("default"))
