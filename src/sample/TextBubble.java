@@ -1,7 +1,8 @@
 package sample;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
 public class TextBubble extends Pane {
@@ -25,7 +26,6 @@ public class TextBubble extends Pane {
         }
         this.text.setTranslateX(this.bubble.getBoundsInParent().getCenterX() - (this.text.getBoundsInParent().getWidth()/2));
         this.text.setTranslateY(this.bubble.getBoundsInParent().getCenterY() - (this.text.getBoundsInParent().getHeight()/2));
-        this.getChildren().add(this.bubble);
         this.getChildren().add(this.text);
     }
 
@@ -35,6 +35,7 @@ public class TextBubble extends Pane {
 
     public void setBubble(ImageView bubble) {
         this.bubble = bubble;
+        updateImage();
     }
 
     public Text getText() {
@@ -85,5 +86,32 @@ public class TextBubble extends Pane {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void updateImage() {
+        this.getChildren().remove(bubble);
+        Image image = bubble.getImage();
+
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        WritableImage writableImage = new WritableImage(width, height);
+
+        PixelReader pixelReader = image.getPixelReader();
+        PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color color = pixelReader.getColor(x, y);
+
+                if (color.equals(Color.rgb(255, 254, 255))) {
+                    pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
+                }
+                else
+                    pixelWriter.setColor(x, y, color);
+            }
+        }
+        bubble = new ImageView(writableImage);
+        this.getChildren().add(bubble);
     }
 }
