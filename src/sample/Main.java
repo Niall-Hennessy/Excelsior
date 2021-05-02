@@ -600,21 +600,34 @@ public class Main extends Application {
                 Tab speechBubbleTab = new Tab("Speech Bubbles");
                 Tab colourTab = new Tab("Skin/Hair");
                 Tab captionTab = new Tab("Caption");
+                Tab backgroundTab = new Tab("Backgrounds");
+                Tab lockTab = new Tab("Lock/Unlock");
+                Tab undoDeleteTab = new Tab("Undo/Delete");
 
                 characterTab.getStyleClass().add("helpTab");
                 speechBubbleTab.getStyleClass().add("helpTab");
                 colourTab.getStyleClass().add("helpTab");
                 captionTab.getStyleClass().add("helpTab");
+                backgroundTab.getStyleClass().add("helpTab");
+                lockTab.getStyleClass().add("helpTab");
+                undoDeleteTab.getStyleClass().add("helpTab");
+
 
                 characterTab.closableProperty().setValue(false);
                 speechBubbleTab.closableProperty().setValue(false);
                 colourTab.closableProperty().setValue(false);
                 captionTab.closableProperty().setValue(false);
+                backgroundTab.closableProperty().setValue(false);
+                lockTab.closableProperty().setValue(false);
+                undoDeleteTab.closableProperty().setValue(false);
 
                 helpPane.getTabs().add(characterTab);
                 helpPane.getTabs().add(speechBubbleTab);
                 helpPane.getTabs().add(colourTab);
                 helpPane.getTabs().add(captionTab);
+                helpPane.getTabs().add(backgroundTab);
+                helpPane.getTabs().add(lockTab);
+                helpPane.getTabs().add(undoDeleteTab);
 
                 helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.7);
                 helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
@@ -673,6 +686,34 @@ public class Main extends Application {
                 ScrollPane instructionCaption =  new ScrollPane(label);
                 instructionCaption.getStyleClass().add("contentPane");
 
+                label = new Label(
+                        "\n Let's add a background!\n" +
+                                "\n Hit the background button and double click the image you want to use."
+                );
+
+                ScrollPane instructionBackground = new ScrollPane(label);
+                instructionBackground.getStyleClass().add("contentPane");
+
+                label = new Label(
+                        "\n Let's protect your work!\n" +
+                                "\n When you have finished working on your panel, to prevent accidental changes hit the open lock button." +
+                                "\n This prevents changes to the panel until you unlock it." +
+                                "\n To unlock the panel hit the now closed lock button."
+                );
+
+                ScrollPane instructionLock = new ScrollPane(label);
+                instructionLock.getStyleClass().add("contentPane");
+
+                label = new Label(
+                        "\n Undo: \n" +
+                                "\n Hit the back arrow button to undo or hit 'z' on your keyboard ." +
+                                "\n \n Delete:\n" +
+                                "\n Hit the red trash can button to delete the selected panel. "
+                );
+
+                ScrollPane instructionUndoDelete = new ScrollPane(label);
+                instructionUndoDelete.getStyleClass().add("contentPane");
+
 
                 instructionCharacter.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 instructionCharacter.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -690,10 +731,26 @@ public class Main extends Application {
                 instructionCaption.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
                 instructionCaption.fitToWidthProperty().setValue(true);
 
+                instructionBackground.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionBackground.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionBackground.fitToWidthProperty().setValue(true);
+
+                instructionLock.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionLock.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionLock.fitToWidthProperty().setValue(true);
+
+                instructionUndoDelete.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionUndoDelete.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+                instructionUndoDelete.fitToWidthProperty().setValue(true);
+
+
                 characterTab.setContent(instructionCharacter);
                 speechBubbleTab.setContent(instructionSpeechBubble);
                 colourTab.setContent(instructionColour);
                 captionTab.setContent(instructionCaption);
+                backgroundTab.setContent(instructionBackground);
+                lockTab.setContent(instructionLock);
+                undoDeleteTab.setContent(instructionUndoDelete);
 
                 Scene scene = new Scene(helpPane);
                 helpStage.setScene(scene);
