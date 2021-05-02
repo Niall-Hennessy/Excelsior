@@ -34,8 +34,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.w3c.dom.*;
-
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -54,6 +54,8 @@ import java.util.*;
 import static java.awt.Color.WHITE;
 
 public class Main extends Application {
+
+    JProgressBar progressBar;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -499,7 +501,7 @@ public class Main extends Application {
                     TransformerFactory transformerFactory = TransformerFactory.newInstance();
                     Transformer transformer = transformerFactory.newTransformer();
                     DOMSource source = new DOMSource(doc);
-                    StreamResult result = new StreamResult(new File("C:\\Users\\Ada\\Desktop\\cars.xml"));
+                    StreamResult result = new StreamResult(new File("C:\\Users\\35383\\Desktop\\cars.xml"));
                     transformer.transform(source, result);
 
                     // Output to console for testing
@@ -1537,7 +1539,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
 
                 try {
-                    File inputFile = new File("C:\\Users\\Ada\\Desktop\\cars.xml");
+                    File inputFile = new File("C:\\Users\\35383\\Desktop\\cars.xml");
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
@@ -1625,6 +1627,26 @@ public class Main extends Application {
                     ComicCharacter rightCharacter = null;
 
                     for (int temp = 0; temp < nList.getLength(); temp++) {
+
+                        //TEST CODE FOR PROGRESS BAR
+                        JFrame frame;
+
+
+                        frame = new JFrame("ProgressBar");
+                        JPanel panel = new JPanel();
+                        progressBar = new JProgressBar();
+                        progressBar.setValue(0);
+                        progressBar.setStringPainted(true);
+                        panel.add(progressBar);
+                        frame.add(panel);
+
+                        frame.setSize(500, 500);
+                        frame.setVisible(true);
+
+                        fill();
+
+                        //TEST CODE FOR PROGRES BAR
+
                         org.w3c.dom.Node nNode = nList.item(temp);
 
                         if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -2124,6 +2146,7 @@ public class Main extends Application {
             }
         });
 
+
                 //KEEP CODE ALLOWS USER TO NAVIAGE FILE EXPLORER AND FIND THEIR FILE
 
 //                if(saveXML.isShowing()) {
@@ -2416,6 +2439,25 @@ public class Main extends Application {
 
         primaryStage.show();
 
+    }
+
+    //function to increase progress
+    public void fill()
+    {
+        int i = 0;
+        try
+        {
+            while ( i<= 100)
+            {
+                //fill the menu bar
+                progressBar.setValue(i + 10);
+
+                //delay the thread
+                Thread.sleep(1000);
+                i+=20;
+            }
+        }
+        catch ( Exception e) {}
     }
 
     public static void main(String[] args) {
