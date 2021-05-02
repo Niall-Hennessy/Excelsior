@@ -5,6 +5,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Screen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,15 +16,17 @@ import java.math.RoundingMode;
 public class ComicCharacter extends Pane {
 
     ImageView characterImageView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
+    int charBoxLength = (int)((Screen.getPrimary().getBounds().getHeight())/2.45)/3;
 
     Image characterImage;
 
-    static String imageName;
+    String imageName;
 
     boolean isFemale = true;
 
     Color skin = Color.rgb(255,232,216,1);
     Color hair =  Color.rgb(240,255,0,1);
+    Color lips = Color.rgb(255, 200, 200, 1);
 
     public ComicCharacter() throws FileNotFoundException {
         this.getChildren().add(characterImageView);
@@ -85,8 +88,8 @@ public class ComicCharacter extends Pane {
                         else
                             pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
                     }
-                    else if(isOnLine(Color.web("#FF0000"), Color.web("#FFA1A1"), color) && !isFemale){
-                        pixelWriter.setColor(x, y, skin);
+                    else if(color.equals(Color.web("#FF0000")) && !isFemale){
+                        pixelWriter.setColor(x, y, lips);
                     }
                     else if(x < 400 && x > 200 && y > 200 && !isFemale){
                         if(color.toString().substring(2,4).matches("ff")) {
@@ -102,8 +105,10 @@ public class ComicCharacter extends Pane {
             }
 
         ImageView imageView = new ImageView(writableImage);
-        imageView.setFitHeight(writableImage.getHeight()/4);
-        imageView.setFitWidth(writableImage.getWidth()/4);
+        //imageView.setFitHeight(writableImage.getHeight()/4);
+        //imageView.setFitWidth(writableImage.getWidth()/4);
+        imageView.setFitHeight(charBoxLength);
+        imageView.setFitWidth(charBoxLength);
         imageView.setSmooth(false);
         imageView.setRotationAxis(Rotate.Y_AXIS);
         imageView.setRotate(characterImageView.getRotate());
@@ -225,5 +230,20 @@ public class ComicCharacter extends Pane {
         this.hair = hair;
 
         updateImage();
+    }
+
+    public Color getLips() {
+        return lips;
+    }
+
+    public void setLips(Color lips) {
+
+        this.lips = lips;
+
+        updateImage();
+    }
+
+    public String getImageName() {
+        return imageName;
     }
 }
