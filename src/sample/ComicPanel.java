@@ -454,11 +454,9 @@ public class ComicPanel extends Pane {
 
         ImageView imageView = new ImageView(image);
 
-        imageView.setRotationAxis(Rotate.Y_AXIS);
-        imageView.setRotate(180);
-
         rightTextBubble = new TextBubble(imageView, text, font, status);
-
+        rightTextBubble.getBubble().setRotationAxis(Rotate.Y_AXIS);
+        rightTextBubble.getBubble().setRotate(180);
 
         rightTextBubble.setTranslateX(rightCharacter.getTranslateX() - 20);
         rightTextBubble.setTranslateY(rightCharacter.getTranslateY() - 50);
