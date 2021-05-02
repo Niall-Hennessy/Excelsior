@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -74,7 +75,7 @@ public class ComicPanel extends Pane {
                 "-fx-background-repeat: stretch; " +
                 "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
                 "-fx-border-color: BLACK; " +
-                "-fx-border-width: 5");
+                "-fx-border-width: 3");
     }
 
     public ComicCharacter getLeftCharacter() {
@@ -395,11 +396,120 @@ public class ComicPanel extends Pane {
         this.getChildren().add(leftTextBubble);
     }
 
+    public void setLeftBubble(String imagePath, String text, Font font, String status) throws FileNotFoundException {
+        this.getChildren().remove(leftTextBubble);
+
+        ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/bubbles/" + imagePath + ".png")));
+
+        leftTextBubble = new TextBubble(imageView, text, font, status);
+
+        leftTextBubble.setTranslateX(leftCharacter.getTranslateX() + 70);
+        leftTextBubble.setTranslateY(leftCharacter.getTranslateY() - 50);
+
+        AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
+
+        leftTextBubble.setOnMouseEntered(mouseEvent -> {
+            leftTextBubble.getScene().setCursor(Cursor.MOVE);
+        });
+
+        leftTextBubble.setOnMouseExited(mouseEvent -> {
+            leftTextBubble.getScene().setCursor(Cursor.DEFAULT);
+        });
+
+        leftTextBubble.setOnMousePressed(pressEvent -> {
+            dragX.set(0.0);
+            dragY.set(0.0);
+            leftTextBubble.setOnMouseDragged(dragEvent -> {
+
+                double offsetX = leftTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                double offsetY = leftTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+
+                if(offsetX < 3)
+                    offsetX = 3;
+                else if(offsetX > this.getWidth()-4 - leftTextBubble.getWidth())
+                    offsetX = this.getWidth()-4 - leftTextBubble.getWidth();
+
+                if(offsetY < 3)
+                    offsetY = 3;
+                else if(offsetY > this.getHeight()-4 - leftTextBubble.getHeight())
+                    offsetY = this.getHeight()-4 - leftTextBubble.getHeight();
+
+
+                leftTextBubble.setTranslateX(offsetX);
+                leftTextBubble.setTranslateY(offsetY);
+                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+            });
+        });
+
+        leftTextBubble.setTranslateX(leftTextBubble.getTranslateX() + dragX.get());
+        leftTextBubble.setTranslateY(leftTextBubble.getTranslateY() + dragY.get());
+        this.getChildren().add(leftTextBubble);
+    }
+
     public void setRightBubble(Image image, String text, Font font, String status){
         this.getChildren().remove(rightTextBubble);
         double checkS = image.getWidth() + image.getHeight();
 
         ImageView imageView = new ImageView(image);
+
+        imageView.setRotationAxis(Rotate.Y_AXIS);
+        imageView.setRotate(180);
+
+        rightTextBubble = new TextBubble(imageView, text, font, status);
+
+
+        rightTextBubble.setTranslateX(rightCharacter.getTranslateX() - 20);
+        rightTextBubble.setTranslateY(rightCharacter.getTranslateY() - 50);
+
+        AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
+        AtomicReference<Double> dragY = new AtomicReference<>((double) 0);
+
+        rightTextBubble.setOnMouseEntered(mouseEvent -> {
+            rightTextBubble.getScene().setCursor(Cursor.MOVE);
+        });
+
+        rightTextBubble.setOnMouseExited(mouseEvent -> {
+            rightTextBubble.getScene().setCursor(Cursor.DEFAULT);
+        });
+
+        rightTextBubble.setOnMousePressed(pressEvent -> {
+            dragX.set(0.0);
+            dragY.set(0.0);
+            rightTextBubble.setOnMouseDragged(dragEvent -> {
+
+                double offsetX = rightTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                double offsetY = rightTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+
+                if(offsetX < 3)
+                    offsetX = 3;
+                else if(offsetX > this.getWidth()-4 - rightTextBubble.getWidth())
+                    offsetX = this.getWidth()-4 - rightTextBubble.getWidth();
+
+                if(offsetY < 3)
+                    offsetY = 3;
+                else if(offsetY > this.getHeight()-4 - rightTextBubble.getHeight())
+                    offsetY = this.getHeight()-4 - rightTextBubble.getHeight();
+
+
+                rightTextBubble.setTranslateX(offsetX);
+                rightTextBubble.setTranslateY(offsetY);
+                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+            });
+        });
+
+        rightTextBubble.setTranslateX(rightTextBubble.getTranslateX() + dragX.get());
+        rightTextBubble.setTranslateY(rightTextBubble.getTranslateY() + dragY.get());
+
+        this.getChildren().add(rightTextBubble);
+    }
+
+    public void setRightBubble(String imagePath, String text, Font font, String status) throws FileNotFoundException {
+        this.getChildren().remove(rightTextBubble);
+
+        ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/bubbles/" + imagePath + ".png")));
 
         imageView.setRotationAxis(Rotate.Y_AXIS);
         imageView.setRotate(180);
