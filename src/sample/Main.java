@@ -1687,34 +1687,45 @@ public class Main extends Application {
                                                 while (figureNode != null) {
 
                                                     if (figureNode.getTextContent().matches("")) {
-                                                        if (nameElement != null) {
-                                                            if (figureNode.getNodeName().matches("pose")) {
-                                                                panelRef.setLeftCharacter("src/images/characters/" + nameElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
-                                                            } else if (figureNode.getNodeName().matches("appearance")) {
-                                                                if (nameElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
-                                                                    panelRef.getLeftCharacter().setFemale(false);
-                                                            } else if (figureNode.getNodeName().matches("skin")) {
-                                                                if (!nameElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
-                                                                    panelRef.getLeftCharacter().setSkin(Color.web(figureNode.getTextContent()));
-                                                            } else if (figureNode.getNodeName().matches("hair")) {
-                                                                if (!nameElement.getElementsByTagName("hair").item(0).getTextContent().matches("default"))
-                                                                    panelRef.getLeftCharacter().setHair(Color.web(figureNode.getTextContent()));
-                                                            } else if (figureNode.getNodeName().matches("lips")) {
-                                                                if (!nameElement.getElementsByTagName("lips").item(0).getTextContent().matches("default"))
-                                                                    panelRef.getLeftCharacter().setLips(Color.web(figureNode.getTextContent()));
-                                                            } else if (figureNode.getNodeName().matches("facing")) {
-                                                                if (nameElement.getElementsByTagName("facing").item(0).getTextContent().matches("left"))
-                                                                    panelRef.getLeftCharacter().flipOrientation();
-                                                            } else if (figureNode.getNodeName().matches("xPosition")) {
-                                                                panelRef.getLeftCharacter().setTranslateX(Double.parseDouble(nameElement.getElementsByTagName("xPosition").item(0).getTextContent()));
-                                                            } else if (figureNode.getNodeName().matches("yPosition")) {
-                                                                panelRef.getLeftCharacter().setTranslateY(Double.parseDouble(nameElement.getElementsByTagName("yPosition").item(0).getTextContent()));
-                                                            }
-                                                        } else {
-                                                            figureNode = figureNode.getNextSibling();
-                                                        }
+                                                        figureNode = figureNode.getNextSibling();
+                                                        continue;
                                                     } else if (figureNode.getNodeName().matches("name")) {
                                                         nameElement = characterHashMap.get(figureNode.getTextContent());
+
+                                                        if(nameElement.getElementsByTagName("pose").item(0) != null)
+                                                            panelRef.setLeftCharacter("src/images/characters/" + nameElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
+
+                                                        if(nameElement.getElementsByTagName("appearance").item(0) != null)
+                                                            if (nameElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
+                                                                panelRef.getLeftCharacter().setFemale(false);
+
+                                                        if(nameElement.getElementsByTagName("skin").item(0) != null)
+                                                            if (!nameElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
+                                                                panelRef.getLeftCharacter().setSkin(Color.web(nameElement.getElementsByTagName("skin").item(0).getTextContent().toUpperCase()));
+
+                                                        if(nameElement.getElementsByTagName("hair").item(0) != null) {
+                                                            if (nameElement.getElementsByTagName("hair").item(0).getTextContent().matches("bald")) {
+                                                                panelRef.getLeftCharacter().setHair(panelRef.getLeftCharacter().getSkin());
+                                                            } else if (!nameElement.getElementsByTagName("hair").item(0).getTextContent().matches("default|blond")) {
+                                                                panelRef.getLeftCharacter().setHair(Color.web(nameElement.getElementsByTagName("hair").item(0).getTextContent().toUpperCase()));
+                                                            }
+                                                        }
+                                                        if(nameElement.getElementsByTagName("lips").item(0) != null) {
+                                                            if (!nameElement.getElementsByTagName("lips").item(0).getTextContent().matches("default")) {
+                                                                panelRef.getLeftCharacter().setLips(Color.web(nameElement.getElementsByTagName("lips").item(0).getTextContent().toUpperCase()));
+                                                            }
+                                                        }
+
+                                                        if(nameElement.getElementsByTagName("facing").item(0) != null)
+                                                            if (nameElement.getElementsByTagName("facing").item(0).getTextContent().matches("left"))
+                                                                panelRef.getLeftCharacter().flipOrientation();
+
+                                                        if(nameElement.getElementsByTagName("xPosition").item(0) != null)
+                                                            panelRef.getLeftCharacter().setTranslateX(Double.parseDouble(nameElement.getElementsByTagName("xPosition").item(0).getTextContent()));
+
+                                                        if(nameElement.getElementsByTagName("yPosition").item(0) != null)
+                                                            panelRef.getLeftCharacter().setTranslateY(Double.parseDouble(nameElement.getElementsByTagName("yPosition").item(0).getTextContent()));
+
                                                     } else if (figureNode.getNodeName().matches("pose")) {
                                                         panelRef.setLeftCharacter("src/images/characters/" + figureNode.getTextContent() + ".png");
                                                     } else if (figureNode.getNodeName().matches("appearance")) {
@@ -1823,34 +1834,45 @@ public class Main extends Application {
                                                 while (figureNode != null) {
 
                                                     if (figureNode.getTextContent().matches("")) {
-                                                        if (nameElement != null) {
-                                                            if (figureNode.getNodeName().matches("pose")) {
-                                                                panelRef.setRightCharacter("src/images/characters/" + nameElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
-                                                            } else if (figureNode.getNodeName().matches("appearance")) {
-                                                                if (nameElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
-                                                                    panelRef.getRightCharacter().setFemale(false);
-                                                            } else if (figureNode.getNodeName().matches("skin")) {
-                                                                if (!nameElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
-                                                                    panelRef.getRightCharacter().setSkin(Color.web(figureNode.getTextContent()));
-                                                            } else if (figureNode.getNodeName().matches("hair")) {
-                                                                if (!nameElement.getElementsByTagName("hair").item(0).getTextContent().matches("default"))
-                                                                    panelRef.getRightCharacter().setHair(Color.web(figureNode.getTextContent()));
-                                                            } else if (figureNode.getNodeName().matches("lips")) {
-                                                                if (!nameElement.getElementsByTagName("lips").item(0).getTextContent().matches("default"))
-                                                                    panelRef.getRightCharacter().setLips(Color.web(figureNode.getTextContent()));
-                                                            } else if (figureNode.getNodeName().matches("facing")) {
-                                                                if (nameElement.getElementsByTagName("facing").item(0).getTextContent().matches("right"))
-                                                                    panelRef.getRightCharacter().flipOrientation();
-                                                            } else if (figureNode.getNodeName().matches("xPosition")) {
-                                                                panelRef.getRightCharacter().setTranslateX(Double.parseDouble(nameElement.getElementsByTagName("xPosition").item(0).getTextContent()));
-                                                            } else if (figureNode.getNodeName().matches("yPosition")) {
-                                                                panelRef.getRightCharacter().setTranslateY(Double.parseDouble(nameElement.getElementsByTagName("yPosition").item(0).getTextContent()));
-                                                            }
-                                                        } else {
-                                                            figureNode = figureNode.getNextSibling();
-                                                        }
+                                                        figureNode = figureNode.getNextSibling();
+                                                        continue;
                                                     } else if (figureNode.getNodeName().matches("name")) {
                                                         nameElement = characterHashMap.get(figureNode.getTextContent());
+
+                                                        if(nameElement.getElementsByTagName("pose").item(0) != null)
+                                                            panelRef.setRightCharacter("src/images/characters/" + nameElement.getElementsByTagName("pose").item(0).getTextContent() + ".png");
+
+                                                        if(nameElement.getElementsByTagName("appearance").item(0) != null)
+                                                            if (nameElement.getElementsByTagName("appearance").item(0).getTextContent().matches("male"))
+                                                                panelRef.getRightCharacter().setFemale(false);
+
+                                                        if(nameElement.getElementsByTagName("skin").item(0) != null)
+                                                            if (!nameElement.getElementsByTagName("skin").item(0).getTextContent().matches("default"))
+                                                                panelRef.getRightCharacter().setSkin(Color.web(nameElement.getElementsByTagName("skin").item(0).getTextContent().toUpperCase()));
+
+                                                        if(nameElement.getElementsByTagName("hair").item(0) != null) {
+                                                            if (nameElement.getElementsByTagName("hair").item(0).getTextContent().matches("bald")) {
+                                                                panelRef.getRightCharacter().setHair(panelRef.getRightCharacter().getSkin());
+                                                            } else if (!nameElement.getElementsByTagName("hair").item(0).getTextContent().matches("default|blond")) {
+                                                                panelRef.getRightCharacter().setHair(Color.web(nameElement.getElementsByTagName("hair").item(0).getTextContent().toUpperCase()));
+                                                            }
+                                                        }
+                                                        if(nameElement.getElementsByTagName("lips").item(0) != null) {
+                                                            if (!nameElement.getElementsByTagName("lips").item(0).getTextContent().matches("default")) {
+                                                                panelRef.getRightCharacter().setLips(Color.web(nameElement.getElementsByTagName("lips").item(0).getTextContent().toUpperCase()));
+                                                            }
+                                                        }
+
+                                                        if(nameElement.getElementsByTagName("facing").item(0) != null)
+                                                            if (nameElement.getElementsByTagName("facing").item(0).getTextContent().matches("left"))
+                                                                panelRef.getRightCharacter().flipOrientation();
+
+                                                        if(nameElement.getElementsByTagName("xPosition").item(0) != null)
+                                                            panelRef.getRightCharacter().setTranslateX(Double.parseDouble(nameElement.getElementsByTagName("xPosition").item(0).getTextContent()));
+
+                                                        if(nameElement.getElementsByTagName("yPosition").item(0) != null)
+                                                            panelRef.getRightCharacter().setTranslateY(Double.parseDouble(nameElement.getElementsByTagName("yPosition").item(0).getTextContent()));
+
                                                     } else if (figureNode.getNodeName().matches("pose")) {
                                                         panelRef.setRightCharacter("src/images/characters/" + figureNode.getTextContent() + ".png");
                                                     } else if (figureNode.getNodeName().matches("appearance")) {
@@ -1948,9 +1970,6 @@ public class Main extends Application {
                                 }
 
                                 progressBar.setValue((int) ((double) (temp + 1) / (double) nList.getLength() * 100));
-
-//                            Thread.sleep(1000);
-//                            System.out.println((double)(temp + 1)/(double)nList.getLength() * 100);
                             }
                         }
 
@@ -2068,8 +2087,6 @@ public class Main extends Application {
 
                     String value = toUndo.substring(0,i);
                     toUndo = toUndo.substring(i+1);
-
-                    System.out.println(value);
 
                     if (operation.matches("delete")) {
                         comicStrip.getChildren().remove(newPanelRight);
