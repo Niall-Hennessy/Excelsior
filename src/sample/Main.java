@@ -14,9 +14,15 @@ import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -38,6 +44,7 @@ import javafx.stage.StageStyle;
 import org.w3c.dom.*;
 
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -48,12 +55,14 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
 import java.sql.Time;
 import java.util.*;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static java.awt.Color.WHITE;
@@ -1993,25 +2002,65 @@ public class Main extends Application {
             comicPanel[0].setSelectedCharacter(null);
 
             FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg");
-            fileChooser.getExtensionFilters().add(extFilter);
+//            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg");
+//            fileChooser.getExtensionFilters().add(extFilter);
             File saveFile = fileChooser.showSaveDialog(saveHTML);
 
+            saveFile.mkdir();
 
-            for(int i=0; i < comicStrip.getChildren().size(); i++){
-                WritableImage img = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
+            for(int i=1; i < comicStrip.getChildren().size()-1; i++){
+                Image img = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
 
-                if (saveFile != null) {
+                int imgWidth = (int) img.getWidth();
+                int imgHeight = (int) img.getHeight();
+
+                WritableImage writableImage = new WritableImage(600, 600);
+
+                PixelReader pixelReader = img.getPixelReader();
+                PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+                int y = 0;
+
+                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() == null){
+
+                    int diff = 600 - imgHeight;
+
+                    for(; y < (diff/2); y++){
+                        for(int x = 0 ;x < 600 ; x++){
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                        }
+                    }
+                }
+
+                int v = y;
+
+                for (; (y - v) < imgHeight; y++){
+                    for(int x = 0 ;x < 600 ; x++) {
+                        pixelWriter.setColor(x, y, pixelReader.getColor(x, (y-v)));
+                    }
+                }
+                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() == null){
+                    for(; y < 600; y++){
+                        for(int x = 0 ;x < 600 ; x++){
+                            pixelWriter.setColor(x, y, Color.WHITE);
+                        }
+                    }
+                }
+
+
+                File toSave = new File(saveFile.getPath() + "\\" + (i-1) + ".png");
+
+                if (toSave != null) {
                     try {
-                        ImageIO.write(SwingFXUtils.fromFXImage(img,
-                                null), "png", saveFile);
+                        ImageIO.write(SwingFXUtils.fromFXImage(writableImage,
+                                null), "png", toSave);
                     } catch (IOException ex) {
                         System.out.println(ex.getMessage());
                     }
                 }
 
-                if(saveFile != null) {
-                    StreamResult result = new StreamResult(saveFile);
+                if(toSave != null) {
+                    StreamResult result = new StreamResult(toSave);
                     StreamResult consoleResult = new StreamResult(System.out);
                 }
             }

@@ -582,6 +582,10 @@ public class ComicPanel extends Pane {
         this.getChildren().add(bottomText);
     }
 
+    public TextCaption getBottomText() {
+        return bottomText;
+    }
+
     public void removeText(boolean[] top, boolean[] bottom){
         if (top[0]){
             this.getChildren().remove(topText);
