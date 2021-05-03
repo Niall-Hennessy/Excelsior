@@ -12,9 +12,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -52,6 +54,7 @@ import java.awt.image.RenderedImage;
 import java.io.*;
 import java.sql.Time;
 import java.util.*;
+import java.util.logging.Logger;
 
 import static java.awt.Color.WHITE;
 
@@ -268,7 +271,6 @@ public class Main extends Application {
                 }
             }
         });
-
 
 
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
@@ -540,8 +542,6 @@ public class Main extends Application {
 
             }
         });
-
-
 
 
         add_character.setOnAction(new EventHandler<ActionEvent>() {
@@ -1978,6 +1978,41 @@ public class Main extends Application {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            }
+        });
+
+        save_htMl.setOnAction((ActionEvent event) -> {
+            final Stage saveHTML = new Stage();
+
+            if(saveHTML.isShowing()) {
+                saveHTML.initOwner(primaryStage);
+            }
+
+            comicPanel[0].unselect();
+            comicPanel[0].setSelectedCharacter(null);
+
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File saveFile = fileChooser.showSaveDialog(saveHTML);
+
+
+            for(int i=0; i < comicStrip.getChildren().size(); i++){
+                WritableImage img = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
+
+                if (saveFile != null) {
+                    try {
+                        ImageIO.write(SwingFXUtils.fromFXImage(img,
+                                null), "png", saveFile);
+                    } catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+
+                if(saveFile != null) {
+                    StreamResult result = new StreamResult(saveFile);
+                    StreamResult consoleResult = new StreamResult(System.out);
                 }
             }
         });
