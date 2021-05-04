@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -41,18 +42,18 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.w3c.dom.*;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLWriter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
@@ -104,15 +105,13 @@ public class Main extends Application {
         Menu file = new Menu("File");
         MenuItem new_project = new MenuItem("New Project");
         MenuItem save_xml = new MenuItem("Save XML");
-        MenuItem save_htMl = new MenuItem("Save HTMl");
+        MenuItem save_html = new MenuItem("Save HTMl");
         MenuItem load_xml = new MenuItem("Load XML");
-        MenuItem load_html = new MenuItem("Load HTML");
         MenuItem add_character = new MenuItem("Add Character");
         file.getItems().add(new_project);
         file.getItems().add(save_xml);
-        file.getItems().add(save_htMl);
+        file.getItems().add(save_html);
         file.getItems().add(load_xml);
-        file.getItems().add(load_html);
         file.getItems().add(add_character);
 
         menuBar.getMenus().add(file);
@@ -1991,7 +1990,7 @@ public class Main extends Application {
             }
         });
 
-        save_htMl.setOnAction((ActionEvent event) -> {
+        save_html.setOnAction((ActionEvent event) -> {
             final Stage saveHTML = new Stage();
 
             if(saveHTML.isShowing()) {
@@ -2002,11 +2001,10 @@ public class Main extends Application {
             comicPanel[0].setSelectedCharacter(null);
 
             FileChooser fileChooser = new FileChooser();
-//            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg");
-//            fileChooser.getExtensionFilters().add(extFilter);
             File saveFile = fileChooser.showSaveDialog(saveHTML);
 
             saveFile.mkdir();
+
 
             for(int i=1; i < comicStrip.getChildren().size()-1; i++){
                 Image img = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
@@ -2016,6 +2014,18 @@ public class Main extends Application {
 
                 WritableImage writableImage = new WritableImage(600, 600);
 
+                double diff = ((ComicPanel)comicStrip.getChildren().get(i)).getHeight();
+
+                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
+                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
+
+                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() != null)
+                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getBottomText().getHeight();
+
+                diff /= 2;
+
+                diff = (int)diff;
+
                 PixelReader pixelReader = img.getPixelReader();
                 PixelWriter pixelWriter = writableImage.getPixelWriter();
 
@@ -2023,9 +2033,7 @@ public class Main extends Application {
 
                 if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() == null){
 
-                    int diff = 600 - imgHeight;
-
-                    for(; y < (diff/2); y++){
+                    for(; y < 50; y++){
                         for(int x = 0 ;x < 600 ; x++){
                             pixelWriter.setColor(x, y, Color.WHITE);
                         }
@@ -2064,6 +2072,69 @@ public class Main extends Application {
                     StreamResult consoleResult = new StreamResult(System.out);
                 }
             }
+
+            if((comicStrip.getChildren().size() % 2) == 1){
+                File toSave = new File(saveFile.getPath() + "\\" + (comicStrip.getChildren().size()-2) + ".png");
+                BufferedImage img = null;
+                try {
+                    img = ImageIO.read(new File("src/images/credits/end_screen.png"));
+                    if (toSave != null) {
+                        try {
+                            ImageIO.write(img, "png", toSave);
+                        } catch (IOException ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                    }
+                } catch (IOException e) {
+                }
+
+                if(toSave != null) {
+                    StreamResult result = new StreamResult(toSave);
+                    StreamResult consoleResult = new StreamResult(System.out);
+                }
+            }
+
+            File htmlFile = new File(saveFile.getPath() + "\\index.html");
+            try {
+                FileWriter myWriter = new FileWriter(saveFile.getPath() + "\\index.html");
+                myWriter.write(
+                        "<!DOCTYPE html>\n" +
+                        "<html>\n" +
+                        "<head>\n" +
+                        "<style>\n" +
+                        "table, th, td {\n" +
+                        "border: 10px solid white;\n" +
+                        "border-collapse: collapse;\n" +
+                        "}\n" +
+                        "</style>\n" +
+                        "</head>\n" +
+                        "<center>\n" +
+                        "<body style=\"background-color:white\">\n" +
+                        "<h2>What if James Bond spied for Auric Goldfinger?</h2>\n" +
+                        "<table>\n"
+                        );
+
+                for(int i=0; i < comicStrip.getChildren().size() - 2 ; i += 2){
+                    myWriter.write(
+                            "<tr>\n" +
+                            "<td><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></td>\n" +
+                            "<td><center><img src=\"" + (i + 1) + ".png\" width=\"500\" height=\"500\"></center></td>\n" +
+                            "</tr>\n"
+                            );
+                }
+
+                myWriter.write(
+                        "</table>\n" +
+                        "</body>\n" +
+                        "</html>\n" +
+                        "</center>\n"
+                );
+
+                myWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         });
 
         new_project.setOnAction(new EventHandler<ActionEvent>() {
@@ -2254,9 +2325,15 @@ public class Main extends Application {
 
                     newComicPanel.index = comicStrip.getChildren().indexOf(newComicPanel);
 
+                    PauseTransition holdTimer = new PauseTransition(Duration.seconds(1));
+
+
+                    newComicPanel.addEventHandler(MouseEvent.MOUSE_RELEASED, eventT -> holdTimer.stop());
+
                     newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
+                            holdTimer.playFromStart();
 
 
                             if(!comicStrip.getChildren().contains(newComicPanel))
