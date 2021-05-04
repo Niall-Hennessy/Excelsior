@@ -2165,13 +2165,30 @@ public class Main extends Application {
                         myWriter.write(
                                 "<tr>\n" +
                                         "<td>\n" +
-                                            "<div style=\"position: relative;\">\n" +
+                                            "<div style=\" text-align: center; position: relative;\">\n" +
                                                 "<div><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></div>\n");
+
+//                        if(isTopBold)
+//                            myWriter.write("<b>\n");
+//                        if(isTopItalic)
+//                            myWriter.write("<i>\n");
                         if(topText != null)
                             myWriter.write("<div style=\"position: absolute; top: 20px; font-family:"+ topFont + "\">"+ topText + " " + "</div>\n");
+//                        if(isTopItalic)
+//                            myWriter.write("</i>\n");
+//                        if(isTopBold)
+//                            myWriter.write("</b>\n");
 
+//                        if(isBottomBold)
+//                            myWriter.write("<b>\n");
+//                        if(isBottomItalic)
+//                            myWriter.write("<i>\n");
                         if(bottomText != null)
                             myWriter.write("<div style=\"position: absolute; bottom: 20px; font-family:" + bottomFont + "\">" + bottomText  + " " + "</div>\n");
+//                        if(isBottomItalic)
+//                            myWriter.write("</i>\n");
+//                        if(isBottomBold)
+//                            myWriter.write("</b>\n");
 
                         myWriter.write("</div>\n</td>\n");
                     } else {
