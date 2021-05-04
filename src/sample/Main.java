@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,6 +34,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
 import java.awt.event.MouseAdapter;
@@ -66,6 +68,18 @@ public class Main extends Application {
         primaryStage.setWidth(widthPrcnt);
 
 
+        final SplashScreen splash = SplashScreen.getSplashScreen();
+        if( splash == null) {
+            System.out.println("SplashScreen.getSplashScreen() returned null");
+            return;
+        }
+
+
+
+
+        
+        
+        
         //TEST FOR SPLASHSCREEN
 /*
         SplashScreen splash = new SplashScreen();
@@ -1540,6 +1554,32 @@ public class Main extends Application {
         primaryStage.show();
 
     }
+
+
+    //TEST 2 FOR SPLASH
+    /*
+    public void splashScreen(Stage stage) {
+        Pane splashLayout = new VBox();
+        ImageView splashImage = new ImageView( new Image(getClass().getResourceAsStream("splahScreen/splash screen.png")));
+        splashLayout.getChildren().add(splashImage);
+        Scene scene = new Scene(splashLayout);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+        PauseTransition pause = new PauseTransition(Duration.seconds(3_000));
+        System.out.println("Test 0");
+        pause.setOnFinished(actionEvent -> {
+            System.out.println("Test 1");
+            Stage mainStage = new Stage();
+            mainStage.setScene(scene);
+            mainStage.show();
+            stage.hide();
+        });
+        System.out.println("Test 2");
+        pause.play();
+
+    }
+     */
+    //TEST 2 FOR SPLASH
 
     public static void main(String[] args) {
         launch(args);

@@ -1,32 +1,65 @@
 package sample;
 
-import com.sun.javafx.application.LauncherImpl;
-import javafx.animation.FadeTransition;
-import javafx.animation.SequentialTransition;
-import javafx.application.Platform;
-import javafx.application.Preloader;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
+import javax.swing.*;
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.awt.event.*;
 
-import static com.sun.javafx.font.PrismFontFactory.isEmbedded;
+
+/*AAAARGH
+public class SplashScreen extends Application {
+
+    public SplashScreen getSplashScreen() {
+        System.out.println("Checking");
+
+        Pane splashLayout = new VBox();
+        ImageView splashImage = new ImageView( new Image(getClass().getResourceAsStream("splahScreen/splash screen.png")));
+        splashLayout.getChildren().add(splashImage);
+        Scene scene = new Scene(splashLayout);
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+        PauseTransition pause = new PauseTransition(Duration.seconds(3_000));
+        System.out.println("Test 0");
+        pause.setOnFinished(actionEvent -> {
+            System.out.println("Test 1");
+            Stage mainStage = new Stage();
+            mainStage.setScene(scene);
+            mainStage.show();
+            stage.hide();
+        });
+        System.out.println("Test 2");
+        pause.play();
+    }
+
+    @Override
+    public void start(Stage stage) {
+        Pane splashLayout = new VBox();
+        ImageView splashImage = new ImageView( new Image(getClass().getResourceAsStream("splahScreen/splash screen.png")));
+        splashLayout.getChildren().add(splashImage);
+        Scene scene = new Scene(splashLayout);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+        PauseTransition pause = new PauseTransition(Duration.seconds(3_000));
+        System.out.println("Test 0");
+        pause.setOnFinished(actionEvent -> {
+            System.out.println("Test 1");
+            Stage mainStage = new Stage();
+            mainStage.setScene(scene);
+            mainStage.show();
+            stage.hide();
+        });
+        System.out.println("Test 2");
+        pause.play();
+
+    }
+}
+
+*/
+//AAAARGH
+
+
 
 /*
 public class SplashScreen extends Preloader {
@@ -246,3 +279,28 @@ public class SplashScreen extends Preloader {
     }
 }
 */
+
+
+class SplashScreen extends JWindow
+{
+    public SplashScreen(String filename, Frame f)
+    {
+        super(f);
+        JLabel l = new JLabel(new ImageIcon("splahScreen/splash screen.png"));
+        getContentPane().add(l, BorderLayout.CENTER);
+        pack();
+        Dimension screenSize =
+                Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension labelSize = l.getPreferredSize();
+        setLocation(screenSize.width/2 - (labelSize.width/2),
+                screenSize.height/2 - (labelSize.height/2));
+        setVisible(true);
+        screenSize = null;
+        labelSize = null;
+        System.out.println("AAArgh");
+    }
+
+    public static SplashScreen getSplashScreen() {
+        return getSplashScreen();
+    }
+}
