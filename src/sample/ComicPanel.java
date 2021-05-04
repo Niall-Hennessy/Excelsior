@@ -619,4 +619,36 @@ public class ComicPanel extends Pane {
     public TextBubble getRightTextBubble() {
         return rightTextBubble;
     }
+
+    TextCaption tmpTopText;
+    TextCaption tmpBottomText;
+
+    public void hideCaptions() {
+        tmpTopText = topText;
+        tmpBottomText = bottomText;
+
+        getChildren().remove(topText);
+        getChildren().remove(bottomText);
+
+        this.topText = null;
+        this.bottomText = null;
+    }
+
+    public void restoreCaptions() {
+        if(tmpTopText != null) {
+            topText = tmpTopText;
+            this.getChildren().add(topText);
+        }
+
+        if(tmpBottomText != null) {
+            int height = (int) Screen.getPrimary().getBounds().getHeight();
+            bottomText = tmpBottomText;
+            bottomText.text.setTextOrigin(VPos.TOP);
+            bottomText.setTranslateY(height / 2.4);
+            this.getChildren().add(bottomText);
+        }
+
+        tmpTopText = null;
+        tmpBottomText = null;
+    }
 }

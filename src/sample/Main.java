@@ -2005,36 +2005,37 @@ public class Main extends Application {
 
             saveFile.mkdir();
 
-
             for(int i=1; i < comicStrip.getChildren().size()-1; i++){
+
+                ComicPanel comicHTMLformat = ((ComicPanel) comicStrip.getChildren().get(i));
+                comicHTMLformat.hideCaptions();
+
                 Image img = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
 
                 int imgWidth = (int) img.getWidth();
                 int imgHeight = (int) img.getHeight();
 
-                WritableImage writableImage = new WritableImage(600, 600);
+                WritableImage writableImage = new WritableImage(imgWidth, (imgHeight + 150));
 
-                double diff = ((ComicPanel)comicStrip.getChildren().get(i)).getHeight();
-
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
-                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
-
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() != null)
-                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getBottomText().getHeight();
-
-                diff /= 2;
-
-                diff = (int)diff;
+//                double diff = ((ComicPanel)comicStrip.getChildren().get(i)).getHeight();
+//
+//                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
+//                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
+//
+//                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() != null)
+//                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getBottomText().getHeight();
+//
+//                diff /= 2;
+//
+//                diff = (int)diff;
 
                 PixelReader pixelReader = img.getPixelReader();
                 PixelWriter pixelWriter = writableImage.getPixelWriter();
 
                 int y = 0;
-
                 if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() == null){
-
-                    for(; y < 50; y++){
-                        for(int x = 0 ;x < 600 ; x++){
+                    for(; y < 75; y++){
+                        for(int x = 0 ;x < imgWidth ; x++){
                             pixelWriter.setColor(x, y, Color.WHITE);
                         }
                     }
@@ -2043,13 +2044,14 @@ public class Main extends Application {
                 int v = y;
 
                 for (; (y - v) < imgHeight; y++){
-                    for(int x = 0 ;x < 600 ; x++) {
+                    for(int x = 0 ;x < imgWidth ; x++) {
                         pixelWriter.setColor(x, y, pixelReader.getColor(x, (y-v)));
                     }
                 }
+
                 if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() == null){
-                    for(; y < 600; y++){
-                        for(int x = 0 ;x < 600 ; x++){
+                    for(; y < imgHeight + 150; y++){
+                        for(int x = 0 ;x < imgWidth ; x++){
                             pixelWriter.setColor(x, y, Color.WHITE);
                         }
                     }
@@ -2071,6 +2073,8 @@ public class Main extends Application {
                     StreamResult result = new StreamResult(toSave);
                     StreamResult consoleResult = new StreamResult(System.out);
                 }
+
+                comicHTMLformat.restoreCaptions();
             }
 
             if((comicStrip.getChildren().size() % 2) == 1){
@@ -2108,33 +2112,95 @@ public class Main extends Application {
                         "}\n" +
                         "</style>\n" +
                         "</head>\n" +
-                        "<center>\n" +
                         "<body style=\"background-color:white\">\n" +
+                        "<center>\n" +
                         "<h2>What if James Bond spied for Auric Goldfinger?</h2>\n" +
                         "<table>\n"
                         );
 
-                for(int i=0; i < comicStrip.getChildren().size() - 2 ; i += 2){
-                    myWriter.write(
-                            "<tr>\n" +
-                            "<td><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></td>\n" +
-                            "<td><center><img src=\"" + (i + 1) + ".png\" width=\"500\" height=\"500\"></center></td>\n" +
-                            "</tr>\n"
-                            );
+//                for(int i=0; i < comicStrip.getChildren().size() - 2 ; i += 2){
+//                    myWriter.write(
+//                            "<tr>\n" +
+//                            "<td>\n" +
+//                                    "<div><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></div>\n");
+//                    if(topText != null) {
+//                        myWriter.write("<div style=\"position: relative; top: 8px\">\"" + topText.getText() + "\"</div>" +
+//                                "</td>"
+//                        );
+//                    } else
+//                        myWriter.write("</td>");
+//
+//                    if(bottomText != null) {
+//                        myWriter.write("<div style=\"position: relative; bottom: 8px\">\"" + bottomText.getText() + "\"</div>");
+//                    } else
+//                        myWriter.write("</td>");
+//
+//                    myWriter.write(
+//                            "<td> + " +
+//                                    "<div><center><img src=\"" + (i + 1) + ".png\" width=\"500\" height=\"500\"></center></div>" +
+//                                "</td>\n" +
+//                                "</tr>\n"
+//                    );
+//                }
+
+                for(int i=0; i < comicStrip.getChildren().size()-2; i++){
+                    String topText = "";
+                    String bottomText = "";
+                    String topFont = "Arial";
+                    String bottomFont = "Arial";
+                    ComicPanel comicHTMLformat = ((ComicPanel) comicStrip.getChildren().get(i+1));
+
+                    if(comicHTMLformat.getTopText() != null) {
+                        topText = comicHTMLformat.getTopText().getText();
+                        topFont  = comicHTMLformat.getTopText().getFont();
+                    }
+
+                    if(comicHTMLformat.getBottomText() != null) {
+                        bottomText = comicHTMLformat.getBottomText().getText();
+                        bottomFont  = comicHTMLformat.getBottomText().getFont();
+                    }
+
+//                    left column
+                    if(i % 2 == 0) {
+                        myWriter.write(
+                                "<tr>\n" +
+                                        "<td>\n" +
+                                            "<div style=\"position: relative;\">\n" +
+                                                "<div><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></div>\n");
+                        if(topText != null)
+                            myWriter.write("<div style=\"position: absolute; top: 20px; font-family:"+ topFont + "\">"+ topText + " " + "</div>\n");
+
+                        if(bottomText != null)
+                            myWriter.write("<div style=\"position: absolute; bottom: 20px; font-family:" + bottomFont + "\">" + bottomText  + " " + "</div>\n");
+
+                        myWriter.write("</div>\n</td>\n");
+                    } else {
+                        myWriter.write(
+                                "<td>\n" +
+                                        "<div style=\"position: relative;\">\n" +
+                                            "<div><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></div>\n");
+                        if(topText != null)
+                            myWriter.write("<div style=\"position: absolute; top: 20px; font-family:"+ topFont + "\">" + topText  + " " + "</div>\n");
+
+                        if(bottomText != null)
+                            myWriter.write("<div style=\"position: absolute; bottom: 20px; font-family:" + bottomFont + "\">" + bottomText  + " " + "</div>\n");
+
+                        myWriter.write("</div>\n</td>\n</tr>\n");
+                    }
+                    topText = null;
                 }
 
                 myWriter.write(
                         "</table>\n" +
+                        "</center>\n" +
                         "</body>\n" +
-                        "</html>\n" +
-                        "</center>\n"
+                        "</html>\n"
                 );
 
                 myWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         });
 
         new_project.setOnAction(new EventHandler<ActionEvent>() {
