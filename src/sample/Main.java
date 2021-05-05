@@ -2005,40 +2005,50 @@ public class Main extends Application {
 
             saveFile.mkdir();
 
+            double topMaxHeight = 0;
 
-            for(int i=1; i < comicStrip.getChildren().size()-1; i++){
+            for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
+                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null && ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight() > topMaxHeight)
+                    topMaxHeight = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
+            }
+
+            for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
+
                 Image img = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
+
+                double whiteSpace = topMaxHeight;
+
+                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
+                    whiteSpace = topMaxHeight - ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
 
                 int imgWidth = (int) img.getWidth();
                 int imgHeight = (int) img.getHeight();
 
                 WritableImage writableImage = new WritableImage(600, 600);
 
-                double diff = ((ComicPanel)comicStrip.getChildren().get(i)).getHeight();
+//                double diff = ((ComicPanel)comicStrip.getChildren().get(i)).getHeight();
+//
+//                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
+//                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
+//
+//                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() != null)
+//                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getBottomText().getHeight();
 
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
-                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
-
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() != null)
-                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getBottomText().getHeight();
-
-                diff /= 2;
-
-                diff = (int)diff;
+//                diff /= 2;
+//
+//                diff = (int)diff;
 
                 PixelReader pixelReader = img.getPixelReader();
                 PixelWriter pixelWriter = writableImage.getPixelWriter();
 
                 int y = 0;
 
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() == null){
-
-                    for(; y < 50; y++){
-                        for(int x = 0 ;x < 600 ; x++){
-                            pixelWriter.setColor(x, y, Color.WHITE);
-                        }
+                for(; y < whiteSpace; y++){
+                    for(int x = 0 ;x < 600 ; x++){
+                        pixelWriter.setColor(x, y, Color.WHITE);
                     }
                 }
+
 
                 int v = y;
 
@@ -2047,13 +2057,13 @@ public class Main extends Application {
                         pixelWriter.setColor(x, y, pixelReader.getColor(x, (y-v)));
                     }
                 }
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() == null){
-                    for(; y < 600; y++){
-                        for(int x = 0 ;x < 600 ; x++){
-                            pixelWriter.setColor(x, y, Color.WHITE);
-                        }
-                    }
-                }
+//                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() == null){
+//                    for(; y < 600; y++){
+//                        for(int x = 0 ;x < 600 ; x++){
+//                            pixelWriter.setColor(x, y, Color.WHITE);
+//                        }
+//                    }
+//                }
 
 
                 File toSave = new File(saveFile.getPath() + "\\" + (i-1) + ".png");
