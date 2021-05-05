@@ -45,6 +45,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.w3c.dom.*;
 
@@ -108,7 +109,7 @@ public class Main extends Application {
         Menu file = new Menu("File");
         MenuItem new_project = new MenuItem("New Project");
         MenuItem save_xml = new MenuItem("Save XML");
-        MenuItem save_html = new MenuItem("Save HTMl");
+        MenuItem save_html = new MenuItem("Save HTML");
         MenuItem load_xml = new MenuItem("Load XML");
         MenuItem add_character = new MenuItem("Add Character");
         file.getItems().add(new_project);
@@ -1964,17 +1965,71 @@ public class Main extends Application {
         });
 
         save_html.setOnAction((ActionEvent event) -> {
-            final Stage saveHTML = new Stage();
 
-            if(saveHTML.isShowing()) {
-                saveHTML.initOwner(primaryStage);
-            }
+            //take 2
+            Stage popupwindow=new Stage();
 
-            comicPanel[0].unselect();
-            comicPanel[0].setSelectedCharacter(null);
+            popupwindow.initModality(Modality.APPLICATION_MODAL);
+            popupwindow.setTitle("Enter Title:");
 
-            FileChooser fileChooser = new FileChooser();
-            File saveFile = fileChooser.showSaveDialog(saveHTML);
+            Label popupPrompt= new Label("Enter the title for your comic strip:");
+            popupPrompt.getStyleClass().add("popUpPrompt");
+
+            TextField popupField = new TextField();
+            popupField.setMinHeight(50);
+
+            //save whats entered to the textfield to comicStrip
+
+
+            Button popupClose= new Button("Submit");
+            popupClose.getStyleClass().add("popUpClose");
+
+            //and set it as the title
+            popupClose.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+
+                    if(popupField.getText().isEmpty() || popupField.getText() == null)
+                    {
+                        System.out.println("Fail");
+                        //comicStrip.setComicTitle(popupField.getText());
+                    }
+
+                    System.out.println(popupField.getText());
+
+                    popupwindow.close();
+
+                }
+            });
+
+
+
+            VBox popupLayout= new VBox(10);
+            popupLayout.getStyleClass().add("popUpLayout");
+
+            popupLayout.getChildren().addAll(popupPrompt, popupField, popupClose);
+
+            popupLayout.setAlignment(Pos.CENTER);
+
+            Scene popupScene= new Scene(popupLayout, 300, 250);
+            popupScene.getStylesheets().add("sample/style.css");
+            popupwindow.setScene(popupScene);
+
+            popupwindow.showAndWait();
+
+
+            //take 2
+                final Stage saveHTML = new Stage();
+
+                if(saveHTML.isShowing()) {
+                    saveHTML.initOwner(primaryStage);
+                }
+
+                comicPanel[0].unselect();
+                comicPanel[0].setSelectedCharacter(null);
+
+                FileChooser fileChooser = new FileChooser();
+                File saveFile = fileChooser.showSaveDialog(saveHTML);
 
             if(saveFile != null)
                 saveFile.mkdir();

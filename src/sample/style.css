@@ -127,3 +127,24 @@
     -fx-background-size: 500 400;
     -fx-background-position: center center;
 }
+
+.popUpClose {
+    -fx-background-color: #B5FFA1;
+}
+
+.popUpClose: hover {
+    -fx-background-color: #A8ED95;
+}
+
+.popUpLayout {
+     -fx-background-color:  #E6B9FF; /*PURPLE BORDER STAGE*/
+     -fx-border-color: black;
+     -fx-border-width: 1px;
+}
+
+.popUpPrompt {
+    -fx-alignment: CENTER;
+    -fx-font-weight: bold;
+    -fx-font-family: helvetica;
+    -fx-font-size: 18;
+}
