@@ -1976,10 +1976,18 @@ public class Main extends Application {
             saveFile.mkdir();
 
             double topMaxHeight = 0;
+            double maxHeight = 0;
+            double maxWidth = 0;
 
             for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
                 if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null && ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight() > topMaxHeight)
                     topMaxHeight = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
+
+                if(((ComicPanel)comicStrip.getChildren().get(i)).getHeight() > maxHeight)
+                    maxHeight = ((ComicPanel)comicStrip.getChildren().get(i)).getHeight();
+
+                if(((ComicPanel)comicStrip.getChildren().get(i)).getWidth() > maxWidth)
+                    maxWidth = ((ComicPanel)comicStrip.getChildren().get(i)).getWidth();
             }
 
             for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
@@ -1994,6 +2002,9 @@ public class Main extends Application {
                 int imgWidth = (int) img.getWidth();
                 int imgHeight = (int) img.getHeight();
 
+                System.out.println(maxWidth);
+                System.out.println(maxHeight);
+
                 WritableImage writableImage = new WritableImage(600, 600);
 
                 PixelReader pixelReader = img.getPixelReader();
@@ -2001,21 +2012,25 @@ public class Main extends Application {
 
                 int y = 0;
 
+                if(imgHeight > 600)
+                    imgHeight = 600;
+
+                if(imgWidth > 600)
+                    imgWidth = 600;
+
                 for(; y < whiteSpace; y++){
                     for(int x = 0 ;x < imgWidth ; x++){
                         pixelWriter.setColor(x, y, Color.WHITE);
                     }
                 }
 
-
                 int v = y;
 
                 for (; (y - v) < imgHeight; y++){
-                    for(int x = 0 ;x < imgWidth ; x++) {
+                    for(int x = 0 ;x < imgWidth; x++) {
                         pixelWriter.setColor(x, y, pixelReader.getColor(x, (y-v)));
                     }
                 }
-
 
                 File toSave = new File(saveFile.getPath() + "\\" + (i-1) + ".png");
 
