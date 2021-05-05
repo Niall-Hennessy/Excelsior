@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
@@ -36,6 +37,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
+import javafx.scene.transform.Transform;
+import javafx.scene.transform.Translate;
 import javafx.stage.*;
 import javafx.scene.text.*;
 import javafx.stage.Modality;
@@ -1973,7 +1976,14 @@ public class Main extends Application {
             FileChooser fileChooser = new FileChooser();
             File saveFile = fileChooser.showSaveDialog(saveHTML);
 
-            saveFile.mkdir();
+            if(saveFile != null)
+                saveFile.mkdir();
+
+            System.out.println("Panel Size: " + (height/2.4 + height/9.6));
+
+            int saveSize = 300;
+
+            double scaleFactor = (saveSize / (height/2.4 + height/9.6));
 
             double topMaxHeight = 0;
             double maxHeight = 0;
@@ -1992,7 +2002,12 @@ public class Main extends Application {
 
             for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
 
-                Image img = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
+                SnapshotParameters snapshotParameters = new SnapshotParameters();
+                snapshotParameters.setTransform(Transform.scale(scaleFactor,scaleFactor,scaleFactor, scaleFactor));
+
+                WritableImage sizer = new WritableImage(saveSize,saveSize);
+
+                Image img = comicStrip.getChildren().get(i).snapshot(snapshotParameters, sizer);
 
                 double whiteSpace = topMaxHeight;
 
@@ -2005,18 +2020,18 @@ public class Main extends Application {
                 System.out.println(maxWidth);
                 System.out.println(maxHeight);
 
-                WritableImage writableImage = new WritableImage(600, 600);
+                WritableImage writableImage = new WritableImage(saveSize, saveSize);
 
                 PixelReader pixelReader = img.getPixelReader();
                 PixelWriter pixelWriter = writableImage.getPixelWriter();
 
                 int y = 0;
 
-                if(imgHeight > 600)
-                    imgHeight = 600;
+                if(imgHeight > saveSize)
+                    imgHeight = saveSize;
 
-                if(imgWidth > 600)
-                    imgWidth = 600;
+                if(imgWidth > saveSize)
+                    imgWidth = saveSize;
 
                 for(; y < whiteSpace; y++){
                     for(int x = 0 ;x < imgWidth ; x++){
