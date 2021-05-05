@@ -2006,18 +2006,37 @@ public class Main extends Application {
             saveFile.mkdir();
 
             int maxHeight = 0;
+            int biggestTopCaption = 0;
+            int biggestBottomCaption = 0;
+            Image[] captionImages = new Image[comicStrip.getChildren().size()-2];
+            int[] totalHeight = new int[comicStrip.getChildren().size()-2];
+            int[] withTopCaption = new int[comicStrip.getChildren().size()-2];
 
-            for(int i=1; i < comicStrip.getChildren().size()-1; i++){
+            for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
 
                 ComicPanel comicHTMLformat = ((ComicPanel) comicStrip.getChildren().get(i));
+                captionImages[i - 1] = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
+
+                totalHeight[i - 1] = (int) captionImages[i - 1].getHeight();
                 comicHTMLformat.hideCaptions();
+                comicHTMLformat.restoreTopCaption();
 
-                Image img = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
+                Image localImage = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
+                withTopCaption[i - 1] = (int) localImage.getHeight();
 
-                int tmpHeight = (int) img.getHeight();
+                comicHTMLformat.restoreBottomCaption();
+            }
 
-                if(tmpHeight > maxHeight)
-                    maxHeight = tmpHeight;
+//            get tallest image
+            for(Image img : captionImages) {
+                if(img.getHeight() > maxHeight)
+                    maxHeight = (int)img.getHeight();
+            }
+
+//            add margins above and below
+            for(int i = 0; i < totalHeight.length) {
+                int topCaptionDepth = totalHeight[i] - withTopCaption(i);
+            }
 
                 int imgWidth = (int) img.getWidth();
                 int imgHeight = (int) img.getHeight();
