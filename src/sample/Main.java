@@ -1967,7 +1967,7 @@ public class Main extends Application {
         save_html.setOnAction((ActionEvent event) -> {
 
             //take 2
-            Stage popupwindow=new Stage();
+            Stage popupwindow = new Stage();
 
             popupwindow.initModality(Modality.APPLICATION_MODAL);
             popupwindow.setTitle("Enter Title:");
@@ -2036,7 +2036,7 @@ public class Main extends Application {
 
             System.out.println("Panel Size: " + (height/2.4 + height/9.6));
 
-            int saveSize = 600;//Big Brothers Watching You
+            int saveSize = 600;
 
             double scaleFactor = (saveSize / (height/2.4 + height/9.6));
 
@@ -2156,7 +2156,7 @@ public class Main extends Application {
                         "</head>\n" +
                         "<center>\n" +
                         "<body style=\"background-color:white\">\n" +
-                        "<h2>What if James Bond spied for Auric Goldfinger?</h2>\n" +
+                        "<h2>" + popupField.getText() + "</h2>\n" +
                         "<table>\n"
                         );
 
