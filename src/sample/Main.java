@@ -948,18 +948,7 @@ public class Main extends Application {
                 else
                     textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
 
-                final Text[] characterCounter = {new Text(textfield.getText().length() + "/50")};
 
-                textfield.textProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-                        characterCounter[0].setText(Integer.toString(textfield.getText().length()) + "/50");
-//                        if (textfield.getText().length() > 50) {
-//                            String s = textfield.getText().substring(0, 50);
-//                            textfield.setText(s);
-//                        }
-                    }
-                });
 
                 HBox textbox = new HBox(textfield);
                 textfield.setPrefWidth(800);
@@ -989,8 +978,6 @@ public class Main extends Application {
                 bubbleGrid.setMargin(italic, new Insets (5, 2, 2, 30));
                 bubbleGrid.add(bold, 1, 8, 1, 1);
                 bubbleGrid.setMargin(bold, new Insets (5, 2, 2, 0));
-                bubbleGrid.add(characterCounter[0],0, 11, 1, 1);
-                bubbleGrid.setMargin(characterCounter[0], new Insets (2, 2, 2, 30));
                 bubbleGrid.add(textbox, 0, 9, 3, 1);
                 bubbleGrid.setMargin(textbox, new Insets (10, 10, 1, 30));
                 bubbleGrid.add(submit, 0, 12, 1, 1);
@@ -1237,18 +1224,7 @@ public class Main extends Application {
                 captionTextfield.setPrefWidth(400);
                 captionTextfield.setPrefHeight(25);
 
-                final Text[] captionCharacterCounter = {new Text(captionTextfield.getText().length() + "/50")};
 
-                captionTextfield.textProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-                        captionCharacterCounter[0].setText(Integer.toString(captionTextfield.getText().length()) + "/50");
-                        if (captionTextfield.getText().length() > 50) {
-                            String s = captionTextfield.getText().substring(0, 50);
-                            captionTextfield.setText(s);
-                        }
-                    }
-                });
 
                 GridPane layoutGrid = new GridPane();
                 layoutGrid.getStyleClass().add("layoutGrid");
@@ -1269,8 +1245,6 @@ public class Main extends Application {
                 layoutGrid.setMargin(label, new Insets (5, 0, 5, 25));
                 layoutGrid.add(combo_box,1, 3, 1, 1);
                 layoutGrid.setMargin(combo_box, new Insets (5, 0, 5, 0));
-                layoutGrid.add(captionCharacterCounter[0], 2, 3, 1, 1);
-                layoutGrid.setMargin(captionCharacterCounter[0], new Insets(5, 0, 5, 0));
                 layoutGrid.add(submit, 0, 4, 1, 1);
                 layoutGrid.setMargin(submit, new Insets (5, 0, 5, 25));
                 layoutGrid.add(cancel,1, 4, 1, 1);
@@ -1278,10 +1252,6 @@ public class Main extends Application {
                 layoutGrid.add(delete,2, 4, 1, 1);
                 layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
 
-
-
-                //addText.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/3);
-                //addText.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/3);
 
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
@@ -2026,25 +1996,13 @@ public class Main extends Application {
 
                 WritableImage writableImage = new WritableImage(600, 600);
 
-//                double diff = ((ComicPanel)comicStrip.getChildren().get(i)).getHeight();
-//
-//                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
-//                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
-//
-//                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() != null)
-//                    diff = ((ComicPanel)comicStrip.getChildren().get(i)).getBottomText().getHeight();
-
-//                diff /= 2;
-//
-//                diff = (int)diff;
-
                 PixelReader pixelReader = img.getPixelReader();
                 PixelWriter pixelWriter = writableImage.getPixelWriter();
 
                 int y = 0;
 
                 for(; y < whiteSpace; y++){
-                    for(int x = 0 ;x < 600 ; x++){
+                    for(int x = 0 ;x < imgWidth ; x++){
                         pixelWriter.setColor(x, y, Color.WHITE);
                     }
                 }
@@ -2053,17 +2011,10 @@ public class Main extends Application {
                 int v = y;
 
                 for (; (y - v) < imgHeight; y++){
-                    for(int x = 0 ;x < 600 ; x++) {
+                    for(int x = 0 ;x < imgWidth ; x++) {
                         pixelWriter.setColor(x, y, pixelReader.getColor(x, (y-v)));
                     }
                 }
-//                if(((ComicPanel)comicStrip.getChildren().get(i)).getBottomText() == null){
-//                    for(; y < 600; y++){
-//                        for(int x = 0 ;x < 600 ; x++){
-//                            pixelWriter.setColor(x, y, Color.WHITE);
-//                        }
-//                    }
-//                }
 
 
                 File toSave = new File(saveFile.getPath() + "\\" + (i-1) + ".png");
