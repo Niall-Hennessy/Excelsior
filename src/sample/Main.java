@@ -2096,7 +2096,7 @@ public class Main extends Application {
 
                 int v = y;
 
-                for (; (y - v) < imgHeight; y++){
+                for (; y < imgHeight; y++){
                     for(int x = 0 ;x < imgWidth; x++) {
                         pixelWriter.setColor(x, y, pixelReader.getColor(x, (y-v)));
                     }
