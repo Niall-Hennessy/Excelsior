@@ -1981,7 +1981,7 @@ public class Main extends Application {
 
             System.out.println("Panel Size: " + (height/2.4 + height/9.6));
 
-            int saveSize = 300;
+            int saveSize = 600;//Big Brothers Watching You
 
             double scaleFactor = (saveSize / (height/2.4 + height/9.6));
 
