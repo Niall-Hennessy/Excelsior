@@ -1963,29 +1963,6 @@ public class Main extends Application {
 
         save_html.setOnAction((ActionEvent event) -> {
 
-            //first create popup to get name then save it
-            /*final JFrame title = new JFrame();
-            JButton button = new JButton();
-
-            button.setText("Click to Set Title:");
-            button.setSize(300, 300);
-            title.setSize(new Dimension(480, 50));
-            title.setLocation((int)width/2, (int)height/4);
-            title.add(button);
-            title.pack();
-            title.setVisible(true);
-
-
-            button.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    String comicTitle = JOptionPane.showInputDialog(title,
-                            "What is the title of your comic strip?", null);
-                    System.out.println("Title entered: " + comicTitle+ ".");
-                }
-            });*/
-            //take 1
-
             //take 2
             Stage popupwindow=new Stage();
 
@@ -1993,12 +1970,36 @@ public class Main extends Application {
             popupwindow.setTitle("Enter Title:");
 
             Label popupPrompt= new Label("Enter the title for your comic strip:");
+            popupPrompt.getStyleClass().add("popUpPrompt");
 
             TextField popupField = new TextField();
+            popupField.setMinHeight(50);
+
+            //save whats entered to the textfield to comicStrip
+
 
             Button popupClose= new Button("Submit");
             popupClose.getStyleClass().add("popUpClose");
-            popupClose.setOnAction(e -> popupwindow.close());
+
+            //and set it as the title
+            popupClose.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+
+                    if(popupField.getText().isEmpty() || popupField.getText() == null)
+                    {
+                        System.out.println("Fail");
+                        //comicStrip.setComicTitle(popupField.getText());
+                    }
+
+                    System.out.println(popupField.getText());
+
+                    popupwindow.close();
+
+                }
+            });
+
+
 
             VBox popupLayout= new VBox(10);
             popupLayout.getStyleClass().add("popUpLayout");

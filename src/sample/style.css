@@ -141,3 +141,10 @@
      -fx-border-color: black;
      -fx-border-width: 1px;
 }
+
+.popUpPrompt {
+    -fx-alignment: CENTER;
+    -fx-font-weight: bold;
+    -fx-font-family: helvetica;
+    -fx-font-size: 18;
+}
