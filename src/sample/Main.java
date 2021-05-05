@@ -1970,18 +1970,18 @@ public class Main extends Application {
             Stage popupwindow = new Stage();
 
             popupwindow.initModality(Modality.APPLICATION_MODAL);
-            popupwindow.setTitle("Enter Title:");
+            popupwindow.initStyle(StageStyle.UNDECORATED);
 
             Label popupPrompt= new Label("Enter the title for your comic strip:");
             popupPrompt.getStyleClass().add("popUpPrompt");
 
-            TextField popupField = new TextField();
+            TextField popupField = new TextField("Title");
             popupField.setMinHeight(50);
 
             //save whats entered to the textfield to comicStrip
 
 
-            Button popupClose= new Button("Submit");
+            Button popupClose= new Button("Next");
             popupClose.getStyleClass().add("popUpClose");
 
             //and set it as the title
@@ -2002,18 +2002,28 @@ public class Main extends Application {
                 }
             });
 
-
+            ComboBox popup_box = new ComboBox();
+            popup_box.getStyleClass().add("400x400");
+            popup_box.getItems().addAll("400x400", "600x600", "800x800", "1200x1200");
+            popup_box.getSelectionModel().selectFirst();
 
             VBox popupLayout= new VBox(10);
             popupLayout.getStyleClass().add("popUpLayout");
 
-            popupLayout.getChildren().addAll(popupPrompt, popupField, popupClose);
+            popupLayout.getChildren().addAll(popupPrompt, popupField, popup_box,popupClose);
 
             popupLayout.setAlignment(Pos.CENTER);
 
             Scene popupScene= new Scene(popupLayout, 300, 250);
             popupScene.getStylesheets().add("sample/style.css");
             popupwindow.setScene(popupScene);
+
+            popupScene.setOnMousePressed(pressEvent -> {
+                popupScene.setOnMouseDragged(dragEvent -> {
+                    popupwindow.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+                    popupwindow.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+                });
+            });
 
             popupwindow.showAndWait();
 
