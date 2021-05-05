@@ -2005,12 +2005,19 @@ public class Main extends Application {
 
             saveFile.mkdir();
 
+            int maxHeight = 0;
+
             for(int i=1; i < comicStrip.getChildren().size()-1; i++){
 
                 ComicPanel comicHTMLformat = ((ComicPanel) comicStrip.getChildren().get(i));
                 comicHTMLformat.hideCaptions();
 
                 Image img = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
+
+                int tmpHeight = (int) img.getHeight();
+
+                if(tmpHeight > maxHeight)
+                    maxHeight = tmpHeight;
 
                 int imgWidth = (int) img.getWidth();
                 int imgHeight = (int) img.getHeight();
