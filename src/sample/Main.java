@@ -42,6 +42,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.w3c.dom.*;
 
@@ -105,7 +106,7 @@ public class Main extends Application {
         Menu file = new Menu("File");
         MenuItem new_project = new MenuItem("New Project");
         MenuItem save_xml = new MenuItem("Save XML");
-        MenuItem save_html = new MenuItem("Save HTMl");
+        MenuItem save_html = new MenuItem("Save HTML");
         MenuItem load_xml = new MenuItem("Load XML");
         MenuItem add_character = new MenuItem("Add Character");
         file.getItems().add(new_project);
@@ -1961,19 +1962,74 @@ public class Main extends Application {
         });
 
         save_html.setOnAction((ActionEvent event) -> {
-            final Stage saveHTML = new Stage();
 
-            if(saveHTML.isShowing()) {
-                saveHTML.initOwner(primaryStage);
-            }
+            //first create popup to get name then save it
+            /*final JFrame title = new JFrame();
+            JButton button = new JButton();
 
-            comicPanel[0].unselect();
-            comicPanel[0].setSelectedCharacter(null);
+            button.setText("Click to Set Title:");
+            button.setSize(300, 300);
+            title.setSize(new Dimension(480, 50));
+            title.setLocation((int)width/2, (int)height/4);
+            title.add(button);
+            title.pack();
+            title.setVisible(true);
 
-            FileChooser fileChooser = new FileChooser();
-            File saveFile = fileChooser.showSaveDialog(saveHTML);
 
-            saveFile.mkdir();
+            button.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    String comicTitle = JOptionPane.showInputDialog(title,
+                            "What is the title of your comic strip?", null);
+                    System.out.println("Title entered: " + comicTitle+ ".");
+                }
+            });*/
+            //take 1
+
+            //take 2
+            Stage popupwindow=new Stage();
+
+            popupwindow.initModality(Modality.APPLICATION_MODAL);
+            popupwindow.setTitle("Enter Title:");
+
+            Label popupPrompt= new Label("Enter the title for your comic strip:");
+
+            TextField popupField = new TextField();
+
+            Button popupClose= new Button("Submit");
+            popupClose.getStyleClass().add("popUpClose");
+            popupClose.setOnAction(e -> popupwindow.close());
+
+            VBox popupLayout= new VBox(10);
+            popupLayout.getStyleClass().add("popUpLayout");
+
+            popupLayout.getChildren().addAll(popupPrompt, popupField, popupClose);
+
+            popupLayout.setAlignment(Pos.CENTER);
+
+            Scene popupScene= new Scene(popupLayout, 300, 250);
+            popupScene.getStylesheets().add("sample/style.css");
+            popupwindow.setScene(popupScene);
+
+            popupwindow.showAndWait();
+
+
+            //take 2
+                final Stage saveHTML = new Stage();
+
+                if(saveHTML.isShowing()) {
+                    saveHTML.initOwner(primaryStage);
+                }
+
+                comicPanel[0].unselect();
+                comicPanel[0].setSelectedCharacter(null);
+
+                FileChooser fileChooser = new FileChooser();
+                File saveFile = fileChooser.showSaveDialog(saveHTML);
+
+                saveFile.mkdir();
+
+
 
 
             for(int i=1; i < comicStrip.getChildren().size()-1; i++){
