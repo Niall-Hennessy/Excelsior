@@ -2006,69 +2006,66 @@ public class Main extends Application {
             saveFile.mkdir();
 
             int maxHeight = 0;
-            int biggestTopCaption = 0;
-            int biggestBottomCaption = 0;
+            int maxTop = 0;
             Image[] captionImages = new Image[comicStrip.getChildren().size()-2];
-            int[] totalHeight = new int[comicStrip.getChildren().size()-2];
-            int[] withTopCaption = new int[comicStrip.getChildren().size()-2];
+            int[] imageOnlyHeight = new int[comicStrip.getChildren().size()-2];
+            int[] topCaption = new int[comicStrip.getChildren().size()-2];
 
             for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
-
+//              Array of all intact images
                 ComicPanel comicHTMLformat = ((ComicPanel) comicStrip.getChildren().get(i));
                 captionImages[i - 1] = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
 
-                totalHeight[i - 1] = (int) captionImages[i - 1].getHeight();
+//              Height of image without captions
                 comicHTMLformat.hideCaptions();
-                comicHTMLformat.restoreTopCaption();
+                imageOnlyHeight[i-1] = (int)(comicHTMLformat.snapshot(new SnapshotParameters(), null).getHeight());
 
-                Image localImage = comicStrip.getChildren().get(i).snapshot(new SnapshotParameters(), null);
-                withTopCaption[i - 1] = (int) localImage.getHeight();
+//              matching array of top caption heights
+                comicHTMLformat.restoreTopCaption();
+                topCaption[i-1] = (int)(comicHTMLformat.snapshot(new SnapshotParameters(), null).getHeight());
 
                 comicHTMLformat.restoreBottomCaption();
             }
 
-//            get tallest image
-            for(Image img : captionImages) {
-                if(img.getHeight() > maxHeight)
-                    maxHeight = (int)img.getHeight();
+//          get tallest image and biggest top caption
+            for(int i = 0; i < captionImages.length; i++) {
+                if((int)captionImages[i].getHeight() > maxHeight)
+                    maxHeight = (int)captionImages[i].getHeight();
+
+                if(topCaption[i] > maxTop)
+                    maxTop = topCaption[i];
             }
 
-//            add margins above and below
-            for(int i = 0; i < totalHeight.length) {
-                int topCaptionDepth = totalHeight[i] - withTopCaption(i);
-            }
+//          add margins using pixelwriter above and below the image, normalise height of panel
+//          then save files
+            for(int i = 0; i < captionImages.length; i++) {
+                int imgWidth = (int)captionImages[i].getWidth();
+                int imgHeight = maxHeight;
 
-                int imgWidth = (int) img.getWidth();
-                int imgHeight = (int) img.getHeight();
+                WritableImage writableImage = new WritableImage(imgWidth, imgHeight);
 
-                WritableImage writableImage = new WritableImage(imgWidth, (imgHeight + 150));
-
-                PixelReader pixelReader = img.getPixelReader();
+                PixelReader pixelReader = captionImages[i].getPixelReader();
                 PixelWriter pixelWriter = writableImage.getPixelWriter();
 
+//              Adding top margin
                 int y = 0;
-                for(; y < 75; y++){
-                    for(int x = 0 ;x < imgWidth ; x++){
+                for(y = 0; y < (maxTop - topCaption[i]); y++)
+                    for(int x = 0 ;x < imgWidth ; x++)
                         pixelWriter.setColor(x, y, Color.WHITE);
-                    }
-                }
 
+//              Adding image
                 int v = y;
-
-                for (; (y - v) < imgHeight; y++){
-                    for(int x = 0 ;x < imgWidth ; x++) {
+                for (; (y - v) < (int)captionImages[i].getHeight(); y++)
+                    for(int x = 0 ;x < imgWidth ; x++)
                         pixelWriter.setColor(x, y, pixelReader.getColor(x, (y-v)));
-                    }
-                }
 
-                for(; y < imgHeight + 150; y++){
-                    for(int x = 0 ;x < imgWidth ; x++){
+//              Adding bottom margin
+                for(; y < imgHeight; y++)
+                    for(int x = 0 ;x < imgWidth ; x++)
                         pixelWriter.setColor(x, y, Color.WHITE);
-                    }
-                }
 
 
-                File toSave = new File(saveFile.getPath() + "\\" + (i-1) + ".png");
+                File toSave = new File(saveFile.getPath() + "\\" + i + ".png");
 
                 if (toSave != null) {
                     try {
@@ -2083,8 +2080,6 @@ public class Main extends Application {
                     StreamResult result = new StreamResult(toSave);
                     StreamResult consoleResult = new StreamResult(System.out);
                 }
-
-                comicHTMLformat.restoreCaptions();
             }
 
             if((comicStrip.getChildren().size() % 2) == 1){
@@ -2153,29 +2148,14 @@ public class Main extends Application {
                         myWriter.write(
                                 "<tr>\n" +
                                         "<td>\n" +
-                                            "<div style=\"position: relative; text-align: center\">\n" +
-                                                "<div><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></div>\n");
-                        if(topText != null)
-                            myWriter.write("<div style=\"position: absolute; top: 28px; font-family:"+ topFont + "\"><b>"+ topText + " " + "</b></div>\n");
-
-                        if(bottomText != null)
-                            myWriter.write("<div style=\"position: absolute; bottom: 20px; font-family:" + bottomFont + "\"><i>" + bottomText  + " " + "</i></div>\n");
-
-                        myWriter.write("</div>\n</td>\n");
+                                                "<div><center><img src=\"" + i + ".png\" width=auto; height=500></center></div>\n" +
+                                        "</td>\n");
                     } else {
                         myWriter.write(
                                 "<td>\n" +
-                                        "<div style=\"position: relative; text-align: center\">\n" +
-                                            "<div><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></div>\n");
-                        if(topText != null)
-                            myWriter.write("<div style=\"position: absolute; top: 28px; font-family:"+ topFont + "\"><b>" + topText  + " " + "</b></div>\n");
-
-                        if(bottomText != null)
-                            myWriter.write("<div style=\"position: absolute; bottom: 20px; font-family:" + bottomFont + "\"><i>" + bottomText  + " " + "</i></div>\n");
-
-                        myWriter.write("</div>\n</td>\n</tr>\n");
+                                            "<div><center><img src=\"" + i + ".png\" width=auto; height=500></center></div>\n" +
+                                    "</td>\n</tr>\n");
                     }
-                    topText = null;
                 }
 
                 myWriter.write(
