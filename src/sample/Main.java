@@ -2101,11 +2101,10 @@ public class Main extends Application {
                 if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
                     whiteSpace = topMaxHeight - ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
 
+                whiteSpace = whiteSpace * scaleFactor;
+
                 int imgWidth = (int) img.getWidth();
                 int imgHeight = (int) img.getHeight();
-
-                System.out.println(maxWidth);
-                System.out.println(maxHeight);
 
                 WritableImage writableImage = new WritableImage(saveSize, saveSize);
 
