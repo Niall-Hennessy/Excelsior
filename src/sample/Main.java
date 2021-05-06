@@ -2081,7 +2081,7 @@ public class Main extends Application {
                     StreamResult consoleResult = new StreamResult(System.out);
                 }
             }
-
+/*
             if((comicStrip.getChildren().size() % 2) == 1){
                 File toSave = new File(saveFile.getPath() + "\\" + (comicStrip.getChildren().size()-2) + ".png");
                 BufferedImage img = null;
@@ -2102,6 +2102,7 @@ public class Main extends Application {
                     StreamResult consoleResult = new StreamResult(System.out);
                 }
             }
+*/
 
             File htmlFile = new File(saveFile.getPath() + "\\index.html");
             try {
@@ -2124,24 +2125,18 @@ public class Main extends Application {
                         "<table>\n"
                         );
 
-                for(int i=0; i < comicStrip.getChildren().size()-2; i++){
+                int includeEnd = 2;
+/*
+                if(comicStrip.getChildren().size() % 2 == 0)
+                    includeEnd = 2;
+                else
+                    includeEnd = 1;
+*/
+                for(int i=0; i < comicStrip.getChildren().size()-includeEnd; i++){
                     String topText = "";
                     String bottomText = "";
                     String topFont = "Arial";
                     String bottomFont = "Arial";
-                    ComicPanel comicHTMLformat = ((ComicPanel) comicStrip.getChildren().get(i+1));
-
-                    if(comicHTMLformat.getTopText() != null) {
-                        topText = comicHTMLformat.getTopText().getText();
-                        topFont  = comicHTMLformat.getTopText().getFont();
-                    }
-
-
-                    if(comicHTMLformat.getBottomText() != null) {
-                        bottomText = comicHTMLformat.getBottomText().getText();
-                        bottomFont  = comicHTMLformat.getBottomText().getFont();
-                    }
-
 
 //                    left column
                     if(i % 2 == 0) {
