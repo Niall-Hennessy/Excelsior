@@ -25,10 +25,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -2383,16 +2380,35 @@ public class Main extends Application {
 
                     newComicPanel.index = comicStrip.getChildren().indexOf(newComicPanel);
 
-                    PauseTransition holdTimer = new PauseTransition(Duration.seconds(1));
-
-
-                    newComicPanel.addEventHandler(MouseEvent.MOUSE_RELEASED, eventT -> holdTimer.stop());
+                    newComicPanel.setOnMouseDragOver(new EventHandler <MouseDragEvent>()
+                    {
+                        public void handle(MouseDragEvent event)
+                        {
+                            System.out.println("Event on Target: mouse drag over");
+                        }
+                    });
 
                     newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            holdTimer.playFromStart();
+                            mouseEvent.setDragDetect(true);
+                            addPressAndHoldHandler(newComicPanel, Duration.seconds(1),
+                                    event -> {
+                                            int index = comicStrip.getChildren().indexOf(newComicPanel);
 
+                                            newComicPanel.setOnMouseDragged(dragEvent -> {
+                                                newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX());
+                                                newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
+                                            });
+
+                                            newComicPanel.setOnMouseDragOver(dragEvent -> {
+
+                                                System.out.println("Test");
+
+                                                comicStrip.getChildren().remove(newComicPanel);
+                                                comicStrip.getChildren().add(index, newComicPanel);
+                                            });
+                                    });
 
                             if(!comicStrip.getChildren().contains(newComicPanel))
                                 comicStrip.getChildren().add(newComicPanel);
@@ -2478,6 +2494,24 @@ public class Main extends Application {
         primaryStage.show();
 
     }
+
+    private void addPressAndHoldHandler(javafx.scene.Node node, Duration holdTime,
+                                        EventHandler<MouseEvent> handler) {
+
+        class Wrapper<T> { T content ; }
+        Wrapper<MouseEvent> eventWrapper = new Wrapper<>();
+
+        PauseTransition holdTimer = new PauseTransition(holdTime);
+        holdTimer.setOnFinished(event -> handler.handle(eventWrapper.content));
+
+
+        node.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            eventWrapper.content = event ;
+            holdTimer.playFromStart();
+        });
+        node.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> holdTimer.stop());
+        node.addEventHandler(MouseEvent.DRAG_DETECTED, event -> holdTimer.stop());
+    };
 
     public static void main(String[] args) {
         launch(args);
