@@ -2044,9 +2044,11 @@ public class Main extends Application {
             if(saveFile != null)
                 saveFile.mkdir();
 
-            System.out.println("Panel Size: " + (height/2.4 + height/9.6));
+            String value = popup_box.getValue().toString();
 
-            int saveSize = 600;
+            value = value.substring(0, value.length()/2);
+
+            int saveSize = Integer.parseInt(value);
 
             double scaleFactor = (saveSize / (height/2.4 + height/9.6));
 
