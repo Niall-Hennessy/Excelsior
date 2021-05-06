@@ -1999,23 +1999,33 @@ public class Main extends Application {
                 }
             });
 
+            ComboBox popup_box = new ComboBox();
+            popup_box.getStyleClass().add("400x400");
+            popup_box.getItems().addAll("400x400", "600x600", "800x800", "1200x1200");
+            popup_box.getSelectionModel().selectFirst();
+
+            //take 2
+                final Stage saveHTML = new Stage();
+
+                if(saveHTML.isShowing()) {
+                    saveHTML.initOwner(primaryStage);
+                }
+
             Button popupClose = new Button("Cancel");
             popupClose.getStyleClass().add("popUpCancel");
+            final boolean[] cancel = {false};
 
             popupClose.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
 
                     //popup window has to close but the file also has to not open
+                    cancel[0] = true;
                     popupwindow.close();
+
 
                 }
             });
-
-            ComboBox popup_box = new ComboBox();
-            popup_box.getStyleClass().add("400x400");
-            popup_box.getItems().addAll("400x400", "600x600", "800x800", "1200x1200");
-            popup_box.getSelectionModel().selectFirst();
 
             HBox popupButtons = new HBox(5);
             popupButtons.getChildren().addAll(popupNext, popupClose);
@@ -2041,14 +2051,10 @@ public class Main extends Application {
 
             popupwindow.showAndWait();
 
-
-            //take 2
-                final Stage saveHTML = new Stage();
-
-                if(saveHTML.isShowing()) {
-                    saveHTML.initOwner(primaryStage);
-                }
-
+            if(cancel[0])
+            {
+                return;
+            }
                 comicPanel[0].unselect();
                 comicPanel[0].setSelectedCharacter(null);
 
