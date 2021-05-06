@@ -1978,17 +1978,14 @@ public class Main extends Application {
             TextField popupField = new TextField("Title");
             popupField.setMinHeight(50);
 
-            //save whats entered to the textfield to comicStrip
+            Button popupNext= new Button("Next");
+            popupNext.getStyleClass().add("popUpNext");
 
-
-            Button popupClose= new Button("Next");
-            popupClose.getStyleClass().add("popUpClose");
-
-            //and set it as the title
-            popupClose.setOnAction(new EventHandler<ActionEvent>() {
+            popupNext.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
 
+                    //CLEAN THIS UP
                     if(popupField.getText().isEmpty() || popupField.getText() == null)
                     {
                         System.out.println("Fail");
@@ -2002,15 +1999,32 @@ public class Main extends Application {
                 }
             });
 
+            Button popupClose = new Button("Cancel");
+            popupClose.getStyleClass().add("popUpCancel");
+
+            popupClose.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+
+                    //popup window has to close but the file also has to not open
+                    popupwindow.close();
+
+                }
+            });
+
             ComboBox popup_box = new ComboBox();
             popup_box.getStyleClass().add("400x400");
             popup_box.getItems().addAll("400x400", "600x600", "800x800", "1200x1200");
             popup_box.getSelectionModel().selectFirst();
 
+            HBox popupButtons = new HBox(5);
+            popupButtons.getChildren().addAll(popupNext, popupClose);
+            popupButtons.setAlignment(Pos.CENTER);
+
             VBox popupLayout= new VBox(10);
             popupLayout.getStyleClass().add("popUpLayout");
 
-            popupLayout.getChildren().addAll(popupPrompt, popupField, popup_box,popupClose);
+            popupLayout.getChildren().addAll(popupPrompt, popupField, popup_box, popupButtons);
 
             popupLayout.setAlignment(Pos.CENTER);
 

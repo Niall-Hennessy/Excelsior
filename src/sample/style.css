@@ -128,11 +128,11 @@
     -fx-background-position: center center;
 }
 
-.popUpClose {
+.popUpNext {
     -fx-background-color: #B5FFA1;
 }
 
-.popUpClose: hover {
+.popUpNext: hover {
     -fx-background-color: #A8ED95;
 }
 
@@ -149,3 +149,11 @@
     -fx-font-size: 18;
 }
 
+.popUpCancel {
+    -fx-background-color: #FFA1A1;
+}
+
+.popUpCancel: hover {
+    -fx-background-color: #ED9595;
+
+}
