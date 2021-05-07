@@ -248,12 +248,26 @@ public class Main extends Application {
         lockButton[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(comicPanel[0] != null) {
-                    if (comicPanel[0].getLocked())
-                        hoverTips.buttonToolTip(tipUnlockButton, mouseEvent, lockButton[0]);
-                    else
-                        hoverTips.buttonToolTip(tipLockButton, mouseEvent, lockButton[0]);
+            //if(comicPanel[0] != null) {
+                if (comicPanel[0].getLocked())
+                {
+                    hoverTips.buttonToolTip(tipUnlockButton, mouseEvent, lockButton[0]);
+                    comicPanel[0].setOnDragDetected(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEventDrag) {
+                            comicPanel[0].rightCharacter.getOnDragDone();
+                        }
+
+                    });
+
                 }
+
+                else
+                {
+                    hoverTips.buttonToolTip(tipLockButton, mouseEvent, lockButton[0]);
+                }
+
+               //}
             }
         });
 
