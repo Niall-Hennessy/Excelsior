@@ -95,6 +95,8 @@ public class Main extends Application {
 
         GridPane mainPane = new GridPane();
 
+        final String[] premise = {""};
+
 
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
@@ -1538,6 +1540,11 @@ public class Main extends Application {
                         Document doc = dBuilder.parse(inputFile);
                         doc.getDocumentElement().normalize();
 
+                        if(doc.getElementsByTagName("premise").item(0) != null)
+                            premise[0] = doc.getElementsByTagName("premise").item(0).getTextContent();
+                        else
+                            premise[0] = "";
+
                         NodeList nList = doc.getElementsByTagName("panel");
                         Element figures = (Element) doc.getElementsByTagName("figures").item(0);
                         NodeList figureList;
@@ -1978,6 +1985,9 @@ public class Main extends Application {
             TextField popupField = new TextField("Title");
             popupField.setMinHeight(50);
 
+            if(premise[0] != null)
+                popupField.setText(premise[0]);
+
             Button popupNext= new Button("Next");
             popupNext.getStyleClass().add("popUpNext");
 
@@ -2217,6 +2227,8 @@ public class Main extends Application {
         new_project.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                premise[0] = "";
+
                 comicStrip.getChildren().clear();
 
                 comicStrip.getChildren().add(newPanelLeft);
