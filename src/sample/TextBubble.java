@@ -22,7 +22,7 @@ public class TextBubble extends Pane {
         this.bubble.setFitHeight(this.text.getBoundsInParent().getHeight() + 50);
         if(this.text.getBoundsInParent().getHeight() > 63) {
             this.text.setFont(Font.font(11));
-            this.bubble.setFitHeight(this.text.getBoundsInParent().getHeight() + 150);
+            this.bubble.setFitHeight(this.text.getBoundsInParent().getHeight() + 100);
         }
         this.text.setTranslateX(this.bubble.getBoundsInParent().getCenterX() - (this.text.getBoundsInParent().getWidth()/2));
         this.text.setTranslateY(this.bubble.getBoundsInParent().getCenterY() - (this.text.getBoundsInParent().getHeight()/2) +3);
