@@ -2441,6 +2441,9 @@ public class Main extends Application {
                                 comicPanel[0] = newComicPanel;
 
                             }
+                            else{
+                                newComicPanel.select();
+                            }
 
                             if(comicPanel[0].getSelectedCharacter() != null) {
                                 hairColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getHair());
