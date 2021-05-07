@@ -610,6 +610,7 @@ public class ComicPanel extends Pane {
 
     public void setBackgroundString(String path) {
         this.background = path;
+        System.out.println(this.getBackgroundString());
     }
 
     public TextBubble getLeftTextBubble() {
