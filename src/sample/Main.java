@@ -65,6 +65,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Time;
 import java.util.*;
 import java.util.List;
@@ -178,7 +180,7 @@ public class Main extends Application {
         String tipLockButton      = "Click to Lock this Panel to disable further editing";
         String tipUnlockButton      = "Click to Unlock this Panel to enable further editing";
         String tipLocked      = "This Panel is Locked Unlock to Allow Further Editing";
-        String tipDeleteButton      = "Delete Selected Object";
+        String tipDeleteButton      = "Delete Selected Panel";
         String tipUndoButton   = "Undo Last Action";
         String tipskinColorPicker   = "Choose Skin Colour";
         String tiphairColorPicker   = "Choose Hair Colour";
@@ -569,12 +571,16 @@ public class Main extends Application {
                 }
 
                 FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Add a character");
 
-                File selectedFile = fileChooser.showOpenDialog(saveXML);
+                File source = fileChooser.showOpenDialog(saveXML);
+                File dest = new File("src/images/characters/" + source.getName());
 
-                File newFile = new File("src/images/characters/" + selectedFile.getName());
-
-                selectedFile.renameTo(newFile);
+                try {
+                    Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
                 saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
