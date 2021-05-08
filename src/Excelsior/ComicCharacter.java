@@ -1,7 +1,6 @@
-package sample;
+package Excelsior;
 
 import javafx.scene.image.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;

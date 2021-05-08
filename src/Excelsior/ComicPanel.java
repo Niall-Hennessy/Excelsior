@@ -1,12 +1,9 @@
-package sample;
+package Excelsior;
 
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
-import javafx.scene.control.TextField;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;

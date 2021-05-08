@@ -1,4 +1,4 @@
-package sample;
+package Excelsior;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

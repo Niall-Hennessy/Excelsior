@@ -1,9 +1,8 @@
-package sample;
+package Excelsior;
 
 import javafx.geometry.VPos;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;

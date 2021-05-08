@@ -1,4 +1,4 @@
-package sample;
+package Excelsior;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;

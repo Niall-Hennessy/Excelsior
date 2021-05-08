@@ -1,4 +1,4 @@
-package sample;
+package Excelsior;
 
 import javafx.scene.image.*;
 import javafx.scene.layout.Pane;

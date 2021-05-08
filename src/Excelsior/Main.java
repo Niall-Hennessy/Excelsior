@@ -1,19 +1,14 @@
-package sample;
+package Excelsior;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -25,8 +20,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -35,44 +28,29 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
 import javafx.scene.transform.Transform;
-import javafx.scene.transform.Translate;
 import javafx.stage.*;
-import javafx.scene.text.*;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.w3c.dom.*;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLWriter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.sql.Time;
 import java.util.*;
 import java.util.List;
-import java.util.logging.Logger;
-
-import static java.awt.Color.WHITE;
 
 public class Main extends Application {
 
@@ -800,7 +778,7 @@ public class Main extends Application {
 
                 Scene scene = new Scene(helpPane);
                 helpStage.setScene(scene);
-                scene.getStylesheets().add("sample/style.css");
+                scene.getStylesheets().add("Excelsior/style.css");
                 helpStage.show();
             }
         });
@@ -1128,7 +1106,7 @@ public class Main extends Application {
                 Scene scene = new Scene(bubbleGrid);
                 addBubble.setScene(scene);
 
-                scene.getStylesheets().add("sample/style.css");
+                scene.getStylesheets().add("Excelsior/style.css");
 
                 scene.setOnMousePressed(pressEvent -> {
                     scene.setOnMouseDragged(dragEvent -> {
@@ -1424,7 +1402,7 @@ public class Main extends Application {
                 });
 
                 Scene scene = new Scene(layoutGrid);
-                scene.getStylesheets().add("sample/style.css");
+                scene.getStylesheets().add("Excelsior/style.css");
                 addText.setScene(scene);
 
                 addText.setX(width/2 -200);
@@ -2114,7 +2092,7 @@ public class Main extends Application {
             popupLayout.setAlignment(Pos.CENTER);
 
             Scene popupScene= new Scene(popupLayout, 300, 250);
-            popupScene.getStylesheets().add("sample/style.css");
+            popupScene.getStylesheets().add("Excelsior/style.css");
             popupwindow.setScene(popupScene);
 
             popupScene.setOnMousePressed(pressEvent -> {
@@ -2561,7 +2539,7 @@ public class Main extends Application {
         });
 
         Scene scene = new Scene(mainPane, width, height, false);
-        scene.getStylesheets().add("sample/style.css");
+        scene.getStylesheets().add("Excelsior/style.css");
 
         scene.setOnKeyPressed(event -> {
             String codeString = event.getCode().toString();
