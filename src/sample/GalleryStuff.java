@@ -66,7 +66,7 @@ public class GalleryStuff {
         Scene scene = new Scene(gallery);
 
         addCharacter.setScene(scene);
-        addCharacter.setTitle("Double click to select");
+        addCharacter.setTitle("Click to select");
         addCharacter.show();
         addCharacter.setMaxHeight(Screen.getPrimary().getVisualBounds().getHeight());
         addCharacter.setX( (Screen.getPrimary().getVisualBounds().getWidth()/2) - (addCharacter.getWidth()/2) );
@@ -92,7 +92,7 @@ public class GalleryStuff {
                     imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            if(mouseEvent.getClickCount() == 2) {
+                            if(mouseEvent.getClickCount() == 1) {
                                 try {
                                     comicPanel[0].setRightCharacter(imageFile.getPath());
                                     addCharacter.close();
@@ -111,7 +111,7 @@ public class GalleryStuff {
 
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
-                                if (mouseEvent.getClickCount() == 2) {
+                                if (mouseEvent.getClickCount() == 1) {
                                     try {
                                         comicPanel[0].setLeftCharacter(imageFile.getPath());
                                         addCharacter.close();
@@ -130,7 +130,7 @@ public class GalleryStuff {
                         public void handle(MouseEvent mouseEvent) {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
-                                if (mouseEvent.getClickCount() == 2) {
+                                if (mouseEvent.getClickCount() == 1) {
                                     comicPanel[0].setBackgroundString(normaliseURL(imageFile.getPath().substring(4)));
 
                                     comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].getBackgroundString() + "'); " +
