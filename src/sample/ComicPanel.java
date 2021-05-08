@@ -14,6 +14,8 @@ import javafx.stage.Screen;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ComicPanel extends Pane {
@@ -34,6 +36,8 @@ public class ComicPanel extends Pane {
     Boolean isLocked;
 
     int index;
+
+   // List<String> undoStack = new Stack<>();
 
     public ComicPanel() throws FileNotFoundException {
 
@@ -636,4 +640,18 @@ public class ComicPanel extends Pane {
     public TextBubble getRightTextBubble() {
         return rightTextBubble;
     }
+
+    /*
+    public void setUndoStack(List<String> undoStack) {
+        if(this.isLocked)
+        {
+            return;
+        }
+        this.undoStack = undoStack;
+    }
+
+    public List<String> getUndoStack() {
+        return undoStack;
+    }*/
+
 }

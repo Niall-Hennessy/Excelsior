@@ -2286,6 +2286,12 @@ public class Main extends Application {
         undoButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(final ActionEvent event) {
 
+                if(comicPanel[0].getLocked())
+                {
+                    hoverTips.lockedTip(tipLocked, leftCharacter);
+                    return;
+                }
+
                 /*
                 Actions that can be undone
 
