@@ -76,6 +76,9 @@ public class ComicCharacter extends Pane {
                     else if(isOnLine(Color.web("#C9E1E3"),Color.web("#75959C"),color)){
                         pixelWriter.setColor(x, y, color);
                     }
+                    else if(isOnLine(Color.web("#F0FF00"),Color.web("#FFFFFF"),color)){
+                        pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
+                    }
                     else if (color.equals(Color.web("#ECB4B5")) && !isFemale){
 
                         if(x < 400 && x > 360 && y > 160 && y < 250)

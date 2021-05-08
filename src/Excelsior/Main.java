@@ -785,7 +785,7 @@ public class Main extends Application {
 
 
 
-        GalleryStuff galleryView = new GalleryStuff();
+        GalleryManager galleryView = new GalleryManager();
 
 
 
