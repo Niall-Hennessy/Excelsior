@@ -51,7 +51,8 @@ public class ComicPanel extends Pane {
         this.leftCharacter.setTranslateX(20);
         this.leftCharacter.setTranslateY(130);
 
-        this.rightCharacter.setTranslateX((height/2.4 + height/9.6) - 180);
+        double rightTranslate = (height/2.4 + height/9.6);
+        this.rightCharacter.setTranslateX(rightTranslate - rightTranslate/3);
         this.rightCharacter.setTranslateY(130);
 
         this.getChildren().add(leftCharacter);
@@ -119,25 +120,26 @@ public class ComicPanel extends Pane {
             dragX.set(0.0);
             dragY.set(0.0);
             leftCharacter.setOnMouseDragged(dragEvent -> {
+                if(!this.isLocked) {
+                    double offsetX = leftCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                    double offsetY = leftCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
 
-                double offsetX = leftCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
-                double offsetY = leftCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+                    if (offsetX < 3)
+                        offsetX = 3;
+                    else if (offsetX > (this.getWidth() - 3) / 2 - leftCharacter.getWidth())
+                        offsetX = (this.getWidth() - 3) / 2 - leftCharacter.getWidth();
 
-                if(offsetX < 3)
-                    offsetX = 3;
-                else if(offsetX > (this.getWidth()-3)/2 - leftCharacter.getWidth())
-                    offsetX = (this.getWidth()-3)/2 - leftCharacter.getWidth();
-
-                if(offsetY < 3)
-                    offsetY = 3;
-                else if(offsetY > this.getHeight()-3 - leftCharacter.getHeight())
-                    offsetY = this.getHeight()-3 - leftCharacter.getHeight();
+                    if (offsetY < 3)
+                        offsetY = 3;
+                    else if (offsetY > this.getHeight() - 3 - leftCharacter.getHeight())
+                        offsetY = this.getHeight() - 3 - leftCharacter.getHeight();
 
 
-                leftCharacter.setTranslateX(offsetX);
-                leftCharacter.setTranslateY(offsetY);
-                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
-                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+                    leftCharacter.setTranslateX(offsetX);
+                    leftCharacter.setTranslateY(offsetY);
+                    dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                    dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+                }
             });
         });
 
@@ -187,25 +189,26 @@ public class ComicPanel extends Pane {
             dragX.set(0.0);
             dragY.set(0.0);
             rightCharacter.setOnMouseDragged(dragEvent -> {
+                if(!this.isLocked) {
+                    double offsetX = rightCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                    double offsetY = rightCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
 
-                double offsetX = rightCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
-                double offsetY = rightCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+                    if (offsetX < (this.getWidth() - 3) / 2)
+                        offsetX = (this.getWidth() - 3) / 2;
+                    else if (offsetX > this.getWidth() - 3 - rightCharacter.getWidth())
+                        offsetX = this.getWidth() - 3 - rightCharacter.getWidth();
 
-                if(offsetX < (this.getWidth()-3)/2)
-                    offsetX = (this.getWidth()-3)/2;
-                else if(offsetX > this.getWidth()-3 - rightCharacter.getWidth())
-                    offsetX = this.getWidth()-3 - rightCharacter.getWidth();
-
-                if(offsetY < 3)
-                    offsetY = 3;
-                else if(offsetY > this.getHeight()-3 - rightCharacter.getHeight())
-                    offsetY = this.getHeight()-3 - rightCharacter.getHeight();
+                    if (offsetY < 3)
+                        offsetY = 3;
+                    else if (offsetY > this.getHeight() - 3 - rightCharacter.getHeight())
+                        offsetY = this.getHeight() - 3 - rightCharacter.getHeight();
 
 
-                rightCharacter.setTranslateX(offsetX);
-                rightCharacter.setTranslateY(offsetY);
-                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
-                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+                    rightCharacter.setTranslateX(offsetX);
+                    rightCharacter.setTranslateY(offsetY);
+                    dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                    dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+                }
             });
         });
 
@@ -369,25 +372,26 @@ public class ComicPanel extends Pane {
             dragX.set(0.0);
             dragY.set(0.0);
             leftTextBubble.setOnMouseDragged(dragEvent -> {
+                if(!this.isLocked) {
+                    double offsetX = leftTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                    double offsetY = leftTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
 
-                double offsetX = leftTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
-                double offsetY = leftTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+                    if (offsetX < 3)
+                        offsetX = 3;
+                    else if (offsetX > this.getWidth() - 4 - leftTextBubble.getWidth())
+                        offsetX = this.getWidth() - 4 - leftTextBubble.getWidth();
 
-                if(offsetX < 3)
-                    offsetX = 3;
-                else if(offsetX > this.getWidth()-4 - leftTextBubble.getWidth())
-                    offsetX = this.getWidth()-4 - leftTextBubble.getWidth();
-
-                if(offsetY < 3)
-                    offsetY = 3;
-                else if(offsetY > this.getHeight()-4 - leftTextBubble.getHeight())
-                    offsetY = this.getHeight()-4 - leftTextBubble.getHeight();
+                    if (offsetY < 3)
+                        offsetY = 3;
+                    else if (offsetY > this.getHeight() - 4 - leftTextBubble.getHeight())
+                        offsetY = this.getHeight() - 4 - leftTextBubble.getHeight();
 
 
-                leftTextBubble.setTranslateX(offsetX);
-                leftTextBubble.setTranslateY(offsetY);
-                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
-                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+                    leftTextBubble.setTranslateX(offsetX);
+                    leftTextBubble.setTranslateY(offsetY);
+                    dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                    dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+                }
             });
         });
 
@@ -476,25 +480,22 @@ public class ComicPanel extends Pane {
             dragX.set(0.0);
             dragY.set(0.0);
             rightTextBubble.setOnMouseDragged(dragEvent -> {
-
-                double offsetX = rightTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
-                double offsetY = rightTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
-
-                if(offsetX < 3)
-                    offsetX = 3;
-                else if(offsetX > this.getWidth()-4 - rightTextBubble.getWidth())
-                    offsetX = this.getWidth()-4 - rightTextBubble.getWidth();
-
-                if(offsetY < 3)
-                    offsetY = 3;
-                else if(offsetY > this.getHeight()-4 - rightTextBubble.getHeight())
-                    offsetY = this.getHeight()-4 - rightTextBubble.getHeight();
-
-
-                rightTextBubble.setTranslateX(offsetX);
-                rightTextBubble.setTranslateY(offsetY);
-                dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
-                dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+                if(!this.isLocked) {
+                    double offsetX = rightTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
+                    double offsetY = rightTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
+                    if (offsetX < 3)
+                        offsetX = 3;
+                    else if (offsetX > this.getWidth() - 4 - rightTextBubble.getWidth())
+                        offsetX = this.getWidth() - 4 - rightTextBubble.getWidth();
+                    if (offsetY < 3)
+                        offsetY = 3;
+                    else if (offsetY > this.getHeight() - 4 - rightTextBubble.getHeight())
+                        offsetY = this.getHeight() - 4 - rightTextBubble.getHeight();
+                    rightTextBubble.setTranslateX(offsetX);
+                    rightTextBubble.setTranslateY(offsetY);
+                    dragX.set(dragEvent.getScreenX() - pressEvent.getScreenX());
+                    dragY.set(dragEvent.getScreenY() - pressEvent.getScreenY());
+                }
             });
         });
 
