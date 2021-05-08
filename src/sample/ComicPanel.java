@@ -29,15 +29,13 @@ public class ComicPanel extends Pane {
     TextCaption topText;
     TextCaption bottomText;
 
-    String background = "images/backgrounds/BlankBackground.png";
+    String background = "images/backgrounds/BlankBackground.jpg";
 
     Boolean isLocked;
 
     int index;
 
     public ComicPanel() throws FileNotFoundException {
-
-        this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
 
         int width = (int) Screen.getPrimary().getBounds().getWidth();
         int height = (int) Screen.getPrimary().getBounds().getHeight();
@@ -56,6 +54,13 @@ public class ComicPanel extends Pane {
 
         this.getChildren().add(leftCharacter);
         this.getChildren().add(rightCharacter);
+
+        this.setStyle("-fx-background-image: url('" + background + "'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-repeat: stretch; "  +
+                "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
+                "-fx-border-color: black; " +
+                "-fx-border-width: 3");
 
         isLocked = false;
     }

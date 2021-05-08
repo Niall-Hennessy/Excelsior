@@ -2,18 +2,14 @@ package sample;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -32,42 +28,29 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
 import javafx.scene.transform.Transform;
-import javafx.scene.transform.Translate;
 import javafx.stage.*;
-import javafx.scene.text.*;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.w3c.dom.*;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLWriter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.*;
-import java.sql.Time;
 import java.util.*;
 import java.util.List;
-import java.util.logging.Logger;
-
-import static java.awt.Color.WHITE;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Main extends Application {
 
@@ -1493,6 +1476,12 @@ public class Main extends Application {
         scrollPane.setPrefHeight(height * 0.6);
         scrollPane.setPrefWidth(width - 20);
 
+        comicStrip.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mouseEvent.setDragDetect(true);
+            }
+        });
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, buttonLayout);
@@ -2394,19 +2383,84 @@ public class Main extends Application {
                             mouseEvent.setDragDetect(true);
                             addPressAndHoldHandler(newComicPanel, Duration.seconds(1),
                                     event -> {
-                                            int index = comicStrip.getChildren().indexOf(newComicPanel);
 
-                                            newComicPanel.setOnMouseDragged(dragEvent -> {
-                                                newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX());
-                                                newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
+                                            newComicPanel.getScene().setCursor(javafx.scene.Cursor.CLOSED_HAND);
+
+                                            AtomicInteger index = new AtomicInteger(comicStrip.getChildren().indexOf(newComicPanel));
+                                            AtomicInteger amount = new AtomicInteger(0);
+                                            AtomicInteger scroll = new AtomicInteger(0);
+
+                                            comicStrip.setOnMouseDragged(dragEvent -> {
+
+                                                if(dragEvent.getScreenX() > (4*width/5)) {
+                                                    double hV = scrollPane.getHvalue();
+                                                    scrollPane.setHvalue(scrollPane.getHvalue() + 0.001);
+                                                    if(scrollPane.getHvalue() != 1) {
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 10);
+                                                        scroll.set(scroll.get() + 10);
+                                                    }
+                                                }else if(dragEvent.getScreenX() < width/5){
+                                                    scrollPane.setHvalue(scrollPane.getHvalue() - 0.001);
+                                                    if(scrollPane.getHvalue() != 0) {
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 10);
+                                                        scroll.set(scroll.get() - 10);
+                                                    }
+                                                }else{
+                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() - ((height/2.4 + height/9.6) * (amount.get())));
+                                                    newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
+                                                }
+
+                                                System.out.println(newComicPanel.getTranslateX());
+
+                                                double presX = newComicPanel.getTranslateX();
+                                                double presY = newComicPanel.getTranslateY();
+
+                                                if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() < ((height/2.4 + height/9.6) * (amount.get() - 1))) {
+
+                                                    System.out.println("New Panel Position");
+
+                                                    amount.getAndDecrement();
+                                                    index.getAndDecrement();
+
+                                                    if(index.get() < 1)
+                                                        index.set(1);
+
+                                                    comicStrip.getChildren().remove(newComicPanel);
+                                                    comicStrip.getChildren().add(index.get(), newComicPanel);
+
+                                                }
+                                                else if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() > ((height/2.4 + height/9.6) * (amount.get() + 1))) {
+                                                    amount.getAndIncrement();
+                                                    index.getAndIncrement();
+
+                                                    if(index.get() > comicStrip.getChildren().size()-2)
+                                                        index.set(comicStrip.getChildren().size()-2);
+
+                                                    comicStrip.getChildren().remove(newComicPanel);
+                                                    comicStrip.getChildren().add(index.get(), newComicPanel);
+                                                }
+
+                                                dragEvent.consume();
                                             });
 
-                                            newComicPanel.setOnMouseDragOver(dragEvent -> {
+                                            comicStrip.setOnMouseReleased(mouseEvent3 -> {
 
-                                                System.out.println("Test");
+                                                newComicPanel.getScene().setCursor(javafx.scene.Cursor.DEFAULT);
 
-                                                comicStrip.getChildren().remove(newComicPanel);
-                                                comicStrip.getChildren().add(index, newComicPanel);
+                                                comicStrip.setMargin(newComicPanel, new Insets(20,10,20,10));
+
+                                                newComicPanel.setTranslateX(0);
+                                                newComicPanel.setTranslateY(0);
+
+                                                comicStrip.setOnMouseDragged(dragEvent2 -> {
+                                                    dragEvent2.consume();
+                                                });
+
+                                                comicStrip.setOnMouseReleased(dragEvent2 -> {
+                                                    dragEvent2.consume();
+                                                });
+
+                                                mouseEvent3.consume();
                                             });
                                     });
 
