@@ -252,14 +252,6 @@ public class Main extends Application {
                 if (comicPanel[0].getLocked())
                 {
                     hoverTips.buttonToolTip(tipUnlockButton, mouseEvent, lockButton[0]);
-                    comicPanel[0].setOnDragDetected(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEventDrag) {
-                            comicPanel[0].rightCharacter.getOnDragDone();
-                        }
-
-                    });
-
                 }
 
                 else
