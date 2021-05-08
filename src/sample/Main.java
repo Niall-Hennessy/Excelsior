@@ -266,35 +266,35 @@ public class Main extends Application {
             }
         });
 
-        skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if(comicPanel[0].getLocked()) {
-                    hoverTips.lockedTip(tipLocked, skinColorPicker[0]);
-                } else {
-                    if (comicPanel[0].getSelectedCharacter() != null) {
-                        hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
-                    } else {
-                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
-                    }
-                }
-            }
-        });
+//        skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent mouseEvent) {
+//                if(comicPanel[0].getLocked()) {
+//                    hoverTips.lockedTip(tipLocked, skinColorPicker[0]);
+//                } else {
+//                    if (comicPanel[0].getSelectedCharacter() != null) {
+//                        hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+//                    } else {
+//                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+//                    }
+//                }
+//            }
+//        });
 
-        hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (comicPanel[0].getLocked()) {
-                    hoverTips.lockedTip(tipLocked, hairColorPicker[0]);
-                } else {
-                    if (comicPanel[0].getSelectedCharacter() != null) {
-                        hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
-                    } else {
-                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
-                    }
-                }
-            }
-        });
+//        hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent mouseEvent) {
+//                if (comicPanel[0].getLocked()) {
+//                    hoverTips.lockedTip(tipLocked, hairColorPicker[0]);
+//                } else {
+//                    if (comicPanel[0].getSelectedCharacter() != null) {
+//                        hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+//                    } else {
+//                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
+//                    }
+//                }
+//            }
+//        });
 
 
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
@@ -1153,26 +1153,8 @@ public class Main extends Application {
                 try {
                     final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
                             true);
-                    int width = (int) image.getWidth();
-                    int height = (int) image.getHeight();
-
-                    WritableImage writableImage = new WritableImage(width, height);
-
-                    PixelReader pixelReader = image.getPixelReader();
-                    PixelWriter pixelWriter = writableImage.getPixelWriter();
-
-                    for (int y = 0; y < height; y++) {
-                        for (int x = 0; x < width; x++) {
-                            Color color = pixelReader.getColor(x, y);
-
-                            if (color.equals(Color.rgb(255, 254, 255))) {
-                                pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
-                            }
-                            else
-                                pixelWriter.setColor(x, y, color);
-                        }
-                    }
-                    imageView = new ImageView(writableImage);
+                    imageView = new ImageView(image);
+                    //imageView.setFitWidth(150);
                     imageView.setPickOnBounds(true);
                     imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -1182,7 +1164,7 @@ public class Main extends Application {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 1) {
-                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(writableImage);
+                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
                                     bubbleName = imageFile.getPath().substring(19);
                                 }
                             }
@@ -1191,8 +1173,6 @@ public class Main extends Application {
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
-
-
                 return imageView;
             }
         });
@@ -1448,6 +1428,73 @@ public class Main extends Application {
                 });
             }
         });
+
+
+        skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, skinColorPicker[0]);
+
+                    Color color = skinColorPicker[0].getValue();
+
+                    skinColorPicker[0].setOnAction(new EventHandler() {
+                        public void handle(Event t) {
+                            skinColorPicker[0].setValue(color);
+                        }
+                    });
+                }
+                else {
+                    skinColorPicker[0].setOnAction(new EventHandler() {
+                        Color current = skinColorPicker[0].getValue();
+                        public void handle(Event t) {
+
+                            if(comicPanel[0].getSelectedCharacter() != null) {
+                                comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
+                                undoList.add("skin|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|" + comicPanel[0].getLeftRight() + "|" + current.toString() + "|");
+                            }
+                            else {
+                                hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+
+        hairColorPicker[0].setOnMouseEntered(new EventHandler() {
+            public void handle(Event t) {
+
+                if(comicPanel[0].getLocked()){
+                    hoverTips.lockedTip(tipLocked, hairColorPicker[0]);
+
+                    Color color = hairColorPicker[0].getValue();
+
+                    hairColorPicker[0].setOnAction(new EventHandler() {
+                        public void handle(Event t) {
+                            hairColorPicker[0].setValue(color);
+                        }
+                    });
+                }
+                else {
+                    hairColorPicker[0].setOnAction(new EventHandler() {
+                        Color current = hairColorPicker[0].getValue();
+                        public void handle(Event t) {
+
+                            if(comicPanel[0].getSelectedCharacter() != null) {
+                                comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
+                                undoList.add("hair|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|" + comicPanel[0].getLeftRight() + "|" + current.toString() + "|");
+                            }else {
+                                hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
 
 
         Text skin = new Text();
