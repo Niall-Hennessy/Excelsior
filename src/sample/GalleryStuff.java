@@ -66,6 +66,7 @@ public class GalleryStuff {
         Scene scene = new Scene(gallery);
 
         addCharacter.setScene(scene);
+        addCharacter.setTitle("Double click to select");
         addCharacter.show();
         addCharacter.setMaxHeight(Screen.getPrimary().getVisualBounds().getHeight());
         addCharacter.setX( (Screen.getPrimary().getVisualBounds().getWidth()/2) - (addCharacter.getWidth()/2) );

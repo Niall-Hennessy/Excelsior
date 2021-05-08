@@ -116,11 +116,13 @@ public class Main extends Application {
         MenuItem save_html = new MenuItem("Save HTML");
         MenuItem load_xml = new MenuItem("Load XML");
         MenuItem add_character = new MenuItem("Add Character");
+        MenuItem add_background = new MenuItem("Add Background");
         file.getItems().add(new_project);
         file.getItems().add(save_xml);
         file.getItems().add(save_html);
         file.getItems().add(load_xml);
         file.getItems().add(add_character);
+        file.getItems().add(add_background);
 
         menuBar.getMenus().add(file);
 
@@ -574,12 +576,49 @@ public class Main extends Application {
                 fileChooser.setTitle("Add a character");
 
                 File source = fileChooser.showOpenDialog(saveXML);
-                File dest = new File("src/images/characters/" + source.getName());
+                if(source != null) {
+                    File dest = new File("src/images/characters/" + source.getName());
 
-                try {
-                    Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    try {
+                        Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
+                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
+
+                VBox vBox = new VBox();
+
+                Scene scene = new Scene(vBox);
+                saveXML.setScene(scene);
+            }
+        });
+
+        add_background.setOnAction(new EventHandler<ActionEvent>() {
+            final Stage saveXML = new Stage();
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(saveXML.isShowing()) {
+                    saveXML.initOwner(primaryStage);
+                }
+
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Add a background image");
+
+                File source = fileChooser.showOpenDialog(saveXML);
+
+                if(source != null) {
+                    File dest = new File("src/images/backgrounds/" + source.getName());
+
+                    try {
+                        Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
@@ -1108,8 +1147,26 @@ public class Main extends Application {
                 try {
                     final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
                             true);
-                    imageView = new ImageView(image);
-                    //imageView.setFitWidth(150);
+                    int width = (int) image.getWidth();
+                    int height = (int) image.getHeight();
+
+                    WritableImage writableImage = new WritableImage(width, height);
+
+                    PixelReader pixelReader = image.getPixelReader();
+                    PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width; x++) {
+                            Color color = pixelReader.getColor(x, y);
+
+                            if (color.equals(Color.rgb(255, 254, 255))) {
+                                pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
+                            }
+                            else
+                                pixelWriter.setColor(x, y, color);
+                        }
+                    }
+                    imageView = new ImageView(writableImage);
                     imageView.setPickOnBounds(true);
                     imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -1119,7 +1176,7 @@ public class Main extends Application {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 1) {
-                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
+                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(writableImage);
                                     bubbleName = imageFile.getPath().substring(19);
                                 }
                             }
@@ -1128,6 +1185,8 @@ public class Main extends Application {
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
+
+
                 return imageView;
             }
         });
