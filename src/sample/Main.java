@@ -2047,14 +2047,17 @@ public class Main extends Application {
             Label popupPrompt = new Label("Title of your Comic Strip:");
             popupPrompt.getStyleClass().add("popUpPrompt");
 
-            TextField popupField = new TextField("Title");
+            TextField popupField = new TextField();
+            popupField.setPromptText("Title");
             popupField.setMinHeight(50);
 
-            TextField htmlRow = new TextField("Number of Rows");
+            TextField htmlRow = new TextField();
+            htmlRow.setPromptText("Number of Rows");
             htmlRow.setMinHeight(30);
             htmlRow.setMinWidth(10);
 
-            TextField htmlCol = new TextField("Number of Columns");
+            TextField htmlCol = new TextField();
+            htmlCol.setPromptText("Number of Columns");
             htmlCol.setMinHeight(30);
             htmlCol.setMinWidth(10);
 
