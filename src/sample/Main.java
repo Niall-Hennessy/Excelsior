@@ -2238,26 +2238,8 @@ public class Main extends Application {
                 }
             }
 
-            if ((comicStrip.getChildren().size() % 2) == 1) {
-                File toSave = new File(saveFile.getPath() + "\\" + (comicStrip.getChildren().size() - 2) + ".png");
-                BufferedImage img = null;
-                try {
-                    img = ImageIO.read(new File("src/images/credits/end_screen.png"));
-                    if (toSave != null) {
-                        try {
-                            ImageIO.write(img, "png", toSave);
-                        } catch (IOException ex) {
-                            System.out.println(ex.getMessage());
-                        }
-                    }
-                } catch (IOException e) {
-                }
-
-                if (toSave != null) {
-                    StreamResult result = new StreamResult(toSave);
-                    StreamResult consoleResult = new StreamResult(System.out);
-                }
-            }
+            int row = Integer.parseInt(htmlRow.getText());
+            int col = Integer.parseInt(htmlCol.getText());
 
             File htmlFile = new File(saveFile.getPath() + "\\index.html");
             try {
@@ -2279,17 +2261,27 @@ public class Main extends Application {
                                 "<table>\n"
                 );
 
+                for(int i=0; i < row; i++){
+                    myWriter.write("<tr>\n");
+                    for(int j=0; j < col; j++){
+                        if((col * i) + j + 1 > comicStrip.getChildren().size() - 2) {
+                            i = row;
+                            j = col;
+                        }else{
+                            myWriter.write("<td><center><img src=\"" + ((col * i) + j) + ".png\" width=\"500\" height=\"500\"></center></td>\n");
+                        }
+                    }
+                    myWriter.write("</tr>\n");
+                }
 
+                myWriter.write(
+                        "</table>\n" +
+                        "</body>\n" +
+                        "</html>\n" +
+                        "</center>\n"
+                );
 
-            myWriter.write(
-                    "</table>\n" +
-                            "</body>\n" +
-                            "</html>\n" +
-                            "</center>\n"
-            );
-
-            myWriter.close();
-
+                myWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
