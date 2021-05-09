@@ -1153,8 +1153,28 @@ public class Main extends Application {
                 try {
                     final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
                             true);
-                    imageView = new ImageView(image);
-                    //imageView.setFitWidth(150);
+
+                    int width = (int) image.getWidth();
+                    int height = (int) image.getHeight();
+
+                    WritableImage writableImage = new WritableImage(width, height);
+
+                    PixelReader pixelReader = image.getPixelReader();
+                    PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width; x++) {
+                            Color color = pixelReader.getColor(x, y);
+
+                            if (color.equals(Color.rgb(255, 254, 255))) {
+                                pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
+                            }
+                            else
+                                pixelWriter.setColor(x, y, color);
+                        }
+                    }
+
+                    imageView = new ImageView(writableImage);
                     imageView.setPickOnBounds(true);
                     imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -1164,7 +1184,7 @@ public class Main extends Application {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 1) {
-                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(image);
+                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(writableImage);
                                     bubbleName = imageFile.getPath().substring(19);
                                 }
                             }
