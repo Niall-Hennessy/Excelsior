@@ -2,18 +2,13 @@ package sample;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -25,8 +20,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -35,44 +28,28 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
 import javafx.scene.transform.Transform;
-import javafx.scene.transform.Translate;
 import javafx.stage.*;
-import javafx.scene.text.*;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.w3c.dom.*;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLWriter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.sql.Time;
 import java.util.*;
 import java.util.List;
-import java.util.logging.Logger;
-
-import static java.awt.Color.WHITE;
 
 public class Main extends Application {
 
@@ -607,182 +584,72 @@ public class Main extends Application {
         });
 
         help.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage helpStage = new Stage();
-
             @Override
             public void handle(ActionEvent event) {
 
-                helpStage.setTitle("Help");
+                HelpMenu helpMenu = new HelpMenu();
 
-                TabPane helpPane = new TabPane();
-                helpPane.getStyleClass().add("helpPane");
+                helpMenu.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.7);
+                helpMenu.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
 
-                Tab characterTab = new Tab("Character");
-                Tab speechBubbleTab = new Tab("Speech Bubbles");
-                Tab colourTab = new Tab("Skin/Hair");
-                Tab captionTab = new Tab("Caption");
-                Tab backgroundTab = new Tab("Backgrounds");
-                Tab lockTab = new Tab("Lock/Unlock");
-                Tab undoDeleteTab = new Tab("Undo/Delete");
+                helpMenu.createTab("Character");
+                helpMenu.createTab("Speech Bubbles");
+                helpMenu.createTab("Skin/Hair");
+                helpMenu.createTab("Caption");
+                helpMenu.createTab("Backgrounds");
+                helpMenu.createTab("Lock/Unlock");
+                helpMenu.createTab("Undo/Delete");
 
-                characterTab.getStyleClass().add("helpTab");
-                speechBubbleTab.getStyleClass().add("helpTab");
-                colourTab.getStyleClass().add("helpTab");
-                captionTab.getStyleClass().add("helpTab");
-                backgroundTab.getStyleClass().add("helpTab");
-                lockTab.getStyleClass().add("helpTab");
-                undoDeleteTab.getStyleClass().add("helpTab");
+                helpMenu.setTabContent("Character", "\n Let's add a character to your comic!\n " +
+                        "\n First press the plus icon in the white panel." +
+                        "\n Now that a black comic panel has appeared, select it so that it is highlighted." +
+                        "\n Click on the character icon to choose a left or right character." +
+                        "\n Double click a character pose from the gallery." +
+                        "\n Use the Flip Button to change which way they are facing." +
+                        "\n Use the M/F button to change their gender.");
 
+                helpMenu.setTabContent("Speech Bubbles", "\n Let's get your characters talking!\n " +
+                        "\n Note: You have to have a character in your panel before you can make them talk.\n " +
+                        "\n Click on the speech bubble icon." +
+                        "\n Choose what bubble you want." +
+                        "\n Write in the text-box what you want them to say - Careful, there is a character limit." +
+                        "\n Choose if you want the text in italic, or bold, or both." +
+                        "\n Hit Submit and voila!" +
+                        "\n Hit Cancel if you change your mind." +
+                        "\n Hit Delete if you want to get rid of the bubble.");
 
-                characterTab.closableProperty().setValue(false);
-                speechBubbleTab.closableProperty().setValue(false);
-                colourTab.closableProperty().setValue(false);
-                captionTab.closableProperty().setValue(false);
-                backgroundTab.closableProperty().setValue(false);
-                lockTab.closableProperty().setValue(false);
-                undoDeleteTab.closableProperty().setValue(false);
+                helpMenu.setTabContent("Skin/Hair", "\n Let's add some colour!\n " +
+                        "\n Select the character who's Skin/Hair you wish to change." +
+                        "\n Select the Skin/Hair colour picker to select a new colour.");
 
-                helpPane.getTabs().add(characterTab);
-                helpPane.getTabs().add(speechBubbleTab);
-                helpPane.getTabs().add(colourTab);
-                helpPane.getTabs().add(captionTab);
-                helpPane.getTabs().add(backgroundTab);
-                helpPane.getTabs().add(lockTab);
-                helpPane.getTabs().add(undoDeleteTab);
+                helpMenu.setTabContent("Caption", "\n Let's caption your panel!\n " +
+                        "\n Hit the caption button." +
+                        "\n Write what you want the caption to be." +
+                        "\n Choose a font for you caption." +
+                        "\n Hit 'Apply' and see it appear." +
+                        "\n Hit 'Cancel' if you change your mind." +
+                        "\n Hit 'Delete' after selecting either the 'Top Text' or 'Bottom Text' to remove the caption.");
 
-                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.7);
-                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
+                helpMenu.setTabContent("Backgrounds", "\n Let's add a background!\n" +
+                        "\n Hit the background button and double click the image you want to use.");
 
-                Label label = new Label();
+                helpMenu.setTabContent("Lock/Unlock", "\n Let's protect your work!\n" +
+                        "\n When you have finished working on your panel, to prevent accidental changes hit the open lock button." +
+                        "\n This prevents changes to the panel until you unlock it." +
+                        "\n To unlock the panel hit the now closed lock button.");
 
-                label = new Label(
-                        "\n Let's add a character to your comic!\n " +
-                                "\n First press the plus icon in the white panel." +
-                                "\n Now that a black comic panel has appeared, select it so that it is highlighted." +
-                                "\n Click on the character icon to choose a left or right character." +
-                                "\n Double click a character pose from the gallery." +
-                                "\n Use the Flip Button to change which way they are facing." +
-                                "\n Use the M/F button to change their gender."
-                );
+                helpMenu.setTabContent("Undo/Delete", "\n Undo: \n" +
+                        "\n Hit the back arrow button to undo or hit 'z' on your keyboard ." +
+                        "\n \n Delete:\n" +
+                        "\n Hit the red trash can button to delete the selected panel. ");
 
-                ScrollPane instructionCharacter =  new ScrollPane(label);
-                instructionCharacter.getStyleClass().add("contentPane");
-
-
-                label = new Label(
-                        "\n Let's get your characters talking!\n " +
-                                "\n Note: You have to have a character in your panel before you can make them talk.\n " +
-                                "\n Click on the speech bubble icon." +
-                                "\n Choose what bubble you want." +
-                                "\n Write in the text-box what you want them to say - Careful, there is a character limit." +
-                                "\n Choose if you want the text in italic, or bold, or both." +
-                                "\n Hit Submit and voila!" +
-                                "\n Hit Cancel if you change your mind." +
-                                "\n Hit Delete if you want to get rid of the bubble."
-                );
-
-                ScrollPane instructionSpeechBubble =  new ScrollPane(label);
-                instructionSpeechBubble.getStyleClass().add("contentPane");
-
-                label = new Label(
-                        "\n Let's add some colour!\n " +
-                                "\n Select the character who's Skin/Hair you wish to change." +
-                                "\n Select the Skin/Hair colour picker to select a new colour."
-                );
-                ScrollPane instructionColour =  new ScrollPane(label);
-                instructionColour.getStyleClass().add("contentPane");
-
-
-
-                label = new Label(
-                        "\n Let's caption your panel!\n " +
-                                "\n Hit the caption button." +
-                                "\n Write what you want the caption to be." +
-                                "\n Choose a font for you caption." +
-                                "\n Hit 'Apply' and see it appear." +
-                                "\n Hit 'Cancel' if you change your mind." +
-                                "\n Hit 'Delete' after selecting either the 'Top Text' or 'Bottom Text' to remove the caption."
-                );
-
-                ScrollPane instructionCaption =  new ScrollPane(label);
-                instructionCaption.getStyleClass().add("contentPane");
-
-                label = new Label(
-                        "\n Let's add a background!\n" +
-                                "\n Hit the background button and double click the image you want to use."
-                );
-
-                ScrollPane instructionBackground = new ScrollPane(label);
-                instructionBackground.getStyleClass().add("contentPane");
-
-                label = new Label(
-                        "\n Let's protect your work!\n" +
-                                "\n When you have finished working on your panel, to prevent accidental changes hit the open lock button." +
-                                "\n This prevents changes to the panel until you unlock it." +
-                                "\n To unlock the panel hit the now closed lock button."
-                );
-
-                ScrollPane instructionLock = new ScrollPane(label);
-                instructionLock.getStyleClass().add("contentPane");
-
-                label = new Label(
-                        "\n Undo: \n" +
-                                "\n Hit the back arrow button to undo or hit 'z' on your keyboard ." +
-                                "\n \n Delete:\n" +
-                                "\n Hit the red trash can button to delete the selected panel. "
-                );
-
-                ScrollPane instructionUndoDelete = new ScrollPane(label);
-                instructionUndoDelete.getStyleClass().add("contentPane");
-
-
-                instructionCharacter.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionCharacter.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionCharacter.fitToWidthProperty().setValue(true);
-
-                instructionSpeechBubble.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionSpeechBubble.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionSpeechBubble.fitToWidthProperty().setValue(true);
-
-                instructionColour.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionColour.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionColour.fitToWidthProperty().setValue(true);
-
-                instructionCaption.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionCaption.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionCaption.fitToWidthProperty().setValue(true);
-
-                instructionBackground.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionBackground.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionBackground.fitToWidthProperty().setValue(true);
-
-                instructionLock.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionLock.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionLock.fitToWidthProperty().setValue(true);
-
-                instructionUndoDelete.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionUndoDelete.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionUndoDelete.fitToWidthProperty().setValue(true);
-
-
-                characterTab.setContent(instructionCharacter);
-                speechBubbleTab.setContent(instructionSpeechBubble);
-                colourTab.setContent(instructionColour);
-                captionTab.setContent(instructionCaption);
-                backgroundTab.setContent(instructionBackground);
-                lockTab.setContent(instructionLock);
-                undoDeleteTab.setContent(instructionUndoDelete);
-
-                Scene scene = new Scene(helpPane);
-                helpStage.setScene(scene);
-                scene.getStylesheets().add("sample/style.css");
-                helpStage.show();
+                helpMenu.showHelpMenu();
             }
         });
 
 
 
-        GalleryStuff galleryView = new GalleryStuff();
+        GalleryManager galleryView = new GalleryManager();
 
 
 
