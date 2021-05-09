@@ -2322,14 +2322,6 @@ public class Main extends Application {
 
                     newComicPanel.setIndex(comicStrip.getChildren().indexOf(newComicPanel));
 
-                    newComicPanel.setOnMouseDragOver(new EventHandler <MouseDragEvent>()
-                    {
-                        public void handle(MouseDragEvent event)
-                        {
-                            System.out.println("Event on Target: mouse drag over");
-                        }
-                    });
-
                     newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
@@ -2373,14 +2365,10 @@ public class Main extends Application {
                                                     newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
                                                 }
 
-                                                System.out.println(newComicPanel.getTranslateX());
-
                                                 double presX = newComicPanel.getTranslateX();
                                                 double presY = newComicPanel.getTranslateY();
 
                                                 if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() < ((height/2.4 + height/9.6) * (amount.get() - 1))) {
-
-                                                    System.out.println("New Panel Position");
 
                                                     amount.getAndDecrement();
                                                     index.getAndDecrement();
