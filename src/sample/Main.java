@@ -2254,7 +2254,7 @@ public class Main extends Application {
                         "<table>\n"
                         );
 
-                for(int i=0; i < comicStrip.getChildren().size() - 2 ; i += 2){
+
                     myWriter.write(
                             "<tr>\n" +
                             "<td><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></td>\n" +
