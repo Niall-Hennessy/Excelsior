@@ -72,11 +72,9 @@ public class Main extends Application {
         primaryStage.setHeight(heightPrcnt);
         primaryStage.setWidth(widthPrcnt);
 
-
         GridPane mainPane = new GridPane();
 
         final String[] premise = {""};
-
 
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
@@ -166,7 +164,6 @@ public class Main extends Application {
         String tiphairColorPicker   = "Choose Hair Colour";
         String tipNoCharacterSelected = "No character has been selected";
         String tipNoPanelSelected = "A comic panel must be selected first";
-
 
 
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -269,6 +266,7 @@ public class Main extends Application {
         });
 
 
+        //Move to it's own class
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
             final Stage saveXML = new Stage();
 
@@ -293,7 +291,6 @@ public class Main extends Application {
 
                     Scene scene = new Scene(vBox);
                     saveXML.setScene(scene);
-
 
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilderFactory.newInstance();
@@ -539,7 +536,7 @@ public class Main extends Application {
             }
         });
 
-
+        //Move add_character and add_background to unique class
         add_character.setOnAction(new EventHandler<ActionEvent>() {
             final Stage saveXML = new Stage();
 
@@ -609,6 +606,7 @@ public class Main extends Application {
             }
         });
 
+        //Move to it's own class
         help.setOnAction(new EventHandler<ActionEvent>() {
             final Stage helpStage = new Stage();
 
