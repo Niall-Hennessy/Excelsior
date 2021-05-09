@@ -20,8 +20,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -45,11 +44,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Main extends Application {
 
@@ -1405,6 +1407,12 @@ public class Main extends Application {
         scrollPane.setPrefHeight(height * 0.6);
         scrollPane.setPrefWidth(width - 20);
 
+        comicStrip.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mouseEvent.setDragDetect(true);
+            }
+        });
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, buttonLayout);
@@ -2314,16 +2322,112 @@ public class Main extends Application {
 
                     newComicPanel.setIndex(comicStrip.getChildren().indexOf(newComicPanel));
 
-                    PauseTransition holdTimer = new PauseTransition(Duration.seconds(1));
-
-
-                    newComicPanel.addEventHandler(MouseEvent.MOUSE_RELEASED, eventT -> holdTimer.stop());
+                    newComicPanel.setOnMouseDragOver(new EventHandler <MouseDragEvent>()
+                    {
+                        public void handle(MouseDragEvent event)
+                        {
+                            System.out.println("Event on Target: mouse drag over");
+                        }
+                    });
 
                     newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            holdTimer.playFromStart();
+                            mouseEvent.setDragDetect(true);
+                            addPressAndHoldHandler(newComicPanel, Duration.seconds(1),
+                                    event -> {
 
+                                            newComicPanel.getScene().setCursor(javafx.scene.Cursor.CLOSED_HAND);
+
+                                            AtomicInteger index = new AtomicInteger(comicStrip.getChildren().indexOf(newComicPanel));
+                                            AtomicInteger amount = new AtomicInteger(0);
+                                            AtomicInteger scroll = new AtomicInteger(0);
+                                            AtomicReference<Double> offset = new AtomicReference<>();
+                                            offset.set(0.0);
+
+                                            comicStrip.setOnMouseDragged(dragEvent -> {
+
+                                                if(dragEvent.getScreenX() > (4*width/5)) {
+                                                    double hV = scrollPane.getHvalue();
+                                                    scrollPane.setHvalue(scrollPane.getHvalue() + 0.001);
+                                                    if(scrollPane.getHvalue() != 1) {
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 9);
+                                                        scroll.set(scroll.get() + 9);
+                                                    }
+                                                }else if(dragEvent.getScreenX() < width/5){
+                                                    scrollPane.setHvalue(scrollPane.getHvalue() - 0.001);
+                                                    if(scrollPane.getHvalue() != 0) {
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 9);
+                                                        scroll.set(scroll.get() - 9);
+                                                    }
+                                                }else{
+
+                                                    if(amount.get() < 0)
+                                                        offset.set(-(height/2.4 + height/9.6));
+                                                    else if(amount.get() > 0)
+                                                        offset.set((height/2.4 + height/9.6));
+                                                    else
+                                                        offset.set(0.0);
+
+                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() - offset.get());
+                                                    newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
+                                                }
+
+                                                System.out.println(newComicPanel.getTranslateX());
+
+                                                double presX = newComicPanel.getTranslateX();
+                                                double presY = newComicPanel.getTranslateY();
+
+                                                if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() < ((height/2.4 + height/9.6) * (amount.get() - 1))) {
+
+                                                    System.out.println("New Panel Position");
+
+                                                    amount.getAndDecrement();
+                                                    index.getAndDecrement();
+
+                                                    if(index.get() < 1)
+                                                        index.set(1);
+
+                                                    comicStrip.getChildren().remove(newComicPanel);
+                                                    comicStrip.getChildren().add(index.get(), newComicPanel);
+                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() + (height/2.4 + height/9.6));
+
+                                                }
+                                                else if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() > ((height/2.4 + height/9.6) * (amount.get() + 1))) {
+                                                    amount.getAndIncrement();
+                                                    index.getAndIncrement();
+
+                                                    if(index.get() > comicStrip.getChildren().size()-2)
+                                                        index.set(comicStrip.getChildren().size()-2);
+
+                                                    comicStrip.getChildren().remove(newComicPanel);
+                                                    comicStrip.getChildren().add(index.get(), newComicPanel);
+                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() - (height/2.4 + height/9.6));
+                                                }
+
+                                                dragEvent.consume();
+                                            });
+
+                                            comicStrip.setOnMouseReleased(mouseEvent3 -> {
+
+                                                newComicPanel.getScene().setCursor(javafx.scene.Cursor.DEFAULT);
+
+                                                comicStrip.setMargin(newComicPanel, new Insets(20,10,20,10));
+
+                                                newComicPanel.setTranslateX(0);
+                                                newComicPanel.setTranslateY(0);
+
+                                                comicStrip.setOnMouseDragged(dragEvent2 -> {
+                                                    dragEvent2.consume();
+                                                });
+
+                                                comicStrip.setOnMouseReleased(dragEvent2 -> {
+                                                    dragEvent2.consume();
+                                                });
+
+                                                mouseEvent3.consume();
+                                            });
+                                    });
 
                             if(!comicStrip.getChildren().contains(newComicPanel))
                                 comicStrip.getChildren().add(newComicPanel);
@@ -2412,6 +2516,24 @@ public class Main extends Application {
         primaryStage.show();
 
     }
+
+    private void addPressAndHoldHandler(javafx.scene.Node node, Duration holdTime,
+                                        EventHandler<MouseEvent> handler) {
+
+        class Wrapper<T> { T content ; }
+        Wrapper<MouseEvent> eventWrapper = new Wrapper<>();
+
+        PauseTransition holdTimer = new PauseTransition(holdTime);
+        holdTimer.setOnFinished(event -> handler.handle(eventWrapper.content));
+
+
+        node.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            eventWrapper.content = event ;
+            holdTimer.playFromStart();
+        });
+        node.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> holdTimer.stop());
+        node.addEventHandler(MouseEvent.DRAG_DETECTED, event -> holdTimer.stop());
+    };
 
     public static void main(String[] args) {
         launch(args);

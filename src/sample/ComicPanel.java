@@ -29,7 +29,7 @@ public class ComicPanel extends Pane {
     private TextCaption topText;
     private TextCaption bottomText;
 
-    private String background = "images/backgrounds/BlankBackground.png";
+    private String background = "images/backgrounds/BlankBackground.jpg";
 
     private Boolean isLocked;
 
