@@ -2331,18 +2331,23 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, about to delete the current panel.\nDo you still wish to continue?");
+
                 if(comicPanel[0].getLocked()){
                     hoverTips.lockedTip(tipLocked, leftCharacter);
                     return;
                 }
 
-                comicStrip.getChildren().remove(comicPanel[0]);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    comicStrip.getChildren().remove(comicPanel[0]);
 
-                deletedPanels.add(comicPanel[0]);
-                undoList.add("delete|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|||");
+                    deletedPanels.add(comicPanel[0]);
+                    undoList.add("delete|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|||");
 
-                hairColorPicker[0].setValue(Color.WHITE);
-                skinColorPicker[0].setValue(Color.WHITE);
+                    hairColorPicker[0].setValue(Color.WHITE);
+                    skinColorPicker[0].setValue(Color.WHITE);
+                }
             }
         });
 
