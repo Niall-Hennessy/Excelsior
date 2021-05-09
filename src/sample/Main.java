@@ -2038,6 +2038,8 @@ public class Main extends Application {
 
         save_html.setOnAction((ActionEvent event) -> {
 
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, number of comic panels does not match layout.\nDo you still wish to continue?");
+
             //take 2
             Stage popupwindow = new Stage();
 
@@ -2071,16 +2073,17 @@ public class Main extends Application {
                 @Override
                 public void handle(ActionEvent actionEvent) {
 
-                    //CLEAN THIS UP
-                    if (popupField.getText().isEmpty() || popupField.getText() == null) {
-                        System.out.println("Fail");
-                        //comicStrip.setComicTitle(popupField.getText());
+                    if (popupField.getText().isEmpty() || popupField.getText() == null)
+                        return;
+
+                    if((Integer.parseInt(htmlRow.getText()) * Integer.parseInt(htmlCol.getText()) < comicStrip.getChildren().size() - 2)){
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            popupwindow.close();
+                        }
+                    }else{
+                        popupwindow.close();
                     }
-
-                    System.out.println(popupField.getText());
-
-                    popupwindow.close();
-
                 }
             });
 
