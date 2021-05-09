@@ -244,30 +244,17 @@ public class Main extends Application {
         });
 
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage saveXML = new Stage();
 
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    if(saveXML.isShowing()) {
-                        saveXML.initOwner(primaryStage);
-                    }
 
                     FileChooser fileChooser = new FileChooser();
 
                     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
                     fileChooser.getExtensionFilters().add(extFilter);
 
-                    File saveFile = fileChooser.showSaveDialog(saveXML);
-
-                    saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
-                    saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
-
-                    VBox vBox = new VBox();
-
-                    Scene scene = new Scene(vBox);
-                    saveXML.setScene(scene);
-
+                    File saveFile = fileChooser.showSaveDialog(null);
 
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilderFactory.newInstance();
@@ -1430,30 +1417,16 @@ public class Main extends Application {
         newPanelLeft.setVisible(false);
 
         load_xml.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage saveXML = new Stage();
-
             @Override
             public void handle(ActionEvent event) {
 
                 try {
 
-                    if(saveXML.isShowing()) {
-                        saveXML.initOwner(primaryStage);
-                    }
-
                     FileChooser fileChooser = new FileChooser();
 
-                    File inputFile = fileChooser.showOpenDialog(saveXML);
+                    File inputFile = fileChooser.showOpenDialog(null);
 
                     if(inputFile != null) {
-
-                        saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth() / 10);
-                        saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight() / 10);
-
-                        VBox vBox = new VBox();
-
-                        Scene scene = new Scene(vBox);
-                        saveXML.setScene(scene);
 
                         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
