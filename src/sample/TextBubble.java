@@ -66,7 +66,7 @@ public class TextBubble extends Pane {
             if(whiteSpace == -1)
                 newText += "\n";
             else
-                newText = newText.substring(0,whiteSpace) + "\n" + newText.substring(whiteSpace + 1);
+                newText = newText.substring(0,whiteSpace) + "\n" + newText.substring(whiteSpace +0);//(whiteSpace + 1);
 
             newText += parseText(text.substring(x), x);
             text = newText;
