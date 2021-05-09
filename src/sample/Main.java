@@ -266,37 +266,6 @@ public class Main extends Application {
             }
         });
 
-//        skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent mouseEvent) {
-//                if(comicPanel[0].getLocked()) {
-//                    hoverTips.lockedTip(tipLocked, skinColorPicker[0]);
-//                } else {
-//                    if (comicPanel[0].getSelectedCharacter() != null) {
-//                        hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
-//                    } else {
-//                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
-//                    }
-//                }
-//            }
-//        });
-
-//        hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent mouseEvent) {
-//                if (comicPanel[0].getLocked()) {
-//                    hoverTips.lockedTip(tipLocked, hairColorPicker[0]);
-//                } else {
-//                    if (comicPanel[0].getSelectedCharacter() != null) {
-//                        hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
-//                    } else {
-//                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
-//                    }
-//                }
-//            }
-//        });
-
-
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
             final Stage saveXML = new Stage();
 
@@ -1466,6 +1435,11 @@ public class Main extends Application {
                     });
                 }
                 else {
+                    if (comicPanel[0].getSelectedCharacter() != null) {
+                        hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+                    } else {
+                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                    }
                     skinColorPicker[0].setOnAction(new EventHandler() {
                         Color current = skinColorPicker[0].getValue();
                         public void handle(Event t) {
@@ -1484,8 +1458,8 @@ public class Main extends Application {
         });
 
 
-        hairColorPicker[0].setOnMouseEntered(new EventHandler() {
-            public void handle(Event t) {
+        hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent mouseEvent) {
 
                 if(comicPanel[0].getLocked()){
                     hoverTips.lockedTip(tipLocked, hairColorPicker[0]);
@@ -1499,6 +1473,12 @@ public class Main extends Application {
                     });
                 }
                 else {
+                    if (comicPanel[0].getSelectedCharacter() != null) {
+                        hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+                    } else {
+                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
+                    }
+
                     hairColorPicker[0].setOnAction(new EventHandler() {
                         Color current = hairColorPicker[0].getValue();
                         public void handle(Event t) {
