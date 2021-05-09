@@ -2,18 +2,13 @@ package sample;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -25,54 +20,38 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
 import javafx.scene.transform.Transform;
-import javafx.scene.transform.Translate;
 import javafx.stage.*;
-import javafx.scene.text.*;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 import org.w3c.dom.*;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.*;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLWriter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.sql.Time;
 import java.util.*;
 import java.util.List;
-import java.util.logging.Logger;
-
-import static java.awt.Color.WHITE;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Main extends Application {
 
@@ -266,62 +245,18 @@ public class Main extends Application {
             }
         });
 
-//        skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent mouseEvent) {
-//                if(comicPanel[0].getLocked()) {
-//                    hoverTips.lockedTip(tipLocked, skinColorPicker[0]);
-//                } else {
-//                    if (comicPanel[0].getSelectedCharacter() != null) {
-//                        hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
-//                    } else {
-//                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
-//                    }
-//                }
-//            }
-//        });
-
-//        hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent mouseEvent) {
-//                if (comicPanel[0].getLocked()) {
-//                    hoverTips.lockedTip(tipLocked, hairColorPicker[0]);
-//                } else {
-//                    if (comicPanel[0].getSelectedCharacter() != null) {
-//                        hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
-//                    } else {
-//                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
-//                    }
-//                }
-//            }
-//        });
-
-
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage saveXML = new Stage();
 
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    if(saveXML.isShowing()) {
-                        saveXML.initOwner(primaryStage);
-                    }
 
                     FileChooser fileChooser = new FileChooser();
 
                     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
                     fileChooser.getExtensionFilters().add(extFilter);
 
-                    File saveFile = fileChooser.showSaveDialog(saveXML);
-
-                    saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
-                    saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
-
-                    VBox vBox = new VBox();
-
-                    Scene scene = new Scene(vBox);
-                    saveXML.setScene(scene);
-
+                    File saveFile = fileChooser.showSaveDialog(null);
 
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilderFactory.newInstance();
@@ -351,15 +286,15 @@ public class Main extends Application {
                         Attr locked = doc.createAttribute("locked");
                         locked.setValue(toParse.getLocked().toString());
 
-                        if(toParse.topText != null) {
-                            above.appendChild(doc.createTextNode(toParse.topText.getText()));
-                            fontAbove.setValue(toParse.topText.getFont());
+                        if(toParse.getTopText() != null) {
+                            above.appendChild(doc.createTextNode(toParse.getTopText().getText()));
+                            fontAbove.setValue(toParse.getTopText().getFont());
                             above.setAttributeNode(fontAbove);
                         }
 
-                        if(toParse.bottomText != null) {
-                            below.appendChild(doc.createTextNode(toParse.bottomText.getText()));
-                            fontBelow.setValue(toParse.bottomText.getFont());
+                        if(toParse.getBottomText() != null) {
+                            below.appendChild(doc.createTextNode(toParse.getBottomText().getText()));
+                            fontBelow.setValue(toParse.getBottomText().getFont());
                             below.setAttributeNode(fontBelow);
                         }
 
@@ -390,17 +325,17 @@ public class Main extends Application {
 
                             figure.appendChild(name);
 
-                            if(toParse.getLeftCharacter().isFemale)
+                            if(toParse.getLeftCharacter().isFemale())
                                 appearance.appendChild(doc.createTextNode("female"));
                             else
                                 appearance.appendChild(doc.createTextNode("male"));
 
                             figure.appendChild(appearance);
 
-                            skin.appendChild(doc.createTextNode(toParse.getLeftCharacter().skin.toString()));
+                            skin.appendChild(doc.createTextNode(toParse.getLeftCharacter().getSkin().toString()));
                             figure.appendChild(skin);
 
-                            hair.appendChild(doc.createTextNode(toParse.getLeftCharacter().hair.toString()));
+                            hair.appendChild(doc.createTextNode(toParse.getLeftCharacter().getHair().toString()));
                             figure.appendChild(hair);
 
                             figure.appendChild(lips);
@@ -438,17 +373,17 @@ public class Main extends Application {
 
                             figure.appendChild(name);
 
-                            if(toParse.getRightCharacter().isFemale)
+                            if(toParse.getRightCharacter().isFemale())
                                 appearance.appendChild(doc.createTextNode("female"));
                             else
                                 appearance.appendChild(doc.createTextNode("male"));
 
                             figure.appendChild(appearance);
 
-                            skin.appendChild(doc.createTextNode(toParse.getRightCharacter().skin.toString()));
+                            skin.appendChild(doc.createTextNode(toParse.getRightCharacter().getSkin().toString()));
                             figure.appendChild(skin);
 
-                            hair.appendChild(doc.createTextNode(toParse.getRightCharacter().hair.toString()));
+                            hair.appendChild(doc.createTextNode(toParse.getRightCharacter().getHair().toString()));
                             figure.appendChild(hair);
 
                             figure.appendChild(lips);
@@ -470,27 +405,27 @@ public class Main extends Application {
                             figure.appendChild(yPosition);
                         }
 
-                        if(toParse.leftTextBubble != null){
+                        if(toParse.getLeftTextBubble() != null){
                             Element balloonXPosition = doc.createElement("xPosition");
                             Element balloonYPosition = doc.createElement("yPosition");
                             Element balloon = doc.createElement("balloon");
                             left.appendChild(balloon);
 
                             Attr attr = doc.createAttribute("status");
-                            attr.setValue(toParse.leftTextBubble.getStatus());
+                            attr.setValue(toParse.getLeftTextBubble().getStatus());
                             balloon.setAttributeNode(attr);
 
                             Element content = doc.createElement("content");
-                            content.appendChild(doc.createTextNode(toParse.leftTextBubble.getText().getText()));
+                            content.appendChild(doc.createTextNode(toParse.getLeftTextBubble().getText().getText()));
                             Attr bold = doc.createAttribute("bold");
                             Attr italic = doc.createAttribute("italic");
 
-                            if(toParse.leftTextBubble.getText().getFont().toString().contains("Bold"))
+                            if(toParse.getLeftTextBubble().getText().getFont().toString().contains("Bold"))
                                 bold.setValue("true");
                             else
                                 bold.setValue("false");
 
-                            if(toParse.leftTextBubble.getText().getFont().toString().contains("Italic"))
+                            if(toParse.getLeftTextBubble().getText().getFont().toString().contains("Italic"))
                                 italic.setValue("true");
                             else
                                 italic.setValue("false");
@@ -506,27 +441,27 @@ public class Main extends Application {
                             balloon.appendChild(balloonYPosition);
                         }
 
-                        if(toParse.rightTextBubble != null){
+                        if(toParse.getRightTextBubble() != null){
                             Element balloonXPosition = doc.createElement("xPosition");
                             Element balloonYPosition = doc.createElement("yPosition");
                             Element balloon = doc.createElement("balloon");
                             right.appendChild(balloon);
 
                             Attr attr = doc.createAttribute("status");
-                            attr.setValue(toParse.rightTextBubble.getStatus());
+                            attr.setValue(toParse.getRightTextBubble().getStatus());
                             balloon.setAttributeNode(attr);
 
                             Element content = doc.createElement("content");
-                            content.appendChild(doc.createTextNode(toParse.rightTextBubble.getText().getText()));
+                            content.appendChild(doc.createTextNode(toParse.getRightTextBubble().getText().getText()));
                             Attr bold = doc.createAttribute("bold");
                             Attr italic = doc.createAttribute("italic");
 
-                            if(toParse.rightTextBubble.getText().getFont().toString().contains("Bold"))
+                            if(toParse.getRightTextBubble().getText().getFont().toString().contains("Bold"))
                                 bold.setValue("true");
                             else
                                 bold.setValue("false");
 
-                            if(toParse.rightTextBubble.getText().getFont().toString().contains("Italic"))
+                            if(toParse.getRightTextBubble().getText().getFont().toString().contains("Italic"))
                                 italic.setValue("true");
                             else
                                 italic.setValue("false");
@@ -638,182 +573,72 @@ public class Main extends Application {
         });
 
         help.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage helpStage = new Stage();
-
             @Override
             public void handle(ActionEvent event) {
 
-                helpStage.setTitle("Help");
+                HelpMenu helpMenu = new HelpMenu();
 
-                TabPane helpPane = new TabPane();
-                helpPane.getStyleClass().add("helpPane");
+                helpMenu.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.7);
+                helpMenu.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
 
-                Tab characterTab = new Tab("Character");
-                Tab speechBubbleTab = new Tab("Speech Bubbles");
-                Tab colourTab = new Tab("Skin/Hair");
-                Tab captionTab = new Tab("Caption");
-                Tab backgroundTab = new Tab("Backgrounds");
-                Tab lockTab = new Tab("Lock/Unlock");
-                Tab undoDeleteTab = new Tab("Undo/Delete");
+                helpMenu.createTab("Character");
+                helpMenu.createTab("Speech Bubbles");
+                helpMenu.createTab("Skin/Hair");
+                helpMenu.createTab("Caption");
+                helpMenu.createTab("Backgrounds");
+                helpMenu.createTab("Lock/Unlock");
+                helpMenu.createTab("Undo/Delete");
 
-                characterTab.getStyleClass().add("helpTab");
-                speechBubbleTab.getStyleClass().add("helpTab");
-                colourTab.getStyleClass().add("helpTab");
-                captionTab.getStyleClass().add("helpTab");
-                backgroundTab.getStyleClass().add("helpTab");
-                lockTab.getStyleClass().add("helpTab");
-                undoDeleteTab.getStyleClass().add("helpTab");
+                helpMenu.setTabContent("Character", "\n Let's add a character to your comic!\n " +
+                        "\n First press the plus icon in the white panel." +
+                        "\n Now that a black comic panel has appeared, select it so that it is highlighted." +
+                        "\n Click on the character icon to choose a left or right character." +
+                        "\n Double click a character pose from the gallery." +
+                        "\n Use the Flip Button to change which way they are facing." +
+                        "\n Use the M/F button to change their gender.");
 
+                helpMenu.setTabContent("Speech Bubbles", "\n Let's get your characters talking!\n " +
+                        "\n Note: You have to have a character in your panel before you can make them talk.\n " +
+                        "\n Click on the speech bubble icon." +
+                        "\n Choose what bubble you want." +
+                        "\n Write in the text-box what you want them to say - Careful, there is a character limit." +
+                        "\n Choose if you want the text in italic, or bold, or both." +
+                        "\n Hit Submit and voila!" +
+                        "\n Hit Cancel if you change your mind." +
+                        "\n Hit Delete if you want to get rid of the bubble.");
 
-                characterTab.closableProperty().setValue(false);
-                speechBubbleTab.closableProperty().setValue(false);
-                colourTab.closableProperty().setValue(false);
-                captionTab.closableProperty().setValue(false);
-                backgroundTab.closableProperty().setValue(false);
-                lockTab.closableProperty().setValue(false);
-                undoDeleteTab.closableProperty().setValue(false);
+                helpMenu.setTabContent("Skin/Hair", "\n Let's add some colour!\n " +
+                        "\n Select the character who's Skin/Hair you wish to change." +
+                        "\n Select the Skin/Hair colour picker to select a new colour.");
 
-                helpPane.getTabs().add(characterTab);
-                helpPane.getTabs().add(speechBubbleTab);
-                helpPane.getTabs().add(colourTab);
-                helpPane.getTabs().add(captionTab);
-                helpPane.getTabs().add(backgroundTab);
-                helpPane.getTabs().add(lockTab);
-                helpPane.getTabs().add(undoDeleteTab);
+                helpMenu.setTabContent("Caption", "\n Let's caption your panel!\n " +
+                        "\n Hit the caption button." +
+                        "\n Write what you want the caption to be." +
+                        "\n Choose a font for you caption." +
+                        "\n Hit 'Apply' and see it appear." +
+                        "\n Hit 'Cancel' if you change your mind." +
+                        "\n Hit 'Delete' after selecting either the 'Top Text' or 'Bottom Text' to remove the caption.");
 
-                helpStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/1.7);
-                helpStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/2);
+                helpMenu.setTabContent("Backgrounds", "\n Let's add a background!\n" +
+                        "\n Hit the background button and double click the image you want to use.");
 
-                Label label = new Label();
+                helpMenu.setTabContent("Lock/Unlock", "\n Let's protect your work!\n" +
+                        "\n When you have finished working on your panel, to prevent accidental changes hit the open lock button." +
+                        "\n This prevents changes to the panel until you unlock it." +
+                        "\n To unlock the panel hit the now closed lock button.");
 
-                label = new Label(
-                        "\n Let's add a character to your comic!\n " +
-                                "\n First press the plus icon in the white panel." +
-                                "\n Now that a black comic panel has appeared, select it so that it is highlighted." +
-                                "\n Click on the character icon to choose a left or right character." +
-                                "\n Double click a character pose from the gallery." +
-                                "\n Use the Flip Button to change which way they are facing." +
-                                "\n Use the M/F button to change their gender."
-                );
+                helpMenu.setTabContent("Undo/Delete", "\n Undo: \n" +
+                        "\n Hit the back arrow button to undo or hit 'z' on your keyboard ." +
+                        "\n \n Delete:\n" +
+                        "\n Hit the red trash can button to delete the selected panel. ");
 
-                ScrollPane instructionCharacter =  new ScrollPane(label);
-                instructionCharacter.getStyleClass().add("contentPane");
-
-
-                label = new Label(
-                        "\n Let's get your characters talking!\n " +
-                                "\n Note: You have to have a character in your panel before you can make them talk.\n " +
-                                "\n Click on the speech bubble icon." +
-                                "\n Choose what bubble you want." +
-                                "\n Write in the text-box what you want them to say - Careful, there is a character limit." +
-                                "\n Choose if you want the text in italic, or bold, or both." +
-                                "\n Hit Submit and voila!" +
-                                "\n Hit Cancel if you change your mind." +
-                                "\n Hit Delete if you want to get rid of the bubble."
-                );
-
-                ScrollPane instructionSpeechBubble =  new ScrollPane(label);
-                instructionSpeechBubble.getStyleClass().add("contentPane");
-
-                label = new Label(
-                        "\n Let's add some colour!\n " +
-                                "\n Select the character who's Skin/Hair you wish to change." +
-                                "\n Select the Skin/Hair colour picker to select a new colour."
-                );
-                ScrollPane instructionColour =  new ScrollPane(label);
-                instructionColour.getStyleClass().add("contentPane");
-
-
-
-                label = new Label(
-                        "\n Let's caption your panel!\n " +
-                                "\n Hit the caption button." +
-                                "\n Write what you want the caption to be." +
-                                "\n Choose a font for you caption." +
-                                "\n Hit 'Apply' and see it appear." +
-                                "\n Hit 'Cancel' if you change your mind." +
-                                "\n Hit 'Delete' after selecting either the 'Top Text' or 'Bottom Text' to remove the caption."
-                );
-
-                ScrollPane instructionCaption =  new ScrollPane(label);
-                instructionCaption.getStyleClass().add("contentPane");
-
-                label = new Label(
-                        "\n Let's add a background!\n" +
-                                "\n Hit the background button and double click the image you want to use."
-                );
-
-                ScrollPane instructionBackground = new ScrollPane(label);
-                instructionBackground.getStyleClass().add("contentPane");
-
-                label = new Label(
-                        "\n Let's protect your work!\n" +
-                                "\n When you have finished working on your panel, to prevent accidental changes hit the open lock button." +
-                                "\n This prevents changes to the panel until you unlock it." +
-                                "\n To unlock the panel hit the now closed lock button."
-                );
-
-                ScrollPane instructionLock = new ScrollPane(label);
-                instructionLock.getStyleClass().add("contentPane");
-
-                label = new Label(
-                        "\n Undo: \n" +
-                                "\n Hit the back arrow button to undo or hit 'z' on your keyboard ." +
-                                "\n \n Delete:\n" +
-                                "\n Hit the red trash can button to delete the selected panel. "
-                );
-
-                ScrollPane instructionUndoDelete = new ScrollPane(label);
-                instructionUndoDelete.getStyleClass().add("contentPane");
-
-
-                instructionCharacter.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionCharacter.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionCharacter.fitToWidthProperty().setValue(true);
-
-                instructionSpeechBubble.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionSpeechBubble.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionSpeechBubble.fitToWidthProperty().setValue(true);
-
-                instructionColour.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionColour.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionColour.fitToWidthProperty().setValue(true);
-
-                instructionCaption.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionCaption.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionCaption.fitToWidthProperty().setValue(true);
-
-                instructionBackground.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionBackground.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionBackground.fitToWidthProperty().setValue(true);
-
-                instructionLock.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionLock.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionLock.fitToWidthProperty().setValue(true);
-
-                instructionUndoDelete.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionUndoDelete.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-                instructionUndoDelete.fitToWidthProperty().setValue(true);
-
-
-                characterTab.setContent(instructionCharacter);
-                speechBubbleTab.setContent(instructionSpeechBubble);
-                colourTab.setContent(instructionColour);
-                captionTab.setContent(instructionCaption);
-                backgroundTab.setContent(instructionBackground);
-                lockTab.setContent(instructionLock);
-                undoDeleteTab.setContent(instructionUndoDelete);
-
-                Scene scene = new Scene(helpPane);
-                helpStage.setScene(scene);
-                scene.getStylesheets().add("sample/style.css");
-                helpStage.show();
+                helpMenu.showHelpMenu();
             }
         });
 
 
 
-        GalleryStuff galleryView = new GalleryStuff();
+        GalleryManager galleryView = new GalleryManager();
 
 
 
@@ -831,10 +656,10 @@ public class Main extends Application {
                     return;
                 }
 
-                if(comicPanel[0].getRightCharacter().imageName == null)
+                if(comicPanel[0].getRightCharacter().getImageName() == null)
                     undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|right|blank|");
                 else
-                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|right|" + comicPanel[0].getRightCharacter().imageName.toString() + "|");
+                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|right|" + comicPanel[0].getRightCharacter().getImageName().toString() + "|");
 
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
@@ -858,10 +683,10 @@ public class Main extends Application {
                     return;
                 }
 
-                if(comicPanel[0].getRightCharacter().imageName == null)
+                if(comicPanel[0].getRightCharacter().getImageName() == null)
                     undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|left|blank|");
                 else
-                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|left|" + comicPanel[0].getRightCharacter().imageName + "|");
+                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|left|" + comicPanel[0].getRightCharacter().getImageName() + "|");
 
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
@@ -966,34 +791,34 @@ public class Main extends Application {
                 final boolean[] isBold = {false};
                 final boolean[] isItalic = {false};
 
-                if(comicPanel[0].leftTextBubble != null) {
-                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Bold"))
+                if(comicPanel[0].getLeftTextBubble() != null) {
+                    if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Bold"))
                         isBold[0] = true;
-                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Italic"))
+                    if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Italic"))
                         isItalic[0] = true;
                 }
 
-                if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()) && comicPanel[0].leftTextBubble != null) {
+                if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()) && comicPanel[0].getLeftTextBubble() != null) {
 
-                    if(comicPanel[0].leftTextBubble != null) {
-                        if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Bold"))
+                    if(comicPanel[0].getLeftTextBubble() != null) {
+                        if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Bold"))
                             isBold[0] = true;
-                        if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Italic"))
+                        if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Italic"))
                             isItalic[0] = true;
                     }
 
-                    textfield.setText(comicPanel[0].leftTextBubble.getText().getText().replaceAll("\n", " "));
+                    textfield.setText(comicPanel[0].getLeftTextBubble().getText().getText().replaceAll("\n", " "));
                 }
-                else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].rightTextBubble != null) {
+                else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].getRightTextBubble() != null) {
 
-                    if(comicPanel[0].rightTextBubble != null) {
-                        if(comicPanel[0].rightTextBubble.getText().getFont().toString().contains("Bold"))
+                    if(comicPanel[0].getRightTextBubble() != null) {
+                        if(comicPanel[0].getRightTextBubble().getText().getFont().toString().contains("Bold"))
                             isBold[0] = true;
-                        if(comicPanel[0].rightTextBubble.getText().getFont().toString().contains("Italic"))
+                        if(comicPanel[0].getRightTextBubble().getText().getFont().toString().contains("Italic"))
                             isItalic[0] = true;
                     }
 
-                    textfield.setText(comicPanel[0].rightTextBubble.getText().getText().replaceAll("\n", " "));
+                    textfield.setText(comicPanel[0].getRightTextBubble().getText().getText().replaceAll("\n", " "));
                 }
 
                 if(isBold[0] && isItalic[0])
@@ -1289,9 +1114,9 @@ public class Main extends Application {
 
                 TextField captionTextfield = new TextField();
 
-                if(comicPanel[0].topText != null) {
-                    captionTextfield.setFont(comicPanel[0].topText.text.getFont());
-                    combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                if(comicPanel[0].getTopText() != null) {
+                    captionTextfield.setFont(comicPanel[0].getTopText().getTextObject().getFont());
+                    combo_box.setValue(comicPanel[0].getTopText().getTextObject().getFont().getName());
                 }
                 else
                     captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
@@ -1336,8 +1161,8 @@ public class Main extends Application {
                 topText.setStyle("-fx-background-color: #C089D7");
                 bottomText.setStyle("-fx-background-color: #E5A6FF");
 
-                if(comicPanel[0].topText != null)
-                    captionTextfield.setText(comicPanel[0].topText.getText());
+                if(comicPanel[0].getTopText() != null)
+                    captionTextfield.setText(comicPanel[0].getTopText().getText());
 
                 topText.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -1349,10 +1174,10 @@ public class Main extends Application {
                         topText.setStyle("-fx-background-color: #C089D7");
                         bottomText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].topText != null) {
-                            captionTextfield.setText(comicPanel[0].topText.getText());
-                            captionTextfield.setFont(comicPanel[0].topText.text.getFont());
-                            combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                        if(comicPanel[0].getTopText() != null) {
+                            captionTextfield.setText(comicPanel[0].getTopText().getText());
+                            captionTextfield.setFont(comicPanel[0].getTopText().getTextObject().getFont());
+                            combo_box.setValue(comicPanel[0].getTopText().getTextObject().getFont().getName());
                         }
                         else {
                             captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
@@ -1371,10 +1196,10 @@ public class Main extends Application {
                         bottomText.setStyle("-fx-background-color: #C089D7");
                         topText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].bottomText != null) {
-                            captionTextfield.setText(comicPanel[0].bottomText.getText());
-                            captionTextfield.setFont(comicPanel[0].bottomText.text.getFont());
-                            combo_box.setValue(comicPanel[0].bottomText.text.getFont().getName());
+                        if(comicPanel[0].getBottomText() != null) {
+                            captionTextfield.setText(comicPanel[0].getBottomText().getText());
+                            captionTextfield.setFont(comicPanel[0].getBottomText().getTextObject().getFont());
+                            combo_box.setValue(comicPanel[0].getBottomText().getTextObject().getFont().getName());
                         }
                         else {
                             captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
@@ -1466,6 +1291,11 @@ public class Main extends Application {
                     });
                 }
                 else {
+                    if (comicPanel[0].getSelectedCharacter() != null) {
+                        hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
+                    } else {
+                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
+                    }
                     skinColorPicker[0].setOnAction(new EventHandler() {
                         Color current = skinColorPicker[0].getValue();
                         public void handle(Event t) {
@@ -1484,8 +1314,8 @@ public class Main extends Application {
         });
 
 
-        hairColorPicker[0].setOnMouseEntered(new EventHandler() {
-            public void handle(Event t) {
+        hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent mouseEvent) {
 
                 if(comicPanel[0].getLocked()){
                     hoverTips.lockedTip(tipLocked, hairColorPicker[0]);
@@ -1499,6 +1329,12 @@ public class Main extends Application {
                     });
                 }
                 else {
+                    if (comicPanel[0].getSelectedCharacter() != null) {
+                        hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
+                    } else {
+                        hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
+                    }
+
                     hairColorPicker[0].setOnAction(new EventHandler() {
                         Color current = hairColorPicker[0].getValue();
                         public void handle(Event t) {
@@ -1571,6 +1407,12 @@ public class Main extends Application {
         scrollPane.setPrefHeight(height * 0.6);
         scrollPane.setPrefWidth(width - 20);
 
+        comicStrip.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mouseEvent.setDragDetect(true);
+            }
+        });
 
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, buttonLayout);
@@ -1583,30 +1425,16 @@ public class Main extends Application {
         newPanelLeft.setVisible(false);
 
         load_xml.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage saveXML = new Stage();
-
             @Override
             public void handle(ActionEvent event) {
 
                 try {
 
-                    if(saveXML.isShowing()) {
-                        saveXML.initOwner(primaryStage);
-                    }
-
                     FileChooser fileChooser = new FileChooser();
 
-                    File inputFile = fileChooser.showOpenDialog(saveXML);
+                    File inputFile = fileChooser.showOpenDialog(null);
 
                     if(inputFile != null) {
-
-                        saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth() / 10);
-                        saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight() / 10);
-
-                        VBox vBox = new VBox();
-
-                        Scene scene = new Scene(vBox);
-                        saveXML.setScene(scene);
 
                         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -2046,39 +1874,52 @@ public class Main extends Application {
 
         save_html.setOnAction((ActionEvent event) -> {
 
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, number of comic panels does not match layout.\nDo you still wish to continue?");
+
             //take 2
             Stage popupwindow = new Stage();
 
             popupwindow.initModality(Modality.APPLICATION_MODAL);
             popupwindow.initStyle(StageStyle.UNDECORATED);
 
-            Label popupPrompt= new Label("Enter the title for your comic strip:");
+            Label popupPrompt = new Label("Title of your Comic Strip:");
             popupPrompt.getStyleClass().add("popUpPrompt");
 
-            TextField popupField = new TextField("Title");
+            TextField popupField = new TextField();
+            popupField.setPromptText("Title");
             popupField.setMinHeight(50);
 
-            if(premise[0] != null)
+            TextField htmlRow = new TextField();
+            htmlRow.setPromptText("Number of Rows");
+            htmlRow.setMinHeight(30);
+            htmlRow.setMinWidth(10);
+
+            TextField htmlCol = new TextField();
+            htmlCol.setPromptText("Number of Columns");
+            htmlCol.setMinHeight(30);
+            htmlCol.setMinWidth(10);
+
+            if (premise[0] != null)
                 popupField.setText(premise[0]);
 
-            Button popupNext= new Button("Next");
+            Button popupNext = new Button("Next");
             popupNext.getStyleClass().add("popUpNext");
 
             popupNext.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
 
-                    //CLEAN THIS UP
-                    if(popupField.getText().isEmpty() || popupField.getText() == null)
-                    {
-                        System.out.println("Fail");
-                        //comicStrip.setComicTitle(popupField.getText());
+                    if (popupField.getText().isEmpty() || popupField.getText() == null)
+                        return;
+
+                    if((Integer.parseInt(htmlRow.getText()) * Integer.parseInt(htmlCol.getText()) < comicStrip.getChildren().size() - 2)){
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            popupwindow.close();
+                        }
+                    }else{
+                        popupwindow.close();
                     }
-
-                    System.out.println(popupField.getText());
-
-                    popupwindow.close();
-
                 }
             });
 
@@ -2088,11 +1929,11 @@ public class Main extends Application {
             popup_box.getSelectionModel().selectFirst();
 
             //take 2
-                final Stage saveHTML = new Stage();
+            final Stage saveHTML = new Stage();
 
-                if(saveHTML.isShowing()) {
-                    saveHTML.initOwner(primaryStage);
-                }
+            if (saveHTML.isShowing()) {
+                saveHTML.initOwner(primaryStage);
+            }
 
             Button popupClose = new Button("Cancel");
             popupClose.getStyleClass().add("popUpCancel");
@@ -2114,14 +1955,18 @@ public class Main extends Application {
             popupButtons.getChildren().addAll(popupNext, popupClose);
             popupButtons.setAlignment(Pos.CENTER);
 
-            VBox popupLayout= new VBox(10);
+            HBox rowColField = new HBox(5);
+            rowColField.getChildren().addAll(htmlRow, htmlCol);
+            rowColField.setAlignment(Pos.CENTER);
+
+            VBox popupLayout = new VBox(10);
             popupLayout.getStyleClass().add("popUpLayout");
 
-            popupLayout.getChildren().addAll(popupPrompt, popupField, popup_box, popupButtons);
+            popupLayout.getChildren().addAll(popupPrompt, popupField, rowColField, popup_box, popupButtons);
 
             popupLayout.setAlignment(Pos.CENTER);
 
-            Scene popupScene= new Scene(popupLayout, 300, 250);
+            Scene popupScene = new Scene(popupLayout, 300, 250);
             popupScene.getStylesheets().add("sample/style.css");
             popupwindow.setScene(popupScene);
 
@@ -2134,55 +1979,54 @@ public class Main extends Application {
 
             popupwindow.showAndWait();
 
-            if(cancel[0])
-            {
+            if (cancel[0]) {
                 return;
             }
-                comicPanel[0].unselect();
-                comicPanel[0].setSelectedCharacter(null);
+            comicPanel[0].unselect();
+            comicPanel[0].setSelectedCharacter(null);
 
-                FileChooser fileChooser = new FileChooser();
-                File saveFile = fileChooser.showSaveDialog(saveHTML);
+            FileChooser fileChooser = new FileChooser();
+            File saveFile = fileChooser.showSaveDialog(saveHTML);
 
-            if(saveFile != null)
+            if (saveFile != null)
                 saveFile.mkdir();
 
             String value = popup_box.getValue().toString();
 
-            value = value.substring(0, value.length()/2);
+            value = value.substring(0, value.length() / 2);
 
             int saveSize = Integer.parseInt(value);
 
-            double scaleFactor = (saveSize / (height/2.4 + height/9.6));
+            double scaleFactor = (saveSize / (height / 2.4 + height / 9.6));
 
             double topMaxHeight = 0;
             double maxHeight = 0;
             double maxWidth = 0;
 
-            for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null && ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight() > topMaxHeight)
-                    topMaxHeight = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
+            for (int i = 1; i < comicStrip.getChildren().size() - 1; i++) {
+                if (((ComicPanel) comicStrip.getChildren().get(i)).getTopText() != null && ((ComicPanel) comicStrip.getChildren().get(i)).getTopText().getHeight() > topMaxHeight)
+                    topMaxHeight = ((ComicPanel) comicStrip.getChildren().get(i)).getTopText().getHeight();
 
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getHeight() > maxHeight)
-                    maxHeight = ((ComicPanel)comicStrip.getChildren().get(i)).getHeight();
+                if (((ComicPanel) comicStrip.getChildren().get(i)).getHeight() > maxHeight)
+                    maxHeight = ((ComicPanel) comicStrip.getChildren().get(i)).getHeight();
 
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getWidth() > maxWidth)
-                    maxWidth = ((ComicPanel)comicStrip.getChildren().get(i)).getWidth();
+                if (((ComicPanel) comicStrip.getChildren().get(i)).getWidth() > maxWidth)
+                    maxWidth = ((ComicPanel) comicStrip.getChildren().get(i)).getWidth();
             }
 
-            for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
+            for (int i = 1; i < comicStrip.getChildren().size() - 1; i++) {
 
                 SnapshotParameters snapshotParameters = new SnapshotParameters();
-                snapshotParameters.setTransform(Transform.scale(scaleFactor,scaleFactor,scaleFactor, scaleFactor));
+                snapshotParameters.setTransform(Transform.scale(scaleFactor, scaleFactor, scaleFactor, scaleFactor));
 
-                WritableImage sizer = new WritableImage(saveSize,saveSize);
+                WritableImage sizer = new WritableImage(saveSize, saveSize);
 
                 Image img = comicStrip.getChildren().get(i).snapshot(snapshotParameters, sizer);
 
                 double whiteSpace = topMaxHeight;
 
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
-                    whiteSpace = topMaxHeight - ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
+                if (((ComicPanel) comicStrip.getChildren().get(i)).getTopText() != null)
+                    whiteSpace = topMaxHeight - ((ComicPanel) comicStrip.getChildren().get(i)).getTopText().getHeight();
 
                 whiteSpace = whiteSpace * scaleFactor;
 
@@ -2196,27 +2040,27 @@ public class Main extends Application {
 
                 int y = 0;
 
-                if(imgHeight > saveSize)
+                if (imgHeight > saveSize)
                     imgHeight = saveSize;
 
-                if(imgWidth > saveSize)
+                if (imgWidth > saveSize)
                     imgWidth = saveSize;
 
-                for(; y < whiteSpace; y++){
-                    for(int x = 0 ;x < imgWidth ; x++){
+                for (; y < whiteSpace; y++) {
+                    for (int x = 0; x < imgWidth; x++) {
                         pixelWriter.setColor(x, y, Color.WHITE);
                     }
                 }
 
                 int v = y;
 
-                for (; y < imgHeight; y++){
-                    for(int x = 0 ;x < imgWidth; x++) {
-                        pixelWriter.setColor(x, y, pixelReader.getColor(x, (y-v)));
+                for (; y < imgHeight; y++) {
+                    for (int x = 0; x < imgWidth; x++) {
+                        pixelWriter.setColor(x, y, pixelReader.getColor(x, (y - v)));
                     }
                 }
 
-                File toSave = new File(saveFile.getPath() + "\\" + (i-1) + ".png");
+                File toSave = new File(saveFile.getPath() + "\\" + (i - 1) + ".png");
 
                 if (toSave != null) {
                     try {
@@ -2227,60 +2071,46 @@ public class Main extends Application {
                     }
                 }
 
-                if(toSave != null) {
+                if (toSave != null) {
                     StreamResult result = new StreamResult(toSave);
                     StreamResult consoleResult = new StreamResult(System.out);
                 }
             }
 
-            if((comicStrip.getChildren().size() % 2) == 1){
-                File toSave = new File(saveFile.getPath() + "\\" + (comicStrip.getChildren().size()-2) + ".png");
-                BufferedImage img = null;
-                try {
-                    img = ImageIO.read(new File("src/images/credits/end_screen.png"));
-                    if (toSave != null) {
-                        try {
-                            ImageIO.write(img, "png", toSave);
-                        } catch (IOException ex) {
-                            System.out.println(ex.getMessage());
-                        }
-                    }
-                } catch (IOException e) {
-                }
-
-                if(toSave != null) {
-                    StreamResult result = new StreamResult(toSave);
-                    StreamResult consoleResult = new StreamResult(System.out);
-                }
-            }
+            int row = Integer.parseInt(htmlRow.getText());
+            int col = Integer.parseInt(htmlCol.getText());
 
             File htmlFile = new File(saveFile.getPath() + "\\index.html");
             try {
                 FileWriter myWriter = new FileWriter(saveFile.getPath() + "\\index.html");
                 myWriter.write(
                         "<!DOCTYPE html>\n" +
-                        "<html>\n" +
-                        "<head>\n" +
-                        "<style>\n" +
-                        "table, th, td {\n" +
-                        "border: 10px solid white;\n" +
-                        "border-collapse: collapse;\n" +
-                        "}\n" +
-                        "</style>\n" +
-                        "</head>\n" +
-                        "<center>\n" +
-                        "<body style=\"background-color:white\">\n" +
-                        "<h2>" + popupField.getText() + "</h2>\n" +
-                        "<table>\n"
-                        );
+                                "<html>\n" +
+                                "<head>\n" +
+                                "<style>\n" +
+                                "table, th, td {\n" +
+                                "border: 10px solid white;\n" +
+                                "border-collapse: collapse;\n" +
+                                "}\n" +
+                                "</style>\n" +
+                                "</head>\n" +
+                                "<center>\n" +
+                                "<body style=\"background-color:white\">\n" +
+                                "<h2>" + popupField.getText() + "</h2>\n" +
+                                "<table>\n"
+                );
 
-
-                    myWriter.write(
-                            "<tr>\n" +
-                            "<td><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></td>\n" +
-                            "<td><center><img src=\"" + (i + 1) + ".png\" width=\"500\" height=\"500\"></center></td>\n" +
-                            "</tr>\n"
-                            );
+                for(int i=0; i < row; i++){
+                    myWriter.write("<tr>\n");
+                    for(int j=0; j < col; j++){
+                        if((col * i) + j + 1 > comicStrip.getChildren().size() - 2) {
+                            i = row;
+                            j = col;
+                        }else{
+                            myWriter.write("<td><center><img src=\"" + ((col * i) + j) + ".png\" width=\"500\" height=\"500\"></center></td>\n");
+                        }
+                    }
+                    myWriter.write("</tr>\n");
                 }
 
                 myWriter.write(
@@ -2329,18 +2159,23 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, about to delete the current panel.\nDo you still wish to continue?");
+
                 if(comicPanel[0].getLocked()){
                     hoverTips.lockedTip(tipLocked, leftCharacter);
                     return;
                 }
 
-                comicStrip.getChildren().remove(comicPanel[0]);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    comicStrip.getChildren().remove(comicPanel[0]);
 
-                deletedPanels.add(comicPanel[0]);
-                undoList.add("delete|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|||");
+                    deletedPanels.add(comicPanel[0]);
+                    undoList.add("delete|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|||");
 
-                hairColorPicker[0].setValue(Color.WHITE);
-                skinColorPicker[0].setValue(Color.WHITE);
+                    hairColorPicker[0].setValue(Color.WHITE);
+                    skinColorPicker[0].setValue(Color.WHITE);
+                }
             }
         });
 
@@ -2408,7 +2243,7 @@ public class Main extends Application {
                     if (operation.matches("delete")) {
                         comicStrip.getChildren().remove(newPanelRight);
                         if (deletedPanels.size() > 0) {
-                            i = deletedPanels.get(deletedPanels.size() - 1).index;
+                            i = deletedPanels.get(deletedPanels.size() - 1).getIndex();
                             if (i > comicStrip.getChildren().size())
                                 i = comicStrip.getChildren().size();
                             comicStrip.getChildren().add(i, deletedPanels.get(deletedPanels.size() - 1));
@@ -2485,18 +2320,102 @@ public class Main extends Application {
 
                     undoList.add("panel|" + comicStrip.getChildren().indexOf(newComicPanel) + "|||");
 
-                    newComicPanel.index = comicStrip.getChildren().indexOf(newComicPanel);
-
-                    PauseTransition holdTimer = new PauseTransition(Duration.seconds(1));
-
-
-                    newComicPanel.addEventHandler(MouseEvent.MOUSE_RELEASED, eventT -> holdTimer.stop());
+                    newComicPanel.setIndex(comicStrip.getChildren().indexOf(newComicPanel));
 
                     newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            holdTimer.playFromStart();
+                            mouseEvent.setDragDetect(true);
+                            addPressAndHoldHandler(newComicPanel, Duration.seconds(1),
+                                    event -> {
 
+                                            newComicPanel.getScene().setCursor(javafx.scene.Cursor.CLOSED_HAND);
+
+                                            AtomicInteger index = new AtomicInteger(comicStrip.getChildren().indexOf(newComicPanel));
+                                            AtomicInteger amount = new AtomicInteger(0);
+                                            AtomicInteger scroll = new AtomicInteger(0);
+                                            AtomicReference<Double> offset = new AtomicReference<>();
+                                            offset.set(0.0);
+
+                                            comicStrip.setOnMouseDragged(dragEvent -> {
+
+                                                if(dragEvent.getScreenX() > (4*width/5)) {
+                                                    double hV = scrollPane.getHvalue();
+                                                    scrollPane.setHvalue(scrollPane.getHvalue() + 0.001);
+                                                    if(scrollPane.getHvalue() != 1) {
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 9);
+                                                        scroll.set(scroll.get() + 9);
+                                                    }
+                                                }else if(dragEvent.getScreenX() < width/5){
+                                                    scrollPane.setHvalue(scrollPane.getHvalue() - 0.001);
+                                                    if(scrollPane.getHvalue() != 0) {
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 9);
+                                                        scroll.set(scroll.get() - 9);
+                                                    }
+                                                }else{
+
+                                                    if(amount.get() < 0)
+                                                        offset.set(-(height/2.4 + height/9.6));
+                                                    else if(amount.get() > 0)
+                                                        offset.set((height/2.4 + height/9.6));
+                                                    else
+                                                        offset.set(0.0);
+
+                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() - offset.get());
+                                                    newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
+                                                }
+
+                                                double presX = newComicPanel.getTranslateX();
+                                                double presY = newComicPanel.getTranslateY();
+
+                                                if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() < ((height/2.4 + height/9.6) * (amount.get() - 1))) {
+
+                                                    amount.getAndDecrement();
+                                                    index.getAndDecrement();
+
+                                                    if(index.get() < 1)
+                                                        index.set(1);
+
+                                                    comicStrip.getChildren().remove(newComicPanel);
+                                                    comicStrip.getChildren().add(index.get(), newComicPanel);
+                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() + (height/2.4 + height/9.6));
+
+                                                }
+                                                else if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() > ((height/2.4 + height/9.6) * (amount.get() + 1))) {
+                                                    amount.getAndIncrement();
+                                                    index.getAndIncrement();
+
+                                                    if(index.get() > comicStrip.getChildren().size()-2)
+                                                        index.set(comicStrip.getChildren().size()-2);
+
+                                                    comicStrip.getChildren().remove(newComicPanel);
+                                                    comicStrip.getChildren().add(index.get(), newComicPanel);
+                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() - (height/2.4 + height/9.6));
+                                                }
+
+                                                dragEvent.consume();
+                                            });
+
+                                            comicStrip.setOnMouseReleased(mouseEvent3 -> {
+
+                                                newComicPanel.getScene().setCursor(javafx.scene.Cursor.DEFAULT);
+
+                                                comicStrip.setMargin(newComicPanel, new Insets(20,10,20,10));
+
+                                                newComicPanel.setTranslateX(0);
+                                                newComicPanel.setTranslateY(0);
+
+                                                comicStrip.setOnMouseDragged(dragEvent2 -> {
+                                                    dragEvent2.consume();
+                                                });
+
+                                                comicStrip.setOnMouseReleased(dragEvent2 -> {
+                                                    dragEvent2.consume();
+                                                });
+
+                                                mouseEvent3.consume();
+                                            });
+                                    });
 
                             if(!comicStrip.getChildren().contains(newComicPanel))
                                 comicStrip.getChildren().add(newComicPanel);
@@ -2585,6 +2504,24 @@ public class Main extends Application {
         primaryStage.show();
 
     }
+
+    private void addPressAndHoldHandler(javafx.scene.Node node, Duration holdTime,
+                                        EventHandler<MouseEvent> handler) {
+
+        class Wrapper<T> { T content ; }
+        Wrapper<MouseEvent> eventWrapper = new Wrapper<>();
+
+        PauseTransition holdTimer = new PauseTransition(holdTime);
+        holdTimer.setOnFinished(event -> handler.handle(eventWrapper.content));
+
+
+        node.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            eventWrapper.content = event ;
+            holdTimer.playFromStart();
+        });
+        node.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> holdTimer.stop());
+        node.addEventHandler(MouseEvent.DRAG_DETECTED, event -> holdTimer.stop());
+    };
 
     public static void main(String[] args) {
         launch(args);

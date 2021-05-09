@@ -13,7 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class HoverTips {
-    Stage toolTip = null;
+    private Stage toolTip = null;
 
     public void setToolTip(Stage toolTip) {
         this.toolTip = toolTip;

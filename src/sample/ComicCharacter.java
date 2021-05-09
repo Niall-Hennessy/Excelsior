@@ -1,7 +1,6 @@
 package sample;
 
 import javafx.scene.image.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
@@ -16,17 +15,17 @@ import java.math.RoundingMode;
 public class ComicCharacter extends Pane {
 
     ImageView characterImageView = new ImageView(new Image(new FileInputStream("src/images/characters/blank.png")));
-    int charBoxLength = (int)((Screen.getPrimary().getBounds().getHeight())/2.45)/3;
+    private int charBoxLength = (int)((Screen.getPrimary().getBounds().getHeight())/2.45)/3;
 
     Image characterImage;
 
-    String imageName;
+    private String imageName;
 
-    boolean isFemale = true;
+    private boolean isFemale = true;
 
-    Color skin = Color.rgb(255,232,216,1);
-    Color hair =  Color.rgb(240,255,0,1);
-    Color lips = Color.rgb(255, 200, 200, 1);
+    private Color skin = Color.rgb(255,232,216,1);
+    private Color hair =  Color.rgb(240,255,0,1);
+    private Color lips = Color.rgb(255, 200, 200, 1);
 
     public ComicCharacter() throws FileNotFoundException {
         this.getChildren().add(characterImageView);

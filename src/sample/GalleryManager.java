@@ -21,9 +21,9 @@ enum Entity{
     background
 }
 
-public class GalleryStuff {
+public class GalleryManager {
 
-    ComicPanel[] comicPanel = null;
+    private ComicPanel[] comicPanel = null;
     final Stage addCharacter = new Stage();
     private double height;
 

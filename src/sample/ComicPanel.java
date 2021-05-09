@@ -18,22 +18,22 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ComicPanel extends Pane {
 
-    ComicCharacter leftCharacter = new ComicCharacter();
-    ComicCharacter rightCharacter =  new ComicCharacter();
+    private ComicCharacter leftCharacter = new ComicCharacter();
+    private ComicCharacter rightCharacter =  new ComicCharacter();
 
-    ComicCharacter selectedCharacter;
+    private ComicCharacter selectedCharacter;
 
-    TextBubble leftTextBubble = null;
-    TextBubble rightTextBubble = null;
+    private TextBubble leftTextBubble = null;
+    private TextBubble rightTextBubble = null;
 
-    TextCaption topText;
-    TextCaption bottomText;
+    private TextCaption topText;
+    private TextCaption bottomText;
 
-    String background = "images/backgrounds/BlankBackground.png";
+    private String background = "images/backgrounds/BlankBackground.jpg";
 
-    Boolean isLocked;
+    private Boolean isLocked;
 
-    int index;
+    private int index;
 
     public ComicPanel() throws FileNotFoundException {
 
@@ -86,7 +86,7 @@ public class ComicPanel extends Pane {
     public void setLeftCharacter(String imagePath) throws FileNotFoundException {
         leftCharacter.setCharacterImageView(imagePath);
 
-        if(leftCharacter.imageName.matches("blank")){
+        if(leftCharacter.getImageName().matches("blank")){
             leftCharacter.setOnMouseEntered(mouseEvent -> {
             });
 
@@ -155,7 +155,7 @@ public class ComicPanel extends Pane {
         rightCharacter.setCharacterImageView(imagePath);
         rightCharacter.flipOrientation();
 
-        if(rightCharacter.imageName.matches("blank")){
+        if(rightCharacter.getImageName().matches("blank")){
             rightCharacter.setOnMouseEntered(mouseEvent -> {
             });
 
@@ -227,7 +227,7 @@ public class ComicPanel extends Pane {
     public void setLeftCharacter(ComicCharacter leftCharacter){
         this.leftCharacter = leftCharacter;
 
-        if(leftCharacter.imageName.matches("blank")){
+        if(leftCharacter.getImageName().matches("blank")){
             leftCharacter.setOnMouseEntered(mouseEvent -> {
             });
 
@@ -316,7 +316,7 @@ public class ComicPanel extends Pane {
     public void setSelectedCharacter(ComicCharacter selectedCharacter) {
 
         if(selectedCharacter != null) {
-            if (selectedCharacter.imageName.matches("blank"))
+            if (selectedCharacter.getImageName().matches("blank"))
                 return;
 
             this.selectedCharacter = selectedCharacter;
@@ -578,7 +578,7 @@ public class ComicPanel extends Pane {
 
         this.getChildren().remove(bottomText);
         bottomText = new TextCaption(text, font);
-        bottomText.text.setTextOrigin(VPos.TOP);
+        bottomText.getTextObject().setTextOrigin(VPos.TOP);
         bottomText.setTranslateY(height/2.4);
         this.getChildren().add(bottomText);
     }
@@ -619,5 +619,13 @@ public class ComicPanel extends Pane {
 
     public TextBubble getRightTextBubble() {
         return rightTextBubble;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }
