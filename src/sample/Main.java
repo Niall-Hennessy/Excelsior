@@ -8,7 +8,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
@@ -2389,6 +2388,8 @@ public class Main extends Application {
                                             AtomicInteger index = new AtomicInteger(comicStrip.getChildren().indexOf(newComicPanel));
                                             AtomicInteger amount = new AtomicInteger(0);
                                             AtomicInteger scroll = new AtomicInteger(0);
+                                            AtomicReference<Double> offset = new AtomicReference<>();
+                                            offset.set(0.0);
 
                                             comicStrip.setOnMouseDragged(dragEvent -> {
 
@@ -2396,17 +2397,25 @@ public class Main extends Application {
                                                     double hV = scrollPane.getHvalue();
                                                     scrollPane.setHvalue(scrollPane.getHvalue() + 0.001);
                                                     if(scrollPane.getHvalue() != 1) {
-                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 10);
-                                                        scroll.set(scroll.get() + 10);
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 9);
+                                                        scroll.set(scroll.get() + 9);
                                                     }
                                                 }else if(dragEvent.getScreenX() < width/5){
                                                     scrollPane.setHvalue(scrollPane.getHvalue() - 0.001);
                                                     if(scrollPane.getHvalue() != 0) {
-                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 10);
-                                                        scroll.set(scroll.get() - 10);
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 9);
+                                                        scroll.set(scroll.get() - 9);
                                                     }
                                                 }else{
-                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() - ((height/2.4 + height/9.6) * (amount.get())));
+
+                                                    if(amount.get() < 0)
+                                                        offset.set(-(height/2.4 + height/9.6));
+                                                    else if(amount.get() > 0)
+                                                        offset.set((height/2.4 + height/9.6));
+                                                    else
+                                                        offset.set(0.0);
+
+                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() - offset.get());
                                                     newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
                                                 }
 
@@ -2427,6 +2436,7 @@ public class Main extends Application {
 
                                                     comicStrip.getChildren().remove(newComicPanel);
                                                     comicStrip.getChildren().add(index.get(), newComicPanel);
+                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() + (height/2.4 + height/9.6));
 
                                                 }
                                                 else if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() > ((height/2.4 + height/9.6) * (amount.get() + 1))) {
@@ -2438,6 +2448,7 @@ public class Main extends Application {
 
                                                     comicStrip.getChildren().remove(newComicPanel);
                                                     comicStrip.getChildren().add(index.get(), newComicPanel);
+                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() - (height/2.4 + height/9.6));
                                                 }
 
                                                 dragEvent.consume();
