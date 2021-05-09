@@ -8,8 +8,8 @@ import javafx.scene.text.*;
 public class TextBubble extends Pane {
 
     ImageView bubble = new ImageView();
-    Text text = new Text();
-    String status = "";
+    private Text text = new Text();
+    private String status = "";
 
     public TextBubble(ImageView bubble, String text, Font font, String status) {
         text = parseText(text, 20);

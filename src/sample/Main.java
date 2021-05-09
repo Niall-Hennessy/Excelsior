@@ -320,15 +320,15 @@ public class Main extends Application {
                         Attr locked = doc.createAttribute("locked");
                         locked.setValue(toParse.getLocked().toString());
 
-                        if(toParse.topText != null) {
-                            above.appendChild(doc.createTextNode(toParse.topText.getText()));
-                            fontAbove.setValue(toParse.topText.getFont());
+                        if(toParse.getTopText() != null) {
+                            above.appendChild(doc.createTextNode(toParse.getTopText().getText()));
+                            fontAbove.setValue(toParse.getTopText().getFont());
                             above.setAttributeNode(fontAbove);
                         }
 
-                        if(toParse.bottomText != null) {
-                            below.appendChild(doc.createTextNode(toParse.bottomText.getText()));
-                            fontBelow.setValue(toParse.bottomText.getFont());
+                        if(toParse.getBottomText() != null) {
+                            below.appendChild(doc.createTextNode(toParse.getBottomText().getText()));
+                            fontBelow.setValue(toParse.getBottomText().getFont());
                             below.setAttributeNode(fontBelow);
                         }
 
@@ -359,17 +359,17 @@ public class Main extends Application {
 
                             figure.appendChild(name);
 
-                            if(toParse.getLeftCharacter().isFemale)
+                            if(toParse.getLeftCharacter().isFemale())
                                 appearance.appendChild(doc.createTextNode("female"));
                             else
                                 appearance.appendChild(doc.createTextNode("male"));
 
                             figure.appendChild(appearance);
 
-                            skin.appendChild(doc.createTextNode(toParse.getLeftCharacter().skin.toString()));
+                            skin.appendChild(doc.createTextNode(toParse.getLeftCharacter().getSkin().toString()));
                             figure.appendChild(skin);
 
-                            hair.appendChild(doc.createTextNode(toParse.getLeftCharacter().hair.toString()));
+                            hair.appendChild(doc.createTextNode(toParse.getLeftCharacter().getHair().toString()));
                             figure.appendChild(hair);
 
                             figure.appendChild(lips);
@@ -407,17 +407,17 @@ public class Main extends Application {
 
                             figure.appendChild(name);
 
-                            if(toParse.getRightCharacter().isFemale)
+                            if(toParse.getRightCharacter().isFemale())
                                 appearance.appendChild(doc.createTextNode("female"));
                             else
                                 appearance.appendChild(doc.createTextNode("male"));
 
                             figure.appendChild(appearance);
 
-                            skin.appendChild(doc.createTextNode(toParse.getRightCharacter().skin.toString()));
+                            skin.appendChild(doc.createTextNode(toParse.getRightCharacter().getSkin().toString()));
                             figure.appendChild(skin);
 
-                            hair.appendChild(doc.createTextNode(toParse.getRightCharacter().hair.toString()));
+                            hair.appendChild(doc.createTextNode(toParse.getRightCharacter().getHair().toString()));
                             figure.appendChild(hair);
 
                             figure.appendChild(lips);
@@ -439,27 +439,27 @@ public class Main extends Application {
                             figure.appendChild(yPosition);
                         }
 
-                        if(toParse.leftTextBubble != null){
+                        if(toParse.getLeftTextBubble() != null){
                             Element balloonXPosition = doc.createElement("xPosition");
                             Element balloonYPosition = doc.createElement("yPosition");
                             Element balloon = doc.createElement("balloon");
                             left.appendChild(balloon);
 
                             Attr attr = doc.createAttribute("status");
-                            attr.setValue(toParse.leftTextBubble.getStatus());
+                            attr.setValue(toParse.getLeftTextBubble().getStatus());
                             balloon.setAttributeNode(attr);
 
                             Element content = doc.createElement("content");
-                            content.appendChild(doc.createTextNode(toParse.leftTextBubble.getText().getText()));
+                            content.appendChild(doc.createTextNode(toParse.getLeftTextBubble().getText().getText()));
                             Attr bold = doc.createAttribute("bold");
                             Attr italic = doc.createAttribute("italic");
 
-                            if(toParse.leftTextBubble.getText().getFont().toString().contains("Bold"))
+                            if(toParse.getLeftTextBubble().getText().getFont().toString().contains("Bold"))
                                 bold.setValue("true");
                             else
                                 bold.setValue("false");
 
-                            if(toParse.leftTextBubble.getText().getFont().toString().contains("Italic"))
+                            if(toParse.getLeftTextBubble().getText().getFont().toString().contains("Italic"))
                                 italic.setValue("true");
                             else
                                 italic.setValue("false");
@@ -475,27 +475,27 @@ public class Main extends Application {
                             balloon.appendChild(balloonYPosition);
                         }
 
-                        if(toParse.rightTextBubble != null){
+                        if(toParse.getRightTextBubble() != null){
                             Element balloonXPosition = doc.createElement("xPosition");
                             Element balloonYPosition = doc.createElement("yPosition");
                             Element balloon = doc.createElement("balloon");
                             right.appendChild(balloon);
 
                             Attr attr = doc.createAttribute("status");
-                            attr.setValue(toParse.rightTextBubble.getStatus());
+                            attr.setValue(toParse.getRightTextBubble().getStatus());
                             balloon.setAttributeNode(attr);
 
                             Element content = doc.createElement("content");
-                            content.appendChild(doc.createTextNode(toParse.rightTextBubble.getText().getText()));
+                            content.appendChild(doc.createTextNode(toParse.getRightTextBubble().getText().getText()));
                             Attr bold = doc.createAttribute("bold");
                             Attr italic = doc.createAttribute("italic");
 
-                            if(toParse.rightTextBubble.getText().getFont().toString().contains("Bold"))
+                            if(toParse.getRightTextBubble().getText().getFont().toString().contains("Bold"))
                                 bold.setValue("true");
                             else
                                 bold.setValue("false");
 
-                            if(toParse.rightTextBubble.getText().getFont().toString().contains("Italic"))
+                            if(toParse.getRightTextBubble().getText().getFont().toString().contains("Italic"))
                                 italic.setValue("true");
                             else
                                 italic.setValue("false");
@@ -800,10 +800,10 @@ public class Main extends Application {
                     return;
                 }
 
-                if(comicPanel[0].getRightCharacter().imageName == null)
+                if(comicPanel[0].getRightCharacter().getImageName() == null)
                     undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|right|blank|");
                 else
-                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|right|" + comicPanel[0].getRightCharacter().imageName.toString() + "|");
+                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|right|" + comicPanel[0].getRightCharacter().getImageName().toString() + "|");
 
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
@@ -827,10 +827,10 @@ public class Main extends Application {
                     return;
                 }
 
-                if(comicPanel[0].getRightCharacter().imageName == null)
+                if(comicPanel[0].getRightCharacter().getImageName() == null)
                     undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|left|blank|");
                 else
-                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|left|" + comicPanel[0].getRightCharacter().imageName + "|");
+                    undoList.add("character|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|left|" + comicPanel[0].getRightCharacter().getImageName() + "|");
 
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
@@ -935,34 +935,34 @@ public class Main extends Application {
                 final boolean[] isBold = {false};
                 final boolean[] isItalic = {false};
 
-                if(comicPanel[0].leftTextBubble != null) {
-                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Bold"))
+                if(comicPanel[0].getLeftTextBubble() != null) {
+                    if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Bold"))
                         isBold[0] = true;
-                    if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Italic"))
+                    if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Italic"))
                         isItalic[0] = true;
                 }
 
-                if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()) && comicPanel[0].leftTextBubble != null) {
+                if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()) && comicPanel[0].getLeftTextBubble() != null) {
 
-                    if(comicPanel[0].leftTextBubble != null) {
-                        if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Bold"))
+                    if(comicPanel[0].getLeftTextBubble() != null) {
+                        if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Bold"))
                             isBold[0] = true;
-                        if(comicPanel[0].leftTextBubble.getText().getFont().toString().contains("Italic"))
+                        if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Italic"))
                             isItalic[0] = true;
                     }
 
-                    textfield.setText(comicPanel[0].leftTextBubble.getText().getText().replaceAll("\n", " "));
+                    textfield.setText(comicPanel[0].getLeftTextBubble().getText().getText().replaceAll("\n", " "));
                 }
-                else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].rightTextBubble != null) {
+                else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].getRightTextBubble() != null) {
 
-                    if(comicPanel[0].rightTextBubble != null) {
-                        if(comicPanel[0].rightTextBubble.getText().getFont().toString().contains("Bold"))
+                    if(comicPanel[0].getRightTextBubble() != null) {
+                        if(comicPanel[0].getRightTextBubble().getText().getFont().toString().contains("Bold"))
                             isBold[0] = true;
-                        if(comicPanel[0].rightTextBubble.getText().getFont().toString().contains("Italic"))
+                        if(comicPanel[0].getRightTextBubble().getText().getFont().toString().contains("Italic"))
                             isItalic[0] = true;
                     }
 
-                    textfield.setText(comicPanel[0].rightTextBubble.getText().getText().replaceAll("\n", " "));
+                    textfield.setText(comicPanel[0].getRightTextBubble().getText().getText().replaceAll("\n", " "));
                 }
 
                 if(isBold[0] && isItalic[0])
@@ -1258,9 +1258,9 @@ public class Main extends Application {
 
                 TextField captionTextfield = new TextField();
 
-                if(comicPanel[0].topText != null) {
-                    captionTextfield.setFont(comicPanel[0].topText.text.getFont());
-                    combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                if(comicPanel[0].getTopText() != null) {
+                    captionTextfield.setFont(comicPanel[0].getTopText().getTextObject().getFont());
+                    combo_box.setValue(comicPanel[0].getTopText().getTextObject().getFont().getName());
                 }
                 else
                     captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
@@ -1305,8 +1305,8 @@ public class Main extends Application {
                 topText.setStyle("-fx-background-color: #C089D7");
                 bottomText.setStyle("-fx-background-color: #E5A6FF");
 
-                if(comicPanel[0].topText != null)
-                    captionTextfield.setText(comicPanel[0].topText.getText());
+                if(comicPanel[0].getTopText() != null)
+                    captionTextfield.setText(comicPanel[0].getTopText().getText());
 
                 topText.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -1318,10 +1318,10 @@ public class Main extends Application {
                         topText.setStyle("-fx-background-color: #C089D7");
                         bottomText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].topText != null) {
-                            captionTextfield.setText(comicPanel[0].topText.getText());
-                            captionTextfield.setFont(comicPanel[0].topText.text.getFont());
-                            combo_box.setValue(comicPanel[0].topText.text.getFont().getName());
+                        if(comicPanel[0].getTopText() != null) {
+                            captionTextfield.setText(comicPanel[0].getTopText().getText());
+                            captionTextfield.setFont(comicPanel[0].getTopText().getTextObject().getFont());
+                            combo_box.setValue(comicPanel[0].getTopText().getTextObject().getFont().getName());
                         }
                         else {
                             captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
@@ -1340,10 +1340,10 @@ public class Main extends Application {
                         bottomText.setStyle("-fx-background-color: #C089D7");
                         topText.setStyle("-fx-background-color: #E5A6FF");
 
-                        if(comicPanel[0].bottomText != null) {
-                            captionTextfield.setText(comicPanel[0].bottomText.getText());
-                            captionTextfield.setFont(comicPanel[0].bottomText.text.getFont());
-                            combo_box.setValue(comicPanel[0].bottomText.text.getFont().getName());
+                        if(comicPanel[0].getBottomText() != null) {
+                            captionTextfield.setText(comicPanel[0].getBottomText().getText());
+                            captionTextfield.setFont(comicPanel[0].getBottomText().getTextObject().getFont());
+                            combo_box.setValue(comicPanel[0].getBottomText().getTextObject().getFont().getName());
                         }
                         else {
                             captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
@@ -2395,7 +2395,7 @@ public class Main extends Application {
                     if (operation.matches("delete")) {
                         comicStrip.getChildren().remove(newPanelRight);
                         if (deletedPanels.size() > 0) {
-                            i = deletedPanels.get(deletedPanels.size() - 1).index;
+                            i = deletedPanels.get(deletedPanels.size() - 1).getIndex();
                             if (i > comicStrip.getChildren().size())
                                 i = comicStrip.getChildren().size();
                             comicStrip.getChildren().add(i, deletedPanels.get(deletedPanels.size() - 1));
@@ -2472,7 +2472,7 @@ public class Main extends Application {
 
                     undoList.add("panel|" + comicStrip.getChildren().indexOf(newComicPanel) + "|||");
 
-                    newComicPanel.index = comicStrip.getChildren().indexOf(newComicPanel);
+                    newComicPanel.setIndex(comicStrip.getChildren().indexOf(newComicPanel));
 
                     PauseTransition holdTimer = new PauseTransition(Duration.seconds(1));
 

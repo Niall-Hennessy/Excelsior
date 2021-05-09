@@ -23,7 +23,7 @@ enum Entity{
 
 public class GalleryStuff {
 
-    ComicPanel[] comicPanel = null;
+    private ComicPanel[] comicPanel = null;
     final Stage addCharacter = new Stage();
     private double height;
 

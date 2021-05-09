@@ -3,7 +3,6 @@ package sample;
 import javafx.geometry.VPos;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
@@ -11,7 +10,7 @@ import javafx.stage.Screen;
 
 public class TextCaption extends Pane {
 
-    Text text = new Text();
+    private Text text = new Text();
 
     public TextCaption(String text, Font font){
         int height = (int) Screen.getPrimary().getBounds().getHeight();
@@ -34,5 +33,13 @@ public class TextCaption extends Pane {
 
     public String getFont(){
         return text.getFont().getName();
+    }
+
+    public Text getTextObject() {
+        return text;
+    }
+
+    public void setText(Text text) {
+        this.text = text;
     }
 }
