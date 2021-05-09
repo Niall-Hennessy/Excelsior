@@ -462,7 +462,7 @@ public class ComicPanel extends Pane {
         rightTextBubble.getBubble().setRotationAxis(Rotate.Y_AXIS);
         rightTextBubble.getBubble().setRotate(180);
 
-        rightTextBubble.setTranslateX(rightCharacter.getTranslateX() - 20);
+        rightTextBubble.setTranslateX(rightCharacter.getTranslateX() - 80);
         rightTextBubble.setTranslateY(rightCharacter.getTranslateY() - 50);
 
         AtomicReference<Double> dragX = new AtomicReference<>((double) 0);
