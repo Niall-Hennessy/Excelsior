@@ -2044,16 +2044,24 @@ public class Main extends Application {
             popupwindow.initModality(Modality.APPLICATION_MODAL);
             popupwindow.initStyle(StageStyle.UNDECORATED);
 
-            Label popupPrompt= new Label("Enter the title for your comic strip:");
+            Label popupPrompt = new Label("Title of your Comic Strip:");
             popupPrompt.getStyleClass().add("popUpPrompt");
 
             TextField popupField = new TextField("Title");
             popupField.setMinHeight(50);
 
-            if(premise[0] != null)
+            TextField htmlRow = new TextField("Number of Rows");
+            htmlRow.setMinHeight(30);
+            htmlRow.setMinWidth(10);
+
+            TextField htmlCol = new TextField("Number of Columns");
+            htmlCol.setMinHeight(30);
+            htmlCol.setMinWidth(10);
+
+            if (premise[0] != null)
                 popupField.setText(premise[0]);
 
-            Button popupNext= new Button("Next");
+            Button popupNext = new Button("Next");
             popupNext.getStyleClass().add("popUpNext");
 
             popupNext.setOnAction(new EventHandler<ActionEvent>() {
@@ -2061,8 +2069,7 @@ public class Main extends Application {
                 public void handle(ActionEvent actionEvent) {
 
                     //CLEAN THIS UP
-                    if(popupField.getText().isEmpty() || popupField.getText() == null)
-                    {
+                    if (popupField.getText().isEmpty() || popupField.getText() == null) {
                         System.out.println("Fail");
                         //comicStrip.setComicTitle(popupField.getText());
                     }
@@ -2080,11 +2087,11 @@ public class Main extends Application {
             popup_box.getSelectionModel().selectFirst();
 
             //take 2
-                final Stage saveHTML = new Stage();
+            final Stage saveHTML = new Stage();
 
-                if(saveHTML.isShowing()) {
-                    saveHTML.initOwner(primaryStage);
-                }
+            if (saveHTML.isShowing()) {
+                saveHTML.initOwner(primaryStage);
+            }
 
             Button popupClose = new Button("Cancel");
             popupClose.getStyleClass().add("popUpCancel");
@@ -2106,14 +2113,18 @@ public class Main extends Application {
             popupButtons.getChildren().addAll(popupNext, popupClose);
             popupButtons.setAlignment(Pos.CENTER);
 
-            VBox popupLayout= new VBox(10);
+            HBox rowColField = new HBox(5);
+            rowColField.getChildren().addAll(htmlRow, htmlCol);
+            rowColField.setAlignment(Pos.CENTER);
+
+            VBox popupLayout = new VBox(10);
             popupLayout.getStyleClass().add("popUpLayout");
 
-            popupLayout.getChildren().addAll(popupPrompt, popupField, popup_box, popupButtons);
+            popupLayout.getChildren().addAll(popupPrompt, popupField, rowColField, popup_box, popupButtons);
 
             popupLayout.setAlignment(Pos.CENTER);
 
-            Scene popupScene= new Scene(popupLayout, 300, 250);
+            Scene popupScene = new Scene(popupLayout, 300, 250);
             popupScene.getStylesheets().add("sample/style.css");
             popupwindow.setScene(popupScene);
 
@@ -2126,55 +2137,54 @@ public class Main extends Application {
 
             popupwindow.showAndWait();
 
-            if(cancel[0])
-            {
+            if (cancel[0]) {
                 return;
             }
-                comicPanel[0].unselect();
-                comicPanel[0].setSelectedCharacter(null);
+            comicPanel[0].unselect();
+            comicPanel[0].setSelectedCharacter(null);
 
-                FileChooser fileChooser = new FileChooser();
-                File saveFile = fileChooser.showSaveDialog(saveHTML);
+            FileChooser fileChooser = new FileChooser();
+            File saveFile = fileChooser.showSaveDialog(saveHTML);
 
-            if(saveFile != null)
+            if (saveFile != null)
                 saveFile.mkdir();
 
             String value = popup_box.getValue().toString();
 
-            value = value.substring(0, value.length()/2);
+            value = value.substring(0, value.length() / 2);
 
             int saveSize = Integer.parseInt(value);
 
-            double scaleFactor = (saveSize / (height/2.4 + height/9.6));
+            double scaleFactor = (saveSize / (height / 2.4 + height / 9.6));
 
             double topMaxHeight = 0;
             double maxHeight = 0;
             double maxWidth = 0;
 
-            for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null && ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight() > topMaxHeight)
-                    topMaxHeight = ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
+            for (int i = 1; i < comicStrip.getChildren().size() - 1; i++) {
+                if (((ComicPanel) comicStrip.getChildren().get(i)).getTopText() != null && ((ComicPanel) comicStrip.getChildren().get(i)).getTopText().getHeight() > topMaxHeight)
+                    topMaxHeight = ((ComicPanel) comicStrip.getChildren().get(i)).getTopText().getHeight();
 
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getHeight() > maxHeight)
-                    maxHeight = ((ComicPanel)comicStrip.getChildren().get(i)).getHeight();
+                if (((ComicPanel) comicStrip.getChildren().get(i)).getHeight() > maxHeight)
+                    maxHeight = ((ComicPanel) comicStrip.getChildren().get(i)).getHeight();
 
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getWidth() > maxWidth)
-                    maxWidth = ((ComicPanel)comicStrip.getChildren().get(i)).getWidth();
+                if (((ComicPanel) comicStrip.getChildren().get(i)).getWidth() > maxWidth)
+                    maxWidth = ((ComicPanel) comicStrip.getChildren().get(i)).getWidth();
             }
 
-            for(int i=1; i < comicStrip.getChildren().size()-1; i++) {
+            for (int i = 1; i < comicStrip.getChildren().size() - 1; i++) {
 
                 SnapshotParameters snapshotParameters = new SnapshotParameters();
-                snapshotParameters.setTransform(Transform.scale(scaleFactor,scaleFactor,scaleFactor, scaleFactor));
+                snapshotParameters.setTransform(Transform.scale(scaleFactor, scaleFactor, scaleFactor, scaleFactor));
 
-                WritableImage sizer = new WritableImage(saveSize,saveSize);
+                WritableImage sizer = new WritableImage(saveSize, saveSize);
 
                 Image img = comicStrip.getChildren().get(i).snapshot(snapshotParameters, sizer);
 
                 double whiteSpace = topMaxHeight;
 
-                if(((ComicPanel)comicStrip.getChildren().get(i)).getTopText() != null)
-                    whiteSpace = topMaxHeight - ((ComicPanel)comicStrip.getChildren().get(i)).getTopText().getHeight();
+                if (((ComicPanel) comicStrip.getChildren().get(i)).getTopText() != null)
+                    whiteSpace = topMaxHeight - ((ComicPanel) comicStrip.getChildren().get(i)).getTopText().getHeight();
 
                 whiteSpace = whiteSpace * scaleFactor;
 
@@ -2188,27 +2198,27 @@ public class Main extends Application {
 
                 int y = 0;
 
-                if(imgHeight > saveSize)
+                if (imgHeight > saveSize)
                     imgHeight = saveSize;
 
-                if(imgWidth > saveSize)
+                if (imgWidth > saveSize)
                     imgWidth = saveSize;
 
-                for(; y < whiteSpace; y++){
-                    for(int x = 0 ;x < imgWidth ; x++){
+                for (; y < whiteSpace; y++) {
+                    for (int x = 0; x < imgWidth; x++) {
                         pixelWriter.setColor(x, y, Color.WHITE);
                     }
                 }
 
                 int v = y;
 
-                for (; y < imgHeight; y++){
-                    for(int x = 0 ;x < imgWidth; x++) {
-                        pixelWriter.setColor(x, y, pixelReader.getColor(x, (y-v)));
+                for (; y < imgHeight; y++) {
+                    for (int x = 0; x < imgWidth; x++) {
+                        pixelWriter.setColor(x, y, pixelReader.getColor(x, (y - v)));
                     }
                 }
 
-                File toSave = new File(saveFile.getPath() + "\\" + (i-1) + ".png");
+                File toSave = new File(saveFile.getPath() + "\\" + (i - 1) + ".png");
 
                 if (toSave != null) {
                     try {
@@ -2219,14 +2229,14 @@ public class Main extends Application {
                     }
                 }
 
-                if(toSave != null) {
+                if (toSave != null) {
                     StreamResult result = new StreamResult(toSave);
                     StreamResult consoleResult = new StreamResult(System.out);
                 }
             }
 
-            if((comicStrip.getChildren().size() % 2) == 1){
-                File toSave = new File(saveFile.getPath() + "\\" + (comicStrip.getChildren().size()-2) + ".png");
+            if ((comicStrip.getChildren().size() % 2) == 1) {
+                File toSave = new File(saveFile.getPath() + "\\" + (comicStrip.getChildren().size() - 2) + ".png");
                 BufferedImage img = null;
                 try {
                     img = ImageIO.read(new File("src/images/credits/end_screen.png"));
@@ -2240,7 +2250,7 @@ public class Main extends Application {
                 } catch (IOException e) {
                 }
 
-                if(toSave != null) {
+                if (toSave != null) {
                     StreamResult result = new StreamResult(toSave);
                     StreamResult consoleResult = new StreamResult(System.out);
                 }
@@ -2251,38 +2261,32 @@ public class Main extends Application {
                 FileWriter myWriter = new FileWriter(saveFile.getPath() + "\\index.html");
                 myWriter.write(
                         "<!DOCTYPE html>\n" +
-                        "<html>\n" +
-                        "<head>\n" +
-                        "<style>\n" +
-                        "table, th, td {\n" +
-                        "border: 10px solid white;\n" +
-                        "border-collapse: collapse;\n" +
-                        "}\n" +
-                        "</style>\n" +
-                        "</head>\n" +
-                        "<center>\n" +
-                        "<body style=\"background-color:white\">\n" +
-                        "<h2>" + popupField.getText() + "</h2>\n" +
-                        "<table>\n"
-                        );
-
-
-                    myWriter.write(
-                            "<tr>\n" +
-                            "<td><center><img src=\"" + i + ".png\" width=\"500\" height=\"500\"></center></td>\n" +
-                            "<td><center><img src=\"" + (i + 1) + ".png\" width=\"500\" height=\"500\"></center></td>\n" +
-                            "</tr>\n"
-                            );
-                }
-
-                myWriter.write(
-                        "</table>\n" +
-                        "</body>\n" +
-                        "</html>\n" +
-                        "</center>\n"
+                                "<html>\n" +
+                                "<head>\n" +
+                                "<style>\n" +
+                                "table, th, td {\n" +
+                                "border: 10px solid white;\n" +
+                                "border-collapse: collapse;\n" +
+                                "}\n" +
+                                "</style>\n" +
+                                "</head>\n" +
+                                "<center>\n" +
+                                "<body style=\"background-color:white\">\n" +
+                                "<h2>" + popupField.getText() + "</h2>\n" +
+                                "<table>\n"
                 );
 
-                myWriter.close();
+
+
+            myWriter.write(
+                    "</table>\n" +
+                            "</body>\n" +
+                            "</html>\n" +
+                            "</center>\n"
+            );
+
+            myWriter.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
