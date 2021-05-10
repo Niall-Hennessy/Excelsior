@@ -504,21 +504,14 @@ public class Main extends Application {
             }
         });
 
-
         add_character.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage saveXML = new Stage();
-
             @Override
             public void handle(ActionEvent event) {
-
-                if(saveXML.isShowing()) {
-                    saveXML.initOwner(primaryStage);
-                }
 
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Add a character");
 
-                File source = fileChooser.showOpenDialog(saveXML);
+                File source = fileChooser.showOpenDialog(null);
                 if(source != null) {
                     File dest = new File("src/images/characters/" + source.getName());
 
@@ -528,31 +521,17 @@ public class Main extends Application {
                         e.printStackTrace();
                     }
                 }
-
-                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
-                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
-
-                VBox vBox = new VBox();
-
-                Scene scene = new Scene(vBox);
-                saveXML.setScene(scene);
             }
         });
 
         add_background.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage saveXML = new Stage();
-
             @Override
             public void handle(ActionEvent event) {
-
-                if(saveXML.isShowing()) {
-                    saveXML.initOwner(primaryStage);
-                }
 
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Add a background image");
 
-                File source = fileChooser.showOpenDialog(saveXML);
+                File source = fileChooser.showOpenDialog(null);
 
                 if(source != null) {
                     File dest = new File("src/images/backgrounds/" + source.getName());
@@ -563,14 +542,6 @@ public class Main extends Application {
                         e.printStackTrace();
                     }
                 }
-
-                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
-                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
-
-                VBox vBox = new VBox();
-
-                Scene scene = new Scene(vBox);
-                saveXML.setScene(scene);
             }
         });
 
