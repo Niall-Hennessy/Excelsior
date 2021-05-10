@@ -1428,6 +1428,8 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+                JFrame frame = null;
+                
                 try {
 
                     FileChooser fileChooser = new FileChooser();
@@ -1481,7 +1483,7 @@ public class Main extends Application {
                         }
 
                         JProgressBar progressBar;
-                        JFrame frame;
+                        
 
                         frame = new JFrame("Loading...");
                         frame.setUndecorated(true);
@@ -1867,7 +1869,10 @@ public class Main extends Application {
                         frame = null;
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Warning, file formatting of the XML document is incorrect.\n\nError: "+ e.getMessage());
+                    alert.show();
+                    frame.setVisible(false);
+                    frame = null;
                 }
             }
         });
