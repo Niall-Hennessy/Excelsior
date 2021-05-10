@@ -1,13 +1,17 @@
 package sample;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 
+import javax.imageio.ImageIO;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -52,7 +56,7 @@ public class ComicCharacter extends Pane {
                     Color color = pixelReader.getColor(x, y);
 
                     if(color.equals(Color.WHITE)){
-                        pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
+                        pixelWriter.setColor(x, y, Color.rgb(0,0,0,0));
                     }else if(color.equals(Color.BLACK)){
                         pixelWriter.setColor(x, y, color);
                     }
@@ -69,6 +73,15 @@ public class ComicCharacter extends Pane {
                             pixelWriter.setColor(x, y, hair);
                     }else if (color.equals(Color.web("#F9FF00"))) {//Male Hair Colour
                         pixelWriter.setColor(x, y, hair);
+                    }
+                    else if(isOnLineSimple(Color.web("#F0FF00"), Color.web("#FFFFFF"), color) && !isFemale){
+                        pixelWriter.setColor(x, y, Color.rgb(0,0,0,0));
+                    }
+                    else if(isOnLineSimple(Color.web("#F0FF00"), Color.web("#ECB4B5"), color) && !isFemale){
+                        pixelWriter.setColor(x, y, Color.rgb(0,0,0,0));
+                    }
+                    else if(isOnLine(Color.web("#ECB4B5"), Color.web("#FFFFFF"), color) && !isFemale){
+                        pixelWriter.setColor(x, y, Color.rgb(0,0,0,0));
                     }
                     else if(isOnLine(Color.web("#F0FF00"), Color.web("#F9FF00"), color)){
                         pixelWriter.setColor(x, y, hair);
@@ -114,6 +127,17 @@ public class ComicCharacter extends Pane {
 
         characterImageView = imageView;
 
+        File toSave = new File("C:\\Users\\Ada\\Desktop\\image.png");
+
+        if (toSave != null) {
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(characterImageView.getImage(),
+                        null), "png", toSave);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+
         this.getChildren().add(characterImageView);
     }
 
@@ -137,8 +161,19 @@ public class ComicCharacter extends Pane {
         characterImageView = flipCharacter;
     }
 
+    public boolean isOnLineSimple(Color p1, Color p2, Color p3) {
+
+        if (p3.getRed() <= p2.getRed() && p3.getRed() >= p1.getRed() &&
+                p3.getBlue() <= p2.getBlue() && p3.getBlue() >= p1.getBlue() &&
+                p3.getGreen() <= p2.getGreen() && p3.getGreen() >= p1.getGreen()) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean isOnLine(Color p1, Color p2, Color p3)
     {
+        //Maths is humanities greatest sin
 
         boolean red = false;
         boolean green = false;

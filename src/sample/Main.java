@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -244,6 +245,7 @@ public class Main extends Application {
                 hoverTips.buttonToolTip(tipUndoButton, mouseEvent, undoButton);
             }
         });
+
 
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -2492,8 +2494,9 @@ public class Main extends Application {
             }
         });
 
-        Scene scene = new Scene(mainPane, width, height, false);
+        Scene scene = new Scene(mainPane, width, height, false, SceneAntialiasing.DISABLED);
         scene.getStylesheets().add("sample/style.css");
+
 
         scene.setOnKeyPressed(event -> {
             String codeString = event.getCode().toString();
