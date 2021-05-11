@@ -2179,16 +2179,17 @@ public class Main extends Application {
                 Actions that can be undone
 
                 Rearranging panel: Panel, Previous Panel
-                Locking Panel: Panel
                 Moving Character: Panel, L/R, Previous Location
                 Adding Speech Bubble: Panel, L/R
                 Moving Speech Bubble: Panel, L/R, Previous Location
-                Add Background: Panel, Previous Image
+
                  */
 
                 /*
                 Actually Implemented
 
+                Add Background: Panel, Previous Image
+                Locking Panel: Panel
                 Delete Panel: Panel
                 Changing Character Image: Panel, L/R, Previous Image
                 Flipping Character: Panel, L/R
@@ -2252,6 +2253,16 @@ public class Main extends Application {
                         ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).setBackgroundString(value);
                         ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).unselect();
                     }
+                    else if(operation.matches("bubble"))
+                    {
+                        if(leftRight.matches("left"))
+                            //try {
+                                ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftTextBubble().setBubble(new ImageView("src/images/bubbles/" + value + ".png"));
+                            //} catch(FileNotFoundException e) {
+                              //  e.printStackTrace();
+                            //}
+                    }
+
                     else if (operation.matches("flip")) {
 
                         if (leftRight.matches("left"))
@@ -2259,7 +2270,8 @@ public class Main extends Application {
                         else
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().flipOrientation();
 
-                    } else if (operation.matches("gender")){
+                    }
+                    else if (operation.matches("gender")){
 
                         if (leftRight.matches("left"))
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().genderSwap();
