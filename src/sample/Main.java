@@ -2,6 +2,7 @@ package sample;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -45,8 +46,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
@@ -2203,7 +2206,6 @@ public class Main extends Application {
                 Rearranging panel: Panel, Previous Panel *To Do after fully implemented or on Sunday*
 
                 Adding Speech Bubble: Panel, L/R
-
                 Moving Character: Panel, L/R, Previous Location
                 Moving Speech Bubble: Panel, L/R, Previous Location
                 Changing Character Image: Panel, L/R, Previous Image
