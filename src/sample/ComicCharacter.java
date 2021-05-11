@@ -127,17 +127,6 @@ public class ComicCharacter extends Pane {
 
         characterImageView = imageView;
 
-        File toSave = new File("C:\\Users\\Ada\\Desktop\\image.png");
-
-        if (toSave != null) {
-            try {
-                ImageIO.write(SwingFXUtils.fromFXImage(characterImageView.getImage(),
-                        null), "png", toSave);
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-
         this.getChildren().add(characterImageView);
     }
 
