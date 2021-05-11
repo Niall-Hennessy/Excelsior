@@ -1205,20 +1205,25 @@ public class Main extends Application {
                     @Override
                     public void handle(ActionEvent actionEvent) {
 
+                        Font undoFont = captionTextfield.getFont();
                         Font font = Font.font((String)combo_box.getSelectionModel().getSelectedItem(), FontWeight.NORMAL, 20);
                         captionTextfield.setFont(Font.font((String)combo_box.getSelectionModel().getSelectedItem(), FontWeight.NORMAL, 20));
 
                         if(top[0]){
-                            comicPanel[0].setTopText(captionTextfield.getText(), font);
-
                             TextCaption current = comicPanel[0].getTopText();
-                            undoList.add("caption|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|" + comicPanel[0].getTopBottom() + "|" + current.toString() + "|");
+
+                            if(current != null)
+                                undoList.add("caption|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|top|" + current.getText() + "#" + undoFont.getFamily() + "|");
+
+                            comicPanel[0].setTopText(captionTextfield.getText(), font);
                         }
                         else if(bottom[0]){
-                            comicPanel[0].setBottomText(captionTextfield.getText(), font);
-
                             TextCaption current = comicPanel[0].getBottomText();
-                            undoList.add("caption|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|" + comicPanel[0].getTopBottom() + "|" + current.toString() + "|");
+
+                            if(current != null)
+                                undoList.add("caption|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|bottom|" + current.getText() + "#" + undoFont.getFamily() + "|");
+
+                            comicPanel[0].setBottomText(captionTextfield.getText(), font);
                         }
                     }
                 });
@@ -2224,13 +2229,6 @@ public class Main extends Application {
                     String value = toUndo.substring(0,i);
                     toUndo = toUndo.substring(i+1);
 
-                    i=0;
-                    while (toUndo.charAt(i) != '|')
-                        i++;
-
-                    String SecondValue = toUndo.substring(0,i);
-                    toUndo = toUndo.substring(i+1);
-
 
                     if (operation.matches("delete")) {
                         comicStrip.getChildren().remove(newPanelRight);
@@ -2273,9 +2271,19 @@ public class Main extends Application {
                         else
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().setHair(Color.web(value));
                     }else if (operation.matches("caption")) {
-//                        undoList.add("hair|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|" + comicPanel[0].getLeftRight() + "|" + current.toString() + "|" + current.toFont() + "|");
+
+                        i=0;
+                        while (value.charAt(i) != '#')
+                            i++;
+
                         if(leftRight.matches("top")) {
-                            ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).setTopText(value, new Font(SecondValue, 20));
+                            ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).setTopText(value.substring(0,i), Font.font(value.substring(i+1), FontWeight.NORMAL, 20));
+                            ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getTopText().setText(new Text(value.substring(0,i)));
+                            ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getTopText().getTextObject().setFont(Font.font(value.substring(i+1), FontWeight.NORMAL, 20));
+                        }else if(leftRight.matches("bottom")) {
+                            ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).setBottomText(value.substring(0,i), Font.font(value.substring(i+1), FontWeight.NORMAL, 20));
+                            ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getBottomText().setText(new Text(value.substring(0,i)));
+                            ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getBottomText().getTextObject().setFont(Font.font(value.substring(i+1), FontWeight.NORMAL, 20));
                         }
 
                     }else if (operation.matches("panel")){
