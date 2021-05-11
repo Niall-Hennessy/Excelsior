@@ -1840,6 +1840,7 @@ public class Main extends Application {
 
                         frame.setVisible(false);
                         frame = null;
+                        progressBar = null;
                     }
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Warning, file formatting of the XML document is incorrect.\n\nError: "+ e.getMessage());
@@ -2306,7 +2307,6 @@ public class Main extends Application {
                     newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
-                            mouseEvent.setDragDetect(true);
                             addPressAndHoldHandler(newComicPanel, Duration.seconds(1),
                                     event -> {
 
@@ -2362,7 +2362,7 @@ public class Main extends Application {
                                                     else if(offset < -2)
                                                         offset = -2;
 
-                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() - ((height/2.4 + height/9.6) * offset));
+                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() - ((height/2.4 + height/9.6) * offset));
                                                     newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
                                                 }
                                             }
