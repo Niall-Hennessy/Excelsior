@@ -301,7 +301,7 @@ public class Main extends Application {
                         }
 
                         if(toParse.getBackgroundString() != null);
-                            background.appendChild(doc.createTextNode(toParse.getBackgroundString()));
+                        background.appendChild(doc.createTextNode(toParse.getBackgroundString()));
 
 
                         panel.appendChild(above);
@@ -1402,7 +1402,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
 
                 JFrame frame = null;
-                
+
                 try {
 
                     FileChooser fileChooser = new FileChooser();
@@ -1456,7 +1456,7 @@ public class Main extends Application {
                         }
 
                         JProgressBar progressBar;
-                        
+
 
                         frame = new JFrame("Loading...");
                         frame.setUndecorated(true);
@@ -2093,9 +2093,9 @@ public class Main extends Application {
 
                 myWriter.write(
                         "</table>\n" +
-                        "</body>\n" +
-                        "</html>\n" +
-                        "</center>\n"
+                                "</body>\n" +
+                                "</html>\n" +
+                                "</center>\n"
                 );
 
                 myWriter.close();
@@ -2251,7 +2251,7 @@ public class Main extends Application {
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().setSkin(Color.web(value));
                     }else if (operation.matches("hair")){
 
-                         hairColorPicker[0].setValue(Color.web(value));
+                        hairColorPicker[0].setValue(Color.web(value));
 
                         if (leftRight.matches("left"))
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().setHair(Color.web(value));
@@ -2310,45 +2310,28 @@ public class Main extends Application {
                             addPressAndHoldHandler(newComicPanel, Duration.seconds(1),
                                     event -> {
 
-                                            newComicPanel.getScene().setCursor(javafx.scene.Cursor.CLOSED_HAND);
+                                        newComicPanel.getScene().setCursor(javafx.scene.Cursor.CLOSED_HAND);
 
-                                            AtomicInteger index = new AtomicInteger(comicStrip.getChildren().indexOf(newComicPanel));
-                                            AtomicInteger amount = new AtomicInteger(0);
-                                            AtomicInteger scroll = new AtomicInteger(0);
-                                            AtomicReference<Double> offset = new AtomicReference<>();
-                                            offset.set(0.0);
+                                        AtomicInteger index = new AtomicInteger(comicStrip.getChildren().indexOf(newComicPanel));
+                                        AtomicInteger amount = new AtomicInteger(0);
+                                        AtomicInteger scroll = new AtomicInteger(0);
 
-                                            comicStrip.setOnMouseDragged(dragEvent -> {
+                                        comicStrip.setOnMouseDragged(dragEvent -> {
 
-                                                if(dragEvent.getScreenX() > (4*width/5)) {
-                                                    double hV = scrollPane.getHvalue();
-                                                    scrollPane.setHvalue(scrollPane.getHvalue() + 0.001);
-                                                    if(scrollPane.getHvalue() != 1) {
-                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 9);
-                                                        scroll.set(scroll.get() + 9);
-                                                    }
-                                                }else if(dragEvent.getScreenX() < width/5){
-                                                    scrollPane.setHvalue(scrollPane.getHvalue() - 0.001);
-                                                    if(scrollPane.getHvalue() != 0) {
-                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 9);
-                                                        scroll.set(scroll.get() - 9);
-                                                    }
-                                                }else{
-
-                                                    if(amount.get() < 0)
-                                                        offset.set(-(height/2.4 + height/9.6));
-                                                    else if(amount.get() > 0)
-                                                        offset.set((height/2.4 + height/9.6));
-                                                    else
-                                                        offset.set(0.0);
-
-                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() - offset.get());
-                                                    newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
+                                            if(dragEvent.getScreenX() > (4*width/5)) {
+                                                double hV = scrollPane.getHvalue();
+                                                scrollPane.setHvalue(scrollPane.getHvalue() + 0.001);
+                                                if(scrollPane.getHvalue() != 1) {
+                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 9);
+                                                    scroll.set(scroll.get() + 9);
                                                 }
-
-                                                double presX = newComicPanel.getTranslateX();
-                                                double presY = newComicPanel.getTranslateY();
-
+                                            }else if(dragEvent.getScreenX() < width/5){
+                                                scrollPane.setHvalue(scrollPane.getHvalue() - 0.001);
+                                                if(scrollPane.getHvalue() != 0) {
+                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 9);
+                                                    scroll.set(scroll.get() - 9);
+                                                }
+                                            }else{
                                                 if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() < ((height/2.4 + height/9.6) * (amount.get() - 1))) {
 
                                                     amount.getAndDecrement();
@@ -2359,10 +2342,9 @@ public class Main extends Application {
 
                                                     comicStrip.getChildren().remove(newComicPanel);
                                                     comicStrip.getChildren().add(index.get(), newComicPanel);
-                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() + (height/2.4 + height/9.6));
-
                                                 }
                                                 else if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() > ((height/2.4 + height/9.6) * (amount.get() + 1))) {
+
                                                     amount.getAndIncrement();
                                                     index.getAndIncrement();
 
@@ -2371,31 +2353,41 @@ public class Main extends Application {
 
                                                     comicStrip.getChildren().remove(newComicPanel);
                                                     comicStrip.getChildren().add(index.get(), newComicPanel);
-                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() - (height/2.4 + height/9.6));
                                                 }
+                                                else {
+                                                    int offset = amount.get();
 
-                                                dragEvent.consume();
+                                                    if(offset > 2)
+                                                        offset = 2;
+                                                    else if(offset < -2)
+                                                        offset = -2;
+
+                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() - ((height/2.4 + height/9.6) * offset));
+                                                    newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
+                                                }
+                                            }
+                                            dragEvent.consume();
+                                        });
+
+                                        comicStrip.setOnMouseReleased(mouseEvent3 -> {
+
+                                            newComicPanel.getScene().setCursor(javafx.scene.Cursor.DEFAULT);
+
+                                            comicStrip.setMargin(newComicPanel, new Insets(20,10,20,10));
+
+                                            newComicPanel.setTranslateX(0);
+                                            newComicPanel.setTranslateY(0);
+
+                                            comicStrip.setOnMouseDragged(dragEvent2 -> {
+                                                dragEvent2.consume();
                                             });
 
-                                            comicStrip.setOnMouseReleased(mouseEvent3 -> {
-
-                                                newComicPanel.getScene().setCursor(javafx.scene.Cursor.DEFAULT);
-
-                                                comicStrip.setMargin(newComicPanel, new Insets(20,10,20,10));
-
-                                                newComicPanel.setTranslateX(0);
-                                                newComicPanel.setTranslateY(0);
-
-                                                comicStrip.setOnMouseDragged(dragEvent2 -> {
-                                                    dragEvent2.consume();
-                                                });
-
-                                                comicStrip.setOnMouseReleased(dragEvent2 -> {
-                                                    dragEvent2.consume();
-                                                });
-
-                                                mouseEvent3.consume();
+                                            comicStrip.setOnMouseReleased(dragEvent2 -> {
+                                                dragEvent2.consume();
                                             });
+
+                                            mouseEvent3.consume();
+                                        });
                                     });
 
                             if(!comicStrip.getChildren().contains(newComicPanel))

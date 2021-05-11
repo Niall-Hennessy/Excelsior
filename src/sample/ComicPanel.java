@@ -37,8 +37,6 @@ public class ComicPanel extends Pane {
 
     public ComicPanel() throws FileNotFoundException {
 
-        this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
-
         int width = (int) Screen.getPrimary().getBounds().getWidth();
         int height = (int) Screen.getPrimary().getBounds().getHeight();
 
@@ -57,6 +55,8 @@ public class ComicPanel extends Pane {
 
         this.getChildren().add(leftCharacter);
         this.getChildren().add(rightCharacter);
+
+        this.unselect();
 
         isLocked = false;
     }
