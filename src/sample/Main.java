@@ -1008,6 +1008,8 @@ public class Main extends Application {
                     return;
                 }
 
+                undoList.add("background|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "||" + comicPanel[0].getBackgroundString() + "|");
+
                 String path = "src/images/backgrounds";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setHeight(height);
@@ -2240,7 +2242,13 @@ public class Main extends Application {
                             deletedPanels.remove(deletedPanels.size() - 1);
                         }
                         comicStrip.getChildren().add(newPanelRight);
-                    } else if (operation.matches("flip")) {
+                    }
+                    else if(operation.matches("background"))
+                    {
+                        ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).setBackgroundString(value);
+                        ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).unselect();
+                    }
+                    else if (operation.matches("flip")) {
 
                         if (leftRight.matches("left"))
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().flipOrientation();
