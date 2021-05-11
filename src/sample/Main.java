@@ -88,7 +88,7 @@ public class Main extends Application {
         final String[] character = new String[1];
 
         MenuBar menuBar = new MenuBar();
-        menuBar.setStyle("-fx-background-color: #B9EBFF");
+        menuBar.setStyle("-fx-background-color: #FBFFCC");
 
         Menu file = new Menu("File");
         MenuItem new_project = new MenuItem("New Project");
@@ -126,7 +126,7 @@ public class Main extends Application {
 
         FlowPane buttonLayout = new FlowPane();
         buttonLayout.setPrefWidth(width - 20);
-        buttonLayout.setStyle("-fx-background-color: #5cd0ff");
+        buttonLayout.setStyle("-fx-background-color: #142042");
 
         menuBox.setMaxHeight(buttonLayout.getHeight()/2);
 
@@ -1390,7 +1390,7 @@ public class Main extends Application {
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, buttonLayout);
         mainPane.addRow(2, scrollPane);
-        mainPane.setStyle("-fx-background-color: #B9EBFF");
+        mainPane.setStyle("-fx-background-color: #1A2A55");
 
         mainPane.setMargin(scrollPane, new Insets(width * 0.05, width * 0.01,0,width * 0.01));
 
