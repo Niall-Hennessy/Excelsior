@@ -790,7 +790,7 @@ public class Main extends Application {
                             isItalic[0] = true;
                     }
 
-                    textfield.setText(comicPanel[0].getLeftTextBubble().getText().getText().replaceAll("\n", " "));
+                    textfield.setText(comicPanel[0].getLeftTextBubble().getText().getText().replaceAll("\n", ""));
                 }
                 else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].getRightTextBubble() != null) {
 
@@ -801,7 +801,7 @@ public class Main extends Application {
                             isItalic[0] = true;
                     }
 
-                    textfield.setText(comicPanel[0].getRightTextBubble().getText().getText().replaceAll("\n", " "));
+                    textfield.setText(comicPanel[0].getRightTextBubble().getText().getText().replaceAll("\n", ""));
                 }
 
                 if(isBold[0] && isItalic[0])
