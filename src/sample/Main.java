@@ -2182,7 +2182,7 @@ public class Main extends Application {
                 Add Panel: Panel
                  */
 
-                if(undoList.size() > 0) {
+                if(undoList.size() > 1) {
 
                     String toUndo = undoList.get(undoList.size() - 1);
                     undoList.remove(undoList.size() - 1);
@@ -2279,6 +2279,9 @@ public class Main extends Application {
                         }
                     }
 
+                }
+                else {
+                    hoverTips.lockedTip("Nothing to undo", undoButton);
                 }
             }
         });
