@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -244,6 +245,7 @@ public class Main extends Application {
                 hoverTips.buttonToolTip(tipUndoButton, mouseEvent, undoButton);
             }
         });
+
 
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -502,21 +504,14 @@ public class Main extends Application {
             }
         });
 
-
         add_character.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage saveXML = new Stage();
-
             @Override
             public void handle(ActionEvent event) {
-
-                if(saveXML.isShowing()) {
-                    saveXML.initOwner(primaryStage);
-                }
 
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Add a character");
 
-                File source = fileChooser.showOpenDialog(saveXML);
+                File source = fileChooser.showOpenDialog(null);
                 if(source != null) {
                     File dest = new File("src/images/characters/" + source.getName());
 
@@ -526,31 +521,17 @@ public class Main extends Application {
                         e.printStackTrace();
                     }
                 }
-
-                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
-                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
-
-                VBox vBox = new VBox();
-
-                Scene scene = new Scene(vBox);
-                saveXML.setScene(scene);
             }
         });
 
         add_background.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage saveXML = new Stage();
-
             @Override
             public void handle(ActionEvent event) {
-
-                if(saveXML.isShowing()) {
-                    saveXML.initOwner(primaryStage);
-                }
 
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Add a background image");
 
-                File source = fileChooser.showOpenDialog(saveXML);
+                File source = fileChooser.showOpenDialog(null);
 
                 if(source != null) {
                     File dest = new File("src/images/backgrounds/" + source.getName());
@@ -561,14 +542,6 @@ public class Main extends Application {
                         e.printStackTrace();
                     }
                 }
-
-                saveXML.setWidth(Screen.getPrimary().getVisualBounds().getWidth()/10);
-                saveXML.setHeight(Screen.getPrimary().getVisualBounds().getHeight()/10);
-
-                VBox vBox = new VBox();
-
-                Scene scene = new Scene(vBox);
-                saveXML.setScene(scene);
             }
         });
 
@@ -1428,6 +1401,8 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+                JFrame frame = null;
+                
                 try {
 
                     FileChooser fileChooser = new FileChooser();
@@ -1481,7 +1456,7 @@ public class Main extends Application {
                         }
 
                         JProgressBar progressBar;
-                        JFrame frame;
+                        
 
                         frame = new JFrame("Loading...");
                         frame.setUndecorated(true);
@@ -1867,7 +1842,10 @@ public class Main extends Application {
                         frame = null;
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Warning, file formatting of the XML document is incorrect.\n\nError: "+ e.getMessage());
+                    alert.show();
+                    frame.setVisible(false);
+                    frame = null;
                 }
             }
         });
@@ -2204,7 +2182,7 @@ public class Main extends Application {
                 Add Panel: Panel
                  */
 
-                if(undoList.size() > 0) {
+                if(undoList.size() > 1) {
 
                     String toUndo = undoList.get(undoList.size() - 1);
                     undoList.remove(undoList.size() - 1);
@@ -2301,6 +2279,9 @@ public class Main extends Application {
                         }
                     }
 
+                }
+                else {
+                    hoverTips.lockedTip("Nothing to undo", undoButton);
                 }
             }
         });
@@ -2487,8 +2468,9 @@ public class Main extends Application {
             }
         });
 
-        Scene scene = new Scene(mainPane, width, height, false);
+        Scene scene = new Scene(mainPane, width, height, false, SceneAntialiasing.DISABLED);
         scene.getStylesheets().add("sample/style.css");
+
 
         scene.setOnKeyPressed(event -> {
             String codeString = event.getCode().toString();
