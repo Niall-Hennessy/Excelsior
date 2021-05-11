@@ -1210,9 +1210,15 @@ public class Main extends Application {
 
                         if(top[0]){
                             comicPanel[0].setTopText(captionTextfield.getText(), font);
+
+                            TextCaption current = comicPanel[0].getTopText();
+                            undoList.add("caption|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|" + comicPanel[0].getTopBottom() + "|" + current.toString() + "|");
                         }
                         else if(bottom[0]){
                             comicPanel[0].setBottomText(captionTextfield.getText(), font);
+
+                            TextCaption current = comicPanel[0].getBottomText();
+                            undoList.add("caption|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|" + comicPanel[0].getTopBottom() + "|" + current.toString() + "|");
                         }
                     }
                 });
@@ -2218,6 +2224,14 @@ public class Main extends Application {
                     String value = toUndo.substring(0,i);
                     toUndo = toUndo.substring(i+1);
 
+                    i=0;
+                    while (toUndo.charAt(i) != '|')
+                        i++;
+
+                    String SecondValue = toUndo.substring(0,i);
+                    toUndo = toUndo.substring(i+1);
+
+
                     if (operation.matches("delete")) {
                         comicStrip.getChildren().remove(newPanelRight);
                         if (deletedPanels.size() > 0) {
@@ -2228,20 +2242,21 @@ public class Main extends Application {
                             deletedPanels.remove(deletedPanels.size() - 1);
                         }
                         comicStrip.getChildren().add(newPanelRight);
-                    }else if (operation.matches("flip")) {
+                    } else if (operation.matches("flip")) {
 
                         if (leftRight.matches("left"))
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().flipOrientation();
                         else
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().flipOrientation();
 
-                    }else if (operation.matches("gender")){
+                    } else if (operation.matches("gender")){
 
                         if (leftRight.matches("left"))
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().genderSwap();
                         else
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().genderSwap();
-                    }else if (operation.matches("skin")){
+                    }
+                    else if (operation.matches("skin")){
 
                         skinColorPicker[0].setValue(Color.web(value));
 
@@ -2249,14 +2264,20 @@ public class Main extends Application {
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().setSkin(Color.web(value));
                         else
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().setSkin(Color.web(value));
-                    }else if (operation.matches("hair")){
+                    }else if (operation.matches("hair")) {
 
-                         hairColorPicker[0].setValue(Color.web(value));
+                        hairColorPicker[0].setValue(Color.web(value));
 
                         if (leftRight.matches("left"))
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getLeftCharacter().setHair(Color.web(value));
                         else
                             ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).getRightCharacter().setHair(Color.web(value));
+                    }else if (operation.matches("caption")) {
+//                        undoList.add("hair|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|" + comicPanel[0].getLeftRight() + "|" + current.toString() + "|" + current.toFont() + "|");
+                        if(leftRight.matches("top")) {
+                            ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel)))).setTopText(value, new Font(SecondValue, 20));
+                        }
+
                     }else if (operation.matches("panel")){
 
                         comicStrip.getChildren().remove(Integer.parseInt(panel));

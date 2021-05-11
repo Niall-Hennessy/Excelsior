@@ -32,6 +32,7 @@ public class ComicPanel extends Pane {
     private String background = "images/backgrounds/BlankBackground.jpg";
 
     private Boolean isLocked;
+    private String topBottom = null;
 
     private int index;
 
@@ -563,6 +564,11 @@ public class ComicPanel extends Pane {
     }
 
     public void setTopText(String text, Font font){
+        if(topText != null)
+            topBottom = "top";
+        else
+            topBottom = null;
+
         this.getChildren().remove(topText);
         topText = new TextCaption(text, font);
         this.getChildren().add(topText);
@@ -573,6 +579,10 @@ public class ComicPanel extends Pane {
     }
 
     public void setBottomText(String text, Font font){
+        if(bottomText != null)
+            topBottom = "bottom";
+        else
+            topBottom = null;
 
         int height = (int) Screen.getPrimary().getBounds().getHeight();
 
@@ -619,6 +629,10 @@ public class ComicPanel extends Pane {
 
     public TextBubble getRightTextBubble() {
         return rightTextBubble;
+    }
+
+    public String getTopBottom() {
+        return topBottom;
     }
 
     public int getIndex() {
