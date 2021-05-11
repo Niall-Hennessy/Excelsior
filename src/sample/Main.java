@@ -1043,6 +1043,8 @@ public class Main extends Application {
                         }
                     }
 
+                    undoList.add("lock|" + comicStrip.getChildren().indexOf(comicPanel[0]) + "|||");
+
                 }
                 else {
                     hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, lockButton[0]);
@@ -2174,10 +2176,11 @@ public class Main extends Application {
                 /*
                 Actions that can be undone
 
+                Rearranging panel: Panel, Previous Panel
+                Locking Panel: Panel
                 Moving Character: Panel, L/R, Previous Location
                 Adding Speech Bubble: Panel, L/R
                 Moving Speech Bubble: Panel, L/R, Previous Location
-                Adding Text: Panel, T/B
                 Add Background: Panel, Previous Image
                  */
 
@@ -2191,6 +2194,7 @@ public class Main extends Application {
                 Skin Character: Panel, L/R, Previous Colour
                 Hair Character: Panel, L/R, Previous Colour
                 Add Panel: Panel
+                Adding Text: Panel, T/B
                  */
 
                 if(undoList.size() > 1) {
@@ -2289,6 +2293,29 @@ public class Main extends Application {
                     }else if (operation.matches("panel")){
 
                         comicStrip.getChildren().remove(Integer.parseInt(panel));
+                    }else if (operation.matches("lock")){
+                        ComicPanel comicPanel = ((ComicPanel) (comicStrip.getChildren().get(Integer.parseInt(panel))));
+                        comicPanel.setLocked(!comicPanel.getLocked());
+
+                        if(comicPanel.getLocked()) {
+                            try {
+                                ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
+                                imageView.setFitWidth(height*0.09);
+                                imageView.setFitHeight(height*0.09);
+                                lockButton[0].setGraphic(imageView);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            try {
+                                ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
+                                imageView.setFitWidth(height*0.09);
+                                imageView.setFitHeight(height*0.09);
+                                lockButton[0].setGraphic(imageView);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }else if (operation.matches("character")){
 
                         if (leftRight.matches("left")) {
