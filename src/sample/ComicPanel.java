@@ -124,8 +124,8 @@ public class ComicPanel extends Pane {
             dragY.set(0.0);
             leftCharacter.setOnMouseDragged(dragEvent -> {
 
-                if(!UndoList.getUndoList().contains(undo))
-                    UndoList.getUndoList().add(undo);
+                if(!UndoList.contains(undo))
+                    UndoList.addUndo(undo);
 
                 if(!this.isLocked) {
                     double offsetX = leftCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
@@ -199,8 +199,8 @@ public class ComicPanel extends Pane {
             dragY.set(0.0);
             rightCharacter.setOnMouseDragged(dragEvent -> {
 
-                if(!UndoList.getUndoList().contains(undo))
-                    UndoList.getUndoList().add(undo);
+                if(!UndoList.contains(undo))
+                    UndoList.addUndo(undo);
 
                 if(!this.isLocked) {
                     double offsetX = rightCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
@@ -389,8 +389,8 @@ public class ComicPanel extends Pane {
             dragY.set(0.0);
             leftTextBubble.setOnMouseDragged(dragEvent -> {
 
-                if(!UndoList.getUndoList().contains(undo))
-                    UndoList.getUndoList().add(undo);
+                if(!UndoList.contains(undo))
+                    UndoList.addUndo(undo);
 
                 if(!this.isLocked) {
                     double offsetX = leftTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
@@ -504,8 +504,8 @@ public class ComicPanel extends Pane {
             dragY.set(0.0);
             rightTextBubble.setOnMouseDragged(dragEvent -> {
 
-                if(!UndoList.getUndoList().contains(undo))
-                    UndoList.getUndoList().add(undo);
+                if(!UndoList.contains(undo))
+                    UndoList.addUndo(undo);
 
                 if(!this.isLocked) {
                     double offsetX = rightTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();

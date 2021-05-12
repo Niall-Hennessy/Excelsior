@@ -77,7 +77,6 @@ public class Main extends Application {
         primaryStage.setHeight(heightPrcnt);
         primaryStage.setWidth(widthPrcnt);
 
-
         GridPane mainPane = new GridPane();
 
         final String[] premise = {""};
@@ -638,7 +637,7 @@ public class Main extends Application {
                 else
                     undo = new Undo("character", comicPanel[0], "right", comicPanel[0].getRightCharacter().getImageName().toString());
 
-                UndoList.getUndoList().add(undo);
+                UndoList.addUndo(undo);
 
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
@@ -669,7 +668,7 @@ public class Main extends Application {
                 else
                     undo = new Undo("character", comicPanel[0], "left", comicPanel[0].getLeftCharacter().getImageName().toString());
 
-                UndoList.getUndoList().add(undo);
+                UndoList.addUndo(undo);
 
                 String path = "src/images/characters";
                 galleryView.setComicPanel(comicPanel);
@@ -687,7 +686,7 @@ public class Main extends Application {
                     comicPanel[0].getSelectedCharacter().flipOrientation();
 
                     Undo undo = new Undo("flip", comicPanel[0], comicPanel[0].getLeftRight());
-                    UndoList.getUndoList().add(undo);
+                    UndoList.addUndo(undo);
                 } else if(comicPanel[0].getLocked()){
                     hoverTips.lockedTip(tipLocked, flipButton);
                     return;
@@ -705,7 +704,7 @@ public class Main extends Application {
                 if(comicPanel[0].getSelectedCharacter() != null && !comicPanel[0].getLocked()) {
                     comicPanel[0].getSelectedCharacter().genderSwap();
                     Undo undo = new Undo("gender", comicPanel[0], comicPanel[0].getLeftRight());
-                    UndoList.getUndoList().add(undo);
+                    UndoList.addUndo(undo);
                 }else if(comicPanel[0].getLocked()){
                     hoverTips.lockedTip(tipLocked, genderButton);
                     return;
@@ -1022,7 +1021,7 @@ public class Main extends Application {
                 }
 
                 Undo undo = new Undo("background", comicPanel[0], comicPanel[0].getBackgroundString());
-                UndoList.getUndoList().add(undo);
+                UndoList.addUndo(undo);
 
                 String path = "src/images/backgrounds";
                 galleryView.setComicPanel(comicPanel);
@@ -1060,7 +1059,7 @@ public class Main extends Application {
                     }
 
                     Undo undo = new Undo("lock", comicPanel[0]);
-                    UndoList.getUndoList().add(undo);
+                    UndoList.addUndo(undo);
 
                 }
                 else {
@@ -1233,11 +1232,11 @@ public class Main extends Application {
 
                             if(current != null){
                                 Undo undo = new Undo("caption", comicPanel[0], "top", current.getText() + "#" + undoFont.getFamily());
-                                UndoList.getUndoList().add(undo);
+                                UndoList.addUndo(undo);
                             }
                             else{
                                 Undo undo = new Undo("caption", comicPanel[0], "top", "" + "#" + "Segoe UI");
-                                UndoList.getUndoList().add(undo);
+                                UndoList.addUndo(undo);
                             }
 
                             comicPanel[0].setTopText(captionTextfield.getText(), font);
@@ -1247,11 +1246,11 @@ public class Main extends Application {
 
                             if(current != null){
                                 Undo undo = new Undo("caption", comicPanel[0], "bottom", current.getText() + "#" + undoFont.getFamily());
-                                UndoList.getUndoList().add(undo);
+                                UndoList.addUndo(undo);
                             }
                             else{
                                 Undo undo = new Undo("caption", comicPanel[0], "bottom", "" + "#" + "Segoe UI");
-                                UndoList.getUndoList().add(undo);
+                                UndoList.addUndo(undo);
                             }
 
                             comicPanel[0].setBottomText(captionTextfield.getText(), font);
@@ -1318,7 +1317,7 @@ public class Main extends Application {
                             if(comicPanel[0].getSelectedCharacter() != null) {
                                 comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
                                 Undo undo = new Undo("skin", comicPanel[0], comicPanel[0].getLeftRight(), current.toString());
-                                UndoList.getUndoList().add(undo);
+                                UndoList.addUndo(undo);
                             }
                             else {
                                 hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
@@ -1358,7 +1357,7 @@ public class Main extends Application {
                             if(comicPanel[0].getSelectedCharacter() != null) {
                                 comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
                                 Undo undo = new Undo("hair", comicPanel[0], comicPanel[0].getLeftRight(), current.toString());
-                                UndoList.getUndoList().add(undo);
+                                UndoList.addUndo(undo);
                             }else {
                                 hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
                             }
@@ -2195,7 +2194,7 @@ public class Main extends Application {
                     deletedPanels.add(comicPanel[0]);
 
                     Undo undo = new Undo("delete", comicPanel[0]);
-                    UndoList.getUndoList().add(undo);
+                    UndoList.addUndo(undo);
 
                     hairColorPicker[0].setValue(Color.WHITE);
                     skinColorPicker[0].setValue(Color.WHITE);
@@ -2219,6 +2218,7 @@ public class Main extends Application {
                 Actually Implemented
 
                 Locking Panel: Panel
+                Add Background: Panel, Previous Image
                 Changing Character Image: Panel, L/R, Previous Image
                 Moving Character: Panel, L/R, Previous Location
                 Delete Panel: Panel
@@ -2228,14 +2228,12 @@ public class Main extends Application {
                 Skin Character: Panel, L/R, Previous Colour
                 Hair Character: Panel, L/R, Previous Colour
                 Adding Text: Panel, T/B
-                Add Background: Panel, Previous Image
                 Add Panel: Panel
                  */
 
-                if(UndoList.getUndoList().size() > 1) {
+                if(UndoList.size() > 1) {
 
-                    Undo undo = UndoList.getUndoList().get(UndoList.getUndoList().size()-1);
-                    UndoList.getUndoList().remove(UndoList.getUndoList().size()-1);
+                    Undo undo = UndoList.getUndo();
 
                     if (undo.getOperation().matches("delete")) {
                         comicStrip.getChildren().remove(newPanelRight);
@@ -2244,7 +2242,7 @@ public class Main extends Application {
                     }
                     else if(undo.getOperation().matches("background"))
                     {
-                        undo.getComicPanel().setBackgroundString(undo.getValue_2());
+                        undo.getComicPanel().setBackgroundString(undo.getValue_1());
                         undo.getComicPanel().unselect();
                     }
                     else if (undo.getOperation().matches("flip")) {
@@ -2335,8 +2333,11 @@ public class Main extends Application {
                                 e.printStackTrace();
                             }
                         }
-                        if(undo.getValue_2().matches("blank"))
+                        if(undo.getValue_2().matches("blank")) {
                             undo.getComicPanel().getCharacter(undo.getValue_1()).setStyle("");
+                            undo.getComicPanel().setSelectedCharacter(null);
+                        }
+
                     }else if (undo.getOperation().matches("moveCharacter")){
 
                         int i=0;
@@ -2388,7 +2389,7 @@ public class Main extends Application {
                     comicStrip.getChildren().add(newPanelRight);
 
                     Undo undo = new Undo("panel", newComicPanel);
-                    UndoList.getUndoList().add(undo);
+                    UndoList.addUndo(undo);
 
                     newComicPanel.setIndex(comicStrip.getChildren().indexOf(newComicPanel));
 
