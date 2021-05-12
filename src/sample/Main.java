@@ -2299,12 +2299,13 @@ public class Main extends Application {
                     }else if (undo.getOperation().matches("lock")){
 
                         undo.getComicPanel().setLocked(!undo.getComicPanel().getLocked());
-
+                        double imageWidth = backgroundButton.getWidth();
+                        double imageHeight = backgroundButton.getHeight();
                         if(undo.getComicPanel().getLocked()) {
                             try {
                                 ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
-                                imageView.setFitWidth(height*0.09);
-                                imageView.setFitHeight(height*0.09);
+                                imageView.setFitWidth(imageWidth-2);
+                                imageView.setFitHeight(imageHeight-2);
                                 lockButton[0].setGraphic(imageView);
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
@@ -2312,8 +2313,8 @@ public class Main extends Application {
                         } else {
                             try {
                                 ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
-                                imageView.setFitWidth(height*0.09);
-                                imageView.setFitHeight(height*0.09);
+                                imageView.setFitWidth(imageWidth-2);
+                                imageView.setFitHeight(imageHeight-2);
                                 lockButton[0].setGraphic(imageView);
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
