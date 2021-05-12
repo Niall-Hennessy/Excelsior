@@ -664,10 +664,10 @@ public class Main extends Application {
 
                 Undo undo;
 
-                if(comicPanel[0].getRightCharacter().getImageName() == null)
+                if(comicPanel[0].getLeftCharacter().getImageName() == null)
                     undo = new Undo("character", comicPanel[0], "left", "blank");
                 else
-                    undo = new Undo("character", comicPanel[0], "left", comicPanel[0].getRightCharacter().getImageName().toString());
+                    undo = new Undo("character", comicPanel[0], "left", comicPanel[0].getLeftCharacter().getImageName().toString());
 
                 UndoList.getUndoList().add(undo);
 
@@ -1235,6 +1235,10 @@ public class Main extends Application {
                                 Undo undo = new Undo("caption", comicPanel[0], "top", current.getText() + "#" + undoFont.getFamily());
                                 UndoList.getUndoList().add(undo);
                             }
+                            else{
+                                Undo undo = new Undo("caption", comicPanel[0], "top", "" + "#" + "Segoe UI");
+                                UndoList.getUndoList().add(undo);
+                            }
 
                             comicPanel[0].setTopText(captionTextfield.getText(), font);
                         }
@@ -1245,6 +1249,11 @@ public class Main extends Application {
                                 Undo undo = new Undo("caption", comicPanel[0], "bottom", current.getText() + "#" + undoFont.getFamily());
                                 UndoList.getUndoList().add(undo);
                             }
+                            else{
+                                Undo undo = new Undo("caption", comicPanel[0], "bottom", "" + "#" + "Segoe UI");
+                                UndoList.getUndoList().add(undo);
+                            }
+
                             comicPanel[0].setBottomText(captionTextfield.getText(), font);
                         }
                     }
@@ -2201,21 +2210,18 @@ public class Main extends Application {
                 /*
                 Actions that can be undone
 
-                Add Default value to textcaption
-
                 Rearranging panel: Panel, Previous Panel *To Do after fully implemented or on Sunday*
 
                 Adding Speech Bubble: Panel, L/R
-                Moving Character: Panel, L/R, Previous Location
                 Moving Speech Bubble: Panel, L/R, Previous Location
-                Changing Character Image: Panel, L/R, Previous Image
-                Add Panel: Panel **
                  */
 
                 /*
                 Actually Implemented
 
                 Locking Panel: Panel
+                Changing Character Image: Panel, L/R, Previous Image
+                Moving Character: Panel, L/R, Previous Location
                 Delete Panel: Panel
                 Flipping Character: Panel, L/R
                 Gender Character: Panel, L/R
@@ -2223,11 +2229,13 @@ public class Main extends Application {
                 Hair Character: Panel, L/R, Previous Colour
                 Adding Text: Panel, T/B
                 Add Background: Panel, Previous Image
+                Add Panel: Panel
                  */
 
                 if(UndoList.getUndoList().size() > 1) {
 
                     Undo undo = UndoList.getUndoList().get(UndoList.getUndoList().size()-1);
+                    UndoList.getUndoList().remove(UndoList.getUndoList().size()-1);
 
                     if (undo.getOperation().matches("delete")) {
                         comicStrip.getChildren().remove(newPanelRight);
@@ -2286,7 +2294,6 @@ public class Main extends Application {
                         }
 
                     }else if (undo.getOperation().matches("panel")){
-
                         comicStrip.getChildren().remove(undo.getComicPanel());
                     }else if (undo.getOperation().matches("lock")){
 
@@ -2328,6 +2335,22 @@ public class Main extends Application {
                                 e.printStackTrace();
                             }
                         }
+                        if(undo.getValue_2().matches("blank"))
+                            undo.getComicPanel().getCharacter(undo.getValue_1()).setStyle("");
+                    }else if (undo.getOperation().matches("moveCharacter")){
+
+                        int i=0;
+                        while (undo.getValue_2().charAt(i) != '#')
+                            i++;
+
+                        if (undo.getValue_1().matches("left")){
+                            undo.getComicPanel().getLeftCharacter().setTranslateX(Double.parseDouble(undo.getValue_2().substring(0, i)));
+                            undo.getComicPanel().getLeftCharacter().setTranslateY(Double.parseDouble(undo.getValue_2().substring(i+1)));
+                        }
+                        else {
+                            undo.getComicPanel().getRightCharacter().setTranslateX(Double.parseDouble(undo.getValue_2().substring(0, i)));
+                            undo.getComicPanel().getRightCharacter().setTranslateY(Double.parseDouble(undo.getValue_2().substring(i+1)));
+                        }
                     }
 
                 }
@@ -2350,7 +2373,7 @@ public class Main extends Application {
 
                     comicStrip.getChildren().add(newPanelRight);
 
-                    Undo undo = new Undo("panel", comicPanel[0]);
+                    Undo undo = new Undo("panel", newComicPanel);
                     UndoList.getUndoList().add(undo);
 
                     newComicPanel.setIndex(comicStrip.getChildren().indexOf(newComicPanel));

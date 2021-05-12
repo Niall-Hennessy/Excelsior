@@ -116,11 +116,17 @@ public class ComicPanel extends Pane {
 
         leftCharacter.setOnMousePressed(pressEvent -> {
 
+            Undo undo = new Undo("moveCharacter", this, "left", this.leftCharacter.getTranslateX() + "#" + this.leftCharacter.getTranslateY());
+
             setSelectedCharacter(leftCharacter);
 
             dragX.set(0.0);
             dragY.set(0.0);
             leftCharacter.setOnMouseDragged(dragEvent -> {
+
+                if(!UndoList.getUndoList().contains(undo))
+                    UndoList.getUndoList().add(undo);
+
                 if(!this.isLocked) {
                     double offsetX = leftCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                     double offsetY = leftCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
@@ -185,11 +191,17 @@ public class ComicPanel extends Pane {
 
         rightCharacter.setOnMousePressed(pressEvent -> {
 
+            Undo undo = new Undo("moveCharacter", this, "right", this.rightCharacter.getTranslateX() + "#" + this.rightCharacter.getTranslateY());
+
             setSelectedCharacter(rightCharacter);
 
             dragX.set(0.0);
             dragY.set(0.0);
             rightCharacter.setOnMouseDragged(dragEvent -> {
+
+                if(!UndoList.getUndoList().contains(undo))
+                    UndoList.getUndoList().add(undo);
+
                 if(!this.isLocked) {
                     double offsetX = rightCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                     double offsetY = rightCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
