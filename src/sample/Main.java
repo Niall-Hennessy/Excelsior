@@ -1419,7 +1419,7 @@ public class Main extends Application {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
-        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setPrefHeight(height * 0.6);
         scrollPane.setPrefWidth(width - 20);
