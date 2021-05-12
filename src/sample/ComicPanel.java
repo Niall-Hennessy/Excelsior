@@ -382,9 +382,16 @@ public class ComicPanel extends Pane {
         });
 
         leftTextBubble.setOnMousePressed(pressEvent -> {
+
+            Undo undo = new Undo("moveBubble", this, "left", this.leftTextBubble.getTranslateX() + "#" + this.leftTextBubble.getTranslateY());
+
             dragX.set(0.0);
             dragY.set(0.0);
             leftTextBubble.setOnMouseDragged(dragEvent -> {
+
+                if(!UndoList.getUndoList().contains(undo))
+                    UndoList.getUndoList().add(undo);
+
                 if(!this.isLocked) {
                     double offsetX = leftTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                     double offsetY = leftTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
@@ -490,9 +497,16 @@ public class ComicPanel extends Pane {
         });
 
         rightTextBubble.setOnMousePressed(pressEvent -> {
+
+            Undo undo = new Undo("moveBubble", this, "right", this.rightTextBubble.getTranslateX() + "#" + this.rightTextBubble.getTranslateY());
+
             dragX.set(0.0);
             dragY.set(0.0);
             rightTextBubble.setOnMouseDragged(dragEvent -> {
+
+                if(!UndoList.getUndoList().contains(undo))
+                    UndoList.getUndoList().add(undo);
+
                 if(!this.isLocked) {
                     double offsetX = rightTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                     double offsetY = rightTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();

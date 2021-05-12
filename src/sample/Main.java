@@ -2213,7 +2213,6 @@ public class Main extends Application {
                 Rearranging panel: Panel, Previous Panel *To Do after fully implemented or on Sunday*
 
                 Adding Speech Bubble: Panel, L/R
-                Moving Speech Bubble: Panel, L/R, Previous Location
                  */
 
                 /*
@@ -2223,6 +2222,7 @@ public class Main extends Application {
                 Changing Character Image: Panel, L/R, Previous Image
                 Moving Character: Panel, L/R, Previous Location
                 Delete Panel: Panel
+                Moving Speech Bubble: Panel, L/R, Previous Location
                 Flipping Character: Panel, L/R
                 Gender Character: Panel, L/R
                 Skin Character: Panel, L/R, Previous Colour
@@ -2350,6 +2350,20 @@ public class Main extends Application {
                         else {
                             undo.getComicPanel().getRightCharacter().setTranslateX(Double.parseDouble(undo.getValue_2().substring(0, i)));
                             undo.getComicPanel().getRightCharacter().setTranslateY(Double.parseDouble(undo.getValue_2().substring(i+1)));
+                        }
+                    }else if (undo.getOperation().matches("moveBubble")){
+
+                        int i=0;
+                        while (undo.getValue_2().charAt(i) != '#')
+                            i++;
+
+                        if (undo.getValue_1().matches("left")){
+                            undo.getComicPanel().getLeftTextBubble().setTranslateX(Double.parseDouble(undo.getValue_2().substring(0, i)));
+                            undo.getComicPanel().getLeftTextBubble().setTranslateY(Double.parseDouble(undo.getValue_2().substring(i+1)));
+                        }
+                        else {
+                            undo.getComicPanel().getRightTextBubble().setTranslateX(Double.parseDouble(undo.getValue_2().substring(0, i)));
+                            undo.getComicPanel().getRightTextBubble().setTranslateY(Double.parseDouble(undo.getValue_2().substring(i+1)));
                         }
                     }
 
