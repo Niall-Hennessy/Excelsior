@@ -2296,7 +2296,6 @@ public class Main extends Application {
                     ComicPanel newComicPanel = new ComicPanel();
                     comicStrip.getChildren().add(newComicPanel);
                     comicStrip.setMargin(newComicPanel, new Insets(20,10,20,10));
-
                     comicStrip.getChildren().add(newPanelRight);
 
                     undoList.add("panel|" + comicStrip.getChildren().indexOf(newComicPanel) + "|||");
@@ -2320,15 +2319,19 @@ public class Main extends Application {
 
                                             comicStrip.setOnMouseDragged(dragEvent -> {
 
+                                                double increase = ((double)comicStrip.getChildren().size()/1000);
+
+                                                if(increase > 10)
+                                                    increase = 10;
+
                                                 if(dragEvent.getScreenX() > (4*width/5)) {
-                                                    double hV = scrollPane.getHvalue();
-                                                    scrollPane.setHvalue(scrollPane.getHvalue() + 0.001);
+                                                    scrollPane.setHvalue(scrollPane.getHvalue() + increase);
                                                     if(scrollPane.getHvalue() != 1) {
                                                         newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 9);
                                                         scroll.set(scroll.get() + 9);
                                                     }
                                                 }else if(dragEvent.getScreenX() < width/5){
-                                                    scrollPane.setHvalue(scrollPane.getHvalue() - 0.001);
+                                                    scrollPane.setHvalue(scrollPane.getHvalue() - increase);
                                                     if(scrollPane.getHvalue() != 0) {
                                                         newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 9);
                                                         scroll.set(scroll.get() - 9);
