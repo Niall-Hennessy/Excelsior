@@ -6,6 +6,7 @@ public class Undo {
     private ComicPanel comicPanel;
     private String value_1;
     private String value_2;
+    private Object obj;
 
     public Undo() {
     }
@@ -62,5 +63,13 @@ public class Undo {
 
     public void setValue_2(String value_2) {
         this.value_2 = value_2;
+    }
+
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
     }
 }

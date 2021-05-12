@@ -361,7 +361,6 @@ public class ComicPanel extends Pane {
 
     public void setLeftBubble(Image image, String text, Font font, String status) {
         this.getChildren().remove(leftTextBubble);
-        double checkS = image.getWidth() + image.getHeight();
 
         ImageView imageView = new ImageView(image);
 
@@ -667,5 +666,22 @@ public class ComicPanel extends Pane {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+
+    public void setLeftTextBubble(TextBubble leftTextBubble) {
+        this.getChildren().remove(this.leftTextBubble);
+        this.leftTextBubble = leftTextBubble;
+        if(this.leftTextBubble != null)
+            this.getChildren().add(this.leftTextBubble);
+
+    }
+
+    public void setRightTextBubble(TextBubble rightTextBubble) {
+        this.getChildren().remove(this.rightTextBubble);
+        this.rightTextBubble = rightTextBubble;
+        if(this.rightTextBubble != null)
+            this.getChildren().add(this.rightTextBubble);
+
     }
 }

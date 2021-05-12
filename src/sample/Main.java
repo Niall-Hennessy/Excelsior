@@ -922,6 +922,40 @@ public class Main extends Application {
                         if(textfield.getText().matches("") || ((ImageView)bubbleDisplay.getChildren().get(0)).getImage() == null)
                             return;
 
+
+                        Undo undo;
+
+
+
+                        if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter())) {
+                            if (comicPanel[0].getLeftTextBubble() == null) {
+                                undo = new Undo("bubble", comicPanel[0], "left");
+                                undo.setObj(comicPanel[0].getLeftTextBubble());
+                            }
+                            else {
+                                undo = new Undo("bubble", comicPanel[0], "left");
+                                undo.setObj(comicPanel[0].getLeftTextBubble());
+                            }
+                        }
+
+                        else
+                        {
+                            if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter())) {
+                                undo = new Undo("bubble", comicPanel[0], "right");
+                                undo.setObj(comicPanel[0].getRightTextBubble());
+                            }
+                            else
+                            {
+                                undo = new Undo("bubble", comicPanel[0], "right");
+                                undo.setObj(comicPanel[0].getRightTextBubble());
+                            }
+
+                        }
+
+
+                            UndoList.addUndo(undo);
+
+
                         if(isBold[0] && isItalic[0])
                             textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
                         else if(!isBold[0] && isItalic[0])
@@ -935,6 +969,11 @@ public class Main extends Application {
                             comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
                         else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()))
                             comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
+
+
+
+
+
 
                         bubbleDisplay.getChildren().remove(bubbleImageView);
                         addBubble.close();
@@ -2291,7 +2330,20 @@ public class Main extends Application {
                             undo.getComicPanel().getBottomText().getTextObject().setFont(Font.font(undo.getValue_2().substring(i+1), FontWeight.NORMAL, 20));
                         }
 
-                    }else if (undo.getOperation().matches("panel")){
+                    }
+                    else if(undo.getOperation().matches("bubble"))
+                    {
+
+                        if(undo.getValue_1().matches("left"))
+                        {
+                            undo.getComicPanel().setLeftTextBubble((TextBubble) undo.getObj());
+                        }
+                        else
+                            undo.getComicPanel().setRightTextBubble((TextBubble) undo.getObj());
+
+                    }
+
+                    else if (undo.getOperation().matches("panel")){
                         comicStrip.getChildren().remove(undo.getComicPanel());
                     }else if (undo.getOperation().matches("lock")){
 
