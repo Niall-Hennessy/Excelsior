@@ -1034,6 +1034,9 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+                double imageWidth = backgroundButton.getWidth();
+                double imageHeight = backgroundButton.getHeight();
+
                 if(comicStrip.getChildren().contains(comicPanel[0])) {
                     comicPanel[0].setLocked(!comicPanel[0].getLocked());
 
@@ -1041,8 +1044,8 @@ public class Main extends Application {
                     if(comicPanel[0].getLocked()) {
                         try {
                             ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
-                            imageView.setFitWidth(height*0.09);
-                            imageView.setFitHeight(height*0.09);
+                            imageView.setFitWidth(imageWidth-2);
+                            imageView.setFitHeight(imageHeight-2);
                             lockButton[0].setGraphic(imageView);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -1050,8 +1053,8 @@ public class Main extends Application {
                     } else {
                         try {
                             ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
-                            imageView.setFitWidth(height*0.09);
-                            imageView.setFitHeight(height*0.09);
+                            imageView.setFitWidth(imageWidth-2);
+                            imageView.setFitHeight(imageHeight-2);
                             lockButton[0].setGraphic(imageView);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
