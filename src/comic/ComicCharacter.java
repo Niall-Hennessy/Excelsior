@@ -1,18 +1,13 @@
-package sample;
+package comic;
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.image.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 
-import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 

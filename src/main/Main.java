@@ -1,8 +1,10 @@
-package sample;
+package main;
 
+import comic.ComicPanel;
+import comic.TextBubble;
+import comic.TextCaption;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -37,6 +39,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.w3c.dom.*;
+import undo.Undo;
+import undo.UndoList;
+import ux.ButtonIcon;
+import ux.GalleryManager;
+import ux.HelpMenu;
+import ux.HoverTips;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -46,10 +54,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
@@ -80,7 +85,6 @@ public class Main extends Application {
         GridPane mainPane = new GridPane();
 
         final String[] premise = {""};
-
 
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
@@ -168,7 +172,6 @@ public class Main extends Application {
         String tiphairColorPicker   = "Choose Hair Colour";
         String tipNoCharacterSelected = "No character has been selected";
         String tipNoPanelSelected = "A comic panel must be selected first";
-
 
 
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -345,7 +348,7 @@ public class Main extends Application {
                             pose.appendChild(doc.createTextNode(toParse.getLeftCharacter().getImageName()));
                             figure.appendChild(pose);
 
-                            if(toParse.getLeftCharacter().characterImageView.getRotate() == 180)
+                            if(toParse.getLeftCharacter().getCharacterImageView().getRotate() == 180)
                                 facing.appendChild(doc.createTextNode("left"));
                             else
                                 facing.appendChild(doc.createTextNode("right"));
@@ -393,7 +396,7 @@ public class Main extends Application {
                             pose.appendChild(doc.createTextNode(toParse.getRightCharacter().getImageName()));
                             figure.appendChild(pose);
 
-                            if(toParse.getRightCharacter().characterImageView.getRotate() == 180)
+                            if(toParse.getRightCharacter().getCharacterImageView().getRotate() == 180)
                                 facing.appendChild(doc.createTextNode("left"));
                             else
                                 facing.appendChild(doc.createTextNode("right"));
@@ -825,7 +828,6 @@ public class Main extends Application {
                     ImageView imageView;
                     imageView = createImageView(file);
                     bubbleGallery.getChildren().add(imageView);
-
                 }
 
                 GridPane bubbleGrid = new GridPane();
@@ -921,10 +923,7 @@ public class Main extends Application {
                         if(textfield.getText().matches("") || ((ImageView)bubbleDisplay.getChildren().get(0)).getImage() == null)
                             return;
 
-
                         Undo undo;
-
-
 
                         if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter())) {
                             if (comicPanel[0].getLeftTextBubble() == null) {
@@ -951,9 +950,7 @@ public class Main extends Application {
 
                         }
 
-
-                            UndoList.addUndo(undo);
-
+                        UndoList.addUndo(undo);
 
                         if(isBold[0] && isItalic[0])
                             textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
@@ -969,11 +966,6 @@ public class Main extends Application {
                         else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()))
                             comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
 
-
-
-
-
-
                         bubbleDisplay.getChildren().remove(bubbleImageView);
                         addBubble.close();
                     }
@@ -982,7 +974,7 @@ public class Main extends Application {
                 Scene scene = new Scene(bubbleGrid);
                 addBubble.setScene(scene);
 
-                scene.getStylesheets().add("sample/style.css");
+                scene.getStylesheets().add("main/style.css");
 
                 scene.setOnMousePressed(pressEvent -> {
                     scene.setOnMouseDragged(dragEvent -> {
@@ -1078,7 +1070,6 @@ public class Main extends Application {
                 if(comicStrip.getChildren().contains(comicPanel[0])) {
                     comicPanel[0].setLocked(!comicPanel[0].getLocked());
 
-
                     if(comicPanel[0].getLocked()) {
                         try {
                             ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
@@ -1158,8 +1149,6 @@ public class Main extends Application {
                 captionTextfield.setPrefWidth(400);
                 captionTextfield.setPrefHeight(25);
 
-
-
                 GridPane layoutGrid = new GridPane();
                 layoutGrid.getStyleClass().add("layoutGrid");
                 layoutGrid.setPadding(new Insets(10, 10, 10, 10));
@@ -1185,7 +1174,6 @@ public class Main extends Application {
                 layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 0));
                 layoutGrid.add(delete,2, 4, 1, 1);
                 layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
-
 
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
@@ -1310,13 +1298,11 @@ public class Main extends Application {
                 });
 
                 Scene scene = new Scene(layoutGrid);
-                scene.getStylesheets().add("sample/style.css");
+                scene.getStylesheets().add("main/style.css");
                 addText.setScene(scene);
 
                 addText.setX(width/2 -200);
                 addText.setY(height/2);
-
-
 
                 addText.show();
 
@@ -1328,7 +1314,6 @@ public class Main extends Application {
                 });
             }
         });
-
 
         skinColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -1369,7 +1354,6 @@ public class Main extends Application {
             }
         });
 
-
         hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent mouseEvent) {
 
@@ -1407,8 +1391,6 @@ public class Main extends Application {
                 }
             }
         });
-
-
 
         Text skin = new Text();
         skin.setText("Skin:");
@@ -1455,7 +1437,6 @@ public class Main extends Application {
         comicStrip.setPrefHeight(height * 0.6 - 20);
         comicStrip.setPrefWidth(width - 20);
         comicStrip.getStyleClass().add("comicStrip");
-
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(comicStrip);
@@ -2029,7 +2010,7 @@ public class Main extends Application {
             popupLayout.setAlignment(Pos.CENTER);
 
             Scene popupScene = new Scene(popupLayout, 300, 250);
-            popupScene.getStylesheets().add("sample/style.css");
+            popupScene.getStylesheets().add("main/style.css");
             popupwindow.setScene(popupScene);
 
             popupScene.setOnMousePressed(pressEvent -> {
@@ -2617,10 +2598,8 @@ public class Main extends Application {
         });
 
 
-
         Scene scene = new Scene(mainPane, width, height, false, SceneAntialiasing.DISABLED);
-        scene.getStylesheets().add("sample/style.css");
-
+        scene.getStylesheets().add("main/style.css");
 
         scene.setOnKeyPressed(event -> {
             String codeString = event.getCode().toString();
@@ -2635,7 +2614,7 @@ public class Main extends Application {
 
         scrollPane.setHvalue(0.5);
 
-        scene.getStylesheets().add("sample/style.css");
+        scene.getStylesheets().add("main/style.css");
 
         primaryStage.show();
 

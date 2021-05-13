@@ -158,7 +158,7 @@
     -fx-background-color: #B5FFA1;
 }
 
-.popUpNext: hover {
+.popUpNext:hover {
     -fx-background-color: #A8ED95;
 }
 
@@ -181,7 +181,7 @@
     -fx-background-color: #FFA1A1;
 }
 
-.popUpCancel: hover {
+.popUpCancel:hover {
     -fx-background-color: #ED9595;
 
 }

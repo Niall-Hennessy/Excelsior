@@ -1,4 +1,4 @@
-package sample;
+package comic;
 
 import javafx.scene.image.*;
 import javafx.scene.layout.Pane;

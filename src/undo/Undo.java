@@ -1,4 +1,6 @@
-package sample;
+package undo;
+
+import comic.ComicPanel;
 
 public class Undo {
 

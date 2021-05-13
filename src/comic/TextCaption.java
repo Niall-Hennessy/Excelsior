@@ -1,4 +1,4 @@
-package sample;
+package comic;
 
 import javafx.geometry.VPos;
 import javafx.scene.layout.Pane;
