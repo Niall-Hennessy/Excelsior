@@ -2616,6 +2616,8 @@ public class Main extends Application {
             }
         });
 
+
+
         Scene scene = new Scene(mainPane, width, height, false, SceneAntialiasing.DISABLED);
         scene.getStylesheets().add("sample/style.css");
 
@@ -2630,6 +2632,8 @@ public class Main extends Application {
         primaryStage.setMaximized(true);
 
         newPanelRight.fire();
+
+        scrollPane.setHvalue(0.5);
 
         scene.getStylesheets().add("sample/style.css");
 
