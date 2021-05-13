@@ -2165,6 +2165,7 @@ public class Main extends Application {
         });
 
         new_project.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent event) {
                 premise[0] = "";
