@@ -2321,8 +2321,8 @@ public class Main extends Application {
 
                                                 double increase = ((double)comicStrip.getChildren().size()/1000);
 
-                                                if(increase > 10)
-                                                    increase = 10;
+                                                if(increase > 5)
+                                                    increase = 5;
 
                                                 if(dragEvent.getScreenX() > (4*width/5)) {
                                                     scrollPane.setHvalue(scrollPane.getHvalue() + increase);
