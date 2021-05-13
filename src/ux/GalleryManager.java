@@ -138,7 +138,7 @@ public class GalleryManager {
                                             "-fx-background-position: center center; " +
                                             "-fx-background-repeat: stretch; "  +
                                             "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
-                                            "-fx-border-color: HOTPINK; " +
+                                            "-fx-border-color: GOLD; " +
                                             "-fx-border-width: 5");
                                     addCharacter.close();
                                 }
