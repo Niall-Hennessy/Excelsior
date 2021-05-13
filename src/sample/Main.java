@@ -89,7 +89,7 @@ public class Main extends Application {
         final String[] character = new String[1];
 
         MenuBar menuBar = new MenuBar();
-        menuBar.setStyle("-fx-background-color: #434A7E");
+        menuBar.setStyle("-fx-background-color: #434A7E;");
 
         Menu file = new Menu("File");
         MenuItem new_project = new MenuItem("New Project");
