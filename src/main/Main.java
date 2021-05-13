@@ -1073,8 +1073,8 @@ public class Main extends Application {
                     if(comicPanel[0].getLocked()) {
                         try {
                             ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
-                            imageView.setFitWidth(imageWidth-2);
-                            imageView.setFitHeight(imageHeight-2);
+                            imageView.setFitWidth(imageWidth-4);
+                            imageView.setFitHeight(imageHeight-4);
                             lockButton[0].setGraphic(imageView);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -1082,8 +1082,8 @@ public class Main extends Application {
                     } else {
                         try {
                             ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
-                            imageView.setFitWidth(imageWidth-2);
-                            imageView.setFitHeight(imageHeight-2);
+                            imageView.setFitWidth(imageWidth-4);
+                            imageView.setFitHeight(imageHeight-4);
                             lockButton[0].setGraphic(imageView);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -1178,8 +1178,10 @@ public class Main extends Application {
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
 
-                topText.setStyle("-fx-background-color: #C089D7");
-                bottomText.setStyle("-fx-background-color: #E5A6FF");
+                //topText.setStyle("-fx-background-color: #C089D7");
+                topText.getStyleClass().add("topTextCaption");
+                //bottomText.setStyle("-fx-background-color: #E5A6FF");
+                bottomText.getStyleClass().add("bottomTextCaption");
 
                 if(comicPanel[0].getTopText() != null)
                     captionTextfield.setText(comicPanel[0].getTopText().getText());
@@ -1191,8 +1193,8 @@ public class Main extends Application {
                         bottom[0] = false;
                         top[0] = true;
 
-                        topText.setStyle("-fx-background-color: #C089D7");
-                        bottomText.setStyle("-fx-background-color: #E5A6FF");
+                        topText.setStyle("-fx-background-color: #755A85");
+                        bottomText.setStyle("-fx-background-color: #AF86C8");
 
                         if(comicPanel[0].getTopText() != null) {
                             captionTextfield.setText(comicPanel[0].getTopText().getText());
@@ -1213,8 +1215,8 @@ public class Main extends Application {
                         bottom[0] = true;
                         top[0] = false;
 
-                        bottomText.setStyle("-fx-background-color: #C089D7");
-                        topText.setStyle("-fx-background-color: #E5A6FF");
+                        bottomText.setStyle("-fx-background-color: #755A85");
+                        topText.setStyle("-fx-background-color: #AF86C8");
 
                         if(comicPanel[0].getBottomText() != null) {
                             captionTextfield.setText(comicPanel[0].getBottomText().getText());
@@ -2336,7 +2338,7 @@ public class Main extends Application {
                         if(undo.getComicPanel().getLocked()) {
                             try {
                                 ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
-                                imageView.setFitWidth(imageWidth-2);
+                                imageView.setFitWidth(imageWidth-4);
                                 imageView.setFitHeight(imageHeight-2);
                                 lockButton[0].setGraphic(imageView);
                             } catch (FileNotFoundException e) {
@@ -2345,7 +2347,7 @@ public class Main extends Application {
                         } else {
                             try {
                                 ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
-                                imageView.setFitWidth(imageWidth-2);
+                                imageView.setFitWidth(imageWidth-4);
                                 imageView.setFitHeight(imageHeight-2);
                                 lockButton[0].setGraphic(imageView);
                             } catch (FileNotFoundException e) {
@@ -2563,8 +2565,8 @@ public class Main extends Application {
                                     double imageWidth = backgroundButton.getWidth();
                                     double imageHeight = backgroundButton.getHeight();
 
-                                    imageView.setFitWidth(imageWidth-2);
-                                    imageView.setFitHeight(imageHeight-2);
+                                    imageView.setFitWidth(imageWidth-4);
+                                    imageView.setFitHeight(imageHeight-4);
                                     lockButton[0].setGraphic(imageView);
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
@@ -2576,8 +2578,8 @@ public class Main extends Application {
                                     double imageWidth = backgroundButton.getWidth();
                                     double imageHeight = backgroundButton.getHeight();
 
-                                    imageView.setFitWidth(imageWidth-2);
-                                    imageView.setFitHeight(imageHeight-2);
+                                    imageView.setFitWidth(imageWidth-4);
+                                    imageView.setFitHeight(imageHeight-4);
                                     lockButton[0].setGraphic(imageView);
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();

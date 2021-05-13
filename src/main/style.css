@@ -1,14 +1,13 @@
 .menuBar {
     -fx-background-color: #FDE4A6;
     -fx-border-color: black;
-    -fx-border-width: 1px;
-    -fx-border-style: solid solid none solid;
+    -fx-border-width: 1px 1px 0px 1px;
 }
 
 .buttonLayout {
-    -fx-background-color: #FDE4A6;
     -fx-border-color: black;
-    -fx-border-width: 1px;
+    -fx-border-width: 0px 1px 1px 1px;
+    -fx-background-color: #FDE4A6;
     /*orange: #FFDD88 //#434A7E*/
 }
 
@@ -25,21 +24,21 @@
 
 
 .bold {
-    -fx-background-color: #E5A6FF;
+    -fx-background-color: #B7A8C0;
     -fx-font-weight: bold;
 }
 
 .italic {
-    -fx-background-color: #E5A6FF;
+    -fx-background-color: #B7A8C0;
     -fx-font-style: italic;
 }
 
  .bold:hover, .italic:hover {
-    -fx-background-color: #C089D7;
+    -fx-background-color: #A974C9; /*AD86C5*/
 }
 
 .escape {
-    -fx-background-color: #E6B9FF;
+    -fx-background-color: #B7A8C0;
 }
 
 .escape:hover {
@@ -63,14 +62,14 @@
 }
 
 .bubbles {
-    -fx-background-color: #B9EBFF; /*BLUE CLOUD BACKGROUNDS*/
+    -fx-background-color: #FDE4A6; /*BLUE CLOUD BACKGROUNDS: #B9EBFF*/
     -fx-border-color: black;
     -fx-border-width: 1px;
 }
 
 
 .bubbleGrid {
-    -fx-background-color: #E6B9FF; /*PURPLE BORDER STAGE*/
+    -fx-background-color: #B7A8C0; /*PURPLE BORDER STAGE: #E6B9FF*/
     -fx-border-color: black;
     -fx-border-width: 1px;
 }
@@ -84,7 +83,7 @@
 }
 
 /*this is the tab styling*/
-.helpTab{
+.helpTab {
     -fx-alignment: CENTER;
     -fx-background-color: #F9F9F9;
     -fx-font-family: georgia;
@@ -104,14 +103,6 @@
    -fx-background-color: white;
 }
 
-/*change background colour to blue till 3 panels added and border works*/
-/*.comicScrollPane > .viewport {
-    -fx-background-color: #B9EBFF;
-}
-
-.comicScrollPane {
-    -fx-background-color: #B9EBFF;
-}*/
 
 /*makes background of the tabs light pink*/
 .tab-pane>*.tab-header-area>*.tab-header-background {
@@ -132,15 +123,23 @@
 
 }
 
-.instructionScroll {
-    -fx-border-width: 0px 0px 0px 0px;
-    -fx-background-color: HOTPINK;
-}
-
+/*FOR CAPTION MODAL*/
 .layoutGrid{
-    -fx-background-color:  #E6B9FF; /*PURPLE BORDER STAGE*/
+    -fx-background-color:  #B7A8C0; /*PURPLE BORDER STAGE: #E6B9FF*/
     -fx-border-color: black;
     -fx-border-width: 1px;
+}
+
+.bottomTextCaption {
+    -fx-background-color: #AF86C8; /*755A85*/
+}
+
+.topTextCaption {
+    -fx-background-color: #755A85;
+}
+
+.topTextCaption: hover, .bottomTextCaption: hover {
+    -fx-background-color: #9470A9;
 }
 
 .capTextField {
@@ -154,16 +153,10 @@
     -fx-background-position: center center;
 }
 
-.popUpNext {
-    -fx-background-color: #B5FFA1;
-}
 
-.popUpNext:hover {
-    -fx-background-color: #A8ED95;
-}
-
+/*HTML POPUP*/
 .popUpLayout {
-     -fx-background-color:  #E6B9FF; /*PURPLE BORDER STAGE*/
+     -fx-background-color:  #B8A6FD; /*Orange: #FDE4A6, better blue: #A6ACFD or #A6B2FD*/
      -fx-border-color: black;
      -fx-border-width: 1px;
      -fx-padding: 5;
@@ -178,10 +171,19 @@
 }
 
 .popUpCancel {
-    -fx-background-color: #FFA1A1;
+    -fx-background-color: #FF6060;/*#FFA1A1;*/
 }
 
 .popUpCancel:hover {
-    -fx-background-color: #ED9595;
+    -fx-background-color: #FF3D3D;
 
 }
+
+.popUpNext {
+    -fx-background-color: #98FF81; /*#B5FFA1;*/
+}
+
+.popUpNext:hover {
+    -fx-background-color: #3FFF13;   /*#A8ED95;*/
+}
+
