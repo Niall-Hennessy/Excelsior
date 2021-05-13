@@ -89,7 +89,7 @@ public class Main extends Application {
         final String[] character = new String[1];
 
         MenuBar menuBar = new MenuBar();
-        menuBar.setStyle("-fx-background-color: #434A7E;");
+        menuBar.getStyleClass().add("menuBar");
 
         Menu file = new Menu("File");
         MenuItem new_project = new MenuItem("New Project");
@@ -105,12 +105,10 @@ public class Main extends Application {
         file.getItems().add(add_character);
         file.getItems().add(add_background);
 
+
         menuBar.getMenus().add(file);
 
-        Menu edit = new Menu("Edit");
-        menuBar.getMenus().add(edit);
-        Menu view = new Menu("View");
-        menuBar.getMenus().add(view);
+
         Menu help = new Menu("Help");
         MenuItem helpItem = new MenuItem("Help");
         help.getItems().add(helpItem);
@@ -127,7 +125,7 @@ public class Main extends Application {
 
         FlowPane buttonLayout = new FlowPane();
         buttonLayout.setPrefWidth(width - 20);
-        buttonLayout.setStyle("-fx-background-color: #FFDD88"); //#434A7E
+        buttonLayout.getStyleClass().add("buttonLayout");
 
         menuBox.setMaxHeight(buttonLayout.getHeight()/2);
 
@@ -146,6 +144,7 @@ public class Main extends Application {
         final Button[] lockButton = {buttonIcon.getButtonIcon("src/images/buttons/unlock.png")};
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
         Button undoButton = buttonIcon.getButtonIcon("src/images/buttons/undo_button.png");
+
 
         final Stage toolTip = new Stage();
         toolTip.initStyle(StageStyle.UNDECORATED);
@@ -1455,7 +1454,7 @@ public class Main extends Application {
         comicStrip.setAlignment(Pos.CENTER);
         comicStrip.setPrefHeight(height * 0.6 - 20);
         comicStrip.setPrefWidth(width - 20);
-        comicStrip.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: black; -fx-border-width: 3px");
+        comicStrip.getStyleClass().add("comicStrip");
 
 
         ScrollPane scrollPane = new ScrollPane();
@@ -1475,7 +1474,7 @@ public class Main extends Application {
         mainPane.addRow(0, menuBox);
         mainPane.addRow(1, buttonLayout);
         mainPane.addRow(2, scrollPane);
-        mainPane.setStyle("-fx-background-color: #434A7E"); //#FFDD88
+        mainPane.getStyleClass().add("mainPane");
 
         mainPane.setMargin(scrollPane, new Insets(width * 0.05, width * 0.01,0,width * 0.01));
 
@@ -2631,7 +2630,8 @@ public class Main extends Application {
         primaryStage.setMaximized(true);
 
         newPanelRight.fire();
-        scrollPane.setHvalue(0.5);
+
+        scene.getStylesheets().add("sample/style.css");
 
         primaryStage.show();
 
