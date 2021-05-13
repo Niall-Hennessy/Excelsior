@@ -2631,6 +2631,7 @@ public class Main extends Application {
         primaryStage.setMaximized(true);
 
         newPanelRight.fire();
+        scrollPane.setHvalue(0.5);
 
         primaryStage.show();
 
