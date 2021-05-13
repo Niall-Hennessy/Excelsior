@@ -1,4 +1,4 @@
-package sample;
+package ux;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -53,7 +53,7 @@ public class HelpMenu
     public void showHelpMenu(){
         Scene scene = new Scene(helpPane);
         helpStage.setScene(scene);
-        scene.getStylesheets().add("sample/style.css");
+        scene.getStylesheets().add("main/style.css");
         helpStage.show();
     }
 
