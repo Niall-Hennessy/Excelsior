@@ -1,3 +1,29 @@
+.menuBar {
+    -fx-background-color: #FDE4A6;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-style: solid solid none solid;
+}
+
+.buttonLayout {
+    -fx-background-color: #FDE4A6;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    /*orange: #FFDD88 //#434A7E*/
+}
+
+.mainPane {
+    -fx-background-color: #5B6192;
+    /*#434A7E Blue//#FFDD88*/
+}
+
+.comicStrip {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+}
+
+
 .bold {
     -fx-background-color: #E5A6FF;
     -fx-font-weight: bold;
