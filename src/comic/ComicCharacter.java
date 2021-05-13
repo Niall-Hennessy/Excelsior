@@ -18,7 +18,7 @@ public class ComicCharacter extends Pane {
     private int charBoxLength = (int)((Screen.getPrimary().getBounds().getHeight())/2.45)/3;
 
     Image characterImage;
-    
+
     private String imageName;
 
     private boolean isFemale = true;

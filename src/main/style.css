@@ -22,6 +22,12 @@
     -fx-border-width: 3px;
 }
 
+/*gets rid of the blue outline when panels added/selected*/
+.scrollPane {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 
 .bold {
     -fx-background-color: #B7A8C0;

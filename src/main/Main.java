@@ -1455,6 +1455,8 @@ public class Main extends Application {
         mainPane.addRow(2, scrollPane);
         mainPane.getStyleClass().add("mainPane");
 
+        scrollPane.getStyleClass().add("scrollPane");
+
         mainPane.setMargin(scrollPane, new Insets(width * 0.05, width * 0.01,0,width * 0.01));
 
         newPanelRight.setVisible(false);
