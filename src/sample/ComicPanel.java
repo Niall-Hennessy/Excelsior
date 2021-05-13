@@ -32,12 +32,11 @@ public class ComicPanel extends Pane {
     private String background = "images/backgrounds/BlankBackground.jpg";
 
     private Boolean isLocked;
+    private String topBottom = null;
 
     private int index;
 
     public ComicPanel() throws FileNotFoundException {
-
-        this.setStyle("-fx-border-color: black; -fx-border-width: 3px");
 
         int width = (int) Screen.getPrimary().getBounds().getWidth();
         int height = (int) Screen.getPrimary().getBounds().getHeight();
@@ -59,6 +58,8 @@ public class ComicPanel extends Pane {
         this.getChildren().add(rightCharacter);
 
         isLocked = false;
+
+        this.unselect();
     }
 
     public void select(){
@@ -67,7 +68,8 @@ public class ComicPanel extends Pane {
                 "-fx-background-repeat: stretch; " +
                 "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
                 "-fx-border-color: HOTPINK; " +
-                "-fx-border-width: 5");
+                "-fx-border-width: 5;" +
+                "-fx-background-color: WHITE");
     }
 
     public void unselect(){
@@ -76,7 +78,8 @@ public class ComicPanel extends Pane {
                 "-fx-background-repeat: stretch; " +
                 "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
                 "-fx-border-color: BLACK; " +
-                "-fx-border-width: 3");
+                "-fx-border-width: 3;" +
+                "-fx-background-color: WHITE");
     }
 
     public ComicCharacter getLeftCharacter() {
@@ -115,11 +118,17 @@ public class ComicPanel extends Pane {
 
         leftCharacter.setOnMousePressed(pressEvent -> {
 
+            Undo undo = new Undo("moveCharacter", this, "left", this.leftCharacter.getTranslateX() + "#" + this.leftCharacter.getTranslateY());
+
             setSelectedCharacter(leftCharacter);
 
             dragX.set(0.0);
             dragY.set(0.0);
             leftCharacter.setOnMouseDragged(dragEvent -> {
+
+                if(!UndoList.contains(undo))
+                    UndoList.addUndo(undo);
+
                 if(!this.isLocked) {
                     double offsetX = leftCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                     double offsetY = leftCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
@@ -184,11 +193,17 @@ public class ComicPanel extends Pane {
 
         rightCharacter.setOnMousePressed(pressEvent -> {
 
+            Undo undo = new Undo("moveCharacter", this, "right", this.rightCharacter.getTranslateX() + "#" + this.rightCharacter.getTranslateY());
+
             setSelectedCharacter(rightCharacter);
 
             dragX.set(0.0);
             dragY.set(0.0);
             rightCharacter.setOnMouseDragged(dragEvent -> {
+
+                if(!UndoList.contains(undo))
+                    UndoList.addUndo(undo);
+
                 if(!this.isLocked) {
                     double offsetX = rightCharacter.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                     double offsetY = rightCharacter.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
@@ -348,7 +363,6 @@ public class ComicPanel extends Pane {
 
     public void setLeftBubble(Image image, String text, Font font, String status) {
         this.getChildren().remove(leftTextBubble);
-        double checkS = image.getWidth() + image.getHeight();
 
         ImageView imageView = new ImageView(image);
 
@@ -369,9 +383,16 @@ public class ComicPanel extends Pane {
         });
 
         leftTextBubble.setOnMousePressed(pressEvent -> {
+
+            Undo undo = new Undo("moveBubble", this, "left", this.leftTextBubble.getTranslateX() + "#" + this.leftTextBubble.getTranslateY());
+
             dragX.set(0.0);
             dragY.set(0.0);
             leftTextBubble.setOnMouseDragged(dragEvent -> {
+
+                if(!UndoList.contains(undo))
+                    UndoList.addUndo(undo);
+
                 if(!this.isLocked) {
                     double offsetX = leftTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                     double offsetY = leftTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
@@ -477,9 +498,16 @@ public class ComicPanel extends Pane {
         });
 
         rightTextBubble.setOnMousePressed(pressEvent -> {
+
+            Undo undo = new Undo("moveBubble", this, "right", this.rightTextBubble.getTranslateX() + "#" + this.rightTextBubble.getTranslateY());
+
             dragX.set(0.0);
             dragY.set(0.0);
             rightTextBubble.setOnMouseDragged(dragEvent -> {
+
+                if(!UndoList.contains(undo))
+                    UndoList.addUndo(undo);
+
                 if(!this.isLocked) {
                     double offsetX = rightTextBubble.getTranslateX() + dragEvent.getScreenX() - pressEvent.getScreenX() - dragX.get();
                     double offsetY = rightTextBubble.getTranslateY() + dragEvent.getScreenY() - pressEvent.getScreenY() - dragY.get();
@@ -563,6 +591,11 @@ public class ComicPanel extends Pane {
     }
 
     public void setTopText(String text, Font font){
+        if(topText != null)
+            topBottom = "top";
+        else
+            topBottom = null;
+
         this.getChildren().remove(topText);
         topText = new TextCaption(text, font);
         this.getChildren().add(topText);
@@ -573,6 +606,10 @@ public class ComicPanel extends Pane {
     }
 
     public void setBottomText(String text, Font font){
+        if(bottomText != null)
+            topBottom = "bottom";
+        else
+            topBottom = null;
 
         int height = (int) Screen.getPrimary().getBounds().getHeight();
 
@@ -621,11 +658,32 @@ public class ComicPanel extends Pane {
         return rightTextBubble;
     }
 
+    public String getTopBottom() {
+        return topBottom;
+    }
+
     public int getIndex() {
         return index;
     }
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+
+    public void setLeftTextBubble(TextBubble leftTextBubble) {
+        this.getChildren().remove(this.leftTextBubble);
+        this.leftTextBubble = leftTextBubble;
+        if(this.leftTextBubble != null)
+            this.getChildren().add(this.leftTextBubble);
+
+    }
+
+    public void setRightTextBubble(TextBubble rightTextBubble) {
+        this.getChildren().remove(this.rightTextBubble);
+        this.rightTextBubble = rightTextBubble;
+        if(this.rightTextBubble != null)
+            this.getChildren().add(this.rightTextBubble);
+
     }
 }

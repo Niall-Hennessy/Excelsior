@@ -48,8 +48,6 @@ public class TextBubble extends Pane {
 
     public String parseText(String text, int x){
 
-        text = text.trim();
-
         if(text.length() > x){
             String newText = text.substring(0,x);
 
@@ -66,7 +64,7 @@ public class TextBubble extends Pane {
             if(whiteSpace == -1)
                 newText += "\n";
             else
-                newText = newText.substring(0,whiteSpace) + "\n" + newText.substring(whiteSpace + 1);
+                newText = newText.substring(0, whiteSpace + 1) + "\n" + newText.substring(whiteSpace+1);
 
             newText += parseText(text.substring(x), x);
             text = newText;
