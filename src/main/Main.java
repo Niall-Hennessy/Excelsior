@@ -133,7 +133,6 @@ public class Main extends Application {
 
         menuBox.setMaxHeight(buttonLayout.getHeight()/2);
 
-//      Lower Panel Buttons and and placement
         ButtonIcon buttonIcon = new ButtonIcon();
 
         buttonIcon.setHeight(primaryStage.getHeight());
@@ -717,7 +716,6 @@ public class Main extends Application {
             }
         });
 
-        //pop up for when they hit the bubble button for speech
         bubbleButton.setOnAction(new EventHandler<ActionEvent>() {
 
             final Stage addBubble = new Stage(StageStyle.UNDECORATED);
@@ -1178,9 +1176,7 @@ public class Main extends Application {
                 final boolean[] top = {true};
                 final boolean[] bottom = {false};
 
-                //topText.setStyle("-fx-background-color: #C089D7");
                 topText.getStyleClass().add("topTextCaption");
-                //bottomText.setStyle("-fx-background-color: #E5A6FF");
                 bottomText.getStyleClass().add("bottomTextCaption");
 
                 if(comicPanel[0].getTopText() != null)
@@ -1921,7 +1917,6 @@ public class Main extends Application {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, number of comic panels does not match layout.\nDo you still wish to continue?");
 
-            //take 2
             Stage popupwindow = new Stage();
 
             popupwindow.initModality(Modality.APPLICATION_MODAL);
@@ -1973,7 +1968,6 @@ public class Main extends Application {
             popup_box.getItems().addAll("400x400", "600x600", "800x800", "1200x1200");
             popup_box.getSelectionModel().selectFirst();
 
-            //take 2
             final Stage saveHTML = new Stage();
 
             if (saveHTML.isShowing()) {
@@ -1987,12 +1981,8 @@ public class Main extends Application {
             popupClose.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-
-                    //popup window has to close but the file also has to not open
                     cancel[0] = true;
                     popupwindow.close();
-
-
                 }
             });
 
