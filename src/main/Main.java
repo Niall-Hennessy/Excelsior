@@ -742,31 +742,21 @@ public class Main extends Application {
 
                 GalleryModal bubbleGallery = new GalleryModal(width/2 -200, height/2, comicPanel[0]);
 
-                bubbleGallery.addSubmit(new Insets (2, 2, 2, 30));
-                bubbleGallery.addGallery(new Insets (10, 10, 10, 30));
-                bubbleGallery.addTextField(new Insets (10, 10, 1, 30));
-                bubbleGallery.addEscape(new Insets (0, 0, 0, 0));
-                bubbleGallery.addCancel(new Insets (2, 2, 2, 2));
-                bubbleGallery.addDelete(new Insets (2, 11, 2, 2));
+                bubbleGallery.addSubmit();
+                bubbleGallery.addGallery();
+                bubbleGallery.addTextField();
+                bubbleGallery.addEscape();
+                bubbleGallery.addCancel();
+                bubbleGallery.addDelete();
                 bubbleGallery.show();
 
-//                  bubbleGrid.add(escape, 4, 1, 1, 1);
-////                bubbleGrid.add(bubbleGallery, 0, 2, 3, 3);
-////                bubbleGrid.setMargin(bubbleGallery,);//its 30 to balance out the x buttons margins and get the otherside right
-////                bubbleGrid.add(bubbleDisplay, 0, 5, 3, 3);
-////                bubbleGrid.setMargin(bubbleDisplay, new Insets (10, 10, 10, 30));
+//
 ////                bubbleGrid.add(italic, 0,8, 1, 1 );
 ////                bubbleGrid.setMargin(italic, new Insets (5, 2, 2, 30));
 ////                bubbleGrid.add(bold, 1, 8, 1, 1);
 ////                bubbleGrid.setMargin(bold, new Insets (5, 2, 2, 0));
 ////                bubbleGrid.add(textbox, 0, 9, 3, 1);
 ////                bubbleGrid.setMargin(textbox, );
-////                bubbleGrid.add(submit, 0, 12, 1, 1);
-////                bubbleGrid.setMargin(submit, );
-////                bubbleGrid.add(cancel,1, 12, 1, 1);
-////                bubbleGrid.setMargin(cancel, );
-////                bubbleGrid.add(delete,2, 12, 1, 1);
-////                bubbleGrid.setMargin(delete, );
 //                Button submit = new Button("Submit");
 //                submit.getStyleClass().add("submit");
 //                Button escape = new Button("X");
@@ -1119,13 +1109,13 @@ public class Main extends Application {
                     return;
                 }
 
-                textModal.addSubmit(new Insets (5, 0, 5, 25));
-                textModal.addTextField(new Insets(5, 0, 5, 25));
+                textModal.addSubmit();
+                textModal.addTextField();
                 textModal.addBooleanButtons("Top Text", "Bottom Text");
-                textModal.addCancel(new Insets (5, 0, 5, 0));
-                textModal.addDelete(new Insets (5, 0, 5, 0));
-                textModal.addComboBox(new Insets (5, 0, 5, 0), "Segoe UI", "Verdana", "Times New Roman", "Arial");
-                textModal.addEscape(new Insets(5,0,5,0));
+                textModal.addCancel();
+                textModal.addDelete();
+                textModal.addComboBox( "Segoe UI", "Verdana", "Times New Roman", "Arial");
+                textModal.addEscape();
                 textModal.show();
 //
 //

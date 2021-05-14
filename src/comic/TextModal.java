@@ -22,7 +22,8 @@ public class TextModal extends Modal{
         super(width, height, cPanel);
     }
 
-    public void addSubmit(Insets insets){
+    @Override
+    public void addSubmit(){
         Button submit = new Button("Submit");
         submit.getStyleClass().add("submit");
 
@@ -32,7 +33,7 @@ public class TextModal extends Modal{
         final Button[] bottomText = {new Button()};
 
         layoutGrid.add(submit, 0, 4, 1, 1);
-        layoutGrid.setMargin(submit, insets);
+        layoutGrid.setMargin(submit,new Insets (5, 0, 5, 25));
 
         layoutGrid.getChildren().addListener(new ListChangeListener<Node>() {
             @Override
@@ -73,12 +74,13 @@ public class TextModal extends Modal{
         });
     }
 
-    public void addDelete(Insets insets){
+    @Override
+    public void addDelete(){
         Button delete = new Button("Delete");
         delete.getStyleClass().add("cancel");
 
         layoutGrid.add(delete,2, 4, 1, 1);
-        layoutGrid.setMargin(delete, insets);
+        layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
 
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -97,22 +99,6 @@ public class TextModal extends Modal{
                 }
             }
         });
-    }
-
-    public void addEscape(Insets insets){
-        super.addEscape(insets);
-    }
-
-    public void addCancel(Insets insets){
-        super.addCancel(insets);
-    }
-
-    public void addTextField(Insets insets){
-        super.addTextField(insets);
-    }
-
-    public void addComboBox(Insets insets, String... args){
-        super.addComboBox(insets, args);
     }
 
     public void addBooleanButtons(String button_1, String button_2){
@@ -147,14 +133,6 @@ public class TextModal extends Modal{
                 textField.setFont(comicPanel.getBottomText().getTextObject().getFont());
             }
         });
-    }
-
-    public void show(){
-        super.show();
-    }
-
-    public void close(){
-        super.close();
     }
 
 }
