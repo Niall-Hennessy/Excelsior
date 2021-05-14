@@ -43,12 +43,12 @@ public class Modal {
         this.comicPanel = cPanel;
     }
 
-    public void addEscape(){
+    public void addEscape(Insets insets){
         Button escape = new Button("X");
         escape.getStyleClass().add("escape");
 
         layoutGrid.add(escape, 21, 0, 1, 1);
-        layoutGrid.setMargin(escape, new Insets(5,0,5,0));
+        layoutGrid.setMargin(escape, insets);
 
         escape.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -58,12 +58,12 @@ public class Modal {
         });
     }
 
-    public void addSubmit(){
+    public void addSubmit(Insets insets){
         Button submit = new Button("Submit");
         submit.getStyleClass().add("submit");
 
         layoutGrid.add(submit, 0, 4, 1, 1);
-        layoutGrid.setMargin(submit, new Insets (5, 0, 5, 25));
+        layoutGrid.setMargin(submit, insets);
 
         layoutGrid.getChildren().addListener(new ListChangeListener<Node>() {
             @Override
@@ -79,12 +79,12 @@ public class Modal {
         });
     }
 
-    public void addCancel(){
+    public void addCancel(Insets insets){
         Button cancel = new Button("Cancel");
         cancel.getStyleClass().add("cancel");
 
         layoutGrid.add(cancel,1, 4, 1, 1);
-        layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 0));
+        layoutGrid.setMargin(cancel, insets);
 
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -94,12 +94,12 @@ public class Modal {
         });
     }
 
-    public void addDelete(){
+    public void addDelete(Insets insets){
         Button delete = new Button("Delete");
         delete.getStyleClass().add("cancel");
 
         layoutGrid.add(delete,2, 4, 1, 1);
-        layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
+        layoutGrid.setMargin(delete, insets);
 
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -108,7 +108,7 @@ public class Modal {
         });
     }
 
-    public void addTextField(){
+    public void addTextField(Insets insets){
         TextField textField = new TextField();
 
         textField.setText(comicPanel.getTopText().getText());
@@ -118,10 +118,10 @@ public class Modal {
         textField.setPrefHeight(25);
 
         layoutGrid.add(textField, 0, 2, 20, 1);
-        layoutGrid.setMargin(textField, new Insets(5, 0, 5, 25));
+        layoutGrid.setMargin(textField, insets);
     }
 
-    public void addComboBox(String... args){
+    public void addComboBox(Insets insets, String... args){
         ComboBox combo_box = new ComboBox();
         combo_box.getStyleClass().add("bold");
 
@@ -132,7 +132,7 @@ public class Modal {
         combo_box.getSelectionModel().selectFirst();
 
         layoutGrid.add(combo_box,1, 3, 1, 1);
-        layoutGrid.setMargin(combo_box, new Insets (5, 0, 5, 0));
+        layoutGrid.setMargin(combo_box, insets);
     }
 
     public void show(){

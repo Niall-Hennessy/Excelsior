@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
 public class TextModal extends Modal{
@@ -21,7 +22,7 @@ public class TextModal extends Modal{
         super(width, height, cPanel);
     }
 
-    public void addSubmit(){
+    public void addSubmit(Insets insets){
         Button submit = new Button("Submit");
         submit.getStyleClass().add("submit");
 
@@ -31,7 +32,7 @@ public class TextModal extends Modal{
         final Button[] bottomText = {new Button()};
 
         layoutGrid.add(submit, 0, 4, 1, 1);
-        layoutGrid.setMargin(submit, new Insets(5, 0, 5, 25));
+        layoutGrid.setMargin(submit, insets);
 
         layoutGrid.getChildren().addListener(new ListChangeListener<Node>() {
             @Override
@@ -72,12 +73,12 @@ public class TextModal extends Modal{
         });
     }
 
-    public void addDelete(){
+    public void addDelete(Insets insets){
         Button delete = new Button("Delete");
         delete.getStyleClass().add("cancel");
 
         layoutGrid.add(delete,2, 4, 1, 1);
-        layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
+        layoutGrid.setMargin(delete, insets);
 
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -98,22 +99,20 @@ public class TextModal extends Modal{
         });
     }
 
-    public void addEscape(){
-        super.addEscape();
+    public void addEscape(Insets insets){
+        super.addEscape(insets);
     }
 
-    public void addCancel(){
-        super.addCancel();
+    public void addCancel(Insets insets){
+        super.addCancel(insets);
     }
 
-    public void addTextField(){
-        super.addTextField();
+    public void addTextField(Insets insets){
+        super.addTextField(insets);
     }
 
-    public void addComboBox(String... args){
-        super.addComboBox(args);
-
-        comboBox.
+    public void addComboBox(Insets insets, String... args){
+        super.addComboBox(insets, args);
     }
 
     public void addBooleanButtons(String button_1, String button_2){

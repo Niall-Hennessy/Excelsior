@@ -713,14 +713,14 @@ public class Main extends Application {
 
         bubbleButton.setOnAction(new EventHandler<ActionEvent>() {
 
-            final Stage addBubble = new Stage(StageStyle.UNDECORATED);
-
-            Pane bubbleDisplay = new Pane();
-            ImageView bubbleImageView = new ImageView();
-            String bubbleName;
-
-            private double xOffset = 0;
-            private double yOffset = 0;
+//            final Stage addBubble = new Stage(StageStyle.UNDECORATED);
+//
+//            Pane bubbleDisplay = new Pane();
+//            ImageView bubbleImageView = new ImageView();
+//            String bubbleName;
+//
+//            private double xOffset = 0;
+//            private double yOffset = 0;
 
             @Override
             public void handle(ActionEvent event) {
@@ -740,294 +740,305 @@ public class Main extends Application {
                     return;
                 }
 
-                Button submit = new Button("Submit");
-                submit.getStyleClass().add("submit");
-                Button escape = new Button("X");
-                escape.getStyleClass().add("escape");
-                Button cancel = new Button("Cancel");
-                cancel.getStyleClass().add("cancel");
-                Button delete = new Button("Delete");
-                delete.getStyleClass().add("cancel");
-                Button italic = new Button("Italic");
-                italic.getStyleClass().add("italic");
-                Button bold = new Button("Bold");
-                bold.getStyleClass().add("bold");
-                Button fonts = new Button("Font");
-                fonts.getStyleClass().add("fonts");
+                GalleryModal bubbleGallery = new GalleryModal(width/2 -200, height/2, comicPanel[0]);
 
-                if(bubbleDisplay.getChildren().size() == 0)
-                    bubbleDisplay.getChildren().add(bubbleImageView);
+                bubbleGallery.addSubmit(new Insets (2, 2, 2, 30));
+                bubbleGallery.addGallery(new Insets (10, 10, 10, 30));
+                bubbleGallery.addTextField(new Insets (10, 10, 1, 30));
+                bubbleGallery.addEscape(new Insets (0, 0, 0, 0));
+                bubbleGallery.addCancel(new Insets (2, 2, 2, 2));
+                bubbleGallery.addDelete(new Insets (2, 11, 2, 2));
+                bubbleGallery.show();
 
-                bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
+//                  bubbleGrid.add(escape, 4, 1, 1, 1);
+////                bubbleGrid.add(bubbleGallery, 0, 2, 3, 3);
+////                bubbleGrid.setMargin(bubbleGallery,);//its 30 to balance out the x buttons margins and get the otherside right
+////                bubbleGrid.add(bubbleDisplay, 0, 5, 3, 3);
+////                bubbleGrid.setMargin(bubbleDisplay, new Insets (10, 10, 10, 30));
+////                bubbleGrid.add(italic, 0,8, 1, 1 );
+////                bubbleGrid.setMargin(italic, new Insets (5, 2, 2, 30));
+////                bubbleGrid.add(bold, 1, 8, 1, 1);
+////                bubbleGrid.setMargin(bold, new Insets (5, 2, 2, 0));
+////                bubbleGrid.add(textbox, 0, 9, 3, 1);
+////                bubbleGrid.setMargin(textbox, );
+////                bubbleGrid.add(submit, 0, 12, 1, 1);
+////                bubbleGrid.setMargin(submit, );
+////                bubbleGrid.add(cancel,1, 12, 1, 1);
+////                bubbleGrid.setMargin(cancel, );
+////                bubbleGrid.add(delete,2, 12, 1, 1);
+////                bubbleGrid.setMargin(delete, );
+//                Button submit = new Button("Submit");
+//                submit.getStyleClass().add("submit");
+//                Button escape = new Button("X");
+//                escape.getStyleClass().add("escape");
+//                Button cancel = new Button("Cancel");
+//                cancel.getStyleClass().add("cancel");
+//                Button delete = new Button("Delete");
+//                delete.getStyleClass().add("cancel");
+//                Button italic = new Button("Italic");
+//                italic.getStyleClass().add("italic");
+//                Button bold = new Button("Bold");
+//                bold.getStyleClass().add("bold");
+//                Button fonts = new Button("Font");
+//                fonts.getStyleClass().add("fonts");
+//
+//                if(bubbleDisplay.getChildren().size() == 0)
+//                    bubbleDisplay.getChildren().add(bubbleImageView);
+//
+//                bubbleDisplay.setMinHeight(bubbleImageView.getFitHeight()+100);
+//
+//                HBox bubbleGallery = new HBox();
+//                bubbleGallery.getStyleClass().add("bubbles");
+//
+//                File folder = new File("src/images/bubbles");
+//                File[] listOfFiles = folder.listFiles();
+//
+//                TextField textfield = new TextField();
+//
+//                final boolean[] isBold = {false};
+//                final boolean[] isItalic = {false};
+//
+//                if(comicPanel[0].getLeftTextBubble() != null) {
+//                    if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Bold"))
+//                        isBold[0] = true;
+//                    if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Italic"))
+//                        isItalic[0] = true;
+//                }
+//
+//                if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()) && comicPanel[0].getLeftTextBubble() != null) {
+//
+//                    if(comicPanel[0].getLeftTextBubble() != null) {
+//                        if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Bold"))
+//                            isBold[0] = true;
+//                        if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Italic"))
+//                            isItalic[0] = true;
+//                    }
+//
+//                    textfield.setText(comicPanel[0].getLeftTextBubble().getText().getText().replaceAll("\n", ""));
+//                }
+//                else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].getRightTextBubble() != null) {
+//
+//                    if(comicPanel[0].getRightTextBubble() != null) {
+//                        if(comicPanel[0].getRightTextBubble().getText().getFont().toString().contains("Bold"))
+//                            isBold[0] = true;
+//                        if(comicPanel[0].getRightTextBubble().getText().getFont().toString().contains("Italic"))
+//                            isItalic[0] = true;
+//                    }
+//
+//                    textfield.setText(comicPanel[0].getRightTextBubble().getText().getText().replaceAll("\n", ""));
+//                }
+//
+//                if(isBold[0] && isItalic[0])
+//                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+//                else if(!isBold[0] && isItalic[0])
+//                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+//                else if(isBold[0] && !isItalic[0])
+//                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+//                else
+//                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
+//
+//
+//
+//                HBox textbox = new HBox(textfield);
+//                textfield.setPrefWidth(800);
+//                textfield.setPrefHeight(50);
+//
+//                for (final File file : listOfFiles)
+//                {
+//                    ImageView imageView;
+//                    imageView = createImageView(file);
+//                    bubbleGallery.getChildren().add(imageView);
+//                }
+//
+//                GridPane bubbleGrid = new GridPane();
+//                bubbleGrid.setPadding(new Insets(10, 10, 10, 10));
+//                bubbleGrid.setVgap(5);
+//                bubbleGrid.setHgap(5);
+//                bubbleGrid.getStyleClass().add("bubbleGrid");
+//
+//                // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
+//
+//
+//                bold.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//                        isBold[0] = !isBold[0];
+//
+//                        if(isBold[0] && isItalic[0])
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+//                        else if(!isBold[0] && isItalic[0])
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+//                        else if(isBold[0] && !isItalic[0])
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+//                        else
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
+//                    }
+//                });
+//
+//                italic.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//                        isItalic[0] = !isItalic[0];
+//
+//                        if(isBold[0] && isItalic[0])
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+//                        else if(!isBold[0] && isItalic[0])
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+//                        else if(isBold[0] && !isItalic[0])
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+//                        else
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
+//                    }
+//                });
+//
+//                cancel.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//
+//                        bubbleDisplay.getChildren().remove(bubbleImageView);
+//                        addBubble.close();
+//                    }
+//                });
+//
+//                delete.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent event) {
+//                        comicPanel[0].removeBubble();
+//                        addBubble.close();
+//                    }
+//                });
+//
+//                escape.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//
+//                        bubbleDisplay.getChildren().remove(bubbleImageView);
+//                        addBubble.close();
+//                    }
+//                });
+//
+//                submit.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent event) {
+//
+//                        if(textfield.getText().replaceAll("\\s", "").matches(""))
+//                            return;
+//
+//                        if(textfield.getText().matches("") || ((ImageView)bubbleDisplay.getChildren().get(0)).getImage() == null)
+//                            return;
+//
+//                        Undo undo;
+//
+//                        if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter())) {
+//                            if (comicPanel[0].getLeftTextBubble() == null) {
+//                                undo = new Undo("bubble", comicPanel[0], "left");
+//                                undo.setObj(comicPanel[0].getLeftTextBubble());
+//                            }
+//                            else {
+//                                undo = new Undo("bubble", comicPanel[0], "left");
+//                                undo.setObj(comicPanel[0].getLeftTextBubble());
+//                            }
+//                        }
+//
+//                        else
+//                        {
+//                            if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter())) {
+//                                undo = new Undo("bubble", comicPanel[0], "right");
+//                                undo.setObj(comicPanel[0].getRightTextBubble());
+//                            }
+//                            else
+//                            {
+//                                undo = new Undo("bubble", comicPanel[0], "right");
+//                                undo.setObj(comicPanel[0].getRightTextBubble());
+//                            }
+//
+//                        }
+//
+//                        UndoList.addUndo(undo);
+//
+//                        if(isBold[0] && isItalic[0])
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+//                        else if(!isBold[0] && isItalic[0])
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+//                        else if(isBold[0] && !isItalic[0])
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+//                        else
+//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
+//
+//                        if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()))
+//                            comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
+//                        else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()))
+//                            comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
+//
+//                        bubbleDisplay.getChildren().remove(bubbleImageView);
+//                        addBubble.close();
+//                    }
+//                });
 
-                HBox bubbleGallery = new HBox();
-                bubbleGallery.getStyleClass().add("bubbles");
+//                Scene scene = new Scene(bubbleGrid);
+//                addBubble.setScene(scene);
+//
+//                scene.getStylesheets().add("main/style.css");
+//
+//                scene.setOnMousePressed(pressEvent -> {
+//                    scene.setOnMouseDragged(dragEvent -> {
+//                        addBubble.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+//                        addBubble.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+//                    });
+//                });
 
-                File folder = new File("src/images/bubbles");
-                File[] listOfFiles = folder.listFiles();
-
-                TextField textfield = new TextField();
-
-                final boolean[] isBold = {false};
-                final boolean[] isItalic = {false};
-
-                if(comicPanel[0].getLeftTextBubble() != null) {
-                    if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Bold"))
-                        isBold[0] = true;
-                    if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Italic"))
-                        isItalic[0] = true;
-                }
-
-                if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()) && comicPanel[0].getLeftTextBubble() != null) {
-
-                    if(comicPanel[0].getLeftTextBubble() != null) {
-                        if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Bold"))
-                            isBold[0] = true;
-                        if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Italic"))
-                            isItalic[0] = true;
-                    }
-
-                    textfield.setText(comicPanel[0].getLeftTextBubble().getText().getText().replaceAll("\n", ""));
-                }
-                else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()) && comicPanel[0].getRightTextBubble() != null) {
-
-                    if(comicPanel[0].getRightTextBubble() != null) {
-                        if(comicPanel[0].getRightTextBubble().getText().getFont().toString().contains("Bold"))
-                            isBold[0] = true;
-                        if(comicPanel[0].getRightTextBubble().getText().getFont().toString().contains("Italic"))
-                            isItalic[0] = true;
-                    }
-
-                    textfield.setText(comicPanel[0].getRightTextBubble().getText().getText().replaceAll("\n", ""));
-                }
-
-                if(isBold[0] && isItalic[0])
-                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
-                else if(!isBold[0] && isItalic[0])
-                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
-                else if(isBold[0] && !isItalic[0])
-                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
-                else
-                    textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
-
-
-
-                HBox textbox = new HBox(textfield);
-                textfield.setPrefWidth(800);
-                textfield.setPrefHeight(50);
-
-                for (final File file : listOfFiles)
-                {
-                    ImageView imageView;
-                    imageView = createImageView(file);
-                    bubbleGallery.getChildren().add(imageView);
-                }
-
-                GridPane bubbleGrid = new GridPane();
-                bubbleGrid.setPadding(new Insets(10, 10, 10, 10));
-                bubbleGrid.setVgap(5);
-                bubbleGrid.setHgap(5);
-                bubbleGrid.getStyleClass().add("bubbleGrid");
-
-                // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
-                bubbleGrid.add(escape, 4, 1, 1, 1);
-                bubbleGrid.add(bubbleGallery, 0, 2, 3, 3);
-                bubbleGrid.setMargin(bubbleGallery, new Insets (10, 10, 10, 30));//its 30 to balance out the x buttons margins and get the otherside right
-                bubbleGrid.add(bubbleDisplay, 0, 5, 3, 3);
-                bubbleGrid.setMargin(bubbleDisplay, new Insets (10, 10, 10, 30));
-                bubbleGrid.add(italic, 0,8, 1, 1 );
-                bubbleGrid.setMargin(italic, new Insets (5, 2, 2, 30));
-                bubbleGrid.add(bold, 1, 8, 1, 1);
-                bubbleGrid.setMargin(bold, new Insets (5, 2, 2, 0));
-                bubbleGrid.add(textbox, 0, 9, 3, 1);
-                bubbleGrid.setMargin(textbox, new Insets (10, 10, 1, 30));
-                bubbleGrid.add(submit, 0, 12, 1, 1);
-                bubbleGrid.setMargin(submit, new Insets (2, 2, 2, 30));
-                bubbleGrid.add(cancel,1, 12, 1, 1);
-                bubbleGrid.setMargin(cancel, new Insets (2, 2, 2, 2));
-                bubbleGrid.add(delete,2, 12, 1, 1);
-                bubbleGrid.setMargin(delete, new Insets (2, 11, 2, 2));
-
-                bold.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        isBold[0] = !isBold[0];
-
-                        if(isBold[0] && isItalic[0])
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
-                        else if(!isBold[0] && isItalic[0])
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
-                        else if(isBold[0] && !isItalic[0])
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
-                        else
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
-                    }
-                });
-
-                italic.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        isItalic[0] = !isItalic[0];
-
-                        if(isBold[0] && isItalic[0])
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
-                        else if(!isBold[0] && isItalic[0])
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
-                        else if(isBold[0] && !isItalic[0])
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
-                        else
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
-                    }
-                });
-
-                cancel.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-
-                        bubbleDisplay.getChildren().remove(bubbleImageView);
-                        addBubble.close();
-                    }
-                });
-
-                delete.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        comicPanel[0].removeBubble();
-                        addBubble.close();
-                    }
-                });
-
-                escape.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-
-                        bubbleDisplay.getChildren().remove(bubbleImageView);
-                        addBubble.close();
-                    }
-                });
-
-                submit.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-
-                        if(textfield.getText().replaceAll("\\s", "").matches(""))
-                            return;
-
-                        if(textfield.getText().matches("") || ((ImageView)bubbleDisplay.getChildren().get(0)).getImage() == null)
-                            return;
-
-                        Undo undo;
-
-                        if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter())) {
-                            if (comicPanel[0].getLeftTextBubble() == null) {
-                                undo = new Undo("bubble", comicPanel[0], "left");
-                                undo.setObj(comicPanel[0].getLeftTextBubble());
-                            }
-                            else {
-                                undo = new Undo("bubble", comicPanel[0], "left");
-                                undo.setObj(comicPanel[0].getLeftTextBubble());
-                            }
-                        }
-
-                        else
-                        {
-                            if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter())) {
-                                undo = new Undo("bubble", comicPanel[0], "right");
-                                undo.setObj(comicPanel[0].getRightTextBubble());
-                            }
-                            else
-                            {
-                                undo = new Undo("bubble", comicPanel[0], "right");
-                                undo.setObj(comicPanel[0].getRightTextBubble());
-                            }
-
-                        }
-
-                        UndoList.addUndo(undo);
-
-                        if(isBold[0] && isItalic[0])
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
-                        else if(!isBold[0] && isItalic[0])
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
-                        else if(isBold[0] && !isItalic[0])
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
-                        else
-                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
-
-                        if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getLeftCharacter()))
-                            comicPanel[0].setLeftBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
-                        else if(comicPanel[0].getSelectedCharacter().equals(comicPanel[0].getRightCharacter()))
-                            comicPanel[0].setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
-
-                        bubbleDisplay.getChildren().remove(bubbleImageView);
-                        addBubble.close();
-                    }
-                });
-
-                Scene scene = new Scene(bubbleGrid);
-                addBubble.setScene(scene);
-
-                scene.getStylesheets().add("main/style.css");
-
-                scene.setOnMousePressed(pressEvent -> {
-                    scene.setOnMouseDragged(dragEvent -> {
-                        addBubble.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
-                        addBubble.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
-                    });
-                });
-
-                addBubble.show();
+//                addBubble.show();
             }
 
-            private ImageView createImageView(final File imageFile) {
-
-                ImageView imageView = null;
-
-                try {
-                    final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
-                            true);
-
-                    int width = (int) image.getWidth();
-                    int height = (int) image.getHeight();
-
-                    WritableImage writableImage = new WritableImage(width, height);
-
-                    PixelReader pixelReader = image.getPixelReader();
-                    PixelWriter pixelWriter = writableImage.getPixelWriter();
-
-                    for (int y = 0; y < height; y++) {
-                        for (int x = 0; x < width; x++) {
-                            Color color = pixelReader.getColor(x, y);
-
-                            if (color.equals(Color.rgb(255, 254, 255))) {
-                                pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
-                            }
-                            else
-                                pixelWriter.setColor(x, y, color);
-                        }
-                    }
-
-                    imageView = new ImageView(writableImage);
-                    imageView.setPickOnBounds(true);
-                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-
-                            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-
-                                if (mouseEvent.getClickCount() == 1) {
-                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(writableImage);
-                                    bubbleName = imageFile.getPath().substring(19);
-                                }
-                            }
-                        }
-                    });
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-                return imageView;
-            }
+//            private ImageView createImageView(final File imageFile) {
+//
+//                ImageView imageView = null;
+//
+//                try {
+//                    final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
+//                            true);
+//
+//                    int width = (int) image.getWidth();
+//                    int height = (int) image.getHeight();
+//
+//                    WritableImage writableImage = new WritableImage(width, height);
+//
+//                    PixelReader pixelReader = image.getPixelReader();
+//                    PixelWriter pixelWriter = writableImage.getPixelWriter();
+//
+//                    for (int y = 0; y < height; y++) {
+//                        for (int x = 0; x < width; x++) {
+//                            Color color = pixelReader.getColor(x, y);
+//
+//                            if (color.equals(Color.rgb(255, 254, 255))) {
+//                                pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
+//                            }
+//                            else
+//                                pixelWriter.setColor(x, y, color);
+//                        }
+//                    }
+//
+//                    imageView = new ImageView(writableImage);
+//                    imageView.setPickOnBounds(true);
+//                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//
+//                        @Override
+//                        public void handle(MouseEvent mouseEvent) {
+//
+//                            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+//
+//                                if (mouseEvent.getClickCount() == 1) {
+//                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(writableImage);
+//                                    bubbleName = imageFile.getPath().substring(19);
+//                                }
+//                            }
+//                        }
+//                    });
+//                } catch (FileNotFoundException ex) {
+//                    ex.printStackTrace();
+//                }
+//                return imageView;
+//            }
         });
 
         backgroundButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -1108,13 +1119,13 @@ public class Main extends Application {
                     return;
                 }
 
-                textModal.addSubmit();
-                textModal.addTextField();
+                textModal.addSubmit(new Insets (5, 0, 5, 25));
+                textModal.addTextField(new Insets(5, 0, 5, 25));
                 textModal.addBooleanButtons("Top Text", "Bottom Text");
-                textModal.addCancel();
-                textModal.addDelete();
-                textModal.addComboBox("Segoe UI", "Verdana", "Times New Roman", "Arial");
-                textModal.addEscape();
+                textModal.addCancel(new Insets (5, 0, 5, 0));
+                textModal.addDelete(new Insets (5, 0, 5, 0));
+                textModal.addComboBox(new Insets (5, 0, 5, 0), "Segoe UI", "Verdana", "Times New Roman", "Arial");
+                textModal.addEscape(new Insets(5,0,5,0));
                 textModal.show();
 //
 //
