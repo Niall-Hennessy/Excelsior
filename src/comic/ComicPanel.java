@@ -66,7 +66,7 @@ public class ComicPanel extends Pane {
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: stretch; " +
                 "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
-                "-fx-border-color: GOLD; " + //HOTPINK
+                "-fx-border-color: #EDE427; " + //HOTPINK or GOLD
                 "-fx-border-width: 4;" +
                 "-fx-background-color: WHITE");
     }
