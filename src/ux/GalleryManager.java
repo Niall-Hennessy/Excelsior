@@ -40,12 +40,12 @@ public class GalleryManager {
     Pane bubbleDisplay = new Pane();
     String bubbleName = null;
 
-    public void setHeight(Double height) {
-        this.height = height;
+    public GalleryManager(ComicPanel[] comicPanel) {
+        this.comicPanel = comicPanel;
     }
 
-    public void setComicPanel(ComicPanel[] comicPanel) {
-        this.comicPanel = comicPanel;
+    public void setHeight(Double height) {
+        this.height = height;
     }
 
     private void openGallery(String path, Entity entity) {

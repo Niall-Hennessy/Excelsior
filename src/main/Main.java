@@ -613,9 +613,7 @@ public class Main extends Application {
 
 
 
-        GalleryManager galleryView = new GalleryManager();
-
-
+        GalleryManager galleryView = new GalleryManager(comicPanel);
 
         rightCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -641,7 +639,6 @@ public class Main extends Application {
                 UndoList.addUndo(undo);
 
                 String path = "src/images/characters";
-                galleryView.setComicPanel(comicPanel);
                 galleryView.setRightCharacter(path);
                 skinColorPicker[0].setValue(comicPanel[0].getRightCharacter().getSkin());
                 hairColorPicker[0].setValue(comicPanel[0].getRightCharacter().getHair());
@@ -672,7 +669,6 @@ public class Main extends Application {
                 UndoList.addUndo(undo);
 
                 String path = "src/images/characters";
-                galleryView.setComicPanel(comicPanel);
                 galleryView.setLeftCharacter(path);
                 skinColorPicker[0].setValue(comicPanel[0].getLeftCharacter().getSkin());
                 hairColorPicker[0].setValue(comicPanel[0].getLeftCharacter().getHair());
@@ -736,7 +732,6 @@ public class Main extends Application {
                 }
 
                 String path = "src/images/bubbles";
-                galleryView.setComicPanel(comicPanel);
                 galleryView.setBubble(path);
             }
         });
@@ -758,7 +753,6 @@ public class Main extends Application {
                 UndoList.addUndo(undo);
 
                 String path = "src/images/backgrounds";
-                galleryView.setComicPanel(comicPanel);
                 galleryView.setHeight(height);
                 galleryView.setBackground(path);
             }
