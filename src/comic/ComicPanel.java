@@ -411,10 +411,10 @@ public class ComicPanel extends Pane {
 
     public void setTopText(String text, Font font){
 
-//        if(topText != null)
-//            topBottom = "top";
-//        else
-//            topBottom = null;
+        if(topText != null)
+            topBottom = "top";
+        else
+            topBottom = null;
 
         this.getChildren().remove(topText);
         topText = new TextCaption(text, font);
@@ -500,5 +500,9 @@ public class ComicPanel extends Pane {
         if(this.rightTextBubble != null)
             this.getChildren().add(this.rightTextBubble);
 
+    }
+
+    public void setTopText(TextCaption topText) {
+        this.topText = topText;
     }
 }

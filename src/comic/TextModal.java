@@ -8,12 +8,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class TextModal extends Modal{
+
+    private final boolean[] value1 = {true};
+    private final boolean[] value2 = {false};
+    TextField textField;
+    ComboBox comboBox;
 
     public TextModal(double width, double height, ComicPanel cPanel) {
         super(width, height, cPanel);
@@ -23,11 +25,10 @@ public class TextModal extends Modal{
         Button submit = new Button("Submit");
         submit.getStyleClass().add("submit");
 
-        final String[] input = {""};
         final Font[] font = {Font.font("Segoe UI", 20)};
 
-        final ComboBox[] comboBox = new ComboBox[1];
-        final TextField[] textField = new TextField[1];
+        final Button[] topText = {new Button()};
+        final Button[] bottomText = {new Button()};
 
         layoutGrid.add(submit, 0, 4, 1, 1);
         layoutGrid.setMargin(submit, new Insets(5, 0, 5, 25));
@@ -39,11 +40,19 @@ public class TextModal extends Modal{
                 Node node = c.getList().get(c.getList().size()-1);
 
                 if(node.toString().contains("ComboBox")) {
-                    comboBox[0] = ((ComboBox) node);
+                    comboBox = ((ComboBox) node);
                 }
 
                 if(node.toString().contains("TextField")) {
-                    textField[0] = ((TextField) node);
+                    textField = ((TextField) node);
+                }
+
+                if(node.toString().contains("Top")) {
+                    topText[0] = ((Button) node);
+                }
+
+                if(node.toString().contains("Bottom")) {
+                    bottomText[0] = ((Button) node);
                 }
             }
         });
@@ -51,8 +60,14 @@ public class TextModal extends Modal{
         submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                font[0] = Font.font((String) comboBox[0].getSelectionModel().getSelectedItem(), 20);
-                comicPanel.setTopText(textField[0].getText(), font[0]);
+                font[0] = Font.font((String) comboBox.getSelectionModel().getSelectedItem(), 20);
+
+                if(value1[0]) {
+                    comicPanel.setTopText(textField.getText(), font[0]);
+                }
+                else if(value2[0]) {
+                    comicPanel.setBottomText(textField.getText(), font[0]);
+                }
             }
         });
     }
@@ -67,6 +82,18 @@ public class TextModal extends Modal{
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if(value1[0]) {
+                    comicPanel.setTopText("", Font.font("", 20));
+                    textField.setText("");
+                    textField.setFont(Font.font("Segoe UI", 20));
+                    comboBox.getSelectionModel().selectFirst();
+                }
+                else if(value2[0]) {
+                    comicPanel.setBottomText("", Font.font("", 20));
+                    textField.setText("");
+                    textField.setFont(Font.font("Segoe UI", 20));
+                    comboBox.getSelectionModel().selectFirst();
+                }
             }
         });
     }
@@ -85,6 +112,8 @@ public class TextModal extends Modal{
 
     public void addComboBox(String... args){
         super.addComboBox(args);
+
+        comboBox.
     }
 
     public void addBooleanButtons(String button_1, String button_2){
@@ -93,14 +122,19 @@ public class TextModal extends Modal{
         Button button2 = new Button(button_2);
         button2.getStyleClass().add("bold");
 
-        final boolean[] value1 = {true};
-        final boolean[] value2 = {false};
+        layoutGrid.add(button1, 0, 1, 1, 1);
+        layoutGrid.setMargin(button1, new Insets (5, 0, 5, 25));
+        layoutGrid.add(button2, 1, 1, 1, 1);
+        layoutGrid.setMargin(button2, new Insets (5, 0, 5, 0));
 
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 value1[0] = true;
                 value2[0] = false;
+
+                textField.setText(comicPanel.getTopText().getText());
+                textField.setFont(comicPanel.getTopText().getTextObject().getFont());
             }
         });
 
@@ -109,6 +143,9 @@ public class TextModal extends Modal{
             public void handle(ActionEvent event) {
                 value1[0] = false;
                 value2[0] = true;
+
+                textField.setText(comicPanel.getBottomText().getText());
+                textField.setFont(comicPanel.getBottomText().getTextObject().getFont());
             }
         });
     }

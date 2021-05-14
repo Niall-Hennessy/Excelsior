@@ -1,9 +1,6 @@
 package main;
 
-import comic.ComicPanel;
-import comic.Modal;
-import comic.TextBubble;
-import comic.TextModal;
+import comic.*;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
@@ -1113,6 +1110,7 @@ public class Main extends Application {
 
                 textModal.addSubmit();
                 textModal.addTextField();
+                textModal.addBooleanButtons("Top Text", "Bottom Text");
                 textModal.addCancel();
                 textModal.addDelete();
                 textModal.addComboBox("Segoe UI", "Verdana", "Times New Roman", "Arial");
