@@ -748,15 +748,10 @@ public class Main extends Application {
                 bubbleGallery.addEscape();
                 bubbleGallery.addCancel();
                 bubbleGallery.addDelete();
+                bubbleGallery.addFormatButtons();
                 bubbleGallery.show();
 
-//
-////                bubbleGrid.add(italic, 0,8, 1, 1 );
-////                bubbleGrid.setMargin(italic, new Insets (5, 2, 2, 30));
-////                bubbleGrid.add(bold, 1, 8, 1, 1);
-////                bubbleGrid.setMargin(bold, new Insets (5, 2, 2, 0));
-////                bubbleGrid.add(textbox, 0, 9, 3, 1);
-////                bubbleGrid.setMargin(textbox, );
+
 //                Button submit = new Button("Submit");
 //                submit.getStyleClass().add("submit");
 //                Button escape = new Button("X");
@@ -785,8 +780,7 @@ public class Main extends Application {
 //
 //                TextField textfield = new TextField();
 //
-//                final boolean[] isBold = {false};
-//                final boolean[] isItalic = {false};
+//
 //
 //                if(comicPanel[0].getLeftTextBubble() != null) {
 //                    if(comicPanel[0].getLeftTextBubble().getText().getFont().toString().contains("Bold"))
@@ -849,37 +843,6 @@ public class Main extends Application {
 //                // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
 //
 //
-//                bold.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent actionEvent) {
-//                        isBold[0] = !isBold[0];
-//
-//                        if(isBold[0] && isItalic[0])
-//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
-//                        else if(!isBold[0] && isItalic[0])
-//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
-//                        else if(isBold[0] && !isItalic[0])
-//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
-//                        else
-//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
-//                    }
-//                });
-//
-//                italic.setOnAction(new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent actionEvent) {
-//                        isItalic[0] = !isItalic[0];
-//
-//                        if(isBold[0] && isItalic[0])
-//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
-//                        else if(!isBold[0] && isItalic[0])
-//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
-//                        else if(isBold[0] && !isItalic[0])
-//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
-//                        else
-//                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
-//                    }
-//                });
 //
 //                cancel.setOnAction(new EventHandler<ActionEvent>() {
 //                    @Override

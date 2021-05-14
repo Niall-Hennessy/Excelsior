@@ -7,17 +7,26 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class GalleryModal extends Modal {
 
     protected Pane galleryPane = new Pane();
     ImageView galleryImageView = new ImageView();
+    TextField textfield = new TextField();
+    Pane bubbleDisplay = new Pane();
+    String bubbleName = "";
 
     public GalleryModal(double width, double height, ComicPanel cPanel) {
         super(width, height, cPanel);
@@ -63,16 +72,16 @@ public class GalleryModal extends Modal {
         layoutGrid.add(submit, 0, 12, 1, 1);
         layoutGrid.setMargin(submit, new Insets (2, 2, 2, 30));
 
-        layoutGrid.getChildren().addListener(new ListChangeListener<Node>() {
-            @Override
-            public void onChanged(javafx.collections.ListChangeListener.Change<? extends Node> c) {
-                Node node = c.getList().get(c.getList().size()-1);
-            }
-        });
-
         submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+                if(comicPanel.getSelectedCharacter().equals(comicPanel.getLeftCharacter()))
+                    comicPanel.setLeftBubble(((ImageView) bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
+                else if(comicPanel.getSelectedCharacter().equals(comicPanel.getRightCharacter()))
+                    comicPanel.setRightBubble(((ImageView)bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
+
+                modal.close();
             }
         });
     }
@@ -88,22 +97,33 @@ public class GalleryModal extends Modal {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                comicPanel.removeBubble();
+                modal.close();
             }
         });
     }
 
     @Override
     public void addTextField() {
-        TextField textField = new TextField();
 
-        textField.setText(comicPanel.getTopText().getText());
+        textfield.setText("");
 
-        textField.getStyleClass().add("capTextField");
-        textField.setPrefWidth(800);
-        textField.setPrefHeight(50);
+        if(comicPanel.getSelectedCharacter().equals(comicPanel.getLeftCharacter()) && comicPanel.getLeftTextBubble()!= null) {
+            textfield.setText(comicPanel.getLeftTextBubble().getText().getText());
+            textfield.setFont(comicPanel.getLeftTextBubble().getText().getFont());
+        }
 
-        layoutGrid.add(textField, 0, 9, 3, 1);
-        layoutGrid.setMargin(textField, new Insets (10, 10, 1, 30));
+        if(comicPanel.getSelectedCharacter().equals(comicPanel.getRightCharacter()) && comicPanel.getRightTextBubble()!= null) {
+            textfield.setText(comicPanel.getRightTextBubble().getText().getText());
+            textfield.setFont(comicPanel.getRightTextBubble().getText().getFont());
+        }
+
+        textfield.getStyleClass().add("capTextField");
+        textfield.setPrefWidth(800);
+        textfield.setPrefHeight(50);
+
+        layoutGrid.add(textfield, 0, 9, 3, 1);
+        layoutGrid.setMargin(textfield, new Insets (10, 10, 1, 30));
     }
 
     public void addGallery(){
@@ -115,15 +135,71 @@ public class GalleryModal extends Modal {
         HBox bubbleGallery = new HBox();
         bubbleGallery.getStyleClass().add("bubbles");
 
-        Pane bubbleDisplay = new Pane();
 
-        File folder = new File("src/images/bubbles");
-        File[] listOfFiles = folder.listFiles();
+        try {
+            Image image = new Image(new FileInputStream("src/images/bubbles/curvy.png"));
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(150);
+            imageView.setFitWidth(150);
+            bubbleName = "curvy";
+            bubbleDisplay.getChildren().add(imageView);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         layoutGrid.add(bubbleGallery, 0, 2, 3, 3);
         layoutGrid.setMargin(bubbleGallery, new Insets(10, 10, 10, 30));
 
         layoutGrid.add(bubbleDisplay, 0, 5, 3, 3);
         layoutGrid.setMargin(bubbleDisplay, new Insets (10, 10, 10, 30));
+    }
+
+    public void addFormatButtons(){
+
+        Button italic = new Button("Italic");
+        italic.getStyleClass().add("italic");
+        Button bold = new Button("Bold");
+        bold.getStyleClass().add("bold");
+
+        final boolean[] isBold = {false};
+        final boolean[] isItalic = {false};
+
+        layoutGrid.add(italic, 0,8, 1, 1 );
+        layoutGrid.setMargin(italic, new Insets (5, 2, 2, 30));
+        layoutGrid.add(bold, 1, 8, 1, 1);
+        layoutGrid.setMargin(bold, new Insets (5, 2, 2, 0));
+
+        bold.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        isBold[0] = !isBold[0];
+
+                        if(isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(!isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(isBold[0] && !isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+                        else
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
+                    }
+                });
+
+                italic.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        isItalic[0] = !isItalic[0];
+
+                        if(isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(!isBold[0] && isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.ITALIC, textfield.getFont().getSize()));
+                        else if(isBold[0] && !isItalic[0])
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.BOLD, FontPosture.REGULAR, textfield.getFont().getSize()));
+                        else
+                            textfield.setFont(Font.font(textfield.getFont().getName(), FontWeight.NORMAL, FontPosture.REGULAR, textfield.getFont().getSize()));
+                    }
+                });
+
     }
 }
