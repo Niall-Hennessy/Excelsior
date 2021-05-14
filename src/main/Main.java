@@ -613,7 +613,7 @@ public class Main extends Application {
 
 
 
-        GalleryManager galleryView = new GalleryManager(comicPanel);
+        GalleryManager galleryView = new GalleryManager(comicPanel, height);
 
         rightCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -753,7 +753,6 @@ public class Main extends Application {
                 UndoList.addUndo(undo);
 
                 String path = "src/images/backgrounds";
-                galleryView.setHeight(height);
                 galleryView.setBackground(path);
             }
         });

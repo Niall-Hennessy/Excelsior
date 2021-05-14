@@ -40,11 +40,8 @@ public class GalleryManager {
     Pane bubbleDisplay = new Pane();
     String bubbleName = null;
 
-    public GalleryManager(ComicPanel[] comicPanel) {
+    public GalleryManager(ComicPanel[] comicPanel, double height) {
         this.comicPanel = comicPanel;
-    }
-
-    public void setHeight(Double height) {
         this.height = height;
     }
 
