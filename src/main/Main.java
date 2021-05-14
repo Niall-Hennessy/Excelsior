@@ -102,10 +102,9 @@ public class Main extends Application {
         MenuItem helpItem = new MenuItem("Help");
 
         Button_UI button_ui = new Button_UI();
-        button_ui.addLabelAndItems(help, helpItem);
         button_ui.addLabelAndItems(file, new_project, save_xml, save_html, load_xml, add_character, add_background);
+        button_ui.addLabelAndItems(help, helpItem);
 
-        MenuBar menuBar = button_ui.getMenuBar();
         HBox menuBox = new HBox(button_ui.getMenuBar());
 
         HBox comicStrip = new HBox();
