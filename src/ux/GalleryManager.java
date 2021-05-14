@@ -112,6 +112,11 @@ public class GalleryManager {
         Button fonts = new Button("Font");
         fonts.getStyleClass().add("fonts");
 
+        if(bubbleDisplay == null) {
+            System.out.println("bubbleDisplay still null");
+            return;
+        }
+
         if(bubbleDisplay.getChildren().size() == 0)
             bubbleDisplay.getChildren().add(bubbleImageView);
 

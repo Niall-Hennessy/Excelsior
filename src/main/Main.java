@@ -735,7 +735,7 @@ public class Main extends Application {
                     return;
                 }
 
-                String path = "src/imgages/bubbles";
+                String path = "src/images/bubbles";
                 galleryView.setComicPanel(comicPanel);
                 galleryView.setBubble(path);
             }
