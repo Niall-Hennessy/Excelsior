@@ -89,7 +89,6 @@ public class Main extends Application {
 
         final String[] character = new String[1];
 
-        Button_UI button_ui = new Button_UI();
 
         Menu file = new Menu("File");
         MenuItem new_project = new MenuItem("New Project");
@@ -98,22 +97,20 @@ public class Main extends Application {
         MenuItem load_xml = new MenuItem("Load XML");
         MenuItem add_character = new MenuItem("Add Character");
         MenuItem add_background = new MenuItem("Add Background");
-        button_ui.addLabelAndItems(file, new_project, save_xml, save_html, load_xml, add_character, add_background);
 
         Menu help = new Menu("Help");
         MenuItem helpItem = new MenuItem("Help");
+
+        Button_UI button_ui = new Button_UI();
         button_ui.addLabelAndItems(help, helpItem);
+        button_ui.addLabelAndItems(file, new_project, save_xml, save_html, load_xml, add_character, add_background);
 
         MenuBar menuBar = button_ui.getMenuBar();
-        menuBar.getStyleClass().add("menuBar");
         HBox menuBox = new HBox(button_ui.getMenuBar());
 
         HBox comicStrip = new HBox();
 
-
-        ButtonIcon buttonIcon = new ButtonIcon();
-
-        buttonIcon.setHeight(primaryStage.getHeight());
+        ButtonIcon buttonIcon = new ButtonIcon(primaryStage.getHeight());
 
         final ColorPicker[] skinColorPicker = {new ColorPicker()};
         final ColorPicker[] hairColorPicker = {new ColorPicker()};
@@ -1083,9 +1080,7 @@ public class Main extends Application {
 
         button_ui.addButtonsToScrollPane(leftCharacter, rightCharacter, flipButton, genderButton, textButton, bubbleButton, backgroundButton);
         button_ui.addOtherToScrollPane(skinColorPicker[0], hairColorPicker[0], undoButton, deleteButton, lockButton[0]);
-        FlowPane buttonLayout = button_ui.getFlowPane();
-        buttonLayout.setPrefWidth(width - 20);
-        buttonLayout.getStyleClass().add("buttonLayout");
+        FlowPane buttonLayout = button_ui.getFlowPane(width);
 
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");

@@ -17,6 +17,7 @@ public class Button_UI {
     }
 
     public MenuBar getMenuBar() {
+        menuBar.getStyleClass().add("menuBar");
         return menuBar;
     }
 
@@ -42,7 +43,10 @@ public class Button_UI {
         buttonLayout.setMargin(lock, new Insets(10, 10, 10, 10));
     }
 
-    public FlowPane getFlowPane() {
+    public FlowPane getFlowPane(Double width) {
+        buttonLayout.setPrefWidth(width - 20);
+        buttonLayout.getStyleClass().add("buttonLayout");
+
         return buttonLayout;
     }
 }
