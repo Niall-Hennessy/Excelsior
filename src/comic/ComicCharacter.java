@@ -55,6 +55,10 @@ public class ComicCharacter extends Pane {
                         pixelWriter.setColor(x, y, Color.rgb(0,0,0,0));
                     }else if(color.equals(Color.BLACK)){
                         pixelWriter.setColor(x, y, color);
+                    }else if(color.equals(Color.rgb(255, 77, 0))){
+                        pixelWriter.setColor(x, y, color);
+                    }else if(color.equals(Color.rgb(251, 255, 94))){
+                        pixelWriter.setColor(x, y, color);
                     }
                     else if(color.equals(Color.web("#A03E00"))){//Shoe Colour
                         pixelWriter.setColor(x, y, color);
@@ -65,33 +69,31 @@ public class ComicCharacter extends Pane {
                         if(!isFemale) {
                             pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
 
-                            if(!pixelReader.getColor(x-1,y).equals(Color.WHITE) && !pixelReader.getColor(x-1,y).equals(Color.WHITE)){
-                                pixelWriter.setColor(x-1,y, Color.rgb(0, 0, 0, 0));
-                            }
-                            else if(!pixelReader.getColor(x,y-1).equals(Color.WHITE) && !pixelReader.getColor(x,y-1).equals(Color.WHITE)){
-                                pixelWriter.setColor(x,y-1, Color.rgb(0, 0, 0, 0));
-                            }
-                            else if(!pixelReader.getColor(x+1,y).equals(Color.WHITE) && !pixelReader.getColor(x+1,y).equals(Color.WHITE)){
-                                pixelWriter.setColor(x+1,y, Color.rgb(0, 0, 0, 0));
-                            }
-                            else if(!pixelReader.getColor(x,y+1).equals(Color.WHITE) && !pixelReader.getColor(x,y+1).equals(Color.WHITE)){
-                                pixelWriter.setColor(x,y+1, Color.rgb(0, 0, 0, 0));
+                            if(x > 0 && y > 0 && x < width - 1 && y < height - 1) {
+                                if (!pixelReader.getColor(x - 1, y).equals(Color.WHITE) && !pixelReader.getColor(x - 1, y).equals(Color.WHITE)) {
+                                    pixelWriter.setColor(x - 1, y, Color.rgb(0, 0, 0, 0));
+                                } else if (!pixelReader.getColor(x, y - 1).equals(Color.WHITE) && !pixelReader.getColor(x, y - 1).equals(Color.WHITE)) {
+                                    pixelWriter.setColor(x, y - 1, Color.rgb(0, 0, 0, 0));
+                                } else if (!pixelReader.getColor(x + 1, y).equals(Color.WHITE) && !pixelReader.getColor(x + 1, y).equals(Color.WHITE)) {
+                                    pixelWriter.setColor(x + 1, y, Color.rgb(0, 0, 0, 0));
+                                } else if (!pixelReader.getColor(x, y + 1).equals(Color.WHITE) && !pixelReader.getColor(x, y + 1).equals(Color.WHITE)) {
+                                    pixelWriter.setColor(x, y + 1, Color.rgb(0, 0, 0, 0));
+                                }
                             }
                         }
                         else {
                             pixelWriter.setColor(x, y, hair);
 
-                            if(!pixelReader.getColor(x-1,y).equals(Color.WHITE) && !pixelReader.getColor(x-1,y).equals(Color.WHITE)){
-                                pixelWriter.setColor(x-1,y, hair);
-                            }
-                            else if(!pixelReader.getColor(x,y-1).equals(Color.WHITE) && !pixelReader.getColor(x,y-1).equals(Color.WHITE)){
-                                pixelWriter.setColor(x,y-1, hair);
-                            }
-                            else if(!pixelReader.getColor(x+1,y).equals(Color.WHITE) && !pixelReader.getColor(x+1,y).equals(Color.WHITE)){
-                                pixelWriter.setColor(x+1,y, hair);
-                            }
-                            else if(!pixelReader.getColor(x,y+1).equals(Color.WHITE) && !pixelReader.getColor(x,y+1).equals(Color.WHITE)){
-                                pixelWriter.setColor(x,y+1, hair);
+                            if(x > 0 && y > 0 && x < width - 1 && y < height - 1) {
+                                if (!pixelReader.getColor(x - 1, y).equals(Color.WHITE) && !pixelReader.getColor(x - 1, y).equals(Color.WHITE)) {
+                                    pixelWriter.setColor(x - 1, y, hair);
+                                } else if (!pixelReader.getColor(x, y - 1).equals(Color.WHITE) && !pixelReader.getColor(x, y - 1).equals(Color.WHITE)) {
+                                    pixelWriter.setColor(x, y - 1, hair);
+                                } else if (!pixelReader.getColor(x + 1, y).equals(Color.WHITE) && !pixelReader.getColor(x + 1, y).equals(Color.WHITE)) {
+                                    pixelWriter.setColor(x + 1, y, hair);
+                                } else if (!pixelReader.getColor(x, y + 1).equals(Color.WHITE) && !pixelReader.getColor(x, y + 1).equals(Color.WHITE)) {
+                                    pixelWriter.setColor(x, y + 1, hair);
+                                }
                             }
                         }
                     }else if (color.equals(Color.web("#F9FF00"))) {//Male Hair Colour
@@ -99,17 +101,16 @@ public class ComicCharacter extends Pane {
 
                         pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
 
-                        if(!pixelReader.getColor(x-1,y).equals(Color.WHITE) && !pixelReader.getColor(x-1,y).equals(Color.WHITE)){
-                            pixelWriter.setColor(x-1,y, hair);
-                        }
-                        else if(!pixelReader.getColor(x,y-1).equals(Color.WHITE) && !pixelReader.getColor(x,y-1).equals(Color.WHITE)){
-                            pixelWriter.setColor(x,y-1, hair);
-                        }
-                        else if(!pixelReader.getColor(x+1,y).equals(Color.WHITE) && !pixelReader.getColor(x+1,y).equals(Color.WHITE)){
-                            pixelWriter.setColor(x+1,y, hair);
-                        }
-                        else if(!pixelReader.getColor(x,y+1).equals(Color.WHITE) && !pixelReader.getColor(x,y+1).equals(Color.WHITE)){
-                            pixelWriter.setColor(x,y+1, hair);
+                        if(x > 0 && y > 0 && x < width - 1 && y < height - 1) {
+                            if (!pixelReader.getColor(x - 1, y).equals(Color.WHITE) && !pixelReader.getColor(x - 1, y).equals(Color.WHITE)) {
+                                pixelWriter.setColor(x - 1, y, hair);
+                            } else if (!pixelReader.getColor(x, y - 1).equals(Color.WHITE) && !pixelReader.getColor(x, y - 1).equals(Color.WHITE)) {
+                                pixelWriter.setColor(x, y - 1, hair);
+                            } else if (!pixelReader.getColor(x + 1, y).equals(Color.WHITE) && !pixelReader.getColor(x + 1, y).equals(Color.WHITE)) {
+                                pixelWriter.setColor(x + 1, y, hair);
+                            } else if (!pixelReader.getColor(x, y + 1).equals(Color.WHITE) && !pixelReader.getColor(x, y + 1).equals(Color.WHITE)) {
+                                pixelWriter.setColor(x, y + 1, hair);
+                            }
                         }
                     }
                     else if(isOnLineSimple(Color.web("#F0FF00"), Color.web("#FFFFFF"), color) && !isFemale){
@@ -159,8 +160,6 @@ public class ComicCharacter extends Pane {
             }
 
         ImageView imageView = new ImageView(writableImage);
-        //imageView.setFitHeight(writableImage.getHeight()/4);
-        //imageView.setFitWidth(writableImage.getWidth()/4);
         imageView.setFitHeight(charBoxLength);
         imageView.setFitWidth(charBoxLength);
         imageView.setSmooth(false);
