@@ -30,7 +30,7 @@ public class ButtonIcon {
 
     public static ColorPicker colorPickerStyling(ColorPicker xColor, double height) throws FileNotFoundException {
         xColor.getStyleClass().add("button"); //WHAT IS THIS DOING THERES NO BUTTON METHOD IN CSS
-        xColor.setStyle("-fx-color-label-visible: false ; -fx-color-rect-width: "+ (height*0.09) +"; -fx-color-rect-height: "+ (height*0.09) +"; -fx-padding: -10; ");
+        xColor.setStyle("-fx-color-label-visible: false ; -fx-color-rect-width: "+ (height*0.09) +"; -fx-color-rect-height: "+ (height*0.09) +"; -fx-padding: -10;");
 
         return xColor;
     }
