@@ -13,6 +13,7 @@ public class TextCaption extends Pane {
     private Text text = new Text();
 
     public TextCaption(String text, Font font){
+
         int height = (int) Screen.getPrimary().getBounds().getHeight();
 
         this.text.setText(text);
@@ -23,7 +24,6 @@ public class TextCaption extends Pane {
 
         this.text.setTranslateX(((height/2.4 + height/9.6) - this.text.getLayoutBounds().getWidth()) / 2);
         this.getChildren().add(this.text);
-
     }
 
     public String getText() {

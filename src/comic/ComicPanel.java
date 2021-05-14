@@ -25,8 +25,8 @@ public class ComicPanel extends Pane {
     private TextBubble leftTextBubble = null;
     private TextBubble rightTextBubble = null;
 
-    private TextCaption topText;
-    private TextCaption bottomText;
+    private TextCaption topText = new TextCaption("", Font.font("Segoe UI", 20));
+    private TextCaption bottomText = new TextCaption("", Font.font("Segoe UI", 20));
 
     private String background = "images/backgrounds/BlankBackground.jpg";
 
@@ -55,6 +55,9 @@ public class ComicPanel extends Pane {
 
         this.getChildren().add(leftCharacter);
         this.getChildren().add(rightCharacter);
+
+        this.getChildren().add(topText);
+        this.getChildren().add(bottomText);
 
         isLocked = false;
 
@@ -407,10 +410,11 @@ public class ComicPanel extends Pane {
     }
 
     public void setTopText(String text, Font font){
-        if(topText != null)
-            topBottom = "top";
-        else
-            topBottom = null;
+
+//        if(topText != null)
+//            topBottom = "top";
+//        else
+//            topBottom = null;
 
         this.getChildren().remove(topText);
         topText = new TextCaption(text, font);

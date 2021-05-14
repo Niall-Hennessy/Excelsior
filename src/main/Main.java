@@ -1,8 +1,9 @@
 package main;
 
 import comic.ComicPanel;
+import comic.Modal;
 import comic.TextBubble;
-import comic.TextCaption;
+import comic.TextModal;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
@@ -41,10 +42,7 @@ import javafx.util.Duration;
 import org.w3c.dom.*;
 import undo.Undo;
 import undo.UndoList;
-import ux.ButtonIcon;
-import ux.GalleryManager;
-import ux.HelpMenu;
-import ux.HoverTips;
+import ux.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -1099,10 +1097,9 @@ public class Main extends Application {
         });
 
         textButton.setOnAction(new EventHandler<ActionEvent>() {
-            final Stage addText = new Stage(StageStyle.UNDECORATED);
-
             @Override
             public void handle(ActionEvent event) {
+                TextModal textModal = new TextModal(width/2 -200, height/2, comicPanel[0]);
 
                 if(!comicStrip.getChildren().contains(comicPanel[0])){
                     hoverTips.NoPanelSelectedTip(tipNoPanelSelected, textButton);
@@ -1114,202 +1111,206 @@ public class Main extends Application {
                     return;
                 }
 
-                Button submit = new Button("Apply");
-                submit.getStyleClass().add("submit");
-                Button escape = new Button("X");
-                escape.getStyleClass().add("escape");
-                Button cancel = new Button("Cancel");
-                cancel.getStyleClass().add("cancel");
-                Button delete = new Button("Delete");
-                delete.getStyleClass().add("cancel");
-                Button topText = new Button("Top Text");
-                topText.getStyleClass().add("bold");
-                Button bottomText = new Button("Bottom Text");
-                bottomText.getStyleClass().add("bold");
-                Label label = new Label("Fonts: ");
-                ComboBox combo_box = new ComboBox();
-                combo_box.getStyleClass().add("bold");
-                combo_box.getItems().addAll("Segoe UI", "Verdana", "Times New Roman", "Arial");
-                combo_box.getSelectionModel().selectFirst();
-
-
-                TextField captionTextfield = new TextField();
-
-                if(comicPanel[0].getTopText() != null) {
-                    captionTextfield.setFont(comicPanel[0].getTopText().getTextObject().getFont());
-                    combo_box.setValue(comicPanel[0].getTopText().getTextObject().getFont().getName());
-                }
-                else
-                    captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
-
-                captionTextfield.getStyleClass().add("capTextField");
-                HBox topOrBot = new HBox(captionTextfield);
-                captionTextfield.setPrefWidth(400);
-                captionTextfield.setPrefHeight(25);
-
-                GridPane layoutGrid = new GridPane();
-                layoutGrid.getStyleClass().add("layoutGrid");
-                layoutGrid.setPadding(new Insets(10, 10, 10, 10));
-                layoutGrid.setVgap(5);
-                layoutGrid.setHgap(5);
-
-                // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
-                layoutGrid.add(escape, 21, 0, 1, 1);
-                layoutGrid.setMargin(escape, new Insets(5,0,5,0));
-                layoutGrid.add(topText, 0, 1, 1, 1);
-                layoutGrid.setMargin(topText, new Insets (5, 0, 5, 25));
-                layoutGrid.add(bottomText, 1, 1, 1, 1);
-                layoutGrid.setMargin(bottomText, new Insets (5, 0, 5, 0));
-                layoutGrid.add(topOrBot, 0, 2, 20, 1);
-                layoutGrid.setMargin(topOrBot, new Insets (5, 0, 5, 25));
-                layoutGrid.add(label,0, 3, 1, 1);
-                layoutGrid.setMargin(label, new Insets (5, 0, 5, 25));
-                layoutGrid.add(combo_box,1, 3, 1, 1);
-                layoutGrid.setMargin(combo_box, new Insets (5, 0, 5, 0));
-                layoutGrid.add(submit, 0, 4, 1, 1);
-                layoutGrid.setMargin(submit, new Insets (5, 0, 5, 25));
-                layoutGrid.add(cancel,1, 4, 1, 1);
-                layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 0));
-                layoutGrid.add(delete,2, 4, 1, 1);
-                layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
-
-                final boolean[] top = {true};
-                final boolean[] bottom = {false};
-
-                topText.getStyleClass().add("topTextCaption");
-                bottomText.getStyleClass().add("bottomTextCaption");
-
-                if(comicPanel[0].getTopText() != null)
-                    captionTextfield.setText(comicPanel[0].getTopText().getText());
-
-                topText.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        captionTextfield.setText("");
-                        bottom[0] = false;
-                        top[0] = true;
-
-                        topText.setStyle("-fx-background-color: #755A85");
-                        bottomText.setStyle("-fx-background-color: #AF86C8");
-
-                        if(comicPanel[0].getTopText() != null) {
-                            captionTextfield.setText(comicPanel[0].getTopText().getText());
-                            captionTextfield.setFont(comicPanel[0].getTopText().getTextObject().getFont());
-                            combo_box.setValue(comicPanel[0].getTopText().getTextObject().getFont().getName());
-                        }
-                        else {
-                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
-                            combo_box.setValue("Segoe UI");
-                        }
-                    }
-                });
-
-                bottomText.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        captionTextfield.setText("");
-                        bottom[0] = true;
-                        top[0] = false;
-
-                        bottomText.setStyle("-fx-background-color: #755A85");
-                        topText.setStyle("-fx-background-color: #AF86C8");
-
-                        if(comicPanel[0].getBottomText() != null) {
-                            captionTextfield.setText(comicPanel[0].getBottomText().getText());
-                            captionTextfield.setFont(comicPanel[0].getBottomText().getTextObject().getFont());
-                            combo_box.setValue(comicPanel[0].getBottomText().getTextObject().getFont().getName());
-                        }
-                        else {
-                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
-                            combo_box.setValue("Segoe UI");
-                        }
-                    }
-                });
-
-                escape.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-
-                        bottom[0] = false;
-                        top[0] = false;
-                        addText.close();
-                    }
-                });
-
-                cancel.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-
-                        bottom[0] = false;
-                        top[0] = false;
-                        addText.close();
-                    }
-                });
-
-                submit.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-
-                        Font undoFont = captionTextfield.getFont();
-                        Font font = Font.font((String)combo_box.getSelectionModel().getSelectedItem(), FontWeight.NORMAL, 20);
-                        captionTextfield.setFont(Font.font((String)combo_box.getSelectionModel().getSelectedItem(), FontWeight.NORMAL, 20));
-
-                        if(top[0]){
-                            TextCaption current = comicPanel[0].getTopText();
-
-                            if(current != null){
-                                Undo undo = new Undo("caption", comicPanel[0], "top", current.getText() + "#" + undoFont.getFamily());
-                                UndoList.addUndo(undo);
-                            }
-                            else{
-                                Undo undo = new Undo("caption", comicPanel[0], "top", "" + "#" + "Segoe UI");
-                                UndoList.addUndo(undo);
-                            }
-
-                            comicPanel[0].setTopText(captionTextfield.getText(), font);
-                        }
-                        else if(bottom[0]){
-                            TextCaption current = comicPanel[0].getBottomText();
-
-                            if(current != null){
-                                Undo undo = new Undo("caption", comicPanel[0], "bottom", current.getText() + "#" + undoFont.getFamily());
-                                UndoList.addUndo(undo);
-                            }
-                            else{
-                                Undo undo = new Undo("caption", comicPanel[0], "bottom", "" + "#" + "Segoe UI");
-                                UndoList.addUndo(undo);
-                            }
-
-                            comicPanel[0].setBottomText(captionTextfield.getText(), font);
-                        }
-                    }
-                });
-
-                delete.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        comicPanel[0].removeText(top, bottom);
-                        bottom[0] = false;
-                        top[0] = false;
-                        addText.close();
-                    }
-                });
-
-                Scene scene = new Scene(layoutGrid);
-                scene.getStylesheets().add("main/style.css");
-                addText.setScene(scene);
-
-                addText.setX(width/2 -200);
-                addText.setY(height/2);
-
-                addText.show();
-
-                scene.setOnMousePressed(pressEvent -> {
-                    scene.setOnMouseDragged(dragEvent -> {
-                        addText.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
-                        addText.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
-                    });
-                });
+                textModal.addSubmit();
+                textModal.addTextField();
+                textModal.addCancel();
+                textModal.addDelete();
+                textModal.addComboBox("Segoe UI", "Verdana", "Times New Roman", "Arial");
+                textModal.addEscape();
+                textModal.show();
+//
+//
+//
+//
+//
+//                Button topText = new Button("Top Text");
+//                topText.getStyleClass().add("bold");
+//                Button bottomText = new Button("Bottom Text");
+//                bottomText.getStyleClass().add("bold");
+//                Label label = new Label("Fonts: ");
+//                ComboBox combo_box = new ComboBox();
+//                combo_box.getStyleClass().add("bold");
+//                combo_box.getItems().addAll("Segoe UI", "Verdana", "Times New Roman", "Arial");
+//                combo_box.getSelectionModel().selectFirst();
+//
+//
+//                TextField captionTextfield = new TextField();
+//
+//                if(comicPanel[0].getTopText() != null) {
+//                    captionTextfield.setFont(comicPanel[0].getTopText().getTextObject().getFont());
+//                    combo_box.setValue(comicPanel[0].getTopText().getTextObject().getFont().getName());
+//                }
+//                else
+//                    captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+//
+//                captionTextfield.getStyleClass().add("capTextField");
+//                HBox topOrBot = new HBox(captionTextfield);
+//                captionTextfield.setPrefWidth(400);
+//                captionTextfield.setPrefHeight(25);
+//
+//                GridPane layoutGrid = new GridPane();
+//                layoutGrid.getStyleClass().add("layoutGrid");
+//                layoutGrid.setPadding(new Insets(10, 10, 10, 10));
+//                layoutGrid.setVgap(5);
+//                layoutGrid.setHgap(5);
+//
+//                // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
+//                layoutGrid.add(escape, 21, 0, 1, 1);
+//                layoutGrid.setMargin(escape, new Insets(5,0,5,0));
+//                layoutGrid.add(topText, 0, 1, 1, 1);
+//                layoutGrid.setMargin(topText, new Insets (5, 0, 5, 25));
+//                layoutGrid.add(bottomText, 1, 1, 1, 1);
+//                layoutGrid.setMargin(bottomText, new Insets (5, 0, 5, 0));
+//                layoutGrid.add(topOrBot, 0, 2, 20, 1);
+//                layoutGrid.setMargin(topOrBot, new Insets (5, 0, 5, 25));
+//                layoutGrid.add(label,0, 3, 1, 1);
+//                layoutGrid.setMargin(label, new Insets (5, 0, 5, 25));
+//                layoutGrid.add(combo_box,1, 3, 1, 1);
+//                layoutGrid.setMargin(combo_box, new Insets (5, 0, 5, 0));
+//                layoutGrid.add(submit, 0, 4, 1, 1);
+//                layoutGrid.setMargin(submit, new Insets (5, 0, 5, 25));
+//                layoutGrid.add(cancel,1, 4, 1, 1);
+//                layoutGrid.setMargin(cancel, new Insets (5, 0, 5, 0));
+//                layoutGrid.add(delete,2, 4, 1, 1);
+//                layoutGrid.setMargin(delete, new Insets (5, 0, 5, 0));
+//
+//                final boolean[] top = {true};
+//                final boolean[] bottom = {false};
+//
+//                topText.getStyleClass().add("topTextCaption");
+//                bottomText.getStyleClass().add("bottomTextCaption");
+//
+//                if(comicPanel[0].getTopText() != null)
+//                    captionTextfield.setText(comicPanel[0].getTopText().getText());
+//
+//                topText.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//                        captionTextfield.setText("");
+//                        bottom[0] = false;
+//                        top[0] = true;
+//
+//                        topText.setStyle("-fx-background-color: #755A85");
+//                        bottomText.setStyle("-fx-background-color: #AF86C8");
+//
+//                        if(comicPanel[0].getTopText() != null) {
+//                            captionTextfield.setText(comicPanel[0].getTopText().getText());
+//                            captionTextfield.setFont(comicPanel[0].getTopText().getTextObject().getFont());
+//                            combo_box.setValue(comicPanel[0].getTopText().getTextObject().getFont().getName());
+//                        }
+//                        else {
+//                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+//                            combo_box.setValue("Segoe UI");
+//                        }
+//                    }
+//                });
+//
+//                bottomText.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//                        captionTextfield.setText("");
+//                        bottom[0] = true;
+//                        top[0] = false;
+//
+//                        bottomText.setStyle("-fx-background-color: #755A85");
+//                        topText.setStyle("-fx-background-color: #AF86C8");
+//
+//                        if(comicPanel[0].getBottomText() != null) {
+//                            captionTextfield.setText(comicPanel[0].getBottomText().getText());
+//                            captionTextfield.setFont(comicPanel[0].getBottomText().getTextObject().getFont());
+//                            combo_box.setValue(comicPanel[0].getBottomText().getTextObject().getFont().getName());
+//                        }
+//                        else {
+//                            captionTextfield.setFont(Font.font("Segoe UI", FontWeight.NORMAL, 20));
+//                            combo_box.setValue("Segoe UI");
+//                        }
+//                    }
+//                });
+//
+//                escape.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//
+//                        bottom[0] = false;
+//                        top[0] = false;
+//                        addText.close();
+//                    }
+//                });
+//
+//                cancel.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//
+//                        bottom[0] = false;
+//                        top[0] = false;
+//                        addText.close();
+//                    }
+//                });
+//
+//                submit.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//
+//                        Font undoFont = captionTextfield.getFont();
+//                        Font font = Font.font((String)combo_box.getSelectionModel().getSelectedItem(), FontWeight.NORMAL, 20);
+//                        captionTextfield.setFont(Font.font((String)combo_box.getSelectionModel().getSelectedItem(), FontWeight.NORMAL, 20));
+//
+//                        if(top[0]){
+//                            TextCaption current = comicPanel[0].getTopText();
+//
+//                            if(current != null){
+//                                Undo undo = new Undo("caption", comicPanel[0], "top", current.getText() + "#" + undoFont.getFamily());
+//                                UndoList.addUndo(undo);
+//                            }
+//                            else{
+//                                Undo undo = new Undo("caption", comicPanel[0], "top", "" + "#" + "Segoe UI");
+//                                UndoList.addUndo(undo);
+//                            }
+//
+//                            comicPanel[0].setTopText(captionTextfield.getText(), font);
+//                        }
+//                        else if(bottom[0]){
+//                            TextCaption current = comicPanel[0].getBottomText();
+//
+//                            if(current != null){
+//                                Undo undo = new Undo("caption", comicPanel[0], "bottom", current.getText() + "#" + undoFont.getFamily());
+//                                UndoList.addUndo(undo);
+//                            }
+//                            else{
+//                                Undo undo = new Undo("caption", comicPanel[0], "bottom", "" + "#" + "Segoe UI");
+//                                UndoList.addUndo(undo);
+//                            }
+//
+//                            comicPanel[0].setBottomText(captionTextfield.getText(), font);
+//                        }
+//                    }
+//                });
+//
+//                delete.setOnAction(new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent actionEvent) {
+//                        comicPanel[0].removeText(top, bottom);
+//                        bottom[0] = false;
+//                        top[0] = false;
+//                        addText.close();
+//                    }
+//                });
+//
+//                Scene scene = new Scene(layoutGrid);
+//                scene.getStylesheets().add("main/style.css");
+//                addText.setScene(scene);
+//
+//                addText.setX(width/2 -200);
+//                addText.setY(height/2);
+//
+//                addText.show();
+//
+//                scene.setOnMousePressed(pressEvent -> {
+//                    scene.setOnMouseDragged(dragEvent -> {
+//                        addText.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+//                        addText.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+//                    });
+//                });
             }
         });
 
@@ -2168,6 +2169,14 @@ public class Main extends Application {
 
             @Override
             public void handle(ActionEvent event) {
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, starting a new project will delete any unsaved progress\nDo you still wish to continue?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (!(result.isPresent() && result.get() == ButtonType.OK)) {
+                    return;
+                }
+
                 premise[0] = "";
 
                 comicStrip.getChildren().clear();
