@@ -77,24 +77,9 @@ public class Main extends Application {
 
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
-        List<ComicPanel> deletedPanels = new Stack<>();
-
-        final String[] character = new String[1];
-
-        Menu file = new Menu("File");
-        MenuItem new_project = new MenuItem("New Project");
-        MenuItem save_xml = new MenuItem("Save XML");
-        MenuItem save_html = new MenuItem("Save HTML");
-        MenuItem load_xml = new MenuItem("Load XML");
-        MenuItem add_character = new MenuItem("Add Character");
-        MenuItem add_background = new MenuItem("Add Background");
-
-        Menu help = new Menu("Help");
-        MenuItem helpItem = new MenuItem("Help");
-
         ButtonUI button_ui = new ButtonUI();
-        button_ui.addLabelAndItems(file, new_project, save_xml, save_html, load_xml, add_character, add_background);
-        button_ui.addLabelAndItems(help, helpItem);
+        button_ui.addLabelAndItems("File", "New Project", "Save XML", "Save HTML", "Load XML", "Add Background", "Add Character");
+        button_ui.addLabelAndItems("Help", "Help");
 
         HBox menuBox = new HBox(button_ui.getMenuBar());
 
@@ -117,7 +102,6 @@ public class Main extends Application {
         final Button[] lockButton = {buttonIcon.getButtonIcon("src/images/buttons/unlock.png")};
         Button deleteButton = buttonIcon.getButtonIcon("src/images/buttons/delete.png");
         Button undoButton = buttonIcon.getButtonIcon("src/images/buttons/undo_button.png");
-
 
         final Stage toolTip = new Stage();
         toolTip.initStyle(StageStyle.UNDECORATED);
@@ -218,7 +202,7 @@ public class Main extends Application {
             }
         });
 
-        save_xml.setOnAction(new EventHandler<ActionEvent>() {
+        button_ui.getMenuItem("Save XML").setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
@@ -234,7 +218,7 @@ public class Main extends Application {
             }
         });
 
-        add_character.setOnAction(new EventHandler<ActionEvent>() {
+        button_ui.getMenuItem("Add Character").setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
@@ -254,7 +238,7 @@ public class Main extends Application {
             }
         });
 
-        add_background.setOnAction(new EventHandler<ActionEvent>() {
+        button_ui.getMenuItem("Add Background").setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
@@ -275,14 +259,13 @@ public class Main extends Application {
             }
         });
 
-        help.setOnAction(new EventHandler<ActionEvent>() {
+        button_ui.getMenuItem("Help").setOnAction(new EventHandler<ActionEvent>() {
             HelpMenuConstructor helpMenuConstructor = new HelpMenuConstructor();
             @Override
             public void handle(ActionEvent event) {
                 helpMenuConstructor.show();
             }
         });
-
 
         GalleryManager galleryView = new GalleryManager();
 
@@ -587,19 +570,9 @@ public class Main extends Application {
             }
         });
 
-        Text skin = new Text();
-        skin.setText("Skin:");
-        skin.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
-
-        Text hair = new Text();
-        hair.setText("Hair:");
-        hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
-
-
         button_ui.addButtonsToScrollPane(leftCharacter, rightCharacter, flipButton, genderButton, textButton, bubbleButton, backgroundButton);
         button_ui.addOtherToScrollPane(skinColorPicker[0], hairColorPicker[0], undoButton, deleteButton, lockButton[0]);
         FlowPane buttonLayout = button_ui.getFlowPane(width);
-
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
@@ -639,14 +612,14 @@ public class Main extends Application {
         newPanelRight.setVisible(false);
         newPanelLeft.setVisible(false);
 
-        load_xml.setOnAction(new EventHandler<ActionEvent>() {
+        button_ui.getMenuItem("Load XML").setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 LoadXML loadXML = new LoadXML(comicStrip, premise[0], newPanelLeft, newPanelRight, width, height);
             }
         });
 
-        save_html.setOnAction((ActionEvent event) -> {
+        button_ui.getMenuItem("Save HTML").setOnAction((ActionEvent event) -> {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, number of comic panels does not match layout.\nDo you still wish to continue?");
 
@@ -895,7 +868,7 @@ public class Main extends Application {
 
         });
 
-        new_project.setOnAction(new EventHandler<ActionEvent>() {
+        button_ui.getMenuItem("New Project").setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -948,8 +921,6 @@ public class Main extends Application {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     comicStrip.getChildren().remove(comicPanel[0]);
-
-                    deletedPanels.add(comicPanel[0]);
 
                     Undo undo = new Undo("delete", comicPanel[0]);
                     undo.setObj(newPanelRight);
@@ -1154,7 +1125,6 @@ public class Main extends Application {
             }
         });
 
-
         Scene scene = new Scene(mainPane, width, height, false, SceneAntialiasing.DISABLED);
         scene.getStylesheets().add("main/style.css");
 
@@ -1174,7 +1144,6 @@ public class Main extends Application {
         scene.getStylesheets().add("main/style.css");
 
         primaryStage.show();
-
     }
 
     private void addPressAndHoldHandler(javafx.scene.Node node, Duration holdTime,
