@@ -1,20 +1,18 @@
 package comic;
 
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import ux.GalleryManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -135,17 +133,19 @@ public class GalleryModal extends Modal {
         HBox bubbleGallery = new HBox();
         bubbleGallery.getStyleClass().add("bubbles");
 
+        File folder = new File("src/images/bubbles");
+        File[] listOfFiles = folder.listFiles();
 
-        try {
-            Image image = new Image(new FileInputStream("src/images/bubbles/curvy.png"));
-            ImageView imageView = new ImageView(image);
-            imageView.setFitHeight(150);
-            imageView.setFitWidth(150);
-            bubbleName = "curvy";
-            bubbleDisplay.getChildren().add(imageView);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        GalleryManager galleryManager = new GalleryManager();
+
+        for (final File file : listOfFiles)
+                {
+                    ImageView imageView;
+                    imageView = galleryManager.createImageView(file, bubbleDisplay, bubbleName);
+                    bubbleGallery.getChildren().add(imageView);
+                }
+
+        System.out.println(bubbleName);
 
         layoutGrid.add(bubbleGallery, 0, 2, 3, 3);
         layoutGrid.setMargin(bubbleGallery, new Insets(10, 10, 10, 30));
