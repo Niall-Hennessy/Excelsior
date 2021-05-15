@@ -4,7 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 
-public class Button_UI {
+public class ButtonUI {
     private MenuBar menuBar = new MenuBar();
     private FlowPane buttonLayout = new FlowPane();
 

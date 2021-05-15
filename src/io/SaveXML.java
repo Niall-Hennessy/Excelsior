@@ -20,17 +20,9 @@ import java.io.File;
 
 public class SaveXML {
 
-    FileChooser fileChooser = new FileChooser();
-
-    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
-
-    public SaveXML(HBox comicStrip){
+    public SaveXML(HBox comicStrip, File saveFile){
 
         try{
-            fileChooser.getExtensionFilters().add(extFilter);
-
-            File saveFile = fileChooser.showSaveDialog(null);
-
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -185,6 +177,7 @@ public class SaveXML {
 
                     Attr attr = doc.createAttribute("status");
                     attr.setValue(toParse.getLeftTextBubble().getStatus());
+
                     balloon.setAttributeNode(attr);
 
                     Element content = doc.createElement("content");

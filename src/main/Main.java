@@ -18,7 +18,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -28,7 +27,6 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Transform;
@@ -38,18 +36,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import org.w3c.dom.*;
 import undo.Undo;
+import undo.UndoAction;
 import undo.UndoList;
 import ux.*;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.nio.file.Files;
@@ -89,7 +81,6 @@ public class Main extends Application {
 
         final String[] character = new String[1];
 
-
         Menu file = new Menu("File");
         MenuItem new_project = new MenuItem("New Project");
         MenuItem save_xml = new MenuItem("Save XML");
@@ -101,7 +92,7 @@ public class Main extends Application {
         Menu help = new Menu("Help");
         MenuItem helpItem = new MenuItem("Help");
 
-        Button_UI button_ui = new Button_UI();
+        ButtonUI button_ui = new ButtonUI();
         button_ui.addLabelAndItems(file, new_project, save_xml, save_html, load_xml, add_character, add_background);
         button_ui.addLabelAndItems(help, helpItem);
 
@@ -227,11 +218,19 @@ public class Main extends Application {
             }
         });
 
-
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                SaveXML saveXML = new SaveXML(comicStrip);
+
+                FileChooser fileChooser = new FileChooser();
+
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+
+                fileChooser.getExtensionFilters().add(extFilter);
+
+                File saveFile = fileChooser.showSaveDialog(null);
+
+                SaveXML saveXML = new SaveXML(comicStrip, saveFile);
             }
         });
 
@@ -528,7 +527,8 @@ public class Main extends Application {
                         }
                     }
 
-                    Undo undo = new Undo("lock", comicPanel[0]);
+                    Undo undo = new Undo("lock", comicPanel[0], "" + height);
+                    undo.setObj(lockButton[0]);
                     UndoList.addUndo(undo);
 
                 }
@@ -592,6 +592,7 @@ public class Main extends Application {
                             if(comicPanel[0].getSelectedCharacter() != null) {
                                 comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
                                 Undo undo = new Undo("skin", comicPanel[0], comicPanel[0].getLeftRight(), current.toString());
+                                undo.setObj(skinColorPicker[0]);
                                 UndoList.addUndo(undo);
                             }
                             else {
@@ -631,6 +632,7 @@ public class Main extends Application {
                             if(comicPanel[0].getSelectedCharacter() != null) {
                                 comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
                                 Undo undo = new Undo("hair", comicPanel[0], comicPanel[0].getLeftRight(), current.toString());
+                                undo.setObj(hairColorPicker[0]);
                                 UndoList.addUndo(undo);
                             }else {
                                 hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
@@ -968,6 +970,8 @@ public class Main extends Application {
                 comicStrip.getChildren().add(newPanelLeft);
                 comicStrip.getChildren().add(newPanelRight);
 
+                UndoList.clear();
+
                 newPanelRight.fire();
             }
         });
@@ -1004,6 +1008,7 @@ public class Main extends Application {
                     deletedPanels.add(comicPanel[0]);
 
                     Undo undo = new Undo("delete", comicPanel[0]);
+                    undo.setObj(newPanelRight);
                     UndoList.addUndo(undo);
 
                     hairColorPicker[0].setValue(Color.WHITE);
@@ -1013,185 +1018,9 @@ public class Main extends Application {
         });
 
         undoButton.setOnAction(new EventHandler<ActionEvent>() {
+            UndoAction undoAction = new UndoAction(comicStrip);
             public void handle(final ActionEvent event) {
-
-
-                /*
-                Actions that can be undone
-
-                Rearranging panel: Panel, Previous Panel *To Do after fully implemented or on Sunday*
-
-                Adding Speech Bubble: Panel, L/R
-                 */
-
-                /*
-                Actually Implemented
-
-                Locking Panel: Panel
-                Add Background: Panel, Previous Image
-                Changing Character Image: Panel, L/R, Previous Image
-                Moving Character: Panel, L/R, Previous Location
-                Delete Panel: Panel
-                Moving Speech Bubble: Panel, L/R, Previous Location
-                Flipping Character: Panel, L/R
-                Gender Character: Panel, L/R
-                Skin Character: Panel, L/R, Previous Colour
-                Hair Character: Panel, L/R, Previous Colour
-                Adding Text: Panel, T/B
-                Add Panel: Panel
-                 */
-
-                if(UndoList.size() > 1) {
-
-                    Undo undo = UndoList.getUndo();
-
-                    if (undo.getOperation().matches("delete")) {
-                        comicStrip.getChildren().remove(newPanelRight);
-                        comicStrip.getChildren().add(undo.getComicPanel().getIndex(), undo.getComicPanel());
-                        comicStrip.getChildren().add(newPanelRight);
-                    }
-                    else if(undo.getOperation().matches("background"))
-                    {
-                        undo.getComicPanel().setBackgroundString(undo.getValue_1());
-                        undo.getComicPanel().unselect();
-                    }
-                    else if (undo.getOperation().matches("flip")) {
-
-                        if (undo.getValue_1().matches("left"))
-                            undo.getComicPanel().getLeftCharacter().flipOrientation();
-                        else
-                            undo.getComicPanel().getRightCharacter().flipOrientation();
-
-                    } else if (undo.getOperation().matches("gender")){
-
-                        if (undo.getValue_1().matches("left"))
-                            undo.getComicPanel().getLeftCharacter().genderSwap();
-                        else
-                            undo.getComicPanel().getRightCharacter().genderSwap();
-                    }
-                    else if (undo.getOperation().matches("skin")){
-
-                        skinColorPicker[0].setValue(Color.web(undo.getValue_2()));
-
-                        if (undo.getValue_1().matches("left"))
-                            undo.getComicPanel().getLeftCharacter().setSkin(Color.web(undo.getValue_2()));
-                        else
-                            undo.getComicPanel().getRightCharacter().setSkin(Color.web(undo.getValue_2()));
-                    }else if (undo.getOperation().matches("hair")) {
-
-                        hairColorPicker[0].setValue(Color.web(undo.getValue_2()));
-
-                        if (undo.getValue_1().matches("left"))
-                            undo.getComicPanel().getLeftCharacter().setHair(Color.web(undo.getValue_2()));
-                        else
-                            undo.getComicPanel().getRightCharacter().setHair(Color.web(undo.getValue_2()));
-                    }else if (undo.getOperation().matches("caption")) {
-
-                        int i=0;
-                        while (undo.getValue_2().charAt(i) != '#')
-                            i++;
-
-                        if(undo.getValue_1().matches("top")) {
-                            undo.getComicPanel().setTopText(undo.getValue_2().substring(0,i), Font.font(undo.getValue_2().substring(i+1), FontWeight.NORMAL, 20));
-                            undo.getComicPanel().getTopText().setText(new Text(undo.getValue_2().substring(0,i)));
-                            undo.getComicPanel().getTopText().getTextObject().setFont(Font.font(undo.getValue_2().substring(i+1), FontWeight.NORMAL, 20));
-                        }else if(undo.getValue_1().matches("bottom")) {
-                            undo.getComicPanel().setBottomText(undo.getValue_2().substring(0,i), Font.font(undo.getValue_2().substring(i+1), FontWeight.NORMAL, 20));
-                            undo.getComicPanel().getBottomText().setText(new Text(undo.getValue_2().substring(0,i)));
-                            undo.getComicPanel().getBottomText().getTextObject().setFont(Font.font(undo.getValue_2().substring(i+1), FontWeight.NORMAL, 20));
-                        }
-
-                    }
-                    else if(undo.getOperation().matches("bubble"))
-                    {
-                        if(undo.getValue_1().matches("left"))
-                            undo.getComicPanel().setLeftTextBubble((TextBubble) undo.getObj());
-                        else
-                            undo.getComicPanel().setRightTextBubble((TextBubble) undo.getObj());
-                    }
-
-                    else if (undo.getOperation().matches("panel")){
-                        comicStrip.getChildren().remove(undo.getComicPanel());
-                    }else if (undo.getOperation().matches("lock")){
-
-                        undo.getComicPanel().setLocked(!undo.getComicPanel().getLocked());
-                        double imageWidth = backgroundButton.getWidth();
-                        double imageHeight = backgroundButton.getHeight();
-                        if(undo.getComicPanel().getLocked()) {
-                            try {
-                                ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
-                                imageView.setFitWidth(imageWidth-4);
-                                imageView.setFitHeight(imageHeight-2);
-                                lockButton[0].setGraphic(imageView);
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            try {
-                                ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
-                                imageView.setFitWidth(imageWidth-4);
-                                imageView.setFitHeight(imageHeight-2);
-                                lockButton[0].setGraphic(imageView);
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }else if (undo.getOperation().matches("character")){
-
-                        if (undo.getValue_1().matches("left")) {
-                            try {
-                                undo.getComicPanel().getLeftCharacter().setCharacterImageView("src/images/characters/" + undo.getValue_2() + ".png");
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        else{
-                            try {
-                                undo.getComicPanel().getRightCharacter().setCharacterImageView("src/images/characters/" + undo.getValue_2() + ".png");
-                                undo.getComicPanel().getRightCharacter().flipOrientation();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        if(undo.getValue_2().matches("blank")) {
-                            undo.getComicPanel().getCharacter(undo.getValue_1()).setStyle("");
-                            undo.getComicPanel().setSelectedCharacter(null);
-                        }
-
-                    }else if (undo.getOperation().matches("moveCharacter")){
-
-                        int i=0;
-                        while (undo.getValue_2().charAt(i) != '#')
-                            i++;
-
-                        if (undo.getValue_1().matches("left")){
-                            undo.getComicPanel().getLeftCharacter().setTranslateX(Double.parseDouble(undo.getValue_2().substring(0, i)));
-                            undo.getComicPanel().getLeftCharacter().setTranslateY(Double.parseDouble(undo.getValue_2().substring(i+1)));
-                        }
-                        else {
-                            undo.getComicPanel().getRightCharacter().setTranslateX(Double.parseDouble(undo.getValue_2().substring(0, i)));
-                            undo.getComicPanel().getRightCharacter().setTranslateY(Double.parseDouble(undo.getValue_2().substring(i+1)));
-                        }
-                    }else if (undo.getOperation().matches("moveBubble")){
-
-                        int i=0;
-                        while (undo.getValue_2().charAt(i) != '#')
-                            i++;
-
-                        if (undo.getValue_1().matches("left")){
-                            undo.getComicPanel().getLeftTextBubble().setTranslateX(Double.parseDouble(undo.getValue_2().substring(0, i)));
-                            undo.getComicPanel().getLeftTextBubble().setTranslateY(Double.parseDouble(undo.getValue_2().substring(i+1)));
-                        }
-                        else {
-                            undo.getComicPanel().getRightTextBubble().setTranslateX(Double.parseDouble(undo.getValue_2().substring(0, i)));
-                            undo.getComicPanel().getRightTextBubble().setTranslateY(Double.parseDouble(undo.getValue_2().substring(i+1)));
-                        }
-                    }
-
-                }
-                else {
-                    hoverTips.lockedTip("Nothing to undo", undoButton);
-                }
+                undoAction.undo();
             }
         });
 
