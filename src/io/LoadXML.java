@@ -473,8 +473,11 @@ public class LoadXML {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Warning, file formatting of the XML document is incorrect.\n\nError: "+ e.getMessage());
             alert.show();
-            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-            frame.dispose();
+
+            if(frame != null) {
+                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                frame.dispose();
+            }
         }
     }
 }

@@ -367,6 +367,7 @@ public class Main extends Application {
                 UndoList.addUndo(undo);
 
                 String path = "src/images/characters";
+                galleryView.setComicPanel(comicPanel);
                 galleryView.setRightCharacter(path);
                 skinColorPicker[0].setValue(comicPanel[0].getRightCharacter().getSkin());
                 hairColorPicker[0].setValue(comicPanel[0].getRightCharacter().getHair());
@@ -397,6 +398,7 @@ public class Main extends Application {
                 UndoList.addUndo(undo);
 
                 String path = "src/images/characters";
+                galleryView.setComicPanel(comicPanel);
                 galleryView.setLeftCharacter(path);
                 skinColorPicker[0].setValue(comicPanel[0].getLeftCharacter().getSkin());
                 hairColorPicker[0].setValue(comicPanel[0].getLeftCharacter().getHair());
@@ -441,15 +443,6 @@ public class Main extends Application {
         });
 
         bubbleButton.setOnAction(new EventHandler<ActionEvent>() {
-
-//            final Stage addBubble = new Stage(StageStyle.UNDECORATED);
-//
-//            Pane bubbleDisplay = new Pane();
-//            ImageView bubbleImageView = new ImageView();
-//            String bubbleName;
-//
-//            private double xOffset = 0;
-//            private double yOffset = 0;
 
             @Override
             public void handle(ActionEvent event) {
