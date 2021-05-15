@@ -48,7 +48,7 @@ public class GalleryManager {
         }
 
         gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizontal
-        gallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        gallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         gallery.setFitToWidth(true);
         gallery.setFitToHeight(true);
         gallery.setContent(poses);
