@@ -4,14 +4,18 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 
-public class Button_UI {
+public class ButtonUI {
     private MenuBar menuBar = new MenuBar();
     private FlowPane buttonLayout = new FlowPane();
 
 
-    public void addLabelAndItems (Menu title, MenuItem ...options) {
-        for(MenuItem i : options) {
-            title.getItems().add(i);
+    public void addLabelAndItems (String titleName, String ...options) {
+
+        Menu title = new Menu(titleName);
+
+        for(String i : options) {
+            MenuItem newMenuItem = new MenuItem(i);
+            title.getItems().add(newMenuItem);
         }
         menuBar.getMenus().add(title);
     }
@@ -48,5 +52,18 @@ public class Button_UI {
         buttonLayout.getStyleClass().add("buttonLayout");
 
         return buttonLayout;
+    }
+
+    public MenuItem getMenuItem(String item){
+
+        for(int i = 0; i < menuBar.getMenus().size(); i++) {
+            for(int j = 0; j < menuBar.getMenus().get(i).getItems().size(); j++) {
+                if(menuBar.getMenus().get(i).getItems().get(j).getText().matches(item)){
+                    return menuBar.getMenus().get(i).getItems().get(j);
+                }
+            }
+        }
+
+        return null;
     }
 }

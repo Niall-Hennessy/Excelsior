@@ -22,6 +22,10 @@ public class UndoList {
         return undo;
     }
 
+    public static void clear(){
+        undoList.clear();
+    }
+
     public static int size(){
         return undoList.size();
     }

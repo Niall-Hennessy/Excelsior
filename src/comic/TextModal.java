@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import undo.Undo;
+import undo.UndoList;
 
 public class TextModal extends Modal{
 
@@ -20,6 +22,13 @@ public class TextModal extends Modal{
     private final boolean[] value2 = {false};
     TextField textField = new TextField();
     ComboBox comboBox = new ComboBox();
+
+    String previousTopText = "";
+    String previousBottomText = "";
+
+    Font previousTopFont = Font.font("Segoe UI", 18);
+    Font previousBottomFont = Font.font("Segoe UI", 18);
+
 
     public TextModal(double width, double height, ComicPanel cPanel) {
         super(width, height, cPanel);
@@ -37,6 +46,26 @@ public class TextModal extends Modal{
         submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+                Undo undo = null;
+
+                if(value1[0]) {
+                    undo = new Undo("caption", comicPanel, "top", previousTopText + "#" + previousTopFont.getName());
+
+                    previousTopText = textField.getText();
+                    previousTopFont = textField.getFont();
+                }
+
+                if(value2[0]) {
+                    undo = new Undo("caption", comicPanel, "bottom", previousBottomText + "#" + previousBottomFont.getName());
+
+                    previousBottomText = textField.getText();
+                    previousBottomFont = textField.getFont();
+                }
+
+                if(undo != null)
+                    UndoList.addUndo(undo);
+
                 Font font = new Font(comboBox.getSelectionModel().getSelectedItem().toString(), 18);
                 textField.setFont(font);
 
@@ -62,15 +91,26 @@ public class TextModal extends Modal{
             @Override
             public void handle(ActionEvent event) {
                 if(value1[0]) {
-                    comicPanel.setTopText("", Font.font("", 20));
+
+                    Undo undo = new Undo("caption", comicPanel, "top", previousTopText + "#" + previousTopFont.getName());
+                    UndoList.addUndo(undo);
+
+                    previousTopText = textField.getText();
+                    previousTopFont = textField.getFont();
+
+                    comicPanel.setTopText("", Font.font("", 18));
                     textField.setText("");
-                    textField.setFont(Font.font("Segoe UI", 20));
+                    textField.setFont(Font.font("Segoe UI", 18));
                     comboBox.getSelectionModel().selectFirst();
                 }
                 else if(value2[0]) {
-                    comicPanel.setBottomText("", Font.font("", 20));
+
+                    Undo undo = new Undo("caption", comicPanel, "bottom", previousBottomText + "#" + previousBottomFont.getName());
+                    UndoList.addUndo(undo);
+
+                    comicPanel.setBottomText("", Font.font("", 18));
                     textField.setText("");
-                    textField.setFont(Font.font("Segoe UI", 20));
+                    textField.setFont(Font.font("Segoe UI", 18));
                     comboBox.getSelectionModel().selectFirst();
                 }
             }
@@ -92,6 +132,8 @@ public class TextModal extends Modal{
         textField.getStyleClass().add("capTextField");
         textField.setPrefWidth(200);
         textField.setPrefHeight(50);
+        Font font = new Font(comboBox.getSelectionModel().getSelectedItem().toString(), 18);
+        textField.setFont(font);
 
 
         layoutGrid.add(textField, 0, 2, 20, 1);
