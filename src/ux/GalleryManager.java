@@ -34,11 +34,6 @@ public class GalleryManager {
         ScrollPane gallery = new ScrollPane();
         TilePane poses = new TilePane();
 
-        if(entity == Entity.background)
-            poses.setPrefColumns(3);
-        else
-            poses.setPrefColumns(7);
-
         poses.setHgap(3);
         poses.setVgap(3);
 
