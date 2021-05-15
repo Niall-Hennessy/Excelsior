@@ -504,21 +504,6 @@ public class Main extends Application {
                 bubbleGallery.show();
 
 
-//                Button submit = new Button("Submit");
-//                submit.getStyleClass().add("submit");
-//                Button escape = new Button("X");
-//                escape.getStyleClass().add("escape");
-//                Button cancel = new Button("Cancel");
-//                cancel.getStyleClass().add("cancel");
-//                Button delete = new Button("Delete");
-//                delete.getStyleClass().add("cancel");
-//                Button italic = new Button("Italic");
-//                italic.getStyleClass().add("italic");
-//                Button bold = new Button("Bold");
-//                bold.getStyleClass().add("bold");
-//                Button fonts = new Button("Font");
-//                fonts.getStyleClass().add("fonts");
-//
 //                if(bubbleDisplay.getChildren().size() == 0)
 //                    bubbleDisplay.getChildren().add(bubbleImageView);
 //
@@ -527,8 +512,6 @@ public class Main extends Application {
 //                HBox bubbleGallery = new HBox();
 //                bubbleGallery.getStyleClass().add("bubbles");
 //
-//                File folder = new File("src/images/bubbles");
-//                File[] listOfFiles = folder.listFiles();
 //
 //                TextField textfield = new TextField();
 //
@@ -694,56 +677,6 @@ public class Main extends Application {
 
 //                addBubble.show();
             }
-
-//            private ImageView createImageView(final File imageFile) {
-//
-//                ImageView imageView = null;
-//
-//                try {
-//                    final Image image = new Image(new FileInputStream(imageFile), 150, 150, true,
-//                            true);
-//
-//                    int width = (int) image.getWidth();
-//                    int height = (int) image.getHeight();
-//
-//                    WritableImage writableImage = new WritableImage(width, height);
-//
-//                    PixelReader pixelReader = image.getPixelReader();
-//                    PixelWriter pixelWriter = writableImage.getPixelWriter();
-//
-//                    for (int y = 0; y < height; y++) {
-//                        for (int x = 0; x < width; x++) {
-//                            Color color = pixelReader.getColor(x, y);
-//
-//                            if (color.equals(Color.rgb(255, 254, 255))) {
-//                                pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
-//                            }
-//                            else
-//                                pixelWriter.setColor(x, y, color);
-//                        }
-//                    }
-//
-//                    imageView = new ImageView(writableImage);
-//                    imageView.setPickOnBounds(true);
-//                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//
-//                        @Override
-//                        public void handle(MouseEvent mouseEvent) {
-//
-//                            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-//
-//                                if (mouseEvent.getClickCount() == 1) {
-//                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(writableImage);
-//                                    bubbleName = imageFile.getPath().substring(19);
-//                                }
-//                            }
-//                        }
-//                    });
-//                } catch (FileNotFoundException ex) {
-//                    ex.printStackTrace();
-//                }
-//                return imageView;
-//            }
         });
 
         backgroundButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

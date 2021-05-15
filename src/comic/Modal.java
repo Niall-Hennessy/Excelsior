@@ -30,8 +30,8 @@ public class Modal {
 
         modal.setScene(scene);
 
-        modal.setX(width);
-        modal.setY(height);
+        modal.setX(width/1.5);
+        modal.setY(height/2);
 
         scene.setOnMousePressed(pressEvent -> {
             scene.setOnMouseDragged(dragEvent -> {

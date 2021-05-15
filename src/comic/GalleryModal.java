@@ -7,11 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import ux.Entity;
 import ux.GalleryManager;
 
 import java.io.File;
@@ -74,6 +77,10 @@ public class GalleryModal extends Modal {
             @Override
             public void handle(ActionEvent event) {
 
+                if(((ImageView) bubbleDisplay.getChildren().get(0)).getImage() == null || textfield.getText().matches("")) {
+                    return;
+                }
+
                 if(comicPanel.getSelectedCharacter().equals(comicPanel.getLeftCharacter()))
                     comicPanel.setLeftBubble(((ImageView) bubbleDisplay.getChildren().get(0)).getImage(), textfield.getText(), textfield.getFont(), bubbleName);
                 else if(comicPanel.getSelectedCharacter().equals(comicPanel.getRightCharacter()))
@@ -125,8 +132,23 @@ public class GalleryModal extends Modal {
     }
 
     public void addGallery(){
+
+        galleryImageView.setFitHeight(150);
+        galleryImageView.setFitWidth(150);
+
         if(galleryPane.getChildren().size() == 0)
             galleryPane.getChildren().add(galleryImageView);
+
+        if(bubbleDisplay.getChildren().size() == 0)
+            bubbleDisplay.getChildren().add(galleryImageView);
+
+        if(comicPanel.getSelectedCharacter().equals(comicPanel.getLeftCharacter()) && comicPanel.getLeftTextBubble() != null){
+            ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(comicPanel.getLeftTextBubble().getBubble().getImage());
+        }
+
+        if(comicPanel.getSelectedCharacter().equals(comicPanel.getRightCharacter()) && comicPanel.getRightTextBubble() != null){
+            ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(comicPanel.getRightTextBubble().getBubble().getImage());
+        }
 
         galleryPane.setMinHeight(galleryImageView.getFitHeight()+100);
 
@@ -141,11 +163,23 @@ public class GalleryModal extends Modal {
         for (final File file : listOfFiles)
                 {
                     ImageView imageView;
-                    imageView = galleryManager.createImageView(file, bubbleDisplay, bubbleName);
+                    imageView = galleryManager.createImageView(file, Entity.bubble);
                     bubbleGallery.getChildren().add(imageView);
-                }
+                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-        System.out.println(bubbleName);
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+
+                            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+
+                                if (mouseEvent.getClickCount() == 1) {
+                                    ((ImageView)bubbleDisplay.getChildren().get(0)).setImage(imageView.getImage());
+                                    bubbleName = file.getPath().substring(19);
+                                }
+                            }
+                        }
+                    });
+                }
 
         layoutGrid.add(bubbleGallery, 0, 2, 3, 3);
         layoutGrid.setMargin(bubbleGallery, new Insets(10, 10, 10, 30));
