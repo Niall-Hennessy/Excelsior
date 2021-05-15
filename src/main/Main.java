@@ -89,8 +89,6 @@ public class Main extends Application {
 
         final String[] character = new String[1];
 
-        MenuBar menuBar = new MenuBar();
-        menuBar.getStyleClass().add("menuBar");
 
         Menu file = new Menu("File");
         MenuItem new_project = new MenuItem("New Project");
@@ -99,38 +97,24 @@ public class Main extends Application {
         MenuItem load_xml = new MenuItem("Load XML");
         MenuItem add_character = new MenuItem("Add Character");
         MenuItem add_background = new MenuItem("Add Background");
-        file.getItems().add(new_project);
-        file.getItems().add(save_xml);
-        file.getItems().add(save_html);
-        file.getItems().add(load_xml);
-        file.getItems().add(add_character);
-        file.getItems().add(add_background);
-
-        menuBar.getMenus().add(file);
 
         Menu help = new Menu("Help");
         MenuItem helpItem = new MenuItem("Help");
-        help.getItems().add(helpItem);
-        menuBar.getMenus().add(help);
 
-        HBox menuBox = new HBox(menuBar);
+        Button_UI button_ui = new Button_UI();
+        button_ui.addLabelAndItems(file, new_project, save_xml, save_html, load_xml, add_character, add_background);
+        button_ui.addLabelAndItems(help, helpItem);
+
+        HBox menuBox = new HBox(button_ui.getMenuBar());
 
         HBox comicStrip = new HBox();
+
+        ButtonIcon buttonIcon = new ButtonIcon(primaryStage.getHeight());
 
         final ColorPicker[] skinColorPicker = {new ColorPicker()};
         final ColorPicker[] hairColorPicker = {new ColorPicker()};
         skinColorPicker[0] = ButtonIcon.colorPickerStyling(skinColorPicker[0], primaryStage.getHeight());
         hairColorPicker[0] = ButtonIcon.colorPickerStyling(hairColorPicker[0], primaryStage.getHeight());
-
-        FlowPane buttonLayout = new FlowPane();
-        buttonLayout.setPrefWidth(width - 20);
-        buttonLayout.getStyleClass().add("buttonLayout");
-
-        menuBox.setMaxHeight(buttonLayout.getHeight()/2);
-
-        ButtonIcon buttonIcon = new ButtonIcon();
-
-        buttonIcon.setHeight(primaryStage.getHeight());
 
         Button rightCharacter = buttonIcon.getButtonIcon("src/images/buttons/lookLeft.png");
         Button leftCharacter = buttonIcon.getButtonIcon("src/images/buttons/lookRight.png");
@@ -460,15 +444,6 @@ public class Main extends Application {
 
         bubbleButton.setOnAction(new EventHandler<ActionEvent>() {
 
-//            final Stage addBubble = new Stage(StageStyle.UNDECORATED);
-//
-//            Pane bubbleDisplay = new Pane();
-//            ImageView bubbleImageView = new ImageView();
-//            String bubbleName;
-//
-//            private double xOffset = 0;
-//            private double yOffset = 0;
-
             @Override
             public void handle(ActionEvent event) {
 
@@ -674,31 +649,11 @@ public class Main extends Application {
         hair.setText("Hair:");
         hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
 
-        buttonLayout.getChildren().add(leftCharacter);
-        buttonLayout.getChildren().add(rightCharacter);
-        buttonLayout.getChildren().add(flipButton);
-        buttonLayout.getChildren().add(genderButton);
-        buttonLayout.getChildren().add(textButton);
-        buttonLayout.getChildren().add(bubbleButton);
-        buttonLayout.getChildren().add(backgroundButton);
-        buttonLayout.getChildren().add(skinColorPicker[0]);
-        buttonLayout.getChildren().add(hairColorPicker[0]);
-        buttonLayout.getChildren().add(undoButton);
-        buttonLayout.getChildren().add(deleteButton);
-        buttonLayout.getChildren().add(lockButton[0]);
 
-        buttonLayout.setMargin(undoButton, new Insets(10,10,10,10));
-        buttonLayout.setMargin(leftCharacter, new Insets(10,10,10,10));
-        buttonLayout.setMargin(rightCharacter, new Insets(10,10,10,10));
-        buttonLayout.setMargin(flipButton, new Insets(10,10,10,10));
-        buttonLayout.setMargin(genderButton, new Insets(10,10,10,10));
-        buttonLayout.setMargin(textButton, new Insets(10,10,10,10));
-        buttonLayout.setMargin(bubbleButton, new Insets(10,10,10,10));
-        buttonLayout.setMargin(backgroundButton, new Insets(10,10,10,10));
-        buttonLayout.setMargin(skinColorPicker[0], new Insets(10,10,10,10));
-        buttonLayout.setMargin(hairColorPicker[0], new Insets(10,10,10,10));
-        buttonLayout.setMargin(deleteButton, new Insets(10,10,10,10));
-        buttonLayout.setMargin(lockButton[0], new Insets(10,10,10,10));
+        button_ui.addButtonsToScrollPane(leftCharacter, rightCharacter, flipButton, genderButton, textButton, bubbleButton, backgroundButton);
+        button_ui.addOtherToScrollPane(skinColorPicker[0], hairColorPicker[0], undoButton, deleteButton, lockButton[0]);
+        FlowPane buttonLayout = button_ui.getFlowPane(width);
+
 
         Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");

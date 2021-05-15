@@ -9,10 +9,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class ButtonIcon {
-
     double height;
-    public void setHeight(double height)
-    {
+
+    public ButtonIcon(Double height) {
         this.height = height;
     }
 
