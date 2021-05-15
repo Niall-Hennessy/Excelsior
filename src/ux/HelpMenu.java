@@ -13,6 +13,7 @@ public class HelpMenu
 {
     final Stage helpStage = new Stage();
     TabPane helpPane = new TabPane();
+    Scene scene = new Scene(helpPane);
 
     public HelpMenu(){
         helpStage.setTitle("Help");
@@ -51,7 +52,6 @@ public class HelpMenu
     }
 
     public void showHelpMenu(){
-        Scene scene = new Scene(helpPane);
         helpStage.setScene(scene);
         scene.getStylesheets().add("main/style.css");
         helpStage.show();
