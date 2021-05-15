@@ -126,15 +126,15 @@ public class GalleryManager {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 1) {
-                                    comicPanel[0].setBackgroundString(normaliseURL(imageFile.getPath().substring(4)));
 
+                                    comicPanel[0].setBackgroundString(normaliseURL(imageFile.getPath().substring(4)));
+                                    addCharacter.close();
                                     comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].getBackgroundString() + "'); " +
                                             "-fx-background-position: center center; " +
-                                            "-fx-background-repeat: stretch; "  +
-                                            "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +
-                                            "-fx-border-color: #EDE427; " + //gold
-                                            "-fx-border-width: 5");
-                                    addCharacter.close();
+                                            "-fx-background-repeat: stretch; " +
+                                            "-fx-background-size: " + (height / 2.4 + height / 9.6) + " " + height / 2.4 + ";" +
+                                            "-fx-border-color: #EDE427; " +
+                                            "-fx-border-width: 4");
                                 }
                             }
                         }

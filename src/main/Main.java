@@ -641,14 +641,6 @@ public class Main extends Application {
             }
         });
 
-        Text skin = new Text();
-        skin.setText("Skin:");
-        skin.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
-
-        Text hair = new Text();
-        hair.setText("Hair:");
-        hair.setStyle("-fx-font-size: 36; -fx-font-family: 'Lucida Console'");
-
 
         button_ui.addButtonsToScrollPane(leftCharacter, rightCharacter, flipButton, genderButton, textButton, bubbleButton, backgroundButton);
         button_ui.addOtherToScrollPane(skinColorPicker[0], hairColorPicker[0], undoButton, deleteButton, lockButton[0]);

@@ -152,12 +152,13 @@
     -fx-padding: 10;
 }
 
-.tester {
+/*DONT THINK WE USE THIS BUT DIDNT CODE IT BUT TESTED THE PROGRAM AND NO ERRORS WHEN RUNNING WITHOUT THIS*/
+/*.tester {
     -fx-background-image: url("../images/backgrounds/basic_Background.jpg");
     -fx-background-repeat: stretch;
     -fx-background-size: 500 400;
     -fx-background-position: center center;
-}
+}*/
 
 
 /*HTML POPUP*/
