@@ -90,8 +90,9 @@ public class TextModal extends Modal{
             textField.setText("");
 
         textField.getStyleClass().add("capTextField");
-        textField.setPrefWidth(400);
-        textField.setPrefHeight(25);
+        textField.setPrefWidth(200);
+        textField.setPrefHeight(50);
+
 
         layoutGrid.add(textField, 0, 2, 20, 1);
         layoutGrid.setMargin(textField, new Insets(5, 0, 5, 25));
