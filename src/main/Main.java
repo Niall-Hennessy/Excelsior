@@ -1155,14 +1155,10 @@ public class Main extends Application {
                     }
                     else if(undo.getOperation().matches("bubble"))
                     {
-
                         if(undo.getValue_1().matches("left"))
-                        {
                             undo.getComicPanel().setLeftTextBubble((TextBubble) undo.getObj());
-                        }
                         else
                             undo.getComicPanel().setRightTextBubble((TextBubble) undo.getObj());
-
                     }
 
                     else if (undo.getOperation().matches("panel")){
