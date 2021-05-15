@@ -92,6 +92,8 @@ public class TextModal extends Modal{
         textField.getStyleClass().add("capTextField");
         textField.setPrefWidth(200);
         textField.setPrefHeight(50);
+        Font font = new Font(comboBox.getSelectionModel().getSelectedItem().toString(), 18);
+        textField.setFont(font);
 
 
         layoutGrid.add(textField, 0, 2, 20, 1);
