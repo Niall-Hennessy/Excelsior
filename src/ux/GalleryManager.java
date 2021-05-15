@@ -139,6 +139,7 @@ public class GalleryManager {
                             }
                         }
                     });
+                    break;
                 case bubble:
                     int width = (int) image.getWidth();
                     int height = (int) image.getHeight();
