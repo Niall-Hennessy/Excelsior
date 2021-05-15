@@ -106,9 +106,7 @@ public class Main extends Application {
         file.getItems().add(add_character);
         file.getItems().add(add_background);
 
-
         menuBar.getMenus().add(file);
-
 
         Menu help = new Menu("Help");
         MenuItem helpItem = new MenuItem("Help");
@@ -247,7 +245,6 @@ public class Main extends Application {
 
 
         save_xml.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 SaveXML saveXML = new SaveXML(comicStrip);
@@ -360,10 +357,7 @@ public class Main extends Application {
         });
 
 
-
         GalleryManager galleryView = new GalleryManager();
-
-
 
         rightCharacter.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
