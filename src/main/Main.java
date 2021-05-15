@@ -579,11 +579,11 @@ public class Main extends Application {
                 }
 
                 textModal.addSubmit();
+                textModal.addComboBox( "Segoe UI", "Verdana", "Times New Roman", "Arial");
                 textModal.addTextField();
                 textModal.addBooleanButtons("Top Text", "Bottom Text");
                 textModal.addCancel();
                 textModal.addDelete();
-                textModal.addComboBox( "Segoe UI", "Verdana", "Times New Roman", "Arial");
                 textModal.addEscape();
                 textModal.show();
             }

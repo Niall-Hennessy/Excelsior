@@ -1,5 +1,7 @@
 package comic;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -15,8 +18,8 @@ public class TextModal extends Modal{
 
     private final boolean[] value1 = {true};
     private final boolean[] value2 = {false};
-    TextField textField;
-    ComboBox comboBox;
+    TextField textField = new TextField();
+    ComboBox comboBox = new ComboBox();
 
     public TextModal(double width, double height, ComicPanel cPanel) {
         super(width, height, cPanel);
@@ -27,48 +30,21 @@ public class TextModal extends Modal{
         Button submit = new Button("Submit");
         submit.getStyleClass().add("submit");
 
-        final Font[] font = {Font.font("Segoe UI", 20)};
-
-        final Button[] topText = {new Button()};
-        final Button[] bottomText = {new Button()};
-
         layoutGrid.add(submit, 0, 4, 1, 1);
         layoutGrid.setMargin(submit,new Insets (5, 0, 5, 25));
 
-        layoutGrid.getChildren().addListener(new ListChangeListener<Node>() {
-            @Override
-            public void onChanged(javafx.collections.ListChangeListener.Change<? extends Node> c) {
-
-                Node node = c.getList().get(c.getList().size()-1);
-
-                if(node.toString().contains("ComboBox")) {
-                    comboBox = ((ComboBox) node);
-                }
-
-                if(node.toString().contains("TextField")) {
-                    textField = ((TextField) node);
-                }
-
-                if(node.toString().contains("Top")) {
-                    topText[0] = ((Button) node);
-                }
-
-                if(node.toString().contains("Bottom")) {
-                    bottomText[0] = ((Button) node);
-                }
-            }
-        });
 
         submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                font[0] = Font.font((String) comboBox.getSelectionModel().getSelectedItem(), 20);
+                Font font = new Font(comboBox.getSelectionModel().getSelectedItem().toString(), 18);
+                textField.setFont(font);
 
                 if(value1[0]) {
-                    comicPanel.setTopText(textField.getText(), font[0]);
+                    comicPanel.setTopText(textField.getText(), font);
                 }
                 else if(value2[0]) {
-                    comicPanel.setBottomText(textField.getText(), font[0]);
+                    comicPanel.setBottomText(textField.getText(), font);
                 }
             }
         });
@@ -101,11 +77,31 @@ public class TextModal extends Modal{
         });
     }
 
+    @Override
+    public void addTextField() {
+
+        if(!comicPanel.getTopText().getText().matches("")){
+            textField.setText(comicPanel.getTopText().getText());
+        }
+        else if(!comicPanel.getBottomText().getText().matches("")){
+            textField.setText(comicPanel.getBottomText().getText());
+        }
+        else
+            textField.setText("");
+
+        textField.getStyleClass().add("capTextField");
+        textField.setPrefWidth(400);
+        textField.setPrefHeight(25);
+
+        layoutGrid.add(textField, 0, 2, 20, 1);
+        layoutGrid.setMargin(textField, new Insets(5, 0, 5, 25));
+    }
+
     public void addBooleanButtons(String button_1, String button_2){
         Button button1 = new Button(button_1);
-        button1.getStyleClass().add("bold");
+        button1.getStyleClass().add("topTextCaption");
         Button button2 = new Button(button_2);
-        button2.getStyleClass().add("bold");
+        button2.getStyleClass().add("bottomTextCaption");
 
         layoutGrid.add(button1, 0, 1, 1, 1);
         layoutGrid.setMargin(button1, new Insets (5, 0, 5, 25));
@@ -118,6 +114,9 @@ public class TextModal extends Modal{
                 value1[0] = true;
                 value2[0] = false;
 
+                button1.setStyle("-fx-background-color: #755A85");
+                button2.setStyle("-fx-background-color: #AF86C8;");
+
                 textField.setText(comicPanel.getTopText().getText());
                 textField.setFont(comicPanel.getTopText().getTextObject().getFont());
             }
@@ -129,10 +128,38 @@ public class TextModal extends Modal{
                 value1[0] = false;
                 value2[0] = true;
 
+                button2.setStyle("-fx-background-color: #755A85");
+                button1.setStyle("-fx-background-color: #AF86C8;");
+
                 textField.setText(comicPanel.getBottomText().getText());
                 textField.setFont(comicPanel.getBottomText().getTextObject().getFont());
             }
         });
     }
 
+    @Override
+    public void addComboBox(String... args) {
+        comboBox.getStyleClass().add("bold");
+
+        for (String arg : args) {
+            comboBox.getItems().add(arg);
+        }
+
+        comboBox.getSelectionModel().selectFirst();
+
+        comboBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue ov, String t, String t1) {
+                Font font = new Font(t1, 18);
+                textField.setFont(font);
+            }
+        });
+
+        Label fonts = new Label("Fonts");
+
+        layoutGrid.add(comboBox,1, 3, 1, 1);
+        layoutGrid.setMargin(comboBox, new Insets (5, 0, 5, 0));
+        layoutGrid.add(fonts,0, 3, 1, 1);
+        layoutGrid.setMargin(fonts, new Insets (5, 0, 5, 25));
+    }
 }

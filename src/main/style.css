@@ -144,7 +144,7 @@
     -fx-background-color: #755A85;
 }
 
-.topTextCaption: hover, .bottomTextCaption: hover {
+.topTextCaption:hover, .bottomTextCaption:hover {
     -fx-background-color: #9470A9;
 }
 
