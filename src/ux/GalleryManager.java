@@ -4,23 +4,17 @@ import comic.ComicPanel;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
-enum Entity{
-    rightCharacter,
-    leftCharacter,
-    background
-}
 
 public class GalleryManager {
 
@@ -78,7 +72,7 @@ public class GalleryManager {
         }
     }
 
-    private ImageView createImageView(final File imageFile, Entity entity) {
+    public ImageView createImageView(final File imageFile, Entity entity) {
 
         ImageView imageView = null;
         try {
@@ -145,6 +139,29 @@ public class GalleryManager {
                             }
                         }
                     });
+                case bubble:
+                    int width = (int) image.getWidth();
+                    int height = (int) image.getHeight();
+
+                    WritableImage writableImage = new WritableImage(width, height);
+
+                    PixelReader pixelReader = image.getPixelReader();
+                    PixelWriter pixelWriter = writableImage.getPixelWriter();
+
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width; x++) {
+                            Color color = pixelReader.getColor(x, y);
+
+                            if (color.equals(Color.rgb(255, 254, 255))) {
+                                pixelWriter.setColor(x, y, Color.rgb(0, 0, 0, 0));
+                            }
+                            else
+                                pixelWriter.setColor(x, y, color);
+                        }
+                    }
+
+                    imageView = new ImageView(writableImage);
+                    imageView.setPickOnBounds(true);
                     break;
             }
         } catch (FileNotFoundException ex) {
@@ -152,6 +169,7 @@ public class GalleryManager {
         }
         return imageView;
     }
+
 
     private String normaliseURL(String url) {
         return url.replace('\\', '/');
