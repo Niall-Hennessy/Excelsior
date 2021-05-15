@@ -11,6 +11,7 @@ import javafx.stage.Screen;
 import undo.Undo;
 import undo.UndoList;
 
+import javax.tools.JavaFileManager;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -65,6 +66,7 @@ public class ComicPanel extends Pane {
     }
 
     public void select(){
+        this.getStyleClass().clear();
         this.setStyle("-fx-background-image: url('" + background + "'); " +
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: stretch; " +
