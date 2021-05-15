@@ -2,14 +2,15 @@ package comic;
 
 import javafx.scene.control.ScrollPane;
 
+import java.io.FileNotFoundException;
+
 public class ComicStripViewer extends ScrollPane {
 
     ComicStrip comicStrip;
 
-    public ComicStripViewer(double width, double height){
+    public ComicStripViewer(double width, double height) throws FileNotFoundException {
 
         comicStrip = new ComicStrip(width, height);
-
         this.setContent(comicStrip);
         this.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         this.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.ALWAYS);

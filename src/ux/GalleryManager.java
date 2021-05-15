@@ -18,7 +18,7 @@ import java.io.FileNotFoundException;
 
 public class GalleryManager {
 
-    private ComicPanel[] comicPanel = null;
+    private ComicPanel comicPanel = null;
     final Stage addCharacter = new Stage();
     private double height;
 
@@ -26,7 +26,7 @@ public class GalleryManager {
         this.height = height;
     }
 
-    public void setComicPanel(ComicPanel[] comicPanel) {
+    public void setComicPanel(ComicPanel comicPanel) {
         this.comicPanel = comicPanel;
     }
 
@@ -84,9 +84,9 @@ public class GalleryManager {
                         public void handle(MouseEvent mouseEvent) {
                             if(mouseEvent.getClickCount() == 1) {
                                 try {
-                                    comicPanel[0].setRightCharacter(imageFile.getPath());
+                                    comicPanel.setRightCharacter(imageFile.getPath());
                                     addCharacter.close();
-                                    comicPanel[0].setSelectedCharacter(comicPanel[0].getRightCharacter());
+                                    comicPanel.setSelectedCharacter(comicPanel.getRightCharacter());
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
@@ -103,9 +103,9 @@ public class GalleryManager {
 
                                 if (mouseEvent.getClickCount() == 1) {
                                     try {
-                                        comicPanel[0].setLeftCharacter(imageFile.getPath());
+                                        comicPanel.setLeftCharacter(imageFile.getPath());
                                         addCharacter.close();
-                                        comicPanel[0].setSelectedCharacter(comicPanel[0].getLeftCharacter());
+                                        comicPanel.setSelectedCharacter(comicPanel.getLeftCharacter());
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
@@ -121,9 +121,9 @@ public class GalleryManager {
                             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
                                 if (mouseEvent.getClickCount() == 1) {
-                                    comicPanel[0].setBackgroundString(normaliseURL(imageFile.getPath().substring(4)));
+                                    comicPanel.setBackgroundString(normaliseURL(imageFile.getPath().substring(4)));
 
-                                    comicPanel[0].setStyle("-fx-background-image: url('" + comicPanel[0].getBackgroundString() + "'); " +
+                                    comicPanel.setStyle("-fx-background-image: url('" + comicPanel.getBackgroundString() + "'); " +
                                             "-fx-background-position: center center; " +
                                             "-fx-background-repeat: stretch; "  +
                                             "-fx-background-size: " + (height/2.4 + height/9.6) + " " + height/2.4 + ";" +

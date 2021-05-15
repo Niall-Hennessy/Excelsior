@@ -11,8 +11,10 @@ import java.io.FileNotFoundException;
 
 public class ComicStrip extends HBox{
 
-    public ComicStrip(double width, double height) {
+    ComicPanel currentPanel;
 
+    public ComicStrip(double width, double height) throws FileNotFoundException {
+        currentPanel = new ComicPanel();
         this.setAlignment(Pos.CENTER);
         this.setPrefHeight(height * 0.6 - 20);
         this.setPrefWidth(width - 20);
@@ -25,5 +27,13 @@ public class ComicStrip extends HBox{
                 mouseEvent.setDragDetect(true);
             }
         });
+    }
+
+    public void setCurrentPanel(ComicPanel comicPanel){
+        currentPanel = comicPanel;
+    }
+
+    public ComicPanel getCurrentPanel() {
+        return currentPanel;
     }
 }

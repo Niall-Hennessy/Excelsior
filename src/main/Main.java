@@ -77,7 +77,7 @@ public class Main extends Application {
 
         final String[] premise = {""};
 
-        final ComicPanel[] comicPanel = {new ComicPanel()};
+//        final ComicPanel[] comicPanel = {new ComicPanel()};
 
         ButtonUI button_ui = new ButtonUI();
         button_ui.addLabelAndItems("File", "New Project", "Save XML", "Save HTML", "Load XML", "Add Background", "Add Character");
@@ -186,8 +186,8 @@ public class Main extends Application {
         lockButton[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(comicPanel[0] != null) {
-                    if (comicPanel[0].getLocked())
+                if(comicStripViewer.getComicStrip().getCurrentPanel() != null) {
+                    if (comicStripViewer.getComicStrip().getCurrentPanel().getLocked())
                         hoverTips.buttonToolTip(tipUnlockButton, mouseEvent, lockButton[0]);
                     else
                         hoverTips.buttonToolTip(tipLockButton, mouseEvent, lockButton[0]);
@@ -273,30 +273,30 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
 
-                if(!comicStripViewer.getComicStrip().getChildren().contains(comicPanel[0])){
+                if(!comicStripViewer.getComicStrip().getChildren().contains(comicStripViewer.getComicStrip().getCurrentPanel())){
                     hoverTips.NoPanelSelectedTip(tipNoPanelSelected, rightCharacter);
                     return;
                 }
 
-                if(comicPanel[0].getLocked()){
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, rightCharacter);
                     return;
                 }
 
                 Undo undo;
 
-                if(comicPanel[0].getRightCharacter().getImageName() == null)
-                    undo = new Undo("character", comicPanel[0], "right", "blank");
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getRightCharacter().getImageName() == null)
+                    undo = new Undo("character", comicStripViewer.getComicStrip().getCurrentPanel(), "right", "blank");
                 else
-                    undo = new Undo("character", comicPanel[0], "right", comicPanel[0].getRightCharacter().getImageName().toString());
+                    undo = new Undo("character", comicStripViewer.getComicStrip().getCurrentPanel(), "right", comicStripViewer.getComicStrip().getCurrentPanel().getRightCharacter().getImageName().toString());
 
                 UndoList.addUndo(undo);
 
                 String path = "src/images/characters";
-                galleryView.setComicPanel(comicPanel);
+                galleryView.setComicPanel(comicStripViewer.getComicStrip().getCurrentPanel());
                 galleryView.setRightCharacter(path);
-                skinColorPicker[0].setValue(comicPanel[0].getRightCharacter().getSkin());
-                hairColorPicker[0].setValue(comicPanel[0].getRightCharacter().getHair());
+                skinColorPicker[0].setValue(comicStripViewer.getComicStrip().getCurrentPanel().getRightCharacter().getSkin());
+                hairColorPicker[0].setValue(comicStripViewer.getComicStrip().getCurrentPanel().getRightCharacter().getHair());
             }
         });
 
@@ -304,30 +304,30 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
 
-                if(!comicStripViewer.getComicStrip().getChildren().contains(comicPanel[0])){
+                if(!comicStripViewer.getComicStrip().getChildren().contains(comicStripViewer.getComicStrip().getCurrentPanel())){
                     hoverTips.NoPanelSelectedTip(tipNoPanelSelected, leftCharacter);
                     return;
                 }
 
-                if(comicPanel[0].getLocked()){
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, leftCharacter);
                     return;
                 }
 
                 Undo undo;
 
-                if(comicPanel[0].getLeftCharacter().getImageName() == null)
-                    undo = new Undo("character", comicPanel[0], "left", "blank");
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getLeftCharacter().getImageName() == null)
+                    undo = new Undo("character", comicStripViewer.getComicStrip().getCurrentPanel(), "left", "blank");
                 else
-                    undo = new Undo("character", comicPanel[0], "left", comicPanel[0].getLeftCharacter().getImageName().toString());
+                    undo = new Undo("character", comicStripViewer.getComicStrip().getCurrentPanel(), "left", comicStripViewer.getComicStrip().getCurrentPanel().getLeftCharacter().getImageName().toString());
 
                 UndoList.addUndo(undo);
 
                 String path = "src/images/characters";
-                galleryView.setComicPanel(comicPanel);
+                galleryView.setComicPanel(comicStripViewer.getComicStrip().getCurrentPanel());
                 galleryView.setLeftCharacter(path);
-                skinColorPicker[0].setValue(comicPanel[0].getLeftCharacter().getSkin());
-                hairColorPicker[0].setValue(comicPanel[0].getLeftCharacter().getHair());
+                skinColorPicker[0].setValue(comicStripViewer.getComicStrip().getCurrentPanel().getLeftCharacter().getSkin());
+                hairColorPicker[0].setValue(comicStripViewer.getComicStrip().getCurrentPanel().getLeftCharacter().getHair());
             }
         });
 
@@ -335,12 +335,12 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(comicPanel[0].getSelectedCharacter() != null && !comicPanel[0].getLocked()) {
-                    comicPanel[0].getSelectedCharacter().flipOrientation();
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter() != null && !comicStripViewer.getComicStrip().getCurrentPanel().getLocked()) {
+                    comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter().flipOrientation();
 
-                    Undo undo = new Undo("flip", comicPanel[0], comicPanel[0].getLeftRight());
+                    Undo undo = new Undo("flip", comicStripViewer.getComicStrip().getCurrentPanel(), comicStripViewer.getComicStrip().getCurrentPanel().getLeftRight());
                     UndoList.addUndo(undo);
-                } else if(comicPanel[0].getLocked()){
+                } else if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, flipButton);
                     return;
                 }
@@ -354,11 +354,11 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(comicPanel[0].getSelectedCharacter() != null && !comicPanel[0].getLocked()) {
-                    comicPanel[0].getSelectedCharacter().genderSwap();
-                    Undo undo = new Undo("gender", comicPanel[0], comicPanel[0].getLeftRight());
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter() != null && !comicStripViewer.getComicStrip().getCurrentPanel().getLocked()) {
+                    comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter().genderSwap();
+                    Undo undo = new Undo("gender", comicStripViewer.getComicStrip().getCurrentPanel(), comicStripViewer.getComicStrip().getCurrentPanel().getLeftRight());
                     UndoList.addUndo(undo);
-                }else if(comicPanel[0].getLocked()){
+                }else if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, genderButton);
                     return;
                 }
@@ -373,22 +373,22 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                if(!comicStripViewer.getComicStrip().getChildren().contains(comicPanel[0])){
+                if(!comicStripViewer.getComicStrip().getChildren().contains(comicStripViewer.getComicStrip().getCurrentPanel())){
                     hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, bubbleButton);
                     return;
                 }
 
-                if(comicPanel[0].getLocked()){
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, bubbleButton);
                     return;
                 }
 
-                if(comicPanel[0].getSelectedCharacter() == null) {
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter() == null) {
                     hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, bubbleButton);
                     return;
                 }
 
-                GalleryModal bubbleGallery = new GalleryModal(width/2 -200, height/2, comicPanel[0]);
+                GalleryModal bubbleGallery = new GalleryModal(width/2 -200, height/2, comicStripViewer.getComicStrip().getCurrentPanel());
 
                 bubbleGallery.addSubmit();
                 bubbleGallery.addGallery();
@@ -404,21 +404,21 @@ public class Main extends Application {
         backgroundButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(!comicStripViewer.getComicStrip().getChildren().contains(comicPanel[0])){
+                if(!comicStripViewer.getComicStrip().getChildren().contains(comicStripViewer.getComicStrip().getCurrentPanel())){
                     hoverTips.NoPanelSelectedTip(tipNoPanelSelected, backgroundButton);
                     return;
                 }
 
-                if(comicPanel[0].getLocked()){
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, backgroundButton);
                     return;
                 }
 
-                Undo undo = new Undo("background", comicPanel[0], comicPanel[0].getBackgroundString());
+                Undo undo = new Undo("background", comicStripViewer.getComicStrip().getCurrentPanel(), comicStripViewer.getComicStrip().getCurrentPanel().getBackgroundString());
                 UndoList.addUndo(undo);
 
                 String path = "src/images/backgrounds";
-                galleryView.setComicPanel(comicPanel);
+                galleryView.setComicPanel(comicStripViewer.getComicStrip().getCurrentPanel());
                 galleryView.setHeight(height);
                 galleryView.setBackground(path);
             }
@@ -431,10 +431,10 @@ public class Main extends Application {
                 double imageWidth = backgroundButton.getWidth();
                 double imageHeight = backgroundButton.getHeight();
 
-                if(comicStripViewer.getComicStrip().getChildren().contains(comicPanel[0])) {
-                    comicPanel[0].setLocked(!comicPanel[0].getLocked());
+                if(comicStripViewer.getComicStrip().getChildren().contains(comicStripViewer.getComicStrip().getCurrentPanel())) {
+                    comicStripViewer.getComicStrip().getCurrentPanel().setLocked(!comicStripViewer.getComicStrip().getCurrentPanel().getLocked());
 
-                    if(comicPanel[0].getLocked()) {
+                    if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()) {
                         try {
                             ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
                             imageView.setFitWidth(imageWidth-4);
@@ -454,7 +454,7 @@ public class Main extends Application {
                         }
                     }
 
-                    Undo undo = new Undo("lock", comicPanel[0], "" + height);
+                    Undo undo = new Undo("lock", comicStripViewer.getComicStrip().getCurrentPanel(), "" + height);
                     undo.setObj(lockButton[0]);
                     UndoList.addUndo(undo);
 
@@ -468,14 +468,14 @@ public class Main extends Application {
         textButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                TextModal textModal = new TextModal(width/2 -200, height/2, comicPanel[0]);
+                TextModal textModal = new TextModal(width/2 -200, height/2, comicStripViewer.getComicStrip().getCurrentPanel());
 
-                if(!comicStripViewer.getComicStrip().getChildren().contains(comicPanel[0])){
+                if(!comicStripViewer.getComicStrip().getChildren().contains(comicStripViewer.getComicStrip().getCurrentPanel())){
                     hoverTips.NoPanelSelectedTip(tipNoPanelSelected, textButton);
                     return;
                 }
 
-                if(comicPanel[0].getLocked()){
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, textButton);
                     return;
                 }
@@ -495,7 +495,7 @@ public class Main extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
 
-                if(comicPanel[0].getLocked()){
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, skinColorPicker[0]);
 
                     Color color = skinColorPicker[0].getValue();
@@ -507,7 +507,7 @@ public class Main extends Application {
                     });
                 }
                 else {
-                    if (comicPanel[0].getSelectedCharacter() != null) {
+                    if (comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter() != null) {
                         hoverTips.colorToolTip(tipskinColorPicker, mouseEvent, skinColorPicker[0]);
                     } else {
                         hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, skinColorPicker[0]);
@@ -516,9 +516,9 @@ public class Main extends Application {
                         Color current = skinColorPicker[0].getValue();
                         public void handle(Event t) {
 
-                            if(comicPanel[0].getSelectedCharacter() != null) {
-                                comicPanel[0].getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
-                                Undo undo = new Undo("skin", comicPanel[0], comicPanel[0].getLeftRight(), current.toString());
+                            if(comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter() != null) {
+                                comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter().setSkin(skinColorPicker[0].getValue());
+                                Undo undo = new Undo("skin", comicStripViewer.getComicStrip().getCurrentPanel(), comicStripViewer.getComicStrip().getCurrentPanel().getLeftRight(), current.toString());
                                 undo.setObj(skinColorPicker[0]);
                                 UndoList.addUndo(undo);
                             }
@@ -534,7 +534,7 @@ public class Main extends Application {
         hairColorPicker[0].setOnMouseEntered(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent mouseEvent) {
 
-                if(comicPanel[0].getLocked()){
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, hairColorPicker[0]);
 
                     Color color = hairColorPicker[0].getValue();
@@ -546,7 +546,7 @@ public class Main extends Application {
                     });
                 }
                 else {
-                    if (comicPanel[0].getSelectedCharacter() != null) {
+                    if (comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter() != null) {
                         hoverTips.colorToolTip(tiphairColorPicker, mouseEvent, hairColorPicker[0]);
                     } else {
                         hoverTips.NoCharacterSelectedTip(tipNoCharacterSelected, hairColorPicker[0]);
@@ -556,9 +556,9 @@ public class Main extends Application {
                         Color current = hairColorPicker[0].getValue();
                         public void handle(Event t) {
 
-                            if(comicPanel[0].getSelectedCharacter() != null) {
-                                comicPanel[0].getSelectedCharacter().setHair(hairColorPicker[0].getValue());
-                                Undo undo = new Undo("hair", comicPanel[0], comicPanel[0].getLeftRight(), current.toString());
+                            if(comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter() != null) {
+                                comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter().setHair(hairColorPicker[0].getValue());
+                                Undo undo = new Undo("hair", comicStripViewer.getComicStrip().getCurrentPanel(), comicStripViewer.getComicStrip().getCurrentPanel().getLeftRight(), current.toString());
                                 undo.setObj(hairColorPicker[0]);
                                 UndoList.addUndo(undo);
                             }else {
@@ -574,12 +574,14 @@ public class Main extends Application {
         button_ui.addOtherToScrollPane(skinColorPicker[0], hairColorPicker[0], undoButton, deleteButton, lockButton[0]);
         FlowPane buttonLayout = button_ui.getFlowPane(width);
 
-        Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
+//        Button newPanelRight = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
+        NewPanelButton newPanelRight = new NewPanelButton(comicStripViewer, width, height);
         Button newPanelLeft = buttonIcon.getButtonIcon("src/images/buttons/plus.png");
         newPanelRight.setScaleX(0.5);
         newPanelRight.setScaleY(0.5);
 
-        comicStripViewer.getComicStrip().getChildren().add(newPanelRight);
+        if(newPanelRight != null)
+            comicStripViewer.getComicStrip().getChildren().add(newPanelRight);
         comicStripViewer.getComicStrip().getChildren().add(newPanelLeft);
 
         mainPane.addRow(0, menuBox);
@@ -705,8 +707,8 @@ public class Main extends Application {
             if (cancel[0]) {
                 return;
             }
-            comicPanel[0].unselect();
-            comicPanel[0].setSelectedCharacter(null);
+            comicStripViewer.getComicStrip().getCurrentPanel().unselect();
+            comicStripViewer.getComicStrip().getCurrentPanel().setSelectedCharacter(null);
 
             FileChooser fileChooser = new FileChooser();
             File saveFile = fileChooser.showSaveDialog(saveHTML);
@@ -867,6 +869,12 @@ public class Main extends Application {
                 comicStripViewer.getComicStrip().getChildren().clear();
 
                 comicStripViewer.getComicStrip().getChildren().add(newPanelLeft);
+                try {
+                    comicStripViewer.getComicStrip().setCurrentPanel(new ComicPanel());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                comicStripViewer.getComicStrip().getChildren().add(comicStripViewer.getComicStrip().getCurrentPanel());
                 comicStripViewer.getComicStrip().getChildren().add(newPanelRight);
 
                 UndoList.clear();
@@ -895,16 +903,16 @@ public class Main extends Application {
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, about to delete the current panel.\nDo you still wish to continue?");
 
-                if(comicPanel[0].getLocked()){
+                if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()){
                     hoverTips.lockedTip(tipLocked, leftCharacter);
                     return;
                 }
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    comicStripViewer.getComicStrip().getChildren().remove(comicPanel[0]);
+                    comicStripViewer.getComicStrip().getChildren().remove(comicStripViewer.getComicStrip().getCurrentPanel());
 
-                    Undo undo = new Undo("delete", comicPanel[0]);
+                    Undo undo = new Undo("delete", comicStripViewer.getComicStrip().getCurrentPanel());
                     undo.setObj(newPanelRight);
                     UndoList.addUndo(undo);
 
@@ -924,183 +932,42 @@ public class Main extends Application {
         newPanelRight.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 try {
-
-                    comicStripViewer.getComicStrip().getChildren().remove(newPanelRight);
-
-                    ComicPanel newComicPanel = new ComicPanel();
-                    comicStripViewer.getComicStrip().getChildren().add(newComicPanel);
-                    comicStripViewer.getComicStrip().setMargin(newComicPanel, new Insets(20,10,20,10));
-                    comicStripViewer.getComicStrip().getChildren().add(newPanelRight);
-
-                    Undo undo = new Undo("panel", newComicPanel);
+                    Undo undo = new Undo("panel", newPanelRight.addPanel(comicStripViewer.getComicStrip().getCurrentPanel()));
                     UndoList.addUndo(undo);
 
-                    newComicPanel.setIndex(comicStripViewer.getComicStrip().getChildren().indexOf(newComicPanel));
+                    if(comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter() != null) {
+                        hairColorPicker[0].setValue(comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter().getHair());
+                        skinColorPicker[0].setValue(comicStripViewer.getComicStrip().getCurrentPanel().getSelectedCharacter().getSkin());
+                    }
+                    else {
+                        hairColorPicker[0].setValue(Color.WHITE);
+                        skinColorPicker[0].setValue(Color.WHITE);
+                    }
 
-                    newComicPanel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-                            mouseEvent.setDragDetect(true);
-                            addPressAndHoldHandler(newComicPanel, Duration.seconds(1),
-                                    event -> {
+                    if(comicStripViewer.getComicStrip().getCurrentPanel().getLocked()) {
+                        try {
+                            ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
 
-                                            newComicPanel.getScene().setCursor(javafx.scene.Cursor.CLOSED_HAND);
-
-                                            AtomicInteger index = new AtomicInteger(comicStripViewer.getComicStrip().getChildren().indexOf(newComicPanel));
-                                            AtomicInteger amount = new AtomicInteger(0);
-                                            AtomicInteger scroll = new AtomicInteger(0);
-                                            AtomicReference<Double> offset = new AtomicReference<>();
-                                            offset.set(0.0);
-
-                                            comicStripViewer.getComicStrip().setOnMouseDragged(dragEvent -> {
-
-                                                double increase = ((double)comicStripViewer.getComicStrip().getChildren().size()/1000);
-
-                                                if(increase > 5)
-                                                    increase = 5;
-
-                                                if(dragEvent.getScreenX() > (4*width/5)) {
-                                                    comicStripViewer.setHvalue(comicStripViewer.getHvalue() + increase);
-                                                    if(comicStripViewer.getHvalue() != 1) {
-                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 9);
-                                                        scroll.set(scroll.get() + 9);
-                                                    }
-                                                }else if(dragEvent.getScreenX() < width/5){
-                                                    comicStripViewer.setHvalue(comicStripViewer.getHvalue() - increase);
-                                                    if(comicStripViewer.getHvalue() != 0) {
-                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 9);
-                                                        scroll.set(scroll.get() - 9);
-                                                    }
-                                                }else{
-
-                                                    if(amount.get() < 0)
-                                                        offset.set(-(height/2.4 + height/9.6));
-                                                    else if(amount.get() > 0)
-                                                        offset.set((height/2.4 + height/9.6));
-                                                    else
-                                                        offset.set(0.0);
-
-                                                    newComicPanel.setTranslateX(dragEvent.getScreenX() - mouseEvent.getSceneX() - offset.get());
-                                                    newComicPanel.setTranslateY(dragEvent.getScreenY() - mouseEvent.getSceneY());
-                                                }
-
-                                                double presX = newComicPanel.getTranslateX();
-                                                double presY = newComicPanel.getTranslateY();
-
-                                                if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() < ((height/2.4 + height/9.6) * (amount.get() - 1))) {
-
-                                                    amount.getAndDecrement();
-                                                    index.getAndDecrement();
-
-                                                    if(index.get() < 1)
-                                                        index.set(1);
-
-                                                    comicStripViewer.getComicStrip().getChildren().remove(newComicPanel);
-                                                    comicStripViewer.getComicStrip().getChildren().add(index.get(), newComicPanel);
-                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() + (height/2.4 + height/9.6));
-
-                                                }
-                                                else if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() > ((height/2.4 + height/9.6) * (amount.get() + 1))) {
-                                                    amount.getAndIncrement();
-                                                    index.getAndIncrement();
-
-                                                    if(index.get() > comicStripViewer.getComicStrip().getChildren().size()-2)
-                                                        index.set(comicStripViewer.getComicStrip().getChildren().size()-2);
-
-                                                    comicStripViewer.getComicStrip().getChildren().remove(newComicPanel);
-                                                    comicStripViewer.getComicStrip().getChildren().add(index.get(), newComicPanel);
-                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() - (height/2.4 + height/9.6));
-                                                }
-
-                                                dragEvent.consume();
-                                            });
-
-                                            comicStripViewer.getComicStrip().setOnMouseReleased(mouseEvent3 -> {
-
-                                                newComicPanel.getScene().setCursor(javafx.scene.Cursor.DEFAULT);
-
-                                                comicStripViewer.getComicStrip().setMargin(newComicPanel, new Insets(20,10,20,10));
-
-                                                newComicPanel.setTranslateX(0);
-                                                newComicPanel.setTranslateY(0);
-
-                                                comicStripViewer.getComicStrip().setOnMouseDragged(dragEvent2 -> {
-                                                    dragEvent2.consume();
-                                                });
-
-                                                comicStripViewer.getComicStrip().setOnMouseReleased(dragEvent2 -> {
-                                                    dragEvent2.consume();
-                                                });
-
-                                                mouseEvent3.consume();
-                                            });
-                                    });
-
-                            if(!comicStripViewer.getComicStrip().getChildren().contains(newComicPanel))
-                                comicStripViewer.getComicStrip().getChildren().add(newComicPanel);
-
-                            if(!comicPanel[0].equals(newComicPanel)) {
-
-                                if (comicPanel[0] != null) {
-                                    comicPanel[0].setSelectedCharacter(null);
-                                    comicPanel[0].unselect();
-                                }
-
-
-                                newComicPanel.setSelectedCharacter(null);
-                                newComicPanel.select();
-                                comicPanel[0] = newComicPanel;
-
-                            }
-                            else{
-                                newComicPanel.select();
-                            }
-
-                            if(comicPanel[0].getSelectedCharacter() != null) {
-                                hairColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getHair());
-                                skinColorPicker[0].setValue(comicPanel[0].getSelectedCharacter().getSkin());
-                            }
-                            else {
-                                hairColorPicker[0].setValue(Color.WHITE);
-                                skinColorPicker[0].setValue(Color.WHITE);
-                            }
-
-                            if(comicPanel[0].getLocked()) {
-                                try {
-                                    ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/lock.png")));
-
-                                    double imageWidth = backgroundButton.getWidth();
-                                    double imageHeight = backgroundButton.getHeight();
-
-                                    imageView.setFitWidth(imageWidth-4);
-                                    imageView.setFitHeight(imageHeight-4);
-                                    lockButton[0].setGraphic(imageView);
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                try {
-                                    ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
-
-                                    double imageWidth = backgroundButton.getWidth();
-                                    double imageHeight = backgroundButton.getHeight();
-
-                                    imageView.setFitWidth(imageWidth-4);
-                                    imageView.setFitHeight(imageHeight-4);
-                                    lockButton[0].setGraphic(imageView);
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            double w = comicStripViewer.getContent().getBoundsInLocal().getWidth();
-                            double x = (newComicPanel.getBoundsInParent().getMaxX() +
-                                    newComicPanel.getBoundsInParent().getMinX()) / 2.0;
-                            double v = comicStripViewer.getViewportBounds().getWidth();
-                            comicStripViewer.setHvalue(comicStripViewer.getHmax() * ((x - 0.5 * v) / (w - v)));
+                            imageView.setFitWidth(height * 0.09);
+                            imageView.setFitHeight(height * 0.09);
+                            lockButton[0].setGraphic(imageView);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
                         }
-                    });
+                    } else {
+                        try {
+                            ImageView imageView = new ImageView(new Image(new FileInputStream("src/images/buttons/unlock.png")));
+
+                            imageView.setFitWidth(height * 0.09);
+                            imageView.setFitHeight(height * 0.09);
+                            lockButton[0].setGraphic(imageView);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -1119,7 +986,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
 
-        newPanelRight.fire();
+//        newPanelRight.fire();
 
         comicStripViewer.setHvalue(0.5);
 
@@ -1127,24 +994,6 @@ public class Main extends Application {
 
         primaryStage.show();
     }
-
-    private void addPressAndHoldHandler(javafx.scene.Node node, Duration holdTime,
-                                        EventHandler<MouseEvent> handler) {
-
-        class Wrapper<T> { T content ; }
-        Wrapper<MouseEvent> eventWrapper = new Wrapper<>();
-
-        PauseTransition holdTimer = new PauseTransition(holdTime);
-        holdTimer.setOnFinished(event -> handler.handle(eventWrapper.content));
-
-
-        node.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            eventWrapper.content = event ;
-            holdTimer.playFromStart();
-        });
-        node.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> holdTimer.stop());
-        node.addEventHandler(MouseEvent.DRAG_DETECTED, event -> holdTimer.stop());
-    };
 
     public static void main(String[] args) {
         launch(args);

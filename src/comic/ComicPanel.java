@@ -507,4 +507,5 @@ public class ComicPanel extends Pane {
     public void setTopText(TextCaption topText) {
         this.topText = topText;
     }
+
 }
