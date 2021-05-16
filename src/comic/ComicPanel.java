@@ -494,7 +494,6 @@ public class ComicPanel extends Pane {
                 "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
                 "-fx-border-color: #EDE427; " + //gold
                 "-fx-border-width: 4");
-        System.out.println("background: " + path);
     }
 
     public TextBubble getLeftTextBubble() {

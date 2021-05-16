@@ -242,6 +242,12 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Application restart needed for changes to take affect");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (!(result.isPresent() && result.get() == ButtonType.OK))
+                    return;
+
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Add a background image");
 
