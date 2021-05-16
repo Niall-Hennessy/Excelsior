@@ -300,11 +300,12 @@ public class ComicPanel extends Pane {
 
         leftTextBubble = new TextBubble(imageView, text, font, status);
 
-        if(leftTextBubble.getBubble().getFitHeight() > height/2.4 -20){
-            leftTextBubble.getBubble().setFitHeight(height/2.4 -50);
-            leftTextBubble.getText().setFont(Font.font(9));
-            leftTextBubble.getText().setTranslateY(leftTextBubble.getBubble().getBoundsInParent().getCenterY() - (leftTextBubble.getText().getBoundsInParent().getHeight()/2) -50);
+        while(leftTextBubble.getBubble().getFitHeight() > height/2.4 -120){
+            leftTextBubble.getText().setText(leftTextBubble.getText().getText().substring(0, leftTextBubble.getText().getText().length()-2));
+            leftTextBubble.getBubble().setFitHeight(leftTextBubble.getText().getBoundsInParent().getHeight() + 100);
+            leftTextBubble.getText().setTranslateY(20);
         }
+
 
 
         leftTextBubble.setTranslateX(leftCharacter.getTranslateX() + 70);
@@ -367,6 +368,13 @@ public class ComicPanel extends Pane {
         ImageView imageView = new ImageView(image);
 
         rightTextBubble = new TextBubble(imageView, text, font, status);
+
+        while(rightTextBubble.getBubble().getFitHeight() > height/2.4 -120){
+            rightTextBubble.getText().setText(rightTextBubble.getText().getText().substring(0, rightTextBubble.getText().getText().length()-2));
+            rightTextBubble.getBubble().setFitHeight(rightTextBubble.getText().getBoundsInParent().getHeight() + 100);
+            rightTextBubble.getText().setTranslateY(20);
+        }
+
         rightTextBubble.getBubble().setRotationAxis(Rotate.Y_AXIS);
         rightTextBubble.getBubble().setRotate(180);
 
