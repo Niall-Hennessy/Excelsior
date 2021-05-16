@@ -115,16 +115,16 @@ public class Main extends Application {
         String tipGenderButton      = "Change Selected Character's Gender";
         String tipTextButton        = "Set Caption Text for Bottom or Top of Panel";
         String tipBubbleButton      = "Insert Text Bubble for Selected Character";
-        String tipBackgroundButton      = "Add a Background to the Panel";
-        String tipLockButton      = "Click to Lock this Panel to disable further editing";
+        String tipBackgroundButton  = "Add a Background to the Panel";
+        String tipLockButton        = "Click to Lock this Panel to disable further editing";
         String tipUnlockButton      = "Click to Unlock this Panel to enable further editing";
-        String tipLocked      = "This Panel is Locked Unlock to Allow Further Editing";
+        String tipLocked            = "This Panel is Locked Unlock to Allow Further Editing";
         String tipDeleteButton      = "Delete Selected Panel";
-        String tipUndoButton   = "Undo Last Action";
+        String tipUndoButton        = "Undo Last Action";
         String tipskinColorPicker   = "Choose Skin Colour";
         String tiphairColorPicker   = "Choose Hair Colour";
-        String tipNoCharacterSelected = "No character has been selected";
-        String tipNoPanelSelected = "A comic panel must be selected first";
+        String tipNoCharacterSelected = "No Character has been Selected";
+        String tipNoPanelSelected   = "A Comic Panel must be Selected First";
 
 
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {

@@ -47,7 +47,7 @@ public class GalleryManager {
             poses.getChildren().addAll(imageView);
         }
 
-        gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizontal
+        gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         gallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         gallery.setFitToWidth(true);
         gallery.setFitToHeight(true);
