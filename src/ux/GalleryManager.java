@@ -23,7 +23,7 @@ public class GalleryManager {
     private double height;
 
     public void setHeight(Double height) {
-        this.height = height;
+        this.height = height/1.2;
     }
 
     public void setComicPanel(ComicPanel[] comicPanel) {
