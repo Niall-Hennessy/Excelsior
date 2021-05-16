@@ -12,7 +12,7 @@ public class UndoList {
     public static void addUndo(Undo undo){
         undoList.add(undo);
 
-        if(undoList.size()>15)
+        if(undoList.size()>16)
             undoList.remove(0);
     }
 
@@ -24,6 +24,7 @@ public class UndoList {
 
     public static void clear(){
         undoList.clear();
+        undoList.add(new Undo());
     }
 
     public static int size(){

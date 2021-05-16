@@ -14,6 +14,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import undo.UndoList;
 
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
@@ -470,6 +471,7 @@ public class LoadXML {
             inputFile = null;
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
             frame.dispose();
+            UndoList.clear();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Warning, file formatting of the XML document is incorrect.\n\nError: "+ e.getMessage());
             alert.show();

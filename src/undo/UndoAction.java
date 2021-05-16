@@ -122,6 +122,10 @@ public class UndoAction {
             else if (undo.getOperation().matches("panel")){
                 comicStrip.getChildren().remove(undo.getComicPanel());
             }
+            else if (undo.getOperation().matches("panelSwap")){
+                comicStrip.getChildren().remove(undo.getComicPanel());
+                comicStrip.getChildren().add(Integer.parseInt(undo.getValue_1()), undo.getComicPanel());
+            }
             else if (undo.getOperation().matches("lock")){
 
                 double height = Double.parseDouble(undo.getValue_1());

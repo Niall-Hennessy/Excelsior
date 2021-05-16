@@ -1,5 +1,6 @@
 package comic;
 
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.image.*;
@@ -8,12 +9,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
+import javafx.util.Duration;
 import undo.Undo;
 import undo.UndoList;
 
 import javax.tools.JavaFileManager;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ComicPanel extends Pane {

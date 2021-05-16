@@ -953,6 +953,13 @@ public class Main extends Application {
                             mouseEvent.setDragDetect(true);
                             addPressAndHoldHandler(newComicPanel, Duration.seconds(1),
                                     event -> {
+                                            Undo undoMovement = new Undo("panelSwap", newComicPanel, "" + comicStripViewer.getComicStrip().getChildren().indexOf(newComicPanel));
+
+                                            double w = comicStripViewer.getContent().getBoundsInLocal().getWidth();
+                                            double x = (newComicPanel.getBoundsInParent().getMaxX() +
+                                                    newComicPanel.getBoundsInParent().getMinX()) / 2.0;
+                                            double v = comicStripViewer.getViewportBounds().getWidth();
+                                            comicStripViewer.setHvalue(comicStripViewer.getHmax() * ((x - 0.5 * v) / (w - v)));
 
                                             newComicPanel.getScene().setCursor(javafx.scene.Cursor.CLOSED_HAND);
 
@@ -966,6 +973,10 @@ public class Main extends Application {
 
                                                 double panelWidth = (height/2.4 + height/9.6);
                                                 int extraPanelCount = (comicStripViewer.getComicStrip().getChildren().size() - 4);
+
+                                                if(extraPanelCount < 0)
+                                                    extraPanelCount = 0;
+
                                                 double moveSpeed = (height/2.4 + height/9.6);
                                                 double increase = (moveSpeed/(panelWidth * extraPanelCount) * 0.01);
 
@@ -1007,8 +1018,7 @@ public class Main extends Application {
 
                                                     comicStripViewer.getComicStrip().getChildren().remove(newComicPanel);
                                                     comicStripViewer.getComicStrip().getChildren().add(index.get(), newComicPanel);
-                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() + (height/2.4 + height/9.6));
-
+                                                    newComicPanel.setTranslateX(0);
                                                 }
                                                 else if(dragEvent.getScreenX() - mouseEvent.getSceneX() + scroll.get() > ((height/2.4 + height/9.6) * (amount.get() + 1))) {
                                                     amount.getAndIncrement();
@@ -1019,7 +1029,7 @@ public class Main extends Application {
 
                                                     comicStripViewer.getComicStrip().getChildren().remove(newComicPanel);
                                                     comicStripViewer.getComicStrip().getChildren().add(index.get(), newComicPanel);
-                                                    newComicPanel.setTranslateX(newComicPanel.getTranslateX() - (height/2.4 + height/9.6));
+                                                    newComicPanel.setTranslateX(0);
                                                 }
 
                                                 dragEvent.consume();
@@ -1043,6 +1053,11 @@ public class Main extends Application {
                                                 });
 
                                                 mouseEvent3.consume();
+
+                                                UndoList.addUndo(undoMovement);
+
+                                                addPressAndHoldHandler(newComicPanel, Duration.seconds(1),
+                                                        event2 -> {});
                                             });
                                     });
 
@@ -1110,6 +1125,8 @@ public class Main extends Application {
                             comicStripViewer.setHvalue(comicStripViewer.getHmax() * ((x - 0.5 * v) / (w - v)));
                         }
                     });
+
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
