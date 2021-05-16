@@ -75,7 +75,7 @@ public class Main extends Application {
 
         ComicStripViewer comicStripViewer = new ComicStripViewer(width, height);
 
-        final String[] premise = {""};
+        Premise premise = new Premise();
 
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
@@ -601,7 +601,7 @@ public class Main extends Application {
         button_ui.getMenuItem("Load XML").setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LoadXML loadXML = new LoadXML(comicStripViewer.getComicStrip(), premise[0], newPanelLeft, newPanelRight, width, height);
+                LoadXML loadXML = new LoadXML(comicStripViewer.getComicStrip(), premise, newPanelLeft, newPanelRight, width, height);
             }
         });
 
@@ -610,6 +610,8 @@ public class Main extends Application {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, number of comic panels does not match layout.\nDo you still wish to continue?");
 
             Stage popupwindow = new Stage();
+            popupwindow.setHeight(height/2.4);
+            popupwindow.setWidth(height/2);
 
             popupwindow.initModality(Modality.APPLICATION_MODAL);
             popupwindow.initStyle(StageStyle.UNDECORATED);
@@ -622,17 +624,28 @@ public class Main extends Application {
             popupField.setMinHeight(50);
 
             TextField htmlRow = new TextField();
-            htmlRow.setPromptText("Number of Rows");
+            int panelCount = comicStripViewer.getComicStrip().getChildren().size()-2;
+            htmlRow.setText("" + (panelCount/2 + panelCount%2));
             htmlRow.setMinHeight(30);
             htmlRow.setMinWidth(10);
 
             TextField htmlCol = new TextField();
-            htmlCol.setPromptText("Number of Columns");
+            htmlCol.setText("2");
             htmlCol.setMinHeight(30);
             htmlCol.setMinWidth(10);
 
-            if (premise[0] != null)
-                popupField.setText(premise[0]);
+            Label rowLabel = new Label("Number of Rows: ");
+            rowLabel.setStyle("-fx-font-size: 15");
+            Label colLabel = new Label("  Number of Columns: ");
+            colLabel.setStyle("-fx-font-size: 15");
+
+
+            HBox rowColLabel = new HBox(40);
+            rowColLabel.getChildren().addAll(rowLabel, colLabel);
+            rowColLabel.setAlignment(Pos.CENTER);
+
+            if (premise.getPremise() != null)
+                popupField.setText(premise.getPremise());
 
             Button popupNext = new Button("Next");
             popupNext.getStyleClass().add("popUpNext");
@@ -682,14 +695,14 @@ public class Main extends Application {
             popupButtons.getChildren().addAll(popupNext, popupClose);
             popupButtons.setAlignment(Pos.CENTER);
 
-            HBox rowColField = new HBox(5);
+            HBox rowColField = new HBox(20);
             rowColField.getChildren().addAll(htmlRow, htmlCol);
             rowColField.setAlignment(Pos.CENTER);
 
             VBox popupLayout = new VBox(10);
             popupLayout.getStyleClass().add("popUpLayout");
 
-            popupLayout.getChildren().addAll(popupPrompt, popupField, rowColField, popup_box, popupButtons);
+            popupLayout.getChildren().addAll(popupPrompt, popupField, rowColLabel,rowColField, popup_box, popupButtons);
 
             popupLayout.setAlignment(Pos.CENTER);
 
@@ -866,7 +879,7 @@ public class Main extends Application {
                     return;
                 }
 
-                premise[0] = "";
+                premise.setPremise("");
 
                 comicStripViewer.getComicStrip().getChildren().clear();
 
