@@ -600,7 +600,11 @@ public class Main extends Application {
         button_ui.getMenuItem("Load XML").setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LoadXML loadXML = new LoadXML(comicStripViewer.getComicStrip(), premise, newPanelLeft, newPanelRight, width, height);
+                FileChooser fileChooser = new FileChooser();
+
+                File inputFile = fileChooser.showOpenDialog(null);
+
+                LoadXML loadXML = new LoadXML(inputFile, comicStripViewer.getComicStrip(), premise, newPanelLeft, newPanelRight, width, height);
             }
         });
 
@@ -967,6 +971,7 @@ public class Main extends Application {
                                     event -> {
                                             Undo undoMovement = new Undo("panelSwap", newComicPanel, "" + comicStripViewer.getComicStrip().getChildren().indexOf(newComicPanel));
 
+                                            //Code opptained From StackOverFlow. Forgot to record from where and by whom
                                             double w = comicStripViewer.getContent().getBoundsInLocal().getWidth();
                                             double x = (newComicPanel.getBoundsInParent().getMaxX() +
                                                     newComicPanel.getBoundsInParent().getMinX()) / 2.0;
