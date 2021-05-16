@@ -11,6 +11,7 @@ import javafx.stage.Screen;
 import undo.Undo;
 import undo.UndoList;
 
+import javax.tools.JavaFileManager;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -35,10 +36,12 @@ public class ComicPanel extends Pane {
 
     private int index;
 
+    int width = (int) Screen.getPrimary().getBounds().getWidth();
+    int height = (int) Screen.getPrimary().getBounds().getHeight();
+
     public ComicPanel() throws FileNotFoundException {
 
-        int width = (int) Screen.getPrimary().getBounds().getWidth();
-        int height = (int) Screen.getPrimary().getBounds().getHeight();
+
 
         this.setMinHeight(height/2.4);
         this.setMinWidth(height/2.4 + height/9.6);
@@ -65,6 +68,7 @@ public class ComicPanel extends Pane {
     }
 
     public void select(){
+        this.getStyleClass().clear();
         this.setStyle("-fx-background-image: url('" + background + "'); " +
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: stretch; " +
@@ -295,6 +299,13 @@ public class ComicPanel extends Pane {
         ImageView imageView = new ImageView(image);
 
         leftTextBubble = new TextBubble(imageView, text, font, status);
+
+        if(leftTextBubble.getBubble().getFitHeight() > height/2.4 -20){
+            leftTextBubble.getBubble().setFitHeight(height/2.4 -50);
+            leftTextBubble.getText().setFont(Font.font(9));
+            leftTextBubble.getText().setTranslateY(leftTextBubble.getBubble().getBoundsInParent().getCenterY() - (leftTextBubble.getText().getBoundsInParent().getHeight()/2) -50);
+        }
+
 
         leftTextBubble.setTranslateX(leftCharacter.getTranslateX() + 70);
         leftTextBubble.setTranslateY(leftCharacter.getTranslateY() - 50);

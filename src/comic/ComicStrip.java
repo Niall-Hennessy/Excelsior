@@ -9,16 +9,21 @@ import ux.ButtonIcon;
 
 import java.io.FileNotFoundException;
 
-public class ComicStrip {
+public class ComicStrip extends HBox{
 
-    static public HBox createComicStrip(double width, double height) throws FileNotFoundException {
-        HBox comicStrip = new HBox();
+    public ComicStrip(double width, double height) {
 
-        comicStrip.setAlignment(Pos.CENTER);
-        comicStrip.setPrefHeight(height * 0.6 - 20);
-        comicStrip.setPrefWidth(width - 20);
-        comicStrip.getStyleClass().add("comicStrip");
+        this.setAlignment(Pos.CENTER);
+        this.setPrefHeight(height * 0.6 - 20);
+        this.setPrefWidth(width - 20);
+        this.getStylesheets().add("main/style.css");
+        this.getStyleClass().add("comicStrip");
 
-        return comicStrip;
+        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mouseEvent.setDragDetect(true);
+            }
+        });
     }
 }
