@@ -460,7 +460,7 @@ public class Main extends Application {
 
                 }
                 else {
-                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, lockButton[0]);
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, lockButton[0]);
                 }
             }
         });
@@ -960,22 +960,22 @@ public class Main extends Application {
 
                                             comicStripViewer.getComicStrip().setOnMouseDragged(dragEvent -> {
 
-                                                double increase = ((double)comicStripViewer.getComicStrip().getChildren().size()/1000);
-
-                                                if(increase > 5)
-                                                    increase = 5;
+                                                double panelWidth = (height/2.4 + height/9.6);
+                                                int extraPanelCount = (comicStripViewer.getComicStrip().getChildren().size() - 4);
+                                                double moveSpeed = (height/2.4 + height/9.6);
+                                                double increase = (moveSpeed/(panelWidth * extraPanelCount) * 0.01);
 
                                                 if(dragEvent.getScreenX() > (4*width/5)) {
                                                     comicStripViewer.setHvalue(comicStripViewer.getHvalue() + increase);
                                                     if(comicStripViewer.getHvalue() != 1) {
-                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() + 9);
-                                                        scroll.set(scroll.get() + 9);
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() + moveSpeed * 0.01);
+                                                        scroll.set((int) (scroll.get() + (moveSpeed * 0.01)));
                                                     }
                                                 }else if(dragEvent.getScreenX() < width/5){
                                                     comicStripViewer.setHvalue(comicStripViewer.getHvalue() - increase);
                                                     if(comicStripViewer.getHvalue() != 0) {
-                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() - 9);
-                                                        scroll.set(scroll.get() - 9);
+                                                        newComicPanel.setTranslateX(newComicPanel.getTranslateX() - moveSpeed * 0.01);
+                                                        scroll.set((int) (scroll.get() - (moveSpeed * 0.01)));
                                                     }
                                                 }else{
 
