@@ -69,14 +69,16 @@ public class ComicPanel extends Pane {
         this.getStyleClass().clear();
         this.getStyleClass().add("backgroundImage");
         this.setStyle("-fx-background-image: url('" + background + "'); " +
-                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";");
+                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
+                "-fx-background-color: WHITE");
     }
 
     public void unselect(){
         this.getStyleClass().add("backgroundImage");
         this.setStyle("-fx-background-image: url('" + background + "'); " +
                 "-fx-border-color: BLACK; " +
-                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";");
+                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
+                "-fx-background-color: WHITE");
     }
 
     public ComicCharacter getLeftCharacter() {
@@ -483,7 +485,8 @@ public class ComicPanel extends Pane {
         this.getStyleClass().clear();
         this.getStyleClass().add("backgroundImage");
         this.setStyle("-fx-background-image: url('" + background + "'); " +
-                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";");
+                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
+                "-fx-background-color: WHITE");
     }
 
     public TextBubble getLeftTextBubble() {

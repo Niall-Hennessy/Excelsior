@@ -131,7 +131,8 @@ public class LoadXML {
                                         "-fx-background-repeat: stretch; " +
                                         "-fx-background-size: " + (height / 2.4 + height / 9.6) + " " + height / 2.4 + ";" +
                                         "-fx-border-color: black; " +
-                                        "-fx-border-width: 5");
+                                        "-fx-border-width: 4;" +
+                                        "-fx-background-color: WHITE");
                             }
 
                             if (currentNode.getNodeName().matches("above")) {
