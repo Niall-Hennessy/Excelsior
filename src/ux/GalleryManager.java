@@ -167,7 +167,6 @@ public class GalleryManager {
         return url.replace('\\', '/');
     }
 
-
     public void setRightCharacter(String path) {
         Entity entity = Entity.rightCharacter;
         openGallery(path, entity);
