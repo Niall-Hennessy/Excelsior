@@ -181,7 +181,7 @@ public class SaveXML {
                     balloon.setAttributeNode(attr);
 
                     Element content = doc.createElement("content");
-                    content.appendChild(doc.createTextNode(toParse.getLeftTextBubble().getText().getText()));
+                    content.appendChild(doc.createTextNode(toParse.getLeftTextBubble().getText().getText().replace("\n", "")));
                     Attr bold = doc.createAttribute("bold");
                     Attr italic = doc.createAttribute("italic");
 
@@ -217,7 +217,7 @@ public class SaveXML {
                     balloon.setAttributeNode(attr);
 
                     Element content = doc.createElement("content");
-                    content.appendChild(doc.createTextNode(toParse.getRightTextBubble().getText().getText()));
+                    content.appendChild(doc.createTextNode(toParse.getRightTextBubble().getText().getText().replace("\n", "")));
                     Attr bold = doc.createAttribute("bold");
                     Attr italic = doc.createAttribute("italic");
 

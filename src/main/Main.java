@@ -460,7 +460,7 @@ public class Main extends Application {
 
                 }
                 else {
-                    hoverTips.NoPanelSelectedTip(tipNoCharacterSelected, lockButton[0]);
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, lockButton[0]);
                 }
             }
         });
