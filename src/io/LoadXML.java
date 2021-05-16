@@ -1,6 +1,7 @@
 package io;
 
 import comic.ComicPanel;
+import comic.Premise;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 
 public class LoadXML {
 
-    public LoadXML(HBox comicStrip, String premise, Button newPanelLeft, Button newPanelRight, double width, double height){
+    public LoadXML(HBox comicStrip, Premise premise, Button newPanelLeft, Button newPanelRight, double width, double height){
         JFrame frame = null;
 
         JProgressBar progressBar;
@@ -45,9 +46,9 @@ public class LoadXML {
                 doc.getDocumentElement().normalize();
 
                 if(doc.getElementsByTagName("premise").item(0) != null)
-                    premise = doc.getElementsByTagName("premise").item(0).getTextContent();
+                    premise.setPremise(doc.getElementsByTagName("premise").item(0).getTextContent());
                 else
-                    premise = "";
+                    premise.setPremise("");
 
                 NodeList nList = doc.getElementsByTagName("panel");
                 Element figures = (Element) doc.getElementsByTagName("figures").item(0);

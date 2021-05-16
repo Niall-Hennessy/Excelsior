@@ -75,7 +75,7 @@ public class Main extends Application {
 
         ComicStripViewer comicStripViewer = new ComicStripViewer(width, height);
 
-        final String[] premise = {""};
+        Premise premise = new Premise();
 
         final ComicPanel[] comicPanel = {new ComicPanel()};
 
@@ -601,7 +601,7 @@ public class Main extends Application {
         button_ui.getMenuItem("Load XML").setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LoadXML loadXML = new LoadXML(comicStripViewer.getComicStrip(), premise[0], newPanelLeft, newPanelRight, width, height);
+                LoadXML loadXML = new LoadXML(comicStripViewer.getComicStrip(), premise, newPanelLeft, newPanelRight, width, height);
             }
         });
 
@@ -644,8 +644,8 @@ public class Main extends Application {
             rowColLabel.getChildren().addAll(rowLabel, colLabel);
             rowColLabel.setAlignment(Pos.CENTER);
 
-            if (premise[0] != null)
-                popupField.setText(premise[0]);
+            if (premise.getPremise() != null)
+                popupField.setText(premise.getPremise());
 
             Button popupNext = new Button("Next");
             popupNext.getStyleClass().add("popUpNext");
@@ -879,7 +879,7 @@ public class Main extends Application {
                     return;
                 }
 
-                premise[0] = "";
+                premise.setPremise("");
 
                 comicStripViewer.getComicStrip().getChildren().clear();
 
