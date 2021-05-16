@@ -8,12 +8,10 @@
     -fx-border-color: black;
     -fx-border-width: 0px 1px 1px 1px;
     -fx-background-color: #FDE4A6;
-    /*orange: #FFDD88 //#434A7E*/
 }
 
 .mainPane {
     -fx-background-color: #5B6192;
-    /*#434A7E Blue//#FFDD88*/
 }
 
 .comicStrip {
@@ -40,7 +38,7 @@
 }
 
  .bold:hover, .italic:hover {
-    -fx-background-color: #A974C9; /*AD86C5*/
+    -fx-background-color: #A974C9;
 }
 
 .escape {
@@ -56,7 +54,7 @@
 }
 
 .submit:hover {
-    -fx-background-color: #3FFF13; /*#58C63F;*/
+    -fx-background-color: #3FFF13;
 }
 
 .cancel {
@@ -68,14 +66,14 @@
 }
 
 .bubbles {
-    -fx-background-color: #FDE4A6; /*BLUE CLOUD BACKGROUNDS: #B9EBFF*/
+    -fx-background-color: #FDE4A6;
     -fx-border-color: black;
     -fx-border-width: 1px;
 }
 
 
 .bubbleGrid {
-    -fx-background-color: #B7A8C0; /*PURPLE BORDER STAGE: #E6B9FF*/
+    -fx-background-color: #B7A8C0;
     -fx-border-color: black;
     -fx-border-width: 1px;
 }
@@ -131,13 +129,13 @@
 
 /*FOR CAPTION MODAL*/
 .layoutGrid{
-    -fx-background-color:  #B7A8C0; /*PURPLE BORDER STAGE: #E6B9FF*/
+    -fx-background-color:  #B7A8C0;
     -fx-border-color: black;
     -fx-border-width: 1px;
 }
 
 .bottomTextCaption {
-    -fx-background-color: #AF86C8; /*755A85*/
+    -fx-background-color: #AF86C8;
 }
 
 .topTextCaption {
@@ -152,18 +150,9 @@
     -fx-padding: 10;
 }
 
-/*DONT THINK WE USE THIS BUT DIDNT CODE IT BUT TESTED THE PROGRAM AND NO ERRORS WHEN RUNNING WITHOUT THIS*/
-/*.tester {
-    -fx-background-image: url("../images/backgrounds/basic_Background.jpg");
-    -fx-background-repeat: stretch;
-    -fx-background-size: 500 400;
-    -fx-background-position: center center;
-}*/
-
-
 /*HTML POPUP*/
 .popUpLayout {
-     -fx-background-color:  #B8A6FD; /*Orange: #FDE4A6, better blue: #A6ACFD or #A6B2FD*/
+     -fx-background-color:  #B8A6FD;
      -fx-border-color: black;
      -fx-border-width: 1px;
      -fx-padding: 5;
@@ -179,7 +168,7 @@
 }
 
 .popUpCancel {
-    -fx-background-color: #FF6060;/*#FFA1A1;*/
+    -fx-background-color: #FF6060;
 }
 
 .popUpCancel:hover {
@@ -188,10 +177,16 @@
 }
 
 .popUpNext {
-    -fx-background-color: #98FF81; /*#B5FFA1;*/
+    -fx-background-color: #98FF81;
 }
 
 .popUpNext:hover {
-    -fx-background-color: #3FFF13;   /*#A8ED95;*/
+    -fx-background-color: #3FFF13;
 }
 
+.backgroundImage {
+    -fx-background-position: center center;
+    -fx-background-repeat: stretch;
+    -fx-border-color: #EDE427;
+    -fx-border-width: 4;
+}
