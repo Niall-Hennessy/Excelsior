@@ -35,6 +35,7 @@ public class ComicCharacter extends Pane {
         updateImage();
     }
 
+    //This method will change the character image to look the specified way set by the user
     public void updateImage(){
         this.getChildren().remove(characterImageView);
         Image image = characterImage;
@@ -191,6 +192,7 @@ public class ComicCharacter extends Pane {
         characterImageView = flipCharacter;
     }
 
+    //A helper function for updateImage
     public boolean isOnLineSimple(Color p1, Color p2, Color p3) {
 
         if (p3.getRed() <= p2.getRed() && p3.getRed() >= p1.getRed() &&
@@ -201,6 +203,7 @@ public class ComicCharacter extends Pane {
         return false;
     }
 
+    //A helper function for updateImage
     public boolean isOnLine(Color p1, Color p2, Color p3)
     {
         boolean red = false;
@@ -239,6 +242,7 @@ public class ComicCharacter extends Pane {
 
     }
 
+    //A helper function for isOnline
     public static double decimalConverter(double decimal) {
         BigDecimal bigDecimal = BigDecimal.valueOf(decimal);
         bigDecimal = bigDecimal.setScale(1, RoundingMode.HALF_UP);

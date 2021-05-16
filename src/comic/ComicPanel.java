@@ -471,10 +471,12 @@ public class ComicPanel extends Pane {
 
     }
 
+    //Gets if a comicPanel is locked
     public Boolean getLocked() {
         return isLocked;
     }
 
+    //Sets if a comicPanel is locked
     public void setLocked(Boolean locked) {
         isLocked = locked;
     }
@@ -497,10 +499,12 @@ public class ComicPanel extends Pane {
         return rightTextBubble;
     }
 
+    //Gets the comicPanel's index inside of its comicStrip
     public int getIndex() {
         return index;
     }
 
+    //Sets the comicPanel's index inside of its comicStrip
     public void setIndex(int index) {
         this.index = index;
     }
