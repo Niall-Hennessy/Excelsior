@@ -4,10 +4,11 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 
+//  Tools for making a top menu bar, build, expand and return menubar
+//  Comic control buttons added and arranged in the flow pane, return as flowPane
 public class ButtonUI {
     private MenuBar menuBar = new MenuBar();
     private FlowPane buttonLayout = new FlowPane();
-
 
     public void addLabelAndItems (String titleName, String ...options) {
 
@@ -53,6 +54,7 @@ public class ButtonUI {
 
         return buttonLayout;
     }
+
 
     public MenuItem getMenuItem(String item){
 
