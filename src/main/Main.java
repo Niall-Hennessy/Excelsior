@@ -606,6 +606,8 @@ public class Main extends Application {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, number of comic panels does not match layout.\nDo you still wish to continue?");
 
             Stage popupwindow = new Stage();
+            popupwindow.setHeight(height/2.4);
+            popupwindow.setWidth(height/2);
 
             popupwindow.initModality(Modality.APPLICATION_MODAL);
             popupwindow.initStyle(StageStyle.UNDECORATED);
@@ -618,14 +620,22 @@ public class Main extends Application {
             popupField.setMinHeight(50);
 
             TextField htmlRow = new TextField();
-            htmlRow.setPromptText("Number of Rows");
             htmlRow.setMinHeight(30);
             htmlRow.setMinWidth(10);
 
             TextField htmlCol = new TextField();
-            htmlCol.setPromptText("Number of Columns");
             htmlCol.setMinHeight(30);
             htmlCol.setMinWidth(10);
+
+            Label rowLabel = new Label("Number of Rows: ");
+            rowLabel.setStyle("-fx-font-size: 15");
+            Label colLabel = new Label("  Number of Columns: ");
+            colLabel.setStyle("-fx-font-size: 15");
+
+
+            HBox rowColLabel = new HBox(40);
+            rowColLabel.getChildren().addAll(rowLabel, colLabel);
+            rowColLabel.setAlignment(Pos.CENTER);
 
             if (premise[0] != null)
                 popupField.setText(premise[0]);
@@ -678,14 +688,14 @@ public class Main extends Application {
             popupButtons.getChildren().addAll(popupNext, popupClose);
             popupButtons.setAlignment(Pos.CENTER);
 
-            HBox rowColField = new HBox(5);
+            HBox rowColField = new HBox(20);
             rowColField.getChildren().addAll(htmlRow, htmlCol);
             rowColField.setAlignment(Pos.CENTER);
 
             VBox popupLayout = new VBox(10);
             popupLayout.getStyleClass().add("popUpLayout");
 
-            popupLayout.getChildren().addAll(popupPrompt, popupField, rowColField, popup_box, popupButtons);
+            popupLayout.getChildren().addAll(popupPrompt, popupField, rowColLabel,rowColField, popup_box, popupButtons);
 
             popupLayout.setAlignment(Pos.CENTER);
 
