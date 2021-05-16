@@ -16,7 +16,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import undo.UndoList;
-
 import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,16 +26,13 @@ import java.util.HashMap;
 
 public class LoadXML {
 
-    public LoadXML(HBox comicStrip, Premise premise, Button newPanelLeft, Button newPanelRight, double width, double height){
+    //LoadXML loads in an XML file and sets the program as needed
+    public LoadXML(File inputFile, HBox comicStrip, Premise premise, Button newPanelLeft, Button newPanelRight, double width, double height){
         JFrame frame = null;
 
         JProgressBar progressBar;
 
         try {
-
-            FileChooser fileChooser = new FileChooser();
-
-            File inputFile = fileChooser.showOpenDialog(null);
 
             if(inputFile != null) {
 

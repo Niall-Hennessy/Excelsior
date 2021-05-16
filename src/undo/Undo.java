@@ -4,6 +4,8 @@ import comic.ComicPanel;
 
 public class Undo {
 
+    //Undo Class contains a variety of objects that the user can use to create an Undo object representing their Undo action
+
     private String operation;
     private ComicPanel comicPanel;
     private String value_1;

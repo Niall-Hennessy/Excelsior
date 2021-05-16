@@ -1,12 +1,11 @@
 package undo;
 
-import undo.Undo;
-
 import java.util.List;
 import java.util.Stack;
 
 public class UndoList {
 
+    //UndoList has a static list of undo that can get added from anywhere.
     static List<Undo> undoList = new Stack<>();
 
     public static void addUndo(Undo undo){

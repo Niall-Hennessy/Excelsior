@@ -2,12 +2,8 @@ package comic;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import ux.ButtonIcon;
-
-import java.io.FileNotFoundException;
 
 public class ComicStrip extends HBox{
 

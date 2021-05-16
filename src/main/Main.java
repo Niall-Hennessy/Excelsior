@@ -40,7 +40,6 @@ import undo.Undo;
 import undo.UndoAction;
 import undo.UndoList;
 import ux.*;
-
 import javax.imageio.ImageIO;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
@@ -115,16 +114,16 @@ public class Main extends Application {
         String tipGenderButton      = "Change Selected Character's Gender";
         String tipTextButton        = "Set Caption Text for Bottom or Top of Panel";
         String tipBubbleButton      = "Insert Text Bubble for Selected Character";
-        String tipBackgroundButton      = "Add a Background to the Panel";
-        String tipLockButton      = "Click to Lock this Panel to disable further editing";
+        String tipBackgroundButton  = "Add a Background to the Panel";
+        String tipLockButton        = "Click to Lock this Panel to disable further editing";
         String tipUnlockButton      = "Click to Unlock this Panel to enable further editing";
-        String tipLocked      = "This Panel is Locked Unlock to Allow Further Editing";
+        String tipLocked            = "This Panel is Locked Unlock to Allow Further Editing";
         String tipDeleteButton      = "Delete Selected Panel";
-        String tipUndoButton   = "Undo Last Action";
+        String tipUndoButton        = "Undo Last Action";
         String tipskinColorPicker   = "Choose Skin Colour";
         String tiphairColorPicker   = "Choose Hair Colour";
-        String tipNoCharacterSelected = "No character has been selected";
-        String tipNoPanelSelected = "A comic panel must be selected first";
+        String tipNoCharacterSelected = "No Character has been Selected";
+        String tipNoPanelSelected   = "A Comic Panel must be Selected First";
 
 
         rightCharacter.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -601,7 +600,11 @@ public class Main extends Application {
         button_ui.getMenuItem("Load XML").setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LoadXML loadXML = new LoadXML(comicStripViewer.getComicStrip(), premise, newPanelLeft, newPanelRight, width, height);
+                FileChooser fileChooser = new FileChooser();
+
+                File inputFile = fileChooser.showOpenDialog(null);
+
+                LoadXML loadXML = new LoadXML(inputFile, comicStripViewer.getComicStrip(), premise, newPanelLeft, newPanelRight, width, height);
             }
         });
 
@@ -968,6 +971,7 @@ public class Main extends Application {
                                     event -> {
                                             Undo undoMovement = new Undo("panelSwap", newComicPanel, "" + comicStripViewer.getComicStrip().getChildren().indexOf(newComicPanel));
 
+                                            //Code opptained From StackOverFlow. Forgot to record from where and by whom
                                             double w = comicStripViewer.getContent().getBoundsInLocal().getWidth();
                                             double x = (newComicPanel.getBoundsInParent().getMaxX() +
                                                     newComicPanel.getBoundsInParent().getMinX()) / 2.0;
@@ -1167,6 +1171,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    //Code found from https://stackoverflow.com/questions/25601266/how-to-achieve-javafx-mouse-event-push-and-hold by https://stackoverflow.com/users/2189127/james-d
     private void addPressAndHoldHandler(javafx.scene.Node node, Duration holdTime,
                                         EventHandler<MouseEvent> handler) {
 

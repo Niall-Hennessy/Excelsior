@@ -1,6 +1,5 @@
 package undo;
 
-import comic.ComicStrip;
 import comic.TextBubble;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
@@ -11,12 +10,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class UndoAction {
 
+    //UndoAction Class gets the UndoList and gets it's operation and derives what it's values must be what to do with them
+    //So that it may actually perform the Undo
     HBox comicStrip;
 
     public UndoAction(HBox comicStrip) {
@@ -24,14 +24,6 @@ public class UndoAction {
     }
 
     public void undo(){
-    /*
-            Actions that can be undone
-
-            Rearranging panel: Panel, Previous Panel *To Do after fully implemented or on Sunday*
-            Adding Text: Panel, T/B
-
-             */
-
             /*
             Actually Implemented
 

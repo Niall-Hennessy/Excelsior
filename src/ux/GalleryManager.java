@@ -49,7 +49,7 @@ public class GalleryManager {
             poses.getChildren().addAll(imageView);
         }
 
-        gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); //horizontal
+        gallery.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         gallery.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         gallery.setFitToWidth(true);
         gallery.setFitToHeight(true);
@@ -166,7 +166,6 @@ public class GalleryManager {
     private String normaliseURL(String url) {
         return url.replace('\\', '/');
     }
-
 
     public void setRightCharacter(String path) {
         Entity entity = Entity.rightCharacter;
