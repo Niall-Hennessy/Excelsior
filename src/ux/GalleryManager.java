@@ -30,6 +30,8 @@ public class GalleryManager {
         this.comicPanel = comicPanel;
     }
 
+    //  navigate to a folder with the desired files, present in a window that resizes based
+    //  on the number of items in the file, to a max portion of the screen before scrollbar appears
     private void openGallery(String path, Entity entity) {
         ScrollPane gallery = new ScrollPane();
         TilePane poses = new TilePane();
@@ -67,6 +69,8 @@ public class GalleryManager {
         }
     }
 
+    //  for each image file, make a thumbnail for the gallery to present in an easy to skim through way
+    //  listen for mouse click and pass the chosen file to the method caller
     public ImageView createImageView(final File imageFile, Entity entity) {
 
         ImageView imageView = null;
@@ -159,10 +163,10 @@ public class GalleryManager {
         return imageView;
     }
 
-
     private String normaliseURL(String url) {
         return url.replace('\\', '/');
     }
+
 
     public void setRightCharacter(String path) {
         Entity entity = Entity.rightCharacter;
