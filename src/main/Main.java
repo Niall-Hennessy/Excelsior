@@ -624,10 +624,13 @@ public class Main extends Application {
             popupField.setMinHeight(50);
 
             TextField htmlRow = new TextField();
+            int panelCount = comicStripViewer.getComicStrip().getChildren().size()-2;
+            htmlRow.setText("" + (panelCount/2 + panelCount%2));
             htmlRow.setMinHeight(30);
             htmlRow.setMinWidth(10);
 
             TextField htmlCol = new TextField();
+            htmlCol.setText("2");
             htmlCol.setMinHeight(30);
             htmlCol.setMinWidth(10);
 
