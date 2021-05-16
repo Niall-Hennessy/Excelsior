@@ -488,12 +488,9 @@ public class ComicPanel extends Pane {
     public void setBackgroundString(String path) {
         this.background = path;
         this.getStyleClass().clear();
+        this.getStyleClass().add("backgroundImage");
         this.setStyle("-fx-background-image: url('" + background + "'); " +
-                "-fx-background-position: center center; " +
-                "-fx-background-repeat: stretch; "  +
-                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";" +
-                "-fx-border-color: #EDE427; " + //gold
-                "-fx-border-width: 4");
+                "-fx-background-size: " + this.getWidth() + " " + this.getHeight() + ";");
         System.out.println("background: " + path);
     }
 

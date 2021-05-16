@@ -32,7 +32,7 @@ public class Modal {
 
         modal.setScene(scene);
 
-        modal.setMaxWidth(width/1.5);
+        modal.setMaxWidth(width/1.5); ///THIS WAS CHANGED IF THE BRANCH CANT BE MERGED
         modal.setMaxHeight(height/1.5);
 
         scene.setOnMousePressed(pressEvent -> {

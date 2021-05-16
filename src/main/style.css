@@ -195,3 +195,9 @@
     -fx-background-color: #3FFF13;   /*#A8ED95;*/
 }
 
+.backgroundImage {
+    -fx-background-position: center center;
+    -fx-background-repeat: stretch;
+    -fx-border-color: #EDE427;
+    -fx-border-width: 4;
+}
