@@ -4,6 +4,7 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,11 +28,12 @@ public class Modal {
         layoutGrid.setPadding(new Insets(10, 10, 10, 10));
         layoutGrid.setVgap(5);
         layoutGrid.setHgap(5);
+        //layoutGrid.setAlignment(Pos.CENTER);
 
         modal.setScene(scene);
 
-        modal.setX(width/1.5);
-        modal.setY(height/1.5);
+        modal.setMaxWidth(width/1.5);
+        modal.setMaxHeight(height/1.5);
 
         scene.setOnMousePressed(pressEvent -> {
             scene.setOnMouseDragged(dragEvent -> {
