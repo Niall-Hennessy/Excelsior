@@ -1,6 +1,5 @@
 package undo;
 
-import comic.ComicStrip;
 import comic.TextBubble;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
@@ -11,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -24,14 +22,6 @@ public class UndoAction {
     }
 
     public void undo(){
-    /*
-            Actions that can be undone
-
-            Rearranging panel: Panel, Previous Panel *To Do after fully implemented or on Sunday*
-            Adding Text: Panel, T/B
-
-             */
-
             /*
             Actually Implemented
 

@@ -40,7 +40,6 @@ import undo.Undo;
 import undo.UndoAction;
 import undo.UndoList;
 import ux.*;
-
 import javax.imageio.ImageIO;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;

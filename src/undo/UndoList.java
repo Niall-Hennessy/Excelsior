@@ -1,7 +1,5 @@
 package undo;
 
-import undo.Undo;
-
 import java.util.List;
 import java.util.Stack;
 
