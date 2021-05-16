@@ -893,6 +893,11 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+                if(!comicStripViewer.getComicStrip().getChildren().contains(comicPanel[0])){
+                    hoverTips.NoPanelSelectedTip(tipNoPanelSelected, deleteButton);
+                    return;
+                }
+
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Warning, about to delete the current panel.\nDo you still wish to continue?");
 
                 if(comicPanel[0].getLocked()){
