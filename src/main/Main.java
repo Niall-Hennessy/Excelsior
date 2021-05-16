@@ -1167,6 +1167,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    //Code found from https://stackoverflow.com/questions/25601266/how-to-achieve-javafx-mouse-event-push-and-hold by https://stackoverflow.com/users/2189127/james-d
     private void addPressAndHoldHandler(javafx.scene.Node node, Duration holdTime,
                                         EventHandler<MouseEvent> handler) {
 

@@ -17,6 +17,8 @@ import java.io.FileNotFoundException;
 
 public class UndoAction {
 
+    //UndoAction Class gets the UndoList and gets it's operation and derives what it's values must be what to do with them
+    //So that it may actually perform the Undo
     HBox comicStrip;
 
     public UndoAction(HBox comicStrip) {
@@ -24,14 +26,6 @@ public class UndoAction {
     }
 
     public void undo(){
-    /*
-            Actions that can be undone
-
-            Rearranging panel: Panel, Previous Panel *To Do after fully implemented or on Sunday*
-            Adding Text: Panel, T/B
-
-             */
-
             /*
             Actually Implemented
 
