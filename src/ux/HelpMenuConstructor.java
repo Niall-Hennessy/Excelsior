@@ -2,6 +2,7 @@ package ux;
 
 import javafx.stage.Screen;
 
+//  Set the content messages for the help modal accessed from the menuBar Help button
 public class HelpMenuConstructor {
 
     HelpMenu helpMenu = new HelpMenu();
