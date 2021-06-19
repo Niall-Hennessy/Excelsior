@@ -1,6 +1,3 @@
-
-###Excelsior
-
 To install 
 1. Download the jar in the out folder and src folder
 2. Put them in the same folder
