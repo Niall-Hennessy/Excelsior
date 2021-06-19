@@ -4,4 +4,4 @@ To install
 3. Put them in the same folder
 4. navigate to the jar in command prompt
 5. run command: java -splash:src/images/splashScreen/splash_screen.png -jar Excelsior.jar
-<a href="READ_ME.txt">Download File</a>
+<button onclick="window.open('READ_ME.txt')">Download</button>
